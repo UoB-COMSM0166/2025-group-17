@@ -1,5 +1,5 @@
 # 2025-group-17
-2025 COMSM0166 group 17<br>
+2025 COMSM0166 group 17<br />
 ![group-photo.jpg](images/group-photo.jpg)
 ## Your Game
 
