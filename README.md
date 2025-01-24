@@ -9,16 +9,17 @@ Your game lives in the [/docs](/docs) folder, and is published using Github page
 
 Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
 
+
 ## Your Group
 
 Add a group photo here!
 
-- Group member 1, name, email, role
-- Group member 2, name, email, role
-- Group member 3, name, email, role
-- Group member 4, name, email, role
-- Group member 5, name, email, role
-- Group member 6, name, email, role
+- Group member 1, Yishan Chen(shandy-del), sf24245@bristol.ac.uk, role
+- Group member 2, Hong Jin(h-d-jin), sd24459@bristol.ac.uk, role
+- Group member 3, Yuetong Dong(Catherinett-111), wv24137@bristol.ac.uk, role
+- Group member 4, ZhexingYang(ZhexingYoung), ec24179@bristol.ac.uk, role
+- Group member 5, Yuzheng Li(Kkan6), nb24046@bristol.ac.uk, role
+- Group member 6, Shuzhou Huang(EnjoyerGG), uq24650@bristol.ac.uk, role
 
 ## Project Report
 
