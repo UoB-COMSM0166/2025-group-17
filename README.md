@@ -1,6 +1,5 @@
 # 2025-group-17
-2025 COMSM0166 group 17<br />
-![group-photo.jpg](images/group-photo.jpg)
+2025 COMSM0166 group 17
 ## Your Game
 
 Link to your game [PLAY HERE](https://peteinfo.github.io/COMSM0166-project-template/)
@@ -12,7 +11,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Your Group
 
-Add a group photo here!
+![group-photo.jpg](images/group-photo.jpg)></br>
 
 - Group member 1, Yishan Chen(shandy-del), sf24245@bristol.ac.uk, role
 - Group member 2, Hong Jin(h-d-jin), sd24459@bristol.ac.uk, role
@@ -20,6 +19,9 @@ Add a group photo here!
 - Group member 4, ZhexingYang(ZhexingYoung), ec24179@bristol.ac.uk, role
 - Group member 5, Yuzheng Li(Kkan6), nb24046@bristol.ac.uk, role
 - Group member 6, Shuzhou Huang(EnjoyerGG), uq24650@bristol.ac.uk, role
+
+## Kanban Board
+https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000c642e4ac8&pvs=4
 
 ## Project Report
 
