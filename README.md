@@ -11,7 +11,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Your Group
 
-![group-photo.jpg](images/group-photo.jpg)></br>
+![group-photo.jpg](images/group-photo.jpg)</br>
 
 - Group member 1, Yishan Chen(shandy-del), sf24245@bristol.ac.uk, role
 - Group member 2, Hong Jin(h-d-jin), sd24459@bristol.ac.uk, role
