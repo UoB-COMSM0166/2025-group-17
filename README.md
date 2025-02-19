@@ -2,7 +2,7 @@
 2025 COMSM0166 group 17
 ## Your Game
 
-Link to your game [PLAY HERE](https://peteinfo.github.io/COMSM0166-project-template/)
+[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/)
 
 Your game lives in the [/docs](/docs) folder, and is published using Github pages to the link above.
 
