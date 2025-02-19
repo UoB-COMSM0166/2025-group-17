@@ -2,7 +2,7 @@
 2025 COMSM0166 group 17
 ## Your Game
 
-[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/)
+[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/public/)
 
 Your game lives in the [/docs](/docs) folder, and is published using Github pages to the link above.
 
