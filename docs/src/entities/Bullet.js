@@ -15,6 +15,6 @@ class Bullet {
 
    display() {
       fill(255, 0, 0);
-      ellipse(this.x, this.y, 15);
+      ellipse(this.x, this.y, 5);
    }
 }

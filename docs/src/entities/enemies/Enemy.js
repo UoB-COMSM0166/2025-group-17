@@ -1,6 +1,8 @@
 const enemySize = 20;
 const chaserSize = 30;
 const shootSize = 25;
+const smallEnemyHp = 50;
+const largeEnemyHp = 100;
 
 // class Enemy {
 //   constructor(xPosition, yPosition, hp, speed, attack) {

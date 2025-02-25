@@ -17,10 +17,10 @@ let minDistanceToSave = 50;
 
 let player = new Player(playerX, playerY);
 let door = new Door(300, 200);
+let enemyCount = 5;
 
 // Add variables and functions from feature_enemies_lyz_before0225
-let bullets = [], enemies = [], obstacles = [], gameState = 0;
-let spawnRate = 1.2, playerHP = 10000;
+let bullets = [], enemies = [], obstacles = [];
 let tutorialStep = 0, tutorialMessages = [
     "Clear all monsters and reach the exit to win!",
     "Use arrow keys to move and avoid obstacles & monsters.",
@@ -37,19 +37,23 @@ function generateObstacles() {
 }
 
 function generateEnemies() {
-  // Pass in appropriate parameters as needed
-  enemies.push(new Enemy(50, 50, 50));
-  enemies.push(new Enemy(700, 500, 100));
+  for (let i = 0; i < enemyCount; i++) {
+    let x = random(hPadding, width - hPadding);
+    let y = random(vPadding, height - vPadding);
+
+    let hp = random([smallEnemyHp, largeEnemyHp]);
+    enemies.push(new Enemy(x, y, hp));
+  }
 }
 
 function updateObstacles() {
-  obstacles.forEach(o => o.show());
+  obstacles.forEach(o => o.display());
 }
 
 function updateBullets() {
   bullets.forEach(b => {
     b.update();
-    b.show();
+    b.display();
   });
 }
 
@@ -74,6 +78,8 @@ function setup() {
   setupMenu();
   setupPauseMenu();
   startTime = millis();
+  generateObstacles();
+  generateEnemies();
 }
 
 function windowResized() {
@@ -94,14 +100,16 @@ function draw() {
     updateObstacles();
     updateBullets();
     updateEnemies();
-    checkPlayerEnemyCollision();
-    checkWinCondition();
-    checkGameOver();
+    
     
     door.display();
     player.update();
     player.display();
     checkSavePoint();
+    setInterval(checkPlayerEnemyCollision, 3000);
+
+    checkWinCondition();
+    checkGameOver();
   }
 }
 
