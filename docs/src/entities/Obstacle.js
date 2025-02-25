@@ -2,6 +2,7 @@ class Obstacle {
    constructor(x, y) {
       this.x = x;
       this.y = y;
+      this.size = 30;
    }
 
    display() {

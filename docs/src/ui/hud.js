@@ -93,3 +93,13 @@ function drawTimer() {
   textAlign(RIGHT, BOTTOM);
   text(`Time Taken:${mins}:${secs}`, width - hPadding, height - vPadding);
 }
+
+// Add from feature_enemies_lyz_before0225
+function displayTutorial() {
+  fill(0);
+  textSize(14);
+  textAlign(CENTER);
+  
+  text(tutorialMessages.join('\n'), width / 2,  120);
+}
+

@@ -90,3 +90,34 @@ function resetGame() {
   console.log("Coordinates are reset!")
   startTime = millis();
 }
+
+// Add from feature_enemies_lyz_before0225
+function checkWinCondition() {
+  // 当所有敌人被消灭，且玩家位于画布上方（yPos < 10）且血量大于 0 时，认为达成胜利条件
+  if (enemies.length === 0 && player.yPos < 10 && playerHP > 0) {
+    tutorialStep = 3;
+  }
+}
+
+function checkPlayerEnemyCollision() {
+  // 遍历所有敌人，检测玩家与敌人之间的距离是否小于双方半径之和（假设 enemy 对象中存在 size 属性）
+  enemies.forEach(enemy => {
+    let d = dist(player.xPos, player.yPos, enemy.xPos, enemy.yPos);
+    if (d < enemy.size / 2 + playerSize / 2) {
+      playerHP -= 625;  // 每次碰撞扣除一定血量
+      playerHP = max(playerHP, 0); // 防止血量低于 0
+    }
+  });
+}
+
+function checkGameOver() {
+  // 当玩家血量耗尽时，在画布正中央显示 Game Over，并停止 draw 循环
+  if (playerHP <= 0) {
+    fill(255, 0, 0);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text("Game Over", width / 2, height / 2);
+    noLoop();
+  }
+}
+
