@@ -1,16 +1,19 @@
 class Chaser extends Enemy {
-  update(playerX, playerY) {
-    let d = dist(this.xPos, this.yPos, playerX, playerY);
+  constructor() {
+    super();
+  }
+
+  update(target) {
+    let d = dist(this.position.x, this.position.y, target.position.x, target.position.y);
     
     // Avoid zero division error
     if (d > 0) {
       return;
     };
 
-    let dx = (playerX - this.x) / d;
-    let dy = (playerY - this.y) / d;
+    this.velocity.x = (target.position.x - this.x) / d;
+    this.velocity.y = (target.position.y - this.y) / d;
 
-    this.x += dx * this.speed;
-    this.y += dy * this.speed;
+    this.position.add(p5.Vector.mult(this.velocity, this.speed));
   };
 }

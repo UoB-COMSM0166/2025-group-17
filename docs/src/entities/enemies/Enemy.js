@@ -3,54 +3,29 @@ const chaserSize = 30;
 const shootSize = 25;
 const smallEnemyHp = 50;
 const largeEnemyHp = 100;
+const smallEnemySize = { w: 40, h: 40 };
+const largeEnemySize = { w: 50, h: 60 };
 
-// class Enemy {
-//   constructor(xPosition, yPosition, hp, speed, attack) {
-//     this.xPos = xPosition;
-//     this.yPos = yPosition;
-//     this.hp = hp;
-//     this.speed = speed;
-//     this.atk = attack;
-//   };
-
-//   display() {
-//     fill('green');
-//     ellipse(this.xPos, this.yPos, enemySize);
-//   };
-// }
-
-// Add from feature_enemies_lyz_before0225
 class Enemy {
   constructor(x, y, hp) {
-    this.xPos = x;
-    this.yPos = y;
     this.hp = hp;
-    this.size = (hp === 50 ? 10 : 40);
-    this.dx = random([-1, 1]);
-    this.dy = random([-1, 1]);
-    this.speed = 1;
+    this.position = createVector(x, y);
+    this.size = createVector(
+        hp === smallEnemyHp ? smallEnemySize.w : largeEnemySize.w,
+        hp === smallEnemyHp ? smallEnemySize.h : largeEnemySize.h
+    );
+    this.velocity = createVector(random([-1, 1]), random([-1, 1]));
   }
+
   update() {
-    this.xPos += this.dx * this.speed;
-    this.yPos += this.dy * this.speed;
-    if (this.xPos < 0 || this.xPos > width) this.dx *= -1;
-    if (this.yPos < 0 || this.yPos > height) this.dy *= -1;
+    this.position.add(this.velocity);
+    if (this.position.x < 0 || this.position.x > width) this.velocity.x *= -1;
+    if (this.position.y < 0 || this.position.y > height) this.velocity.y *= -1;
   }
+
   display() {
-    fill(255, 0, 0);
-    rect(this.xPos, this.yPos, this.size, this.size);
+    fill('green');
+    rect(this.position.x, this.position.y, this.size.x, this.size.y);
   }
 }
-// Add done.
 
-class ChasingShooter extends Enemy {
-
-}
-
-class AtkType {
-  
-}
-
-class ChasingType {
-
-}

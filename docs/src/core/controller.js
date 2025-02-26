@@ -1,15 +1,17 @@
 let tempPlayerHp;
-let lastCollisionTime = 0; 
-let collisionOccurred = false;
-
+let lastCollisionTime = 0;
 
 function checkSavePoint() {
   // Save when player crosses the target position
-  if (!nearSavedPosition && dist(player.xPos, player.yPos, door.xPos, door.yPos) < playerSize / 2) {
+  const distanceX = abs(player.position.x - savePoint.position.x);
+  const distanceY = abs(player.position.y - savePoint.position.y);
+  if (!nearSavedPosition && distanceX < player.size.x && distanceY < player.size.y) {
     saveGameData();
     nearSavedPosition = true;
   }
-  if (nearSavedPosition && dist(player.xPos, player.yPos, lastSavedPosition.xPos, lastSavedPosition.yPos) > minDistanceToSave) {
+
+  const moveDistance = dist(player.position.x, player.position.y, lastSavedPosition.xPos, lastSavedPosition.yPos);
+  if (nearSavedPosition && moveDistance > minDistanceToSave) {
     console.log("Can be saved again!");
     nearSavedPosition = false;
   }
@@ -17,28 +19,28 @@ function checkSavePoint() {
 
 function saveGameData() {
   if (nearSavedPosition) return;
-  
-  let gameState = {
-    xPos: door.xPos,
-    yPos: door.yPos
-  };
 
-  localStorage.setItem('gameState', JSON.stringify(gameState));
-  lastSavedPosition.xPos = gameState.xPos;
-  lastSavedPosition.yPos = gameState.yPos;
+  localStorage.setItem('lastSavePoint', JSON.stringify(savePoint));
+  localStorage.setItem('playerHp', JSON.stringify(player.hp));
+  lastSavedPosition.xPos = savePoint.position.x;
+  lastSavedPosition.yPos = savePoint.position.y;
   console.log("Game Saved!");
 }
 
 function loadGameData() {
-  let savedGame = localStorage.getItem('gameState');
-  if (!savedGame) {
+  generateEnemies();
+  generateObstacles();
+  let savedPosition = localStorage.getItem('lastSavePoint');
+  let playerHp = localStorage.getItem('playerHp');
+  if (!savedPosition || !playerHp) {
     console.log("No save data found; starting from scratch...");
     return startNewGame();
   }
 
-  savedGame = JSON.parse(savedGame);
-  player.xPos = savedGame.xPos;
-  player.yPos = savedGame.yPos;
+  savedPosition = JSON.parse(savedPosition);
+  player.position.x = savedPosition.position.x;
+  player.position.y = savedPosition.position.y;
+  player.hp = JSON.parse(playerHp);
   console.log("Game Loaded!");
   
   menuDisplayed = false;
@@ -90,54 +92,19 @@ function exitGame() {
 }
 
 function resetGame() {
-  player.xPos = playerX;
-  player.yPos = playerY;
-  console.log("Coordinates are reset!")
+  player = new Player(playerX, playerY);
+  generateObstacles();
+  generateEnemies();
+  console.log("Player is reset!")
   startTime = millis();
 }
 
-// Add from feature_enemies_lyz_before0225
 function checkWinCondition() {
   // 当所有敌人被消灭，且玩家位于画布上方（yPos < 10）且血量大于 0 时，认为达成胜利条件
-  if (enemies.length === 0 && player.yPos < 10 && player.hp > 0) {
-    tutorialStep = 3;
-  }
+  return (enemies.length === 0 && player.position.y < 10 && player.hp > 0)
 }
 
-function checkPlayerEnemyCollision() {
-  // // 遍历所有敌人，检测玩家与敌人之间的距离是否小于双方半径之和（假设 enemy 对象中存在 size 属性）
-  // enemies.forEach(enemy => {
-  //   let d = dist(player.xPos, player.yPos, enemy.xPos, enemy.yPos);
-  //   if (d < enemy.size / 2 + playerSize / 2) {
-  //     tempPlayerHp = player.hp - 1;
-  //     player.hp = max(0, tempPlayerHp); // 防止血量低于 0
-  //   }
-  // });
-  if (millis() - lastCollisionTime < 3000) {
-    return;
-  }
-  collisionOccurred = false;
-  enemies.forEach(enemy => {
-    let d = dist(player.xPos, player.yPos, enemy.xPos, enemy.yPos);
-    if (d < enemy.size / 2 + playerSize / 2) {
-      player.hp = max(0, player.hp - 1);
-      collisionOccurred = true;
-    }
-  });
-  
-  if (collisionOccurred) {
-    lastCollisionTime = millis();
-  }
-}
-
-function checkGameOver() {
-  // 当玩家血量耗尽时，在画布正中央显示 Game Over，并停止 draw 循环
-  if (player.hp <= 0) {
-    fill(255, 0, 0);
-    textSize(32);
-    textAlign(CENTER, CENTER);
-    text("Game Over", width / 2, height / 2);
-    noLoop();
-  }
+function isGameOver() {
+  return player.hp <= 0;
 }
 

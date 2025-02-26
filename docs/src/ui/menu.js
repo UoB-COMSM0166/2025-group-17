@@ -11,8 +11,6 @@ function setupMenu() {
   btnNewGame.mousePressed(startNewGame);
 }
 
-
-
 function setupPauseMenu() {
   btnPause = createImg('assets/icons/pause.svg', 'Click to pause');
   btnPause.position(windowWidth - 80, vPadding);
@@ -50,5 +48,14 @@ function drawPauseMenu() {
   // Reset the button positions to support proper resizing
   btnResume.position(windowWidth / 2 - hPadding, windowHeight / 2 - vPadding);
   btnExit.position(windowWidth / 2 - hPadding, windowHeight / 2 + vPadding);
+}
+
+function drawGameOver() {
+  clear();
+  background(220);
+  fill(255, 0, 0);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text("Game Over", width / 2, height / 2);
 }
 

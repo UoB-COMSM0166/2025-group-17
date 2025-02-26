@@ -4,82 +4,69 @@ const defaultAtk = 5;
 const playerMaxHp = 5;
 const playerMaxSpeed = 15;
 const playerMaxAtk = 20;
-const playerSize = 20;
+const playerSize = { w: 20, h: 20 };
+
+const playerX = 50;
+const playerY = 50;
 
 class Player {
-  constructor(xPosition, yPosition) {
-    this.xPos = xPosition;
-    this.yPos = yPosition;
+  constructor(x, y) {
+    this.position = createVector(x, y);
     this.hp = defaultHp;
     this.speed = defaultSpeed;
     this.maxSpeed = playerMaxSpeed;
+    this.velocity = createVector(0, 0);
     this.atk = defaultAtk;
     this.maxAtk = playerMaxAtk;
-
-    // Add from feature_enemies_lyz_before0225
-    // For key-based displacement
-    this.dx = 0;
-    this.dy = 0;
-    // Add done/
-  }
-
-  // Add from feature_enemies_lyz_before0225
-  move(keyCode) {
-    if (keyCode === UP_ARROW) this.dy = -this.speed;
-    if (keyCode === DOWN_ARROW) this.dy = this.speed;
-    if (keyCode === LEFT_ARROW) this.dx = -this.speed;
-    if (keyCode === RIGHT_ARROW) this.dx = this.speed;
-  }
-
-  stop() {
-    this.dx = 0;
-    this.dy = 0;
+    this.size = createVector(playerSize.w, playerSize.h);
+    this.bullets = [];
   }
 
   shoot(direction) {
-    // Shooting function to create bullet objects
-    bullets.push(new Bullet(this.xPos, this.yPos, direction));
+    bullets.push(new Bullet(this.position.x, this.position.y, direction));
   }
-
-  update() {
-    // Here we can choose to use key detection (original logic) or update location based on dx, dy
-    let newX = this.xPos + this.dx;
-    let newY = this.yPos + this.dy;
-    // Boundary and obstacle detection can be added (for example, call colliesWithObstacle)
-    if (!this.collidesWithObstacle(newX, newY) && !this.hitsBoundary(newX, newY)) {
-      this.xPos = newX;
-      this.yPos = newY;
-    }
-  }
-
-  collidesWithObstacle(x, y) {
-    // 检查是否与任一障碍物碰撞（每个 Obstacle 应有 x、y 和尺寸信息）
-    return obstacles.some(o => x > o.x && x < o.x + o.size && y > o.y && y < o.y + o.size);
-  }
-
-  hitsBoundary(x, y) {
-    return x < 0 || x > width || y < 0 || y > height;
-  }
-  // Add done.
-
 
   display() {
     fill('red');
-    ellipse(this.xPos, this.yPos, playerSize);
+    rect(this.position.x, this.position.y, this.size.x, this.size.y);
   };
 
-  // update() {
-  //   if (keyIsDown(LEFT_ARROW)) {
-  //     this.xPos -= this.speed;
-  //   }
-  //   if (keyIsDown(RIGHT_ARROW)) {
-  //     this.xPos += this.speed;
-  //   }
-  //   if (keyIsDown(UP_ARROW)) {
-  //     this.yPos -= this.speed;
-  //   }
-  //   if (keyIsDown(DOWN_ARROW)) {
-  //     this.yPos += this.speed;
-  //   }
-  // };
+  updateVelocity() {
+    if (keyIsDown(LEFT_ARROW)) {
+      this.velocity.x -= this.speed;
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+      this.velocity.x += this.speed;
+    }
+    if (keyIsDown(UP_ARROW)) {
+      this.velocity.y -= this.speed;
+    }
+    if (keyIsDown(DOWN_ARROW)) {
+      this.velocity.y += this.speed;
+    }
+  }
+
+  resetVelocity() {
+    this.velocity.x = 0;
+    this.velocity.y = 0;
+  }
+
+  updatePosition() {
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
+  };
+
+  revertPosition() {
+    this.position.x -= this.velocity.x;
+    this.position.y -= this.velocity.y;
+  };
+
+  updateHp(newHp) {
+    this.hp = max(0, newHp);
+  }
+
+  shoot(direction) {
+    this.bullets.push(new Bullet(this.position.x, this.position.y, direction));
+    console.log("A bullet has been shot");
+  }
 }
