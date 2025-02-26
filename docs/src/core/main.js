@@ -2,12 +2,13 @@ let menuDisplayed = true;
 let isGamePaused = false;
 let isBossStage = false;
 let btnPause, btnResume, btnExit, btnContinue, btnNewGame;
+let inputHandler = null;
 
 let startTime;
 let timeSpent = 0;
 
-let playerX = 50;
-let playerY = 50;
+let savePointX = 300;
+let savePointY = 200;
 let currentLevel = 1;
 let currentStage = 1;
 
@@ -15,12 +16,12 @@ let nearSavedPosition = false;
 let lastSavedPosition = { xPos: null, yPos: null };
 let minDistanceToSave = 50;
 
-let player = new Player(playerX, playerY);
-let door = new Door(300, 200);
+let player, savePoint;
 let enemyCount = 5;
+let obstacleCount = 5;
 
 // Add variables and functions from feature_enemies_lyz_before0225
-let bullets = [], enemies = [], obstacles = [];
+let enemies = [], obstacles = [];
 let tutorialStep = 0, tutorialMessages = [
     "Clear all monsters and reach the exit to win!",
     "Use arrow keys to move and avoid obstacles & monsters.",
@@ -29,14 +30,16 @@ let tutorialStep = 0, tutorialMessages = [
 ];
 
 function generateObstacles() {
-  for (let i = 0; i < 3; i++) {
-    let x = random(100, width - 100);
-    let y = random(100, height - 100);
+  obstacles = [];
+  for (let i = 0; i < obstacleCount; i++) {
+    let x = random(hPadding, width - hPadding);
+    let y = random(vPadding, height - vPadding);
     obstacles.push(new Obstacle(x, y));
   }
 }
 
 function generateEnemies() {
+  enemies = [];
   for (let i = 0; i < enemyCount; i++) {
     let x = random(hPadding, width - hPadding);
     let y = random(vPadding, height - vPadding);
@@ -50,20 +53,12 @@ function updateObstacles() {
   obstacles.forEach(o => o.display());
 }
 
-function updateBullets() {
-  bullets.forEach(b => {
-    b.update();
-    b.display();
-  });
-}
-
 function updateEnemies() {
   enemies.forEach(e => {
     e.update();
     e.display();
   });
 }
-
 
 // Add done.
 
@@ -75,6 +70,13 @@ function preload() {
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   adjustCanvasWithAspectRatio();
+
+  imageMode(CENTER);
+
+  player = new Player(playerX, playerY);
+  savePoint = new SavePoint(savePointX, savePointY);
+  inputHandler = new InputHandler();
+
   setupMenu();
   setupPauseMenu();
   startTime = millis();
@@ -92,50 +94,29 @@ function draw() {
     drawMenu();
   } else if (isGamePaused) {
     drawPauseMenu();     
+  } else if (isGameOver()) {
+    drawGameOver();
   }
   else {
     drawUiHub();
-    // Add from feature_enemies_lyz_before0225
     displayTutorial();
     updateObstacles();
-    updateBullets();
     updateEnemies();
     
-    
-    door.display();
-    player.update();
+    inputHandler.update();
+    savePoint.display();
     player.display();
-    checkSavePoint();
-    setInterval(checkPlayerEnemyCollision, 3000);
 
+    checkSavePoint();
     checkWinCondition();
-    checkGameOver();
   }
+}
+
+function keyPressed() {
+  inputHandler.handlePlayerShooting();
 }
 
 let boss = {
   hp: 30,
   maxHp: 100
 };
-
-// Add from feature_enemies_lyz_before0225
-function keyPressed() {
-  // 方向键控制移动
-  if ([UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW].includes(keyCode)) {
-    player.move(keyCode);
-    if (tutorialStep === 1) tutorialStep++;
-  }
-  // WSAD 键控制射击
-  if ([87, 65, 83, 68].includes(keyCode)) {
-    player.shoot(keyCode);
-    if (tutorialStep === 2) tutorialStep++;
-  }
-}
-
-function keyReleased() {
-  if ([UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW].includes(keyCode)) {
-    player.stop();
-  }
-}
-
-// Add done.
