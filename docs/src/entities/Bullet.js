@@ -1,5 +1,5 @@
 class Bullet {
-   constructor(x, y, direction, s = 10, dmg = 50) {
+   constructor(x, y, direction, dmg, s = 10) {
       this.position = createVector(x, y);
       this.size = createVector(s, s);
       this.speed = 5;
