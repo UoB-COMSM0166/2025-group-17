@@ -1,25 +1,3 @@
-let menuDisplayed = true;
-let isGamePaused = false;
-let isBossStage = false;
-let btnPause, btnResume, btnExit, btnContinue, btnNewGame;
-let inputHandler = null;
-
-let startTime;
-let timeSpent = 0;
-
-let savePointX = 300;
-let savePointY = 200;
-let currentLevel = 1;
-let currentStage = 1;
-
-let nearSavedPosition = false;
-let lastSavedPosition = { xPos: null, yPos: null };
-let minDistanceToSave = 50;
-
-let player, savePoint;
-let enemyCount = 5;
-let obstacleCount = 5;
-
 let pauseSound = new Audio("assets/music/Pause.mp3");
 let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
 let deathSound = new Audio("assets/music.Enemy_Death.mp3");
@@ -29,20 +7,11 @@ let deathSound2 = new Audio("assets/music/Player_Death.mp3");
 let walkSound = new Audio("assets/music/Player_Walk.mp3");
 walkSound.loop = true;
 
-// Add variables and functions from feature_enemies_lyz_before0225
-let enemies = [], obstacles = [];
-let tutorialStep = 0, tutorialMessages = [
-    "Clear all monsters and reach the exit to win!",
-    "Use arrow keys to move and avoid obstacles & monsters.",
-    "Use WSAD keys to shoot and attack monsters.",
-    "You can start the game now!"
-];
-
 function generateObstacles() {
   obstacles = [];
   for (let i = 0; i < obstacleCount; i++) {
-    let x = random(hPadding, width - hPadding);
-    let y = random(vPadding, height - vPadding);
+    let x = random(hPadding, widthInPixel - hPadding);
+    let y = random(vPadding, heightInPixel - vPadding);
     obstacles.push(new Obstacle(x, y));
   }
 }
@@ -50,8 +19,8 @@ function generateObstacles() {
 function generateEnemies() {
   enemies = [];
   for (let i = 0; i < enemyCount; i++) {
-    let x = random(hPadding, width - hPadding);
-    let y = random(vPadding, height - vPadding);
+    let x = random(hPadding, widthInPixel - hPadding);
+    let y = random(vPadding, heightInPixel - vPadding);
 
     let hp = random([smallEnemyHp, largeEnemyHp]);
     enemies.push(new Enemy(x, y, hp));
@@ -77,9 +46,6 @@ function preload() {
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   adjustCanvasWithAspectRatio();
-
-  imageMode(CENTER);
-
   player = new Player(playerX, playerY);
   savePoint = new SavePoint(savePointX, savePointY);
   inputHandler = new InputHandler();
@@ -91,21 +57,18 @@ function setup() {
   generateEnemies();
 }
 
-function windowResized() {
-  adjustCanvasWithAspectRatio();
-}
-
 function draw() {
+  // push();
+  adjustCanvasWithAspectRatio();
   background(220);
   if (menuDisplayed) {
     drawMenu();
   } else if (isGamePaused) {
-    drawPauseMenu();     
+    drawPauseMenu();
   } else if (isGameOver()) {
     drawGameOver();
   }
   else {
-    drawUiHub();
     displayTutorial();
     updateObstacles();
     updateEnemies();
@@ -113,10 +76,12 @@ function draw() {
     inputHandler.update();
     savePoint.display();
     player.display();
+    drawUiHub();
 
     checkSavePoint();
     checkWinCondition();
   }
+  // pop();
 }
 
 function keyPressed() {
