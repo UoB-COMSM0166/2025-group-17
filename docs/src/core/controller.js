@@ -1,6 +1,3 @@
-let tempPlayerHp;
-let lastCollisionTime = 0;
-
 function checkSavePoint() {
   // Save when player crosses the target position
   const distanceX = abs(player.position.x - savePoint.position.x);

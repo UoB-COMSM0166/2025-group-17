@@ -1,5 +1,3 @@
-let obstacleSize = { w: 30, h: 30 };
-
 class Obstacle {
   constructor(x, y) {
   this.position = createVector(x, y);

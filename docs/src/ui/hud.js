@@ -1,10 +1,3 @@
-const heartSize = 24;
-const iconPadding = 5;
-
-const bossHpWidth = 400;
-const bossHpHeight = 30;
-const bossHpCorner = 10;
-
 function adjustCanvasWithAspectRatio() {
   let cnvHeight, cnvWidth;
   // Calculate the max size that fits while keeping 16:9 aspect ratio
@@ -20,6 +13,7 @@ function adjustCanvasWithAspectRatio() {
 
   // Centre the cnv
   cnv.position((windowWidth - cnvWidth) / 2, (windowHeight - cnvHeight) / 2);
+  scale(cnvWidth / widthInPixel, cnvHeight / heightInPixel);
 }
 
 function drawUiHub() {
@@ -35,12 +29,12 @@ function drawUiHub() {
 function drawHealthBar() {
   // Draw current HP
   for (let h = 0; h < player.hp; h++) {
-    image(heart, hPadding + h * (heartSize + iconPadding), vPadding, heartSize, heartSize);
+    image(heart, hPadding + h * (iconSize + iconPadding), vPadding, iconSize, iconSize);
   }
 
   // Draw lost HP
   for (let dh = 0; dh < defaultHp - player.hp; dh++) {
-    image(damagedHeart, hPadding + (dh + player.hp) * (heartSize + iconPadding), vPadding, heartSize, heartSize);
+    image(damagedHeart, hPadding + (dh + player.hp) * (iconSize + iconPadding), vPadding, iconSize, iconSize);
   }
 }
 
@@ -48,17 +42,18 @@ function drawCurrentLevel() {
   fill(255);
   textFont('Courier New', uiTextSize);
   textAlign(LEFT, BOTTOM);
-  text(`Level:${currentLevel}-${currentStage}`, hPadding, height - vPadding);
+  text(`Level:${currentLevel}-${currentStage}`, hPadding, heightInPixel - vPadding);
 }
 
 function drawBossStatus() {
   if (!isBossStage) return;
   let hpPercentage = boss.hp / boss.maxHp;
-  let barX = (width / 2) - (bossHpWidth / 2);
+  let barX = (widthInPixel / 2) - (bossHpWidth / 2);
 
   // Draw HP bar background
   fill(200);
   stroke(0);
+  strokeWeight(3);
   rect(barX, vPadding, bossHpWidth, bossHpHeight, bossHpCorner);
 
   // Draw HP bar
@@ -68,9 +63,11 @@ function drawBossStatus() {
   // Draw percentage markers
   for (let i of [0.25, 0.5, 0.75]) {
     let lineX = barX + bossHpWidth * i;
-    stroke(0);
     line(lineX, vPadding, lineX, vPadding + bossHpHeight);
   }
+
+  // Back to default weight
+  strokeWeight(1);
 }
 
 function adjustBossStatusColor(percentage) {
@@ -91,7 +88,7 @@ function drawTimer() {
   fill(255);
   textFont('Courier New', uiTextSize);
   textAlign(RIGHT, BOTTOM);
-  text(`Time Taken:${mins}:${secs}`, width - hPadding, height - vPadding);
+  text(`Time Taken:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`, widthInPixel - hPadding, heightInPixel - vPadding);
 }
 
 // Add from feature_enemies_lyz_before0225
@@ -100,6 +97,6 @@ function displayTutorial() {
   textSize(14);
   textAlign(CENTER);
   
-  text(tutorialMessages.join('\n'), width / 2,  120);
+  text(tutorialMessages.join('\n'), widthInPixel / 2,  120);
 }
 

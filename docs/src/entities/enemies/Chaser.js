@@ -13,7 +13,6 @@ class Chaser extends Enemy {
 
     this.velocity.x = (target.position.x - this.x) / d;
     this.velocity.y = (target.position.y - this.y) / d;
-
-    this.position.add(p5.Vector.mult(this.velocity, this.speed));
+    super.update();
   };
 }
