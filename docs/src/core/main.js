@@ -60,8 +60,6 @@ function updateEnemies() {
   });
 }
 
-// Add done.
-
 function preload() {
   heart = loadImage('assets/icons/heart.svg');
   damagedHeart = loadImage('assets/icons/damagedHeart.svg');
