@@ -1,5 +1,3 @@
-const savePointSize = { w: 30, h: 30 };
-
 class SavePoint {
   constructor(x, y) {
     this.position = createVector(x, y);

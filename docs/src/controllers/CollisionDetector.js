@@ -40,7 +40,7 @@ class CollisionDetector {
   hitBoundary(obj) {
     let x = obj.position.x + obj.velocity.x;
     let y = obj.position.y + obj.velocity.y;
-    return x < 0 || x > width - obj.size.x || y < 0 || y > height - obj.size.y;
+    return x < 0 || x > widthInPixel - obj.size.x || y < 0 || y > heightInPixel - obj.size.y;
   }
 }
 

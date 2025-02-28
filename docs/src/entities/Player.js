@@ -1,14 +1,3 @@
-const defaultSpeed = 5;
-const defaultHp = 3;
-const defaultAtk = 5;
-const playerMaxHp = 5;
-const playerMaxSpeed = 15;
-const playerMaxAtk = 20;
-const playerSize = { w: 20, h: 20 };
-
-const playerX = 50;
-const playerY = 50;
-
 class Player {
   constructor(x, y) {
     this.position = createVector(x, y);
@@ -87,7 +76,7 @@ class Player {
   }
 
   shoot(direction) {
-    this.bullets.push(new Bullet(this.position.x, this.position.y, direction));
+    this.bullets.push(new Bullet(this.position.x, this.position.y, direction, this.atk));
     console.log("A bullet has been shot");
 
     shootSound.currentTime = 0;
