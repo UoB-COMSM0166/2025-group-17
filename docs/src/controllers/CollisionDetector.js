@@ -16,6 +16,11 @@ class CollisionDetector {
           hitSound.currentTime=0; //music 让音效从头播放
           hitSound.play();
 
+          if(enemyArray[enemyIndex].hp === 0){
+            deathSound.currentTime = 0;
+            deathSound.play();
+          }
+
 
           bulletArray.splice(bulletIndex, 1);
         }

@@ -61,5 +61,8 @@ class InputHandler {
     }
     player.updateHp(player.hp - 1);
     this.lastCollisionTime = millis();
+
+    hurtSound.currentTime = 0;
+    hurtSound.play();
   }
 }

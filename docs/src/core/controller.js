@@ -64,6 +64,10 @@ function toggleButtons() {
 function pauseGame() {
   pauseTime = millis();
   console.log("Game pause!");
+
+  if (pauseSound) {
+    pauseSound.play();
+  }
   isGamePaused = true;
   btnPause.hide();
   btnResume.show();

@@ -20,7 +20,14 @@ let player, savePoint;
 let enemyCount = 5;
 let obstacleCount = 5;
 
-let hitSound = new Audio("assets/music/hit.mp3");
+let pauseSound = new Audio("assets/music/Pause.mp3");
+let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
+let deathSound = new Audio("assets/music.Enemy_Death.mp3");
+let shootSound = new Audio("assets/music/Player_Shoot.mp3");
+let hurtSound = new Audio("assets/music/Player_Hurt.mp3");
+let deathSound2 = new Audio("assets/music/Player_Death.mp3");
+let walkSound = new Audio("assets/music/Player_Walk.mp3");
+walkSound.loop = true;
 
 // Add variables and functions from feature_enemies_lyz_before0225
 let enemies = [], obstacles = [];

@@ -24,6 +24,7 @@ class Player {
 
   shoot(direction) {
     bullets.push(new Bullet(this.position.x, this.position.y, direction));
+
   }
 
   display() {
@@ -32,17 +33,32 @@ class Player {
   };
 
   updateVelocity() {
+    let moving = false; //记录玩家是否在移动
+
     if (keyIsDown(LEFT_ARROW)) {
       this.velocity.x -= this.speed;
+      moving = true;
     }
     if (keyIsDown(RIGHT_ARROW)) {
       this.velocity.x += this.speed;
+      moving = true;
     }
     if (keyIsDown(UP_ARROW)) {
       this.velocity.y -= this.speed;
+      moving = true;
     }
     if (keyIsDown(DOWN_ARROW)) {
       this.velocity.y += this.speed;
+      moving = true;
+    }
+
+    if (moving) {
+      if (walkSound.paused) {
+        walkSound.currentTime = 0;
+        walkSound.play();
+      }
+    } else {
+      walkSound.pause();
     }
   }
 
@@ -63,10 +79,18 @@ class Player {
 
   updateHp(newHp) {
     this.hp = max(0, newHp);
+
+    if(this.hp === 0) {
+      deathSound.currentTime = 0;
+      deathSound.play();
+    }
   }
 
   shoot(direction) {
     this.bullets.push(new Bullet(this.position.x, this.position.y, direction));
     console.log("A bullet has been shot");
+
+    shootSound.currentTime = 0;
+    shootSound.play();
   }
 }
