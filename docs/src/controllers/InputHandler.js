@@ -1,16 +1,16 @@
 class InputHandler {
-  constructor(cooldownTime = 2000, bulletDmg = 50) {
+  constructor(roomObj, cooldownTime = 2000) {
+    this.currentRoom = roomObj;
     this.collisionDetector = new CollisionDetector();
     this.collisionCoolDownTime = cooldownTime;
-    this.bulletDamage = bulletDmg;
     this.lastCollisionTime = millis();
   }
   
   update() {
     player.updateVelocity();
     player.updatePosition();
-    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(player, enemies);
-    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(player, obstacles);
+    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.enemies);
+    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.obstacles);
     const playerHitBoundary = this.collisionDetector.hitBoundary(player);
     if (collideWithEnemies || collideWithObstacles || playerHitBoundary) {
       player.revertPosition();
@@ -26,8 +26,8 @@ class InputHandler {
     //   player.shoot(direction);
     // }
     this.updateBullets();
-    this.collisionDetector.detectBulletEnemyCollision(player.bullets, enemies);
-    this.removeEnemies(enemies);
+    this.collisionDetector.detectBulletEnemyCollision(player.bullets, this.currentRoom.enemies);
+    this.removeEnemies(this.currentRoom.enemies);
   }
   
   handlePlayerShooting() {

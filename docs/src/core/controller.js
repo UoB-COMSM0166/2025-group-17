@@ -1,7 +1,7 @@
 function checkSavePoint() {
   // Save when player crosses the target position
-  const distanceX = abs(player.position.x - savePoint.position.x);
-  const distanceY = abs(player.position.y - savePoint.position.y);
+  const distanceX = abs(player.position.x - room.savePoint.position.x);
+  const distanceY = abs(player.position.y - room.savePoint.position.y);
   if (!nearSavedPosition && distanceX < player.size.x && distanceY < player.size.y) {
     saveGameData();
     nearSavedPosition = true;
@@ -17,16 +17,16 @@ function checkSavePoint() {
 function saveGameData() {
   if (nearSavedPosition) return;
 
-  localStorage.setItem('lastSavePoint', JSON.stringify(savePoint));
+  localStorage.setItem('lastSavePoint', JSON.stringify(room.savePoint));
   localStorage.setItem('playerHp', JSON.stringify(player.hp));
-  lastSavedPosition.xPos = savePoint.position.x;
-  lastSavedPosition.yPos = savePoint.position.y;
+  lastSavedPosition.xPos = room.savePoint.position.x;
+  lastSavedPosition.yPos = room.savePoint.position.y;
   console.log("Game Saved!");
 }
 
 function loadGameData() {
-  generateEnemies();
-  generateObstacles();
+  room.generateEnemies();
+  room.generateObstacles();
   let savedPosition = localStorage.getItem('lastSavePoint');
   let playerHp = localStorage.getItem('playerHp');
   if (!savedPosition || !playerHp) {
@@ -93,16 +93,15 @@ function exitGame() {
 }
 
 function resetGame() {
+  menuDisplayed = false;
+  isGamePaused = false;
+  gameOver = false;
+  
   player = new Player(playerX, playerY);
-  generateObstacles();
-  generateEnemies();
-  console.log("Player is reset!")
-  startTime = millis();
-}
-
-function checkWinCondition() {
-  // 当所有敌人被消灭，且玩家位于画布上方（yPos < 10）且血量大于 0 时，认为达成胜利条件
-  return (enemies.length === 0 && player.position.y < 10 && player.hp > 0)
+  room = new Room();
+  room.setup();
+  inputHandler = new InputHandler(room);
+  console.log("Game is reset!")
 }
 
 function isGameOver() {

@@ -7,7 +7,7 @@ class Player {
     this.velocity = createVector(0, 0);
     this.atk = defaultAtk;
     this.maxAtk = playerMaxAtk;
-    this.size = createVector(playerSize.w, playerSize.h);
+    this.size = createVector(heightInPixel / 12, heightInPixel / 12);
     this.bullets = [];
   }
 
