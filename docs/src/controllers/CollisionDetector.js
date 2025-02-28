@@ -1,28 +1,26 @@
 class CollisionDetector {
-  detectPlayerCollision(playerObj, objArray) {
+  detectPlayerCollision(playerObj, objArr) {
     // Check the collision between the player and other objects. If there is a collision, 
     // the player bounces back.
-    return objArray.some(obj => this.detectCollision(playerObj, obj));
+    return objArr.some(obj => this.detectCollision(playerObj, obj));
   }
  
-  detectBulletEnemyCollision(bulletArray, enemyArray) {
+  detectBulletEnemyCollision(bulletArr, enemyArr) {
     // Check the collision between bullets and enemies. If there is a collision, 
     // the bullet vanishes and causes damage to the enemy.
-    enemyArray.forEach((enemyObj, enemyIndex) => {
-      bulletArray.forEach((bulletObj, bulletIndex) => {
+    enemyArr.forEach((enemyObj, enemyIndex) => {
+      bulletArr.forEach((bulletObj, bulletIndex) => {
         if (this.detectCollision(bulletObj, enemyObj)) {
-          enemyArray[enemyIndex].hp = max(0, enemyObj.hp - bulletObj.damage);
+          enemyArr[enemyIndex].hp = max(0, enemyObj.hp - bulletObj.damage);
 
           hitSound.currentTime=0; //music 让音效从头播放
           hitSound.play();
 
-          if(enemyArray[enemyIndex].hp === 0){
+          if(enemyArr[enemyIndex].hp === 0){
             deathSound.currentTime = 0;
             deathSound.play();
           }
-
-
-          bulletArray.splice(bulletIndex, 1);
+          bulletArr.splice(bulletIndex, 1);
         }
       });
     });
@@ -40,7 +38,7 @@ class CollisionDetector {
   hitBoundary(obj) {
     let x = obj.position.x + obj.velocity.x;
     let y = obj.position.y + obj.velocity.y;
-    return x < 0 || x > widthInPixel - obj.size.x || y < 0 || y > heightInPixel - obj.size.y;
+    return x < leftBoundary || x > rightBoundary - obj.size.x || y < topBoundary || y > bottomBoundary - obj.size.y;
   }
 }
 

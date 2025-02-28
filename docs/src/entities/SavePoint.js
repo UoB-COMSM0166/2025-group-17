@@ -1,8 +1,7 @@
 class SavePoint {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.size = savePointSize;
-    this.size = createVector(savePointSize.w, savePointSize.h);
+    this.size = createVector(savePointParam.w, savePointParam.h);
   }
 
   display() {

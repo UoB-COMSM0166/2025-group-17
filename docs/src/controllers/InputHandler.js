@@ -1,16 +1,17 @@
 class InputHandler {
-  constructor(cooldownTime = 2000, bulletDmg = 50) {
+  constructor(roomObj, cooldownTime = 2000) {
+    this.currentRoom = roomObj;
     this.collisionDetector = new CollisionDetector();
     this.collisionCoolDownTime = cooldownTime;
-    this.bulletDamage = bulletDmg;
     this.lastCollisionTime = millis();
   }
   
   update() {
+    this.currentRoom.update();
     player.updateVelocity();
     player.updatePosition();
-    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(player, enemies);
-    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(player, obstacles);
+    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.enemies);
+    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.obstacles);
     const playerHitBoundary = this.collisionDetector.hitBoundary(player);
     if (collideWithEnemies || collideWithObstacles || playerHitBoundary) {
       player.revertPosition();
@@ -26,8 +27,9 @@ class InputHandler {
     //   player.shoot(direction);
     // }
     this.updateBullets();
-    this.collisionDetector.detectBulletEnemyCollision(player.bullets, enemies);
-    this.removeEnemies(enemies);
+    this.collisionDetector.detectBulletEnemyCollision(player.bullets, this.currentRoom.enemies);
+    this.removeEnemies(this.currentRoom.enemies);
+    this.moveToNextRoom();
   }
   
   handlePlayerShooting() {
@@ -53,7 +55,6 @@ class InputHandler {
     });
   }
 
-
   decreasePlayerHp() {
     // The player will not receive any damage in the future 2 seconds.
     if (millis() - this.lastCollisionTime < this.collisionCoolDownTime) {
@@ -64,5 +65,19 @@ class InputHandler {
 
     hurtSound.currentTime = 0;
     hurtSound.play();
+  }
+
+  moveToNextRoom(tolerance=player.size.x) {
+    if (!this.currentRoom.checkClearCondition()) return;
+
+    const playerMidX = player.position.x + player.size.x / 2;
+    const playerMidY = player.position.y + player.size.y / 2;
+    const doorX = this.currentRoom.door.position.x;
+    const doorY = this.currentRoom.door.position.y + this.currentRoom.door.size.y / 2;
+    
+    if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
+      console.log("Move to the next room!");
+      loadRoom();
+    }
   }
 }
