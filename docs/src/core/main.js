@@ -20,6 +20,8 @@ let player, savePoint;
 let enemyCount = 5;
 let obstacleCount = 5;
 
+let hitSound = new Audio("assets/music/hit.mp3");
+
 // Add variables and functions from feature_enemies_lyz_before0225
 let enemies = [], obstacles = [];
 let tutorialStep = 0, tutorialMessages = [

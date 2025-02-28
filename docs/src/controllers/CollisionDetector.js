@@ -12,6 +12,11 @@ class CollisionDetector {
       bulletArray.forEach((bulletObj, bulletIndex) => {
         if (this.detectCollision(bulletObj, enemyObj)) {
           enemyArray[enemyIndex].hp = max(0, enemyObj.hp - bulletObj.damage);
+
+          hitSound.currentTime=0; //music 让音效从头播放
+          hitSound.play();
+
+
           bulletArray.splice(bulletIndex, 1);
         }
       });
