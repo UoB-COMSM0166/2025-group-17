@@ -16,6 +16,10 @@ let timeSpent = 0;
 let currentLevel = 1;
 let currentStage = 1;
 
+const uiTextSize = 20;
+const hPadding = 50;
+const vPadding = 20;
+
 let nearSavedPosition = false;
 let lastSavedPosition = { xPos: null, yPos: null };
 let minDistanceToSave = 50;
@@ -28,7 +32,7 @@ const largeEnemyHp = 100;
 const largeEnemySize = { w: 50, h: 60 };
 
 let player;
-let enemyCount = 5;
+let enemyCount = 1;
 let obstacleCount = 5;
 
 // Add variables and functions from feature_enemies_lyz_before0225
@@ -66,11 +70,6 @@ const leftBoundary = boundaryInPixel.w;
 const rightBoundary = widthInPixel - boundaryInPixel.w;
 const topBoundary = boundaryInPixel.h;
 const bottomBoundary = heightInPixel - boundaryInPixel.h;
-const smallEntitySize = heightInPixel / 12;
 
-const playerX = 100;
-const playerY = 100;
-
-const uiTextSize = 20;
-const hPadding = 50;
-const vPadding = 20;
+const playerX = leftBoundary;
+const playerY = heightInPixel / 2;

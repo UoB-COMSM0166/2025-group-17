@@ -108,3 +108,7 @@ function isGameOver() {
   return player.hp <= 0;
 }
 
+function loadRoom() {
+  
+}
+

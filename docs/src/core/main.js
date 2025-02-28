@@ -14,7 +14,7 @@ function preload() {
   startMenuImg = loadImage('assets/background/menu_start.png');
   closedDoorImg = loadImage('assets/door/door_close.png');
   openDoorImg = loadImage('assets/door/door_open.png');
-  officeRoomImg = loadImage('assets/background/room_office.jpg');
+  officeRoomImg = loadImage('assets/background/room_tutorial.png');
 }
 
 function setup() {
@@ -41,7 +41,7 @@ function draw() {
   }
   else {
     displayTutorial();
-    room.update();
+    // room.update();
     inputHandler.update();
     player.display();
     drawUiHub();

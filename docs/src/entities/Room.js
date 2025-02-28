@@ -27,8 +27,8 @@ class Room {
     this.obstacles = [];
     const maxEntitySize = heightInPixel / 8;
     for (let i = 0; i < obstacleCount; i++) {
-      let x = random(boundaryInPixel.w, widthInPixel - boundaryInPixel.w - maxEntitySize);
-      let y = random(boundaryInPixel.h, heightInPixel - boundaryInPixel.h - maxEntitySize);
+      let x = random(leftBoundary, rightBoundary - maxEntitySize);
+      let y = random(topBoundary, bottomBoundary - maxEntitySize);
       this.obstacles.push(new Obstacle(x, y));
     }
   }
@@ -37,8 +37,8 @@ class Room {
     this.enemies = [];
     const maxEntitySize = heightInPixel / 8;
     for (let i = 0; i < enemyCount; i++) {
-      let x = random(boundaryInPixel.w, widthInPixel - boundaryInPixel.w - maxEntitySize);
-      let y = random(boundaryInPixel.h, heightInPixel - boundaryInPixel.h - maxEntitySize);
+      let x = random(leftBoundary, rightBoundary - maxEntitySize);
+      let y = random(topBoundary, bottomBoundary - maxEntitySize);
       let hp = random([smallEnemyHp, largeEnemyHp]);
       this.enemies.push(new Enemy(x, y, hp));
     }
@@ -63,5 +63,4 @@ class Room {
   checkClearCondition() {
     return (this.enemies.length === 0 && player.hp > 0);
   }
-  
 }
