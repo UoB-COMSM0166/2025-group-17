@@ -41,14 +41,6 @@ class Player {
       moving = true;
     }
 
-    if (moving) {
-      if (walkSound.paused) {
-        walkSound.currentTime = 0;
-        walkSound.play();
-      }
-    } else {
-      walkSound.pause();
-    }
   }
 
   resetVelocity() {
