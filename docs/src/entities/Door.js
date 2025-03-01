@@ -17,6 +17,8 @@ class Door {
     this.currentDoorImg = openDoorImg;
     
     this.isOpen = true;
+
+    openDoorSound.play();
   }
 
   updateImage() {

@@ -1,11 +1,12 @@
+let mainmenuSound = new Audio("assets/music/Scene_music/MainMenu.mp3");
 let pauseSound = new Audio("assets/music/Pause.mp3");
 let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
 let deathSound = new Audio("assets/music/Enemy_Death.mp3");
 let shootSound = new Audio("assets/music/Player_Shoot.mp3");
 let hurtSound = new Audio("assets/music/Player_Hurt.mp3");
 let deathSound2 = new Audio("assets/music/Player_Death.mp3");
-let walkSound = new Audio("assets/music/Player_Walk.mp3");
-walkSound.loop = true;
+
+let openDoorSound = new Audio("assets/music/Door_Open.mp3");
 
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
