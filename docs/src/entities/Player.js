@@ -69,7 +69,7 @@ class Player {
   updateHp(newHp) {
     this.hp = max(0, newHp);
 
-    if(this.hp === 0) {
+    if (this.hp === 0) {
       deathSound.currentTime = 0;
       deathSound.play();
     }
@@ -82,4 +82,12 @@ class Player {
     shootSound.currentTime = 0;
     shootSound.play();
   }
+
+  // resetStatus() {
+  //   this.position.set(playerX, playerY); // 重置到初始位置
+  //   this.speed = defaultSpeed;          // 重置速度
+  //   this.atk = defaultAtk;              // 重置攻击力
+  //   this.bullets = [];                  // 清空子弹
+
+  // }
 }

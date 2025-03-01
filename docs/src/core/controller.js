@@ -11,7 +11,7 @@ const rooms = [
     id: 2,
     background: 'assets/background/room_level1.jpg',
     savePoint: { x: 300, y: 200, w: 30, h: 30 }
-    
+
   }
 ];
 let currentRoomIndex = 0;
@@ -46,7 +46,7 @@ function saveGameData() {
 
 function loadGameData() {
   const savedRoomIndex = localStorage.getItem('currentRoomIndex');
-  if(savedRoomIndex) {
+  if (savedRoomIndex) {
     currentRoomIndex = parseInt(savedRoomIndex);
   }
 
@@ -64,7 +64,7 @@ function loadGameData() {
   player.position.y = savedPosition.position.y;
   player.hp = JSON.parse(playerHp);
   console.log("Game Loaded!");
-  
+
   menuDisplayed = false;
   toggleButtons();
 }
@@ -121,10 +121,12 @@ function resetGame() {
   menuDisplayed = false;
   isGamePaused = false;
   gameOver = false;
-  
+
+  currentRoomIndex = 0;
+
   player = new Player(playerX, playerY);
-  room = new Room();
-  room.setup(rooms[currentRoomIndex]);
+  //room = new Room();
+  room.setup(rooms[currentRoomIndex]); // reset to the initial room
   inputHandler = new InputHandler(room);
   console.log("Game is reset!")
 }
@@ -136,19 +138,26 @@ function isGameOver() {
 function loadRoom() {
   currentRoomIndex++;
 
-  if(currentRoomIndex >= rooms.length) {
-    //showEnding(); // TODO: show--successfully pass all levels
+  if (currentRoomIndex >= rooms.length) {
+    // TODO: showEnding(); // TODO: show--successfully pass all levels
     print("Successfully Passed All Levels!");
     return;
   }
 
-  // Keep play hp (need or not)
-  // const prevHp = player.hp;
-  resetGame();
-  // player.hp = prevHp;
 
-  // Load level
+  // Keep play hp (need or not)
+  // TODO: 在player类中设置resetStatus函数，在除了宝箱房外的房间内调用
+  // Reset status of player (keep HP)
+  // player.resetStatus()
+  const prevHp = player.hp;
+  player = new Player(playerX, playerY);
+  player.hp = prevHp;
+
+  // Load room
   room.setup(rooms[currentRoomIndex]);
 
+  
+  
+  
 }
 

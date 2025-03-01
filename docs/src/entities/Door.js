@@ -5,6 +5,7 @@ class Door {
     this.currentDoorImg = closedDoorImg;
 
     this.isOpen = false;
+    this.updateImage();
   }
 
   display() {
@@ -17,4 +18,9 @@ class Door {
     
     this.isOpen = true;
   }
+
+  updateImage() {
+    image(this.currentDoorImg, this.position.x, this.position.y);
+  }
+
 }
