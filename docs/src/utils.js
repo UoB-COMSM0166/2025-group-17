@@ -1,4 +1,4 @@
-// TODO: Merge into classes
+// // TODO: Merge into classes
 let lastCollisionTime = 0;
 
 let menuDisplayed = true;
