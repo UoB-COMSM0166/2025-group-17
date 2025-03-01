@@ -1,3 +1,21 @@
+const rooms = [
+  {
+    id: 1,
+    background: 'assets/background/room_tutorial.png',
+    savePoint: { x: 300, y: 200, w: 30, h: 30 }
+    // Call generation functions to generate enemies and obstacles
+    // enemies: [],
+    // obstacles: []
+  },
+  {
+    id: 2,
+    background: 'assets/background/room_level1.jpg',
+    savePoint: { x: 300, y: 200, w: 30, h: 30 }
+    
+  }
+];
+let currentRoomIndex = 0;
+
 function checkSavePoint() {
   // Save when player crosses the target position
   const distanceX = abs(player.position.x - room.savePoint.position.x);
@@ -17,6 +35,8 @@ function checkSavePoint() {
 function saveGameData() {
   if (nearSavedPosition) return;
 
+  localStorage.setItem('currentRoomIndex', currentRoomIndex);
+
   localStorage.setItem('lastSavePoint', JSON.stringify(room.savePoint));
   localStorage.setItem('playerHp', JSON.stringify(player.hp));
   lastSavedPosition.xPos = room.savePoint.position.x;
@@ -25,6 +45,11 @@ function saveGameData() {
 }
 
 function loadGameData() {
+  const savedRoomIndex = localStorage.getItem('currentRoomIndex');
+  if(savedRoomIndex) {
+    currentRoomIndex = parseInt(savedRoomIndex);
+  }
+
   room.generateEnemies();
   room.generateObstacles();
   let savedPosition = localStorage.getItem('lastSavePoint');
@@ -99,7 +124,7 @@ function resetGame() {
   
   player = new Player(playerX, playerY);
   room = new Room();
-  room.setup();
+  room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
   console.log("Game is reset!")
 }
@@ -109,6 +134,21 @@ function isGameOver() {
 }
 
 function loadRoom() {
-  
+  currentRoomIndex++;
+
+  if(currentRoomIndex >= rooms.length) {
+    //showEnding(); // TODO: show--successfully pass all levels
+    print("Successfully Passed All Levels!");
+    return;
+  }
+
+  // Keep play hp (need or not)
+  // const prevHp = player.hp;
+  resetGame();
+  // player.hp = prevHp;
+
+  // Load level
+  room.setup(rooms[currentRoomIndex]);
+
 }
 

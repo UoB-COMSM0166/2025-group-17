@@ -3,6 +3,8 @@ class Door {
     this.position = createVector(x, y);
     this.size = createVector(doorSize.w, doorSize.h);
     this.currentDoorImg = closedDoorImg;
+
+    this.isOpen = false;
   }
 
   display() {
@@ -12,5 +14,7 @@ class Door {
   open() {
     if (this.currentDoorImg === openDoorImg) return;
     this.currentDoorImg = openDoorImg;
+    
+    this.isOpen = true;
   }
 }

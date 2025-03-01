@@ -4,23 +4,39 @@ class Room {
     this.door = null;
     this.enemies = [];
     this.obstacles = [];
+    
+    this.currentRoomData = null;
+    this.backgroundImg = null;
   }
 
-  setup() {
-    this.savePoint = new SavePoint(savePointParam.x, savePointParam.y);
+  setup(roomData) {
+    // Clear old objects, (need or not)
+    this.enemies = [];
+    this.obstacles = [];
+    
+    // Load level configuration
     this.door = new Door();
     this.generateObstacles();
     this.generateEnemies();
+    
+    this.currentRoomData = roomData; // Store level data
+    this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
+    this.backgroundImg = roomData.backgroundImg;
     startTime = millis();
+
   }
 
   update() {
-    image(officeRoomImg, 0, 0, widthInPixel, heightInPixel);
+    // Use corresponding backgroundImg for current level
+    image(this.backgroundImg, 0, 0, widthInPixel, heightInPixel);
+    //image(officeRoomImg, 0, 0, widthInPixel, heightInPixel);
     this.savePoint.display();
     this.updateObstacles();
     this.updateEnemies();
     this.updateDoor();
     this.checkClearCondition();
+
+    
   }
   
   generateObstacles() {

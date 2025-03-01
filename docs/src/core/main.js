@@ -15,6 +15,7 @@ function preload() {
   closedDoorImg = loadImage('assets/door/door_close.png');
   openDoorImg = loadImage('assets/door/door_open.png');
   officeRoomImg = loadImage('assets/background/room_tutorial.png');
+  level1RoomImg = loadImage('assets/background/room_level1.jpg');
 }
 
 function setup() {
@@ -22,7 +23,7 @@ function setup() {
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
   room = new Room();
-  room.setup();
+  room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 
   setupMenu();
@@ -40,13 +41,19 @@ function draw() {
     drawGameOver();
   }
   else {
-    displayTutorial();
-    // room.update();
+    //displayTutorial();
+    room.update();
     inputHandler.update();
     player.display();
     drawUiHub();
 
     checkSavePoint();
+
+    // TODO: Check if needed to load next room
+    if(player.collides(room.door) && room.door.isOpen) {
+      loadRoom();
+    }
+
   }
 }
 

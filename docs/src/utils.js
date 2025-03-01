@@ -37,13 +37,13 @@ let obstacleCount = 5;
 
 // Add variables and functions from feature_enemies_lyz_before0225
 let enemies = [], obstacles = [];
-const tutorialStep = 0
-const tutorialMessages = [
-    "Clear all monsters and reach the exit to win!",
-    "Use arrow keys to move and avoid obstacles & monsters.",
-    "Use WSAD keys to shoot and attack monsters.",
-    "You can start the game now!"
-];
+// const tutorialStep = 0
+// const tutorialMessages = [
+//     "Clear all monsters and reach the exit to win!",
+//     "Use arrow keys to move and avoid obstacles & monsters.",
+//     "Use WSAD keys to shoot and attack monsters.",
+//     "You can start the game now!"
+// ];
 
 const doorSize = { w: 73, h: 95 };
 
