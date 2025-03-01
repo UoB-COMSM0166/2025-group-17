@@ -40,9 +40,13 @@ function drawHealthBar() {
 
 function drawCurrentLevel() {
   fill(255);
-  textFont('Courier New', uiTextSize);
+  stroke(0);
+  strokeWeight(5);
+  textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
-  text(`Level:${currentLevel}-${currentStage}`, hPadding, heightInPixel - vPadding);
+//  text(`Level:${currentLevel}-${currentStage}`, hPadding, heightInPixel - vPadding);
+  text(`Level:${currentRoomIndex + 1} `, hPadding, heightInPixel - vPadding);
+
 }
 
 function drawBossStatus() {
@@ -51,9 +55,7 @@ function drawBossStatus() {
   let barX = (widthInPixel / 2) - (bossHpWidth / 2);
 
   // Draw HP bar background
-  fill(200);
-  stroke(0);
-  strokeWeight(3);
+  fill(0);
   rect(barX, vPadding, bossHpWidth, bossHpHeight, bossHpCorner);
 
   // Draw HP bar
@@ -86,17 +88,19 @@ function drawTimer() {
   let secs = totalSecs % 60;
 
   fill(255);
-  textFont('Courier New', uiTextSize);
+  stroke(0);
+  strokeWeight(5);
+  textFont(uiFont, uiTextSize);
   textAlign(RIGHT, BOTTOM);
   text(`Time Taken:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`, widthInPixel - hPadding, heightInPixel - vPadding);
 }
 
-// Add from feature_enemies_lyz_before0225
-function displayTutorial() {
-  fill(0);
-  textSize(14);
-  textAlign(CENTER);
+// // Add from feature_enemies_lyz_before0225
+// function displayTutorial() {
+//   fill(0);
+//   textSize(14);
+//   textAlign(CENTER);
   
-  text(tutorialMessages.join('\n'), widthInPixel / 2,  120);
-}
+//   text(tutorialMessages.join('\n'), widthInPixel / 2,  120);
+// }
 

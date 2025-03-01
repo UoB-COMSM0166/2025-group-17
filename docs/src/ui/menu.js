@@ -27,17 +27,15 @@ function setupPauseMenu() {
 }
 
 function drawMenu() {
-  fill(0);
-  textSize(uiTextSize);
-  textAlign(CENTER, CENTER);
-  text("Welcome to the Game!", widthInPixel / 2, heightInPixel / 3);
-
+  image(startMenuImg, 0, 0, widthInPixel, heightInPixel);
   btnContinue.position(windowWidth / 2 - hPadding, windowHeight / 2 - vPadding);
   btnNewGame.position(windowWidth / 2 - hPadding, windowHeight / 2 + vPadding);
 }
 
 function drawPauseMenu() {
-  fill(0);
+  fill(255);
+  stroke(0);
+  strokeWeight(5);
   textSize(uiTextSize);
   textAlign(CENTER, CENTER);
   text("Paused", widthInPixel / 2, heightInPixel / 3);

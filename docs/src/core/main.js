@@ -1,64 +1,44 @@
 let pauseSound = new Audio("assets/music/Pause.mp3");
 let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
-let deathSound = new Audio("assets/music.Enemy_Death.mp3");
+let deathSound = new Audio("assets/music/Enemy_Death.mp3");
 let shootSound = new Audio("assets/music/Player_Shoot.mp3");
 let hurtSound = new Audio("assets/music/Player_Hurt.mp3");
 let deathSound2 = new Audio("assets/music/Player_Death.mp3");
 let walkSound = new Audio("assets/music/Player_Walk.mp3");
 walkSound.loop = true;
 
-function generateObstacles() {
-  obstacles = [];
-  for (let i = 0; i < obstacleCount; i++) {
-    let x = random(hPadding, widthInPixel - hPadding);
-    let y = random(vPadding, heightInPixel - vPadding);
-    obstacles.push(new Obstacle(x, y));
-  }
-}
-
-function generateEnemies() {
-  enemies = [];
-  for (let i = 0; i < enemyCount; i++) {
-    let x = random(hPadding, widthInPixel - hPadding);
-    let y = random(vPadding, heightInPixel - vPadding);
-
-    let hp = random([smallEnemyHp, largeEnemyHp]);
-    enemies.push(new Enemy(x, y, hp));
-  }
-}
-
-function updateObstacles() {
-  obstacles.forEach(o => o.display());
-}
-
-function updateEnemies() {
-  enemies.forEach(e => {
-    e.update();
-    e.display();
-  });
-}
-
 function preload() {
+  uiFont = loadFont('assets/fonts/PressStart2P.ttf');
   heart = loadImage('assets/icons/heart.svg');
   damagedHeart = loadImage('assets/icons/damagedHeart.svg');
+  startMenuImg = loadImage('assets/background/menu_start.png');
+  closedDoorImg = loadImage('assets/door/door_close.png');
+  openDoorImg = loadImage('assets/door/door_open.png');
+
+  // officeRoomImg = loadImage('assets/background/room_tutorial.png');
+  // level1RoomImg = loadImage('assets/background/room_level1.jpg');
+  // Explicitly preload all room backgrounds
+  rooms.forEach((room, i) => {
+    room.backgroundImg = loadImage(room.background);
+    rooms[i] = room; // Ensure the reference is updated
+  });
+
 }
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
-  savePoint = new SavePoint(savePointX, savePointY);
-  inputHandler = new InputHandler();
+  room = new Room();
+  room.setup(rooms[currentRoomIndex]);
+  inputHandler = new InputHandler(room);
 
   setupMenu();
-  setupPauseMenu();
-  startTime = millis();
-  generateObstacles();
-  generateEnemies();
+  setupPauseMenu();  
+
 }
 
 function draw() {
-  // push();
   adjustCanvasWithAspectRatio();
   background(220);
   if (menuDisplayed) {
@@ -69,17 +49,14 @@ function draw() {
     drawGameOver();
   }
   else {
-    displayTutorial();
-    updateObstacles();
-    updateEnemies();
-    
+  
+    room.update();
     inputHandler.update();
-    savePoint.display();
     player.display();
     drawUiHub();
 
     checkSavePoint();
-    checkWinCondition();
+
   }
   // pop();
 }

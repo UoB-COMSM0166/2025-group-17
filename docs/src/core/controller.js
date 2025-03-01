@@ -1,7 +1,25 @@
+const rooms = [
+  {
+    id: 1,
+    background: 'assets/background/room_tutorial.png',
+    savePoint: { x: 300, y: 200, w: 30, h: 30 }
+    // Call generation functions to generate enemies and obstacles
+    // enemies: [],
+    // obstacles: []
+  },
+  {
+    id: 2,
+    background: 'assets/background/room_level1.jpg',
+    savePoint: { x: 300, y: 200, w: 30, h: 30 }
+
+  }
+];
+let currentRoomIndex = 0;
+
 function checkSavePoint() {
   // Save when player crosses the target position
-  const distanceX = abs(player.position.x - savePoint.position.x);
-  const distanceY = abs(player.position.y - savePoint.position.y);
+  const distanceX = abs(player.position.x - room.savePoint.position.x);
+  const distanceY = abs(player.position.y - room.savePoint.position.y);
   if (!nearSavedPosition && distanceX < player.size.x && distanceY < player.size.y) {
     saveGameData();
     nearSavedPosition = true;
@@ -17,16 +35,23 @@ function checkSavePoint() {
 function saveGameData() {
   if (nearSavedPosition) return;
 
-  localStorage.setItem('lastSavePoint', JSON.stringify(savePoint));
+  localStorage.setItem('currentRoomIndex', currentRoomIndex);
+
+  localStorage.setItem('lastSavePoint', JSON.stringify(room.savePoint));
   localStorage.setItem('playerHp', JSON.stringify(player.hp));
-  lastSavedPosition.xPos = savePoint.position.x;
-  lastSavedPosition.yPos = savePoint.position.y;
+  lastSavedPosition.xPos = room.savePoint.position.x;
+  lastSavedPosition.yPos = room.savePoint.position.y;
   console.log("Game Saved!");
 }
 
 function loadGameData() {
-  generateEnemies();
-  generateObstacles();
+  const savedRoomIndex = localStorage.getItem('currentRoomIndex');
+  if (savedRoomIndex) {
+    currentRoomIndex = parseInt(savedRoomIndex);
+  }
+
+  room.generateEnemies();
+  room.generateObstacles();
   let savedPosition = localStorage.getItem('lastSavePoint');
   let playerHp = localStorage.getItem('playerHp');
   if (!savedPosition || !playerHp) {
@@ -39,7 +64,7 @@ function loadGameData() {
   player.position.y = savedPosition.position.y;
   player.hp = JSON.parse(playerHp);
   console.log("Game Loaded!");
-  
+
   menuDisplayed = false;
   toggleButtons();
 }
@@ -93,19 +118,46 @@ function exitGame() {
 }
 
 function resetGame() {
-  player = new Player(playerX, playerY);
-  generateObstacles();
-  generateEnemies();
-  console.log("Player is reset!")
-  startTime = millis();
-}
+  menuDisplayed = false;
+  isGamePaused = false;
+  gameOver = false;
 
-function checkWinCondition() {
-  // 当所有敌人被消灭，且玩家位于画布上方（yPos < 10）且血量大于 0 时，认为达成胜利条件
-  return (enemies.length === 0 && player.position.y < 10 && player.hp > 0)
+  currentRoomIndex = 0;
+
+  player = new Player(playerX, playerY);
+  //room = new Room();
+  room.setup(rooms[currentRoomIndex]); // reset to the initial room
+  inputHandler = new InputHandler(room);
+  console.log("Game is reset!")
 }
 
 function isGameOver() {
   return player.hp <= 0;
+}
+
+function loadRoom() {
+  currentRoomIndex++;
+
+  if (currentRoomIndex >= rooms.length) {
+    // TODO: showEnding(); // TODO: show--successfully pass all levels
+    print("Successfully Passed All Levels!");
+    return;
+  }
+
+
+  // Keep play hp (need or not)
+  // TODO: 在player类中设置resetStatus函数，在除了宝箱房外的房间内调用
+  // Reset status of player (keep HP)
+  // player.resetStatus()
+  const prevHp = player.hp;
+  player = new Player(playerX, playerY);
+  player.hp = prevHp;
+
+  // Load room
+  room.setup(rooms[currentRoomIndex]);
+
+  
+  
+  
 }
 
