@@ -25,6 +25,19 @@ class CollisionDetector {
       });
     });
   }
+ 
+  detectBulletObstacleCollision(bulletArr, obstacleArr) {
+    // Check the collision between bullets, walls and obstacles. If there is a collision, 
+    // the bullet vanishes.
+    bulletArr.forEach((bulletObj, bulletIndex) => {
+      if (this.isBulletHitWall(bulletObj)) bulletArr.splice(bulletIndex, 1);
+      else if (obstacleArr.some(obstacleObj => this.detectCollision(bulletObj, obstacleObj))) {
+        hitSound.currentTime = 0;
+        hitSound.play();
+        bulletArr.splice(bulletIndex, 1);
+      }
+    });
+  }
   
   detectCollision(objA, objB) {
     // Detect the collision between two objects.
@@ -35,10 +48,24 @@ class CollisionDetector {
     return isCollided;
   }
 
-  hitBoundary(obj) {
+  isHitBoundary(obj) {
     let x = obj.position.x + obj.velocity.x;
     let y = obj.position.y + obj.velocity.y;
     return x < leftBoundary || x > rightBoundary - obj.size.x || y < topBoundary || y > bottomBoundary - obj.size.y;
+  }
+
+  isBulletHitWall(bulletObj) {
+    const wallMarginX = boundaryInPixel.w / 3;
+    const wallMarginY = boundaryInPixel.h / 3;
+    const { x, y } = bulletObj.position;
+    const { x: bulletWidth, y: bulletHeight } = bulletObj.size;
+      
+    return (
+      x < leftBoundary - wallMarginX ||
+      x > rightBoundary - bulletWidth + wallMarginX ||
+      y < topBoundary - wallMarginY ||
+      y > bottomBoundary - bulletHeight + wallMarginY
+    );
   }
 }
 

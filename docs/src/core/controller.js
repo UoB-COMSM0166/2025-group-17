@@ -2,7 +2,7 @@ const rooms = [
   {
     id: 1,
     background: 'assets/background/room_tutorial.png',
-    savePoint: { x: 300, y: 200, w: 30, h: 30 }
+    savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
     // Call generation functions to generate enemies and obstacles
     // enemies: [],
     // obstacles: []
@@ -10,8 +10,7 @@ const rooms = [
   {
     id: 2,
     background: 'assets/background/room_level1.jpg',
-    savePoint: { x: 300, y: 200, w: 30, h: 30 }
-
+    savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
   }
 ];
 let currentRoomIndex = 0;

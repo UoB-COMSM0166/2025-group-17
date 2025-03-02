@@ -7,20 +7,20 @@ class Room {
     
     this.currentRoomData = null;
     this.backgroundImg = null;
-    this.size = null;
+    this.size = {
+      width: widthInPixel,
+      height: heightInPixel
+    };
+    this.collisionDetector = new CollisionDetector();
   }
 
   setup(roomData) {
     // // Clear old objects, (need or not)
     // this.enemies = [];
     // this.obstacles = [];
-    
+
     // Load room configuration
     this.backgroundImg = roomData.backgroundImg;
-    this.size = {
-      width: widthInPixel,
-      height: heightInPixel
-    };
     
     this.door = new Door();
     this.generateObstacles();
@@ -32,8 +32,6 @@ class Room {
     if(roomData.id == 1) {
       startTime = millis();
     }
-    
-
   }
 
   update() {
@@ -46,18 +44,22 @@ class Room {
     this.updateEnemies();
     this.updateDoor();
     this.checkClearCondition();
-
-    
   }
   
   generateObstacles() {
     this.obstacles = [];
-    const maxEntitySize = heightInPixel / 8;
+    const maxObstacleSize = heightInPixel / 12;
+
     // TODO: obstacleCount不同关卡设为不一样的数值。根据难度或者其他条件
     for (let i = 0; i < obstacleCount; i++) {
-      let x = random(leftBoundary, rightBoundary - maxEntitySize);
-      let y = random(topBoundary, bottomBoundary - maxEntitySize);
-      this.obstacles.push(new Obstacle(x, y));
+      let newObstacle;
+      do {
+        const x = random(savePointParam.x, widthInPixel - maxObstacleSize - savePointParam.x);
+        const y = random(savePointParam.y, heightInPixel - maxObstacleSize - savePointParam.y);
+        newObstacle = new Obstacle(x, y);
+      } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
+      
+      this.obstacles.push(newObstacle);
     }
   }
   
@@ -66,8 +68,8 @@ class Room {
     const maxEntitySize = heightInPixel / 8;
     // TODO: enemyCount不同关卡设为不一样的数值。根据难度或者其他条件
     for (let i = 0; i < enemyCount; i++) {
-      let x = random(leftBoundary, rightBoundary - maxEntitySize);
-      let y = random(topBoundary, bottomBoundary - maxEntitySize);
+      let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
+      let y = random(savePointParam.y, heightInPixel - maxEntitySize - savePointParam.y);
       let hp = random([smallEnemyHp, largeEnemyHp]);
       this.enemies.push(new Enemy(x, y, hp));
     }
