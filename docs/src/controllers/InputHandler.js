@@ -5,11 +5,12 @@ class InputHandler {
     this.collisionCoolDownTime = cooldownTime;
     this.lastCollisionTime = millis();
   }
-  
+
   update() {
     this.currentRoom.update();
     player.updateVelocity();
     player.updatePosition();
+    player.updateBlinking(); // The player will blink for 2 seconds after being hit.
     const collideWithEnemies = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.enemies);
     const collideWithObstacles = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.obstacles);
     const playerHitBoundary = this.collisionDetector.isHitBoundary(player);
@@ -18,6 +19,7 @@ class InputHandler {
     }
     if (collideWithEnemies) {
       this.decreasePlayerHp();
+
     };
     player.resetVelocity();
 
@@ -32,7 +34,7 @@ class InputHandler {
     this.removeEnemies(this.currentRoom.enemies);
     this.moveToNextRoom();
   }
-  
+
   handlePlayerShooting() {
     const direction = key.toLowerCase();
     if (direction === 'w' || direction === 'a' || direction === 's' || direction === 'd') {
@@ -61,21 +63,24 @@ class InputHandler {
     if (millis() - this.lastCollisionTime < this.collisionCoolDownTime) {
       return;
     }
+
+    player.updateBlinking(); // The player will blink for 2 seconds after being hit.
     player.updateHp(player.hp - 1);
     this.lastCollisionTime = millis();
+
 
     hurtSound.currentTime = 0;
     hurtSound.play();
   }
 
-  moveToNextRoom(tolerance=player.size.x) {
+  moveToNextRoom(tolerance = player.size.x) {
     if (!this.currentRoom.checkClearCondition()) return;
 
     const playerMidX = player.position.x + player.size.x / 2;
     const playerMidY = player.position.y + player.size.y / 2;
     const doorX = this.currentRoom.door.position.x;
     const doorY = this.currentRoom.door.position.y + this.currentRoom.door.size.y / 2;
-    
+
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
       loadRoom();

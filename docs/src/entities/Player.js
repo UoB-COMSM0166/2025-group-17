@@ -4,10 +4,14 @@ class Player {
     this.hp = defaultHp;
     this.speed = defaultSpeed;
     this.maxSpeed = playerMaxSpeed;
+    this.acceleration = defaultAcceleration;
+    this.friction = defaultFriction;
     this.velocity = createVector(0, 0);
     this.atk = defaultAtk;
     this.maxAtk = playerMaxAtk;
     this.size = createVector(heightInPixel / 12, heightInPixel / 12);
+    this.invincibleTimer = 0;   // Frames remaining for invincibility
+    this.blinkCounter = 0;      // Used for blinking during invincibility
     this.bullets = [];
   }
 
@@ -16,30 +20,62 @@ class Player {
 
   }
 
+  updateBlinking() {
+    if (this.invincibleTimer > 0) {
+      this.invincibleTimer--;
+      this.blinkCounter = (this.blinkCounter + 1) % 10;
+    }
+  }
+
   display() {
+    // When invincible, skip drawing for half the blink cycle.
+    if (this.invincibleTimer > 0 && this.blinkCounter < 5) return;
     fill('red');
     rect(this.position.x, this.position.y, this.size.x, this.size.y);
   };
 
   updateVelocity() {
     let moving = false; //记录玩家是否在移动
-
+    let input = createVector(0, 0);
+    let desiredVel = createVector(0, 0);
     if (keyIsDown(LEFT_ARROW)) {
-      this.velocity.x -= this.speed;
+      input.x = -1;
+      moving = true;
+    } else if (keyIsDown(RIGHT_ARROW)) {
+      input.x = 1;
+      moving = true;
+    } else if (keyIsDown(UP_ARROW)) {
+      input.y = -1;
+      moving = true;
+    } else if (keyIsDown(DOWN_ARROW)) {
+      input.y = 1;
       moving = true;
     }
-    if (keyIsDown(RIGHT_ARROW)) {
-      this.velocity.x += this.speed;
-      moving = true;
+    if (input.mag() > 0) {
+      input.normalize();
+      desiredVel = p5.Vector.mult(input, this.speed);
     }
-    if (keyIsDown(UP_ARROW)) {
-      this.velocity.y -= this.speed;
-      moving = true;
-    }
-    if (keyIsDown(DOWN_ARROW)) {
-      this.velocity.y += this.speed;
-      moving = true;
-    }
+
+    // Smoothly interpolate current velocity toward desired velocity.
+    this.velocity.lerp(desiredVel, this.acceleration);
+
+
+    // if (keyIsDown(LEFT_ARROW)) {
+    //   this.velocity.x -= this.speed;
+    //   moving = true;
+    // }
+    // if (keyIsDown(RIGHT_ARROW)) {
+    //   this.velocity.x += this.speed;
+    //   moving = true;
+    // }
+    // if (keyIsDown(UP_ARROW)) {
+    //   this.velocity.y -= this.speed;
+    //   moving = true;
+    // }
+    // if (keyIsDown(DOWN_ARROW)) {
+    //   this.velocity.y += this.speed;
+    //   moving = true;
+    // }
 
   }
 
@@ -59,8 +95,10 @@ class Player {
   };
 
   updateHp(newHp) {
-    this.hp = max(0, newHp);
-
+    if (this.hp > 0 && this.invincibleTimer === 0) {
+      this.hp = max(0, newHp);
+      this.invincibleTimer = 60; // Approximately one second at 60 fps.
+    }
     if (this.hp === 0) {
       deathSound.currentTime = 0;
       deathSound.play();
@@ -74,6 +112,7 @@ class Player {
     shootSound.currentTime = 0;
     shootSound.play();
   }
+
 
   // resetStatus() {
   //   this.position.set(playerX, playerY); // 重置到初始位置
