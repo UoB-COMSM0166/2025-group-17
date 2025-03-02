@@ -35,29 +35,35 @@ class Player {
   };
 
   updateVelocity() {
-    let moving = false; //记录玩家是否在移动
+    //let moving = false; //记录玩家是否在移动
     let input = createVector(0, 0);
     let desiredVel = createVector(0, 0);
     if (keyIsDown(LEFT_ARROW)) {
       input.x = -1;
-      moving = true;
-    } else if (keyIsDown(RIGHT_ARROW)) {
+      // moving = true;
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
       input.x = 1;
-      moving = true;
-    } else if (keyIsDown(UP_ARROW)) {
+      //  moving = true;
+    }
+    if (keyIsDown(UP_ARROW)) {
       input.y = -1;
-      moving = true;
-    } else if (keyIsDown(DOWN_ARROW)) {
+      //  moving = true;
+    }
+    if (keyIsDown(DOWN_ARROW)) {
       input.y = 1;
-      moving = true;
+      //  moving = true;
     }
-    if (input.mag() > 0) {
-      input.normalize();
-      desiredVel = p5.Vector.mult(input, this.speed);
-    }
+    input.normalize().mult(this.acceleration);
+    this.velocity.add(input);
+    this.velocity.mult(this.friction);
+    // if (input.mag() > 0) {
+    //   input.normalize();
+    //   desiredVel = p5.Vector.mult(input, this.speed);
+    // }
 
     // Smoothly interpolate current velocity toward desired velocity.
-    this.velocity.lerp(desiredVel, this.acceleration);
+    //this.velocity.lerp(desiredVel, this.acceleration);
 
 
     // if (keyIsDown(LEFT_ARROW)) {
