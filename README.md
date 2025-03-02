@@ -75,12 +75,33 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 
 - One qualitative evaluation (your choice) 
 Heuristic Evaluation
-
+Name: Hsinyun Fan  Project Title:
 | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 | - | - | - | - | - | - | - |
-| 1 Hsinyun Fan | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
-| 2 Kailin Fang | Instruction could be more clear (like use picture to show). | Help and doccumentation | 1 | 2 | 1 | 1.33 |
-| 3 Daisy Fan | Can pop up instruction first then begin. The HP not very clear. | Help and doccumentation | 1 | 2 | 1 | 1.33 |
+|  | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
+
+Name: Kailin Fang  Project Title:
+| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
+| - | - | - | - | - | - | - |
+| | Instruction could be more clear (like use picture to show). | Help and doccumentation | 1 | 2 | 1 | 1.33 |
+
+Name: Daisy Fan  Project Title:
+| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
+| - | - | - | - | - | - | - |
+|  | Can pop up instruction first then begin. The HP not very clear. | Help and doccumentation | 1 | 2 | 1 | 1.33 |
+
+Name: Brian  Project Title:
+| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
+| - | - | - | - | - | - | - |
+|  | Don't know how to win or play when just eneter the game. | Visibility | 1 | 4 | 1 | 2 |
+
+Name: Kaijie Xu  Project Title:
+| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
+| - | - | - | - | - | - | - |
+| | Player identification | Recognition rather than recall. | 2 | 2 | 4 | 2.67 |
+| | Differentiation mechanism | User control and  | 1 | 3 | 1 | 1.67 |
+
+
 - One quantitative evaluation (of your choice) 
 
 - Description of how code was tested. 

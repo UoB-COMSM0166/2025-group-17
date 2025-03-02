@@ -11,6 +11,12 @@ const rooms = [
     id: 2,
     background: 'assets/background/room_level1.jpg',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
+
+  },
+  {
+    id: 3,
+    background: 'assets/background/room_level1.jpg',
+    savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
   }
 ];
 let currentRoomIndex = 0;
