@@ -64,5 +64,4 @@ const bottomBoundary = heightInPixel - boundaryInPixel.h;
 const playerX = leftBoundary;
 const playerY = heightInPixel / 2;
 
-// const savePointParam = { x: 300, y: 200, w: 30, h: 30 };
-const savePointParam = { x: leftBoundary + 60, y: bottomBoundary - 80, w: 30, h: 30 }
+const savePointParam = { x: leftBoundary + 60, y: bottomBoundary - 80, w: 30, h: 30 };

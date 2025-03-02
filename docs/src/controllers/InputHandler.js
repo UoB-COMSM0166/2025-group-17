@@ -12,7 +12,7 @@ class InputHandler {
     player.updatePosition();
     const collideWithEnemies = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.enemies);
     const collideWithObstacles = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.obstacles);
-    const playerHitBoundary = this.collisionDetector.hitBoundary(player);
+    const playerHitBoundary = this.collisionDetector.isHitBoundary(player);
     if (collideWithEnemies || collideWithObstacles || playerHitBoundary) {
       player.revertPosition();
     }
@@ -28,6 +28,7 @@ class InputHandler {
     // }
     this.updateBullets();
     this.collisionDetector.detectBulletEnemyCollision(player.bullets, this.currentRoom.enemies);
+    this.collisionDetector.detectBulletObstacleCollision(player.bullets, this.currentRoom.obstacles);
     this.removeEnemies(this.currentRoom.enemies);
     this.moveToNextRoom();
   }
