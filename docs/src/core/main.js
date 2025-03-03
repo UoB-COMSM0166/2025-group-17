@@ -16,6 +16,8 @@ function preload() {
   closedDoorImg = loadImage('assets/door/door_close.png');
   openDoorImg = loadImage('assets/door/door_open.png');
 
+
+
   // officeRoomImg = loadImage('assets/background/room_tutorial.png');
   // level1RoomImg = loadImage('assets/background/room_level1.jpg');
   // Explicitly preload all room backgrounds
@@ -35,7 +37,7 @@ function setup() {
   inputHandler = new InputHandler(room);
 
   setupMenu();
-  setupPauseMenu();  
+  setupPauseMenu();
 
 }
 
@@ -50,7 +52,7 @@ function draw() {
     drawGameOver();
   }
   else {
-  
+
     room.update();
     inputHandler.update();
     player.display();
