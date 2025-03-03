@@ -41,12 +41,14 @@ let player;
 let enemyCount = 1;
 let obstacleCount = 5;
 let enemies = [], obstacles = [];
-//load obstacles images
+
+//load images of obstacles, player, bullet, and enemy
 let obstacleImages = [];
-//loading bar
-// let totalAssets = 2;
-// let assetsLoaded = 0;
-// let loadingComplete = false;
+let playerImage;
+let bulletImage;
+let enemyImage;
+
+
 
 const doorSize = { w: 73, h: 95 };
 

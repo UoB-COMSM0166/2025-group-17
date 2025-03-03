@@ -9,10 +9,11 @@ class Player {
     this.velocity = createVector(0, 0);
     this.atk = defaultAtk;
     this.maxAtk = playerMaxAtk;
-    this.size = createVector(heightInPixel / 12, heightInPixel / 12);
+    this.size = createVector(heightInPixel / 8, heightInPixel / 8);
     this.invincibleTimer = 0;   // Frames remaining for invincibility
     this.blinkCounter = 0;      // Used for blinking during invincibility
     this.bullets = [];
+    this.image = playerImage;
   }
 
   shoot(direction) {
@@ -30,8 +31,9 @@ class Player {
   display() {
     // When invincible, skip drawing for half the blink cycle.
     if (this.invincibleTimer > 0 && this.blinkCounter < 5) return;
-    fill('red');
-    rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    // fill('red');
+    // rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
   };
 
   updateVelocity() {

@@ -27,6 +27,12 @@ function preload() {
   ///obstacleImages.push(loadImage('assets/obstacles/level1/desk.png'));
   //obstacleImages.push(loadImage('assets/obstacles/level1/chair.png'));
 
+  //load player image
+  playerImage = loadImage('assets/character/Character.png');
+  //load bullet image
+  bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
+  //load enemy image
+  enemyImage = loadImage('assets/enemies/level1/CCTV.png');
 
   rooms.forEach((room, i) => {
     room.backgroundImg = loadImage(room.background);
@@ -66,15 +72,15 @@ function draw() {
 
   } else if (isGameCompleted) {
     drawGameCompleted();
-  }  
+  }
   else {
-    
+
     room.update();
     inputHandler.update();
     player.display();
     drawUiHub();
 
-    checkSavePoint();    
+    checkSavePoint();
 
   }
   // pop();
