@@ -54,3 +54,19 @@ function drawGameOver() {
   text("Game Over", widthInPixel / 2, heightInPixel / 2);
 }
 
+function drawGameCompleted() {
+  clear();
+  background(220);
+  fill(255, 0, 0);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  
+  let totalSecs = floor(timeSpent / 1000);
+  let mins = floor(totalSecs/60);
+  let secs = totalSecs % 60;
+  text(`YOU WON! Took ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} seconds`, widthInPixel / 2, heightInPixel / 2);
+  // text("THE END? ALL CLEARED.", widthInPixel / 2, heightInPixel / 2);
+  // text("YOU WON!", widthInPixel / 2, heightInPixel / 2);
+
+}
+

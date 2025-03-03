@@ -16,9 +16,6 @@ function preload() {
   closedDoorImg = loadImage('assets/door/door_close.png');
   openDoorImg = loadImage('assets/door/door_open.png');
 
-  // officeRoomImg = loadImage('assets/background/room_tutorial.png');
-  // level1RoomImg = loadImage('assets/background/room_level1.jpg');
-  // Explicitly preload all room backgrounds
   rooms.forEach((room, i) => {
     room.backgroundImg = loadImage(room.background);
     rooms[i] = room; // Ensure the reference is updated
@@ -35,7 +32,7 @@ function setup() {
   inputHandler = new InputHandler(room);
 
   setupMenu();
-  setupPauseMenu();  
+  setupPauseMenu();
 
 }
 
@@ -48,15 +45,16 @@ function draw() {
     drawPauseMenu();
   } else if (isGameOver()) {
     drawGameOver();
-  }
-  else {
-  
+  } else if (isGameCompleted) {
+    drawGameCompleted();
+  }  
+  else {   
     room.update();
     inputHandler.update();
     player.display();
     drawUiHub();
 
-    checkSavePoint();
+    checkSavePoint();    
 
   }
   // pop();
