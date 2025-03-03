@@ -1,7 +1,7 @@
 const rooms = [
   {
     id: 1,
-    background: 'assets/background/room_tutorial.png',
+    background: 'assets/background/room1-tutorial.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
     // Call generation functions to generate enemies and obstacles
     // enemies: [],
@@ -9,13 +9,13 @@ const rooms = [
   },
   {
     id: 2,
-    background: 'assets/background/room_level1.jpg',
+    background: 'assets/background/room2.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
 
   },
   {
     id: 3,
-    background: 'assets/background/room_level1.jpg',
+    background: 'assets/background/room5.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
   }
 ];
@@ -161,8 +161,8 @@ function loadRoom() {
   // Load room
   room.setup(rooms[currentRoomIndex]);
 
-  
-  
-  
+
+
+
 }
 
