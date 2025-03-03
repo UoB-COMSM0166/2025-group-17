@@ -17,27 +17,16 @@ function preload() {
   openDoorImg = loadImage('assets/door/open-right.png');
 
   //load obstacles images
-  obstacleImages.push(loadImage('assets/obstacles/level1/pillow1.png'));
-  //obstacleImages[1] = loadImage('assets/obstacles/level1/PC-1.png');
-  //obstacleImages.push(loadImage('assets/obstacles/level1/tree.png'));
-  //obstacleImages.push(loadImage('assets/obstacles/level1/chair.jpg'));
-  //loadImage('assets/obstacles/level1/PC_1.png');
-  //let obs2 = loadImage('assets/obstacles/level1/conputer_2.png');
-  // loadImage('assets/obstacles/level1/pillow1.png', img => {
-  //   obstacleImages.push(img);
-  //   assetsLoaded++;
-  //   checkLoadingComplete();
-  // });
-  // loadImage('assets/obstacles/level1/pillow2.png', img => {
-  //   obstacleImages.push(img);
-  //   assetsLoaded++;
-  //   checkLoadingComplete();
-  // });
-  //obstacleImages.push(loadImage('assets/obstacles/level1/desk.jpg'));
-  /*test*/
-  //let obs1 = loadImage('assets/obstacles/level1/PC-1.png');
-  //obstacleImages.push(obs1);
-  //obstacleImages.push(obs2);
+  //obstacleImages.push(loadImage('assets/obstacles/level1/pillow1.png'));
+  //obstacleImages.push(loadImage('assets/obstacles/level1/pillow2.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-1.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-2.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-3.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-4.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-5.png'));
+  ///obstacleImages.push(loadImage('assets/obstacles/level1/desk.png'));
+  //obstacleImages.push(loadImage('assets/obstacles/level1/chair.png'));
+
 
   // officeRoomImg = loadImage('assets/background/room_tutorial.png');
   // level1RoomImg = loadImage('assets/background/room_level1.jpg');
