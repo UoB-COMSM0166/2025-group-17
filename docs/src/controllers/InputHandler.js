@@ -36,6 +36,23 @@ class InputHandler {
   }
 
   handlePlayerShooting() {
+    // let shootDirection = createVector(0, 0);
+    // if (keyIsDown(87)) shootDirection.y = -1; // W
+    // if (keyIsDown(83)) shootDirection.y = 1; // S
+    // if (keyIsDown(65)) shootDirection.x = -1; // A
+    // if (keyIsDown(68)) shootDirection.x = 1; // D
+
+    // if (shootDirection.mag() > 0) {
+    //   shootDirection.normalize();
+    //   if (shootCooldown <= 0) {
+    //     player.shoot(shootDirection);
+    //     shootCooldown = 20; //reset cooldown (10 frames)
+    //   }
+    // }
+
+    // if (shootCooldown > 0) {
+    //   shootCooldown--;
+    // }
     const direction = key.toLowerCase();
     if (direction === 'w' || direction === 'a' || direction === 's' || direction === 'd') {
       console.log("Bullet input detected!")

@@ -33,6 +33,7 @@ const largeEnemyHp = 100;
 const largeEnemySize = { w: 50, h: 60 };
 const defaultAcceleration = 5.0;
 const defaultFriction = 0.85;
+let shootCooldown = 0;
 
 let player;
 let enemyCount = 1;

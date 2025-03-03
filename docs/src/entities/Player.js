@@ -54,16 +54,22 @@ class Player {
       input.y = 1;
       //  moving = true;
     }
-    input.normalize().mult(this.acceleration);
-    this.velocity.add(input);
-    this.velocity.mult(this.friction);
-    // if (input.mag() > 0) {
-    //   input.normalize();
-    //   desiredVel = p5.Vector.mult(input, this.speed);
-    // }
+    /**way one **/
+    // input.normalize().mult(this.acceleration);
+    // this.velocity.add(input);
+    // this.velocity.mult(this.friction);
 
-    // Smoothly interpolate current velocity toward desired velocity.
-    //this.velocity.lerp(desiredVel, this.acceleration);
+    /**way two**/
+    if (input.mag() > 0) {
+      input.normalize();
+      desiredVel = p5.Vector.mult(input, this.speed);
+    }
+    // Smoothly update velocity
+    this.velocity.lerp(desiredVel, 0.8);
+    // If no input, apply friction
+    if (input.mag() === 0) {
+      this.velocity.mult(this.friction);
+    }
 
 
     // if (keyIsDown(LEFT_ARROW)) {
