@@ -5,6 +5,7 @@ let lastCollisionTime = 0;
 let menuDisplayed = true;
 let isGamePaused = false;
 let isBossStage = false;
+let isGameCompleted = false;
 let btnPause, btnResume, btnExit, btnContinue, btnNewGame;
 let inputHandler = null;
 let room = null;

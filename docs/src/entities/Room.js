@@ -15,9 +15,6 @@ class Room {
   }
 
   setup(roomData) {
-    // // Clear old objects, (need or not)
-    // this.enemies = [];
-    // this.obstacles = [];
 
     // Load room configuration
     this.backgroundImg = roomData.backgroundImg;
@@ -37,9 +34,8 @@ class Room {
   update() {
     // Use corresponding backgroundImg for current level
     image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
-    //image(officeRoomImg, 0, 0, widthInPixel, heightInPixel);
-
-    this.savePoint.display();
+    
+    this.savePoint.display();    
     this.updateObstacles();
     this.updateEnemies();
     this.updateDoor();
