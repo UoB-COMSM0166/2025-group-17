@@ -1,4 +1,5 @@
 // // TODO: Merge into classes
+
 let lastCollisionTime = 0;
 
 let menuDisplayed = true;
@@ -39,7 +40,12 @@ let player;
 let enemyCount = 1;
 let obstacleCount = 5;
 let enemies = [], obstacles = [];
-
+//load obstacles images
+let obstacleImages = [];
+//loading bar
+// let totalAssets = 2;
+// let assetsLoaded = 0;
+// let loadingComplete = false;
 
 const doorSize = { w: 73, h: 95 };
 
