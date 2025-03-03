@@ -1,4 +1,5 @@
 // // TODO: Merge into classes
+
 let lastCollisionTime = 0;
 
 let menuDisplayed = true;
@@ -25,18 +26,27 @@ let nearSavedPosition = false;
 let lastSavedPosition = { xPos: null, yPos: null };
 let minDistanceToSave = 50;
 
+//Player properties
 const enemySize = 20;
 const chaserSize = 30;
 const shootSize = 25;
 const smallEnemyHp = 50;
 const largeEnemyHp = 100;
 const largeEnemySize = { w: 50, h: 60 };
+const defaultAcceleration = 5.0;
+const defaultFriction = 0.85;
+let shootCooldown = 0;
 
 let player;
 let enemyCount = 1;
 let obstacleCount = 5;
 let enemies = [], obstacles = [];
-
+//load obstacles images
+let obstacleImages = [];
+//loading bar
+// let totalAssets = 2;
+// let assetsLoaded = 0;
+// let loadingComplete = false;
 
 const doorSize = { w: 73, h: 95 };
 
@@ -56,7 +66,7 @@ const bossHpCorner = 10;
 
 const widthInPixel = 1024;
 const heightInPixel = 576;
-const boundaryInPixel = { w: 80 , h: 72 }
+const boundaryInPixel = { w: 80, h: 72 }
 const leftBoundary = boundaryInPixel.w;
 const rightBoundary = widthInPixel - boundaryInPixel.w;
 const topBoundary = boundaryInPixel.h;

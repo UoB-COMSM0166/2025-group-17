@@ -4,7 +4,7 @@ class Room {
     this.door = null;
     this.enemies = [];
     this.obstacles = [];
-    
+
     this.currentRoomData = null;
     this.backgroundImg = null;
     this.size = {
@@ -18,11 +18,11 @@ class Room {
 
     // Load room configuration
     this.backgroundImg = roomData.backgroundImg;
-    
+
     this.door = new Door();
     this.generateObstacles();
     this.generateEnemies();
-    
+
     this.currentRoomData = roomData; // Store room data
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
 
@@ -41,7 +41,7 @@ class Room {
     this.updateDoor();
     this.checkClearCondition();
   }
-  
+
   generateObstacles() {
     this.obstacles = [];
     const maxObstacleSize = heightInPixel / 12;
@@ -54,11 +54,10 @@ class Room {
         const y = random(savePointParam.y, heightInPixel - maxObstacleSize - savePointParam.y);
         newObstacle = new Obstacle(x, y);
       } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
-      
       this.obstacles.push(newObstacle);
     }
   }
-  
+
   generateEnemies() {
     this.enemies = [];
     const maxEntitySize = heightInPixel / 8;
@@ -74,7 +73,7 @@ class Room {
   updateObstacles() {
     this.obstacles.forEach(o => o.display());
   }
-  
+
   updateEnemies() {
     this.enemies.forEach(e => {
       e.update();

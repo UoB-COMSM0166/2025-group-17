@@ -3,15 +3,18 @@ class Bullet {
       this.position = createVector(x, y);
       this.size = createVector(s, s);
       this.speed = 5;
-      this.direction = direction;
+      this.direction = direction; // Use a vector direction instead of a letter
       this.damage = dmg;
    }
 
    update() {
+      // Move the bullet along its direction
+      //this.position.add(p5.Vector.mult(this.direction, this.speed));
       if (this.direction === 'w') this.position.y -= this.speed;
       if (this.direction === 'a') this.position.x -= this.speed;
       if (this.direction === 's') this.position.y += this.speed;
       if (this.direction === 'd') this.position.x += this.speed;
+
    }
 
    display() {
