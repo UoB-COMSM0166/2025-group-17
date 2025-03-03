@@ -45,7 +45,7 @@ function drawCurrentLevel() {
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
 //  text(`Level:${currentLevel}-${currentStage}`, hPadding, heightInPixel - vPadding);
-  text(`Level:${currentRoomIndex + 1} `, hPadding, heightInPixel - vPadding);
+  text(`Level: ${currentRoomIndex} / ${rooms.length}`, hPadding, heightInPixel - vPadding);
 
 }
 
@@ -94,13 +94,4 @@ function drawTimer() {
   textAlign(RIGHT, BOTTOM);
   text(`Time Taken:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`, widthInPixel - hPadding, heightInPixel - vPadding);
 }
-
-// // Add from feature_enemies_lyz_before0225
-// function displayTutorial() {
-//   fill(0);
-//   textSize(14);
-//   textAlign(CENTER);
-  
-//   text(tutorialMessages.join('\n'), widthInPixel / 2,  120);
-// }
 

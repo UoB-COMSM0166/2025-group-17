@@ -125,7 +125,7 @@ function exitGame() {
 function resetGame() {
   menuDisplayed = false;
   isGamePaused = false;
-  gameOver = false;
+  isGameCompleted = false;
 
   currentRoomIndex = 0;
 
@@ -144,19 +144,25 @@ function loadRoom() {
   currentRoomIndex++;
 
   if (currentRoomIndex >= rooms.length) {
-    // TODO: showEnding(); // TODO: show--successfully pass all levels
-    print("Successfully Passed All Levels!");
+    isGameCompleted = true;
+    console.log("Game Completed!");
+
     return;
   }
-
 
   // Keep play hp (need or not)
   // TODO: 在player类中设置resetStatus函数，在除了宝箱房外的房间内调用
   // Reset status of player (keep HP)
   // player.resetStatus()
   const prevHp = player.hp;
+
+  // // 如果 currentRoomIndex 是 1，不继承血量
+  // if (currentRoomIndex === 1) {
+  //   player = new Player(playerX, playerY);
+  // } else {
   player = new Player(playerX, playerY);
-  player.hp = prevHp;
+  player.hp = prevHp; // 继承血量
+  // }
 
   // Load room
   room.setup(rooms[currentRoomIndex]);
