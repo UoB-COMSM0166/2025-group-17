@@ -1,7 +1,7 @@
 class Obstacle {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.size = createVector(heightInPixel / 8, heightInPixel / 8);
+    this.size = createVector(heightInPixel / 10, heightInPixel / 10);
     //randomly choose an image from the loaded obstacle images
     this.image = random(obstacleImages);
 
