@@ -78,8 +78,7 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 Heuristic Evaluation
 
 | Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
-
-| - | - | - | - | - | - | - | - |
+|----------|----------|----------|----------|----------|----------|----------|----------|
 | Hsinyun Fan | Tutorial Interface | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
 | Kailin Fang | Tutorial Interface | Instruction could be more clear (like use picture to show). | Help and doccumentation | 1 | 2 | 1 | 1.33 |
 | Daisy Fan | Tutorial Interface | Can pop up instruction first then begin. The HP not very clear. | Help and doccumentation | 1 | 2 | 1 | 1.33 |
