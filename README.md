@@ -76,7 +76,6 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 - One qualitative evaluation (your choice) 
 
 Heuristic Evaluation
-
 | Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 | - | - | - | - | - | - | - | - |
 | Hsinyun Fan |  | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
@@ -85,8 +84,6 @@ Heuristic Evaluation
 | Brian | Tutorial Interface | Don't know how to win or play when just eneter the game. | Visibility | 1 | 4 | 1 | 2 |
 | Kaijie Xu | "Playng" Interface | Player identification | Recognition rather than recall. | 2 | 2 | 4 | 2.67 |
 | Kaijie Xu | "Playng" Interface | Differentiation mechanism | User control and freedom. | 1 | 3 | 1 | 1.67 |
-
-
 
 
 
