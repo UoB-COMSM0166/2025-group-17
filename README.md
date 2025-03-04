@@ -74,7 +74,9 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 - 15% ~750 words
 
 - One qualitative evaluation (your choice) 
+
 Heuristic Evaluation
+
 Name: Hsinyun Fan  Project Title:
 | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 | - | - | - | - | - | - | - |
