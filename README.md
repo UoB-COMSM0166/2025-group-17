@@ -74,7 +74,7 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 - 15% ~750 words
 
 - One qualitative evaluation (your choice)  Heuristic Evaluation
-
+222222222222222222222
 | Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 |----------|----------|----------|----------|----------|----------|----------|----------|
 | Hsinyun Fan | Tutorial Interface | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
