@@ -4,6 +4,7 @@ class Room {
     this.door = null;
     this.enemies = [];
     this.obstacles = [];
+    this.obsCount = obstacleCount;
 
     this.currentRoomData = null;
     this.backgroundImg = null;
@@ -17,11 +18,11 @@ class Room {
   setup(roomData) {
 
     // Load room configuration
-    this.backgroundImg = roomData.backgroundImg;
-
-    this.door = new Door();
-    this.generateObstacles();
+    this.generateObstacles(this.obsCount);
     this.generateEnemies();
+    this.backgroundImg = roomData.backgroundImg;
+    this.door = new Door();
+    this.door.close();
 
     this.currentRoomData = roomData; // Store room data
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
@@ -42,16 +43,15 @@ class Room {
     this.checkClearCondition();
   }
 
-  generateObstacles() {
+  generateObstacles(obsCount) {
     this.obstacles = [];
-    const maxObstacleSize = heightInPixel / 12;
 
     // TODO: obstacleCount不同关卡设为不一样的数值。根据难度或者其他条件
-    for (let i = 0; i < obstacleCount; i++) {
+    for (let i = 0; i < obsCount; i++) {
       let newObstacle;
       do {
-        const x = random(savePointParam.x, widthInPixel - maxObstacleSize - savePointParam.x);
-        const y = random(savePointParam.y, heightInPixel - maxObstacleSize - savePointParam.y);
+        const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
+        const y = random(topBoundary + player.size.y, bottomBoundary - maxObstacleSize - player.size.y);
         newObstacle = new Obstacle(x, y);
       } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
       this.obstacles.push(newObstacle);
@@ -60,11 +60,10 @@ class Room {
 
   generateEnemies() {
     this.enemies = [];
-    const maxEntitySize = heightInPixel / 8;
     // TODO: enemyCount不同关卡设为不一样的数值。根据难度或者其他条件
     for (let i = 0; i < enemyCount; i++) {
       let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
-      let y = random(savePointParam.y, heightInPixel - maxEntitySize - savePointParam.y);
+      let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
       let hp = random([smallEnemyHp, largeEnemyHp]);
       this.enemies.push(new Enemy(x, y, hp));
     }
@@ -83,6 +82,7 @@ class Room {
 
   updateDoor() {
     if (this.checkClearCondition()) this.door.open();
+    else this.door.close();
     this.door.display();
   }
 
