@@ -15,14 +15,18 @@ class Door {
   open() {
     if (this.currentDoorImg === openDoorImg) return;
     this.currentDoorImg = openDoorImg;
-    
     this.isOpen = true;
 
     openDoorSound.play();
   }
 
+  close() {
+    if (this.currentDoorImg === closedDoorImg) return;
+    this.currentDoorImg = closedDoorImg;
+    this.isOpen = false;
+  }
+
   updateImage() {
     image(this.currentDoorImg, this.position.x, this.position.y);
   }
-
 }

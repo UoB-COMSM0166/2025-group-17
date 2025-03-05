@@ -3,10 +3,11 @@ class Enemy {
     this.hp = hp;
     this.position = createVector(x, y);
     this.size = createVector(
-        hp === smallEnemyHp ? heightInPixel / 12 : largeEnemySize.w,
-        hp === smallEnemyHp ? heightInPixel / 12 : largeEnemySize.h
+      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.w,
+      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.h
     );
     this.velocity = createVector(random([-1, 1]), random([-1, 1]));
+    this.image = enemyImage;
   }
 
   update() {
@@ -20,8 +21,10 @@ class Enemy {
   }
 
   display() {
-    fill('green');
-    rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    //imageMode(CENTER);
+    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
+    // fill('green');
+    // rect(this.position.x, this.position.y, this.size.x, this.size.y);
   }
 }
 

@@ -1,7 +1,7 @@
 const rooms = [
   {
     id: 1,
-    background: 'assets/background/room_tutorial.png',
+    background: 'assets/background/room1-tutorial.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
     // Call generation functions to generate enemies and obstacles
     // enemies: [],
@@ -9,13 +9,13 @@ const rooms = [
   },
   {
     id: 2,
-    background: 'assets/background/room_level1.jpg',
+    background: 'assets/background/room2.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
 
   },
   {
     id: 3,
-    background: 'assets/background/room_level1_boss.jpg',
+    background: 'assets/background/room5.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
   }
 ];
@@ -41,9 +41,9 @@ function saveGameData() {
   if (nearSavedPosition) return;
 
   localStorage.setItem('currentRoomIndex', currentRoomIndex);
-
   localStorage.setItem('lastSavePoint', JSON.stringify(room.savePoint));
   localStorage.setItem('playerHp', JSON.stringify(player.hp));
+  localStorage.setItem('timeSpent', JSON.stringify(timeSpent));
   lastSavedPosition.xPos = room.savePoint.position.x;
   lastSavedPosition.yPos = room.savePoint.position.y;
   console.log("Game Saved!");
@@ -51,41 +51,34 @@ function saveGameData() {
 
 function loadGameData() {
   const savedRoomIndex = localStorage.getItem('currentRoomIndex');
-  if (savedRoomIndex) {
-    currentRoomIndex = parseInt(savedRoomIndex);
-  }
+  if (savedRoomIndex) currentRoomIndex = parseInt(savedRoomIndex);
+  room.setup(rooms[currentRoomIndex]);
 
-  room.generateEnemies();
-  room.generateObstacles();
-  let savedPosition = localStorage.getItem('lastSavePoint');
-  let playerHp = localStorage.getItem('playerHp');
-  if (!savedPosition || !playerHp) {
-    console.log("No save data found; starting from scratch...");
+  const savedPositionData = localStorage.getItem('lastSavePoint');
+  const savedPlayerHp = localStorage.getItem('playerHp');
+  const savedTimeSpent = localStorage.getItem('timeSpent');
+  if (!savedPositionData || !savedPlayerHp || !savedTimeSpent) {
+    console.log("Parts of save data missing; starting from scratch...");
     return startNewGame();
   }
 
-  savedPosition = JSON.parse(savedPosition);
+  const savedPosition = JSON.parse(savedPositionData);
   player.position.x = savedPosition.position.x;
   player.position.y = savedPosition.position.y;
-  player.hp = JSON.parse(playerHp);
+  player.hp = JSON.parse(savedPlayerHp);
+  startTime = millis() - JSON.parse(savedTimeSpent);
   console.log("Game Loaded!");
 
   menuDisplayed = false;
-  toggleButtons();
+  menuDrawer.toggleStartButtons();
+  menuDrawer.toggleGameOverButtons();
 }
 
 function startNewGame() {
   console.log("New Game Start!");
   resetGame();
-  menuDisplayed = false;
-  toggleButtons();
-}
-
-// Hide the buttons once they are clicked on the start menu
-function toggleButtons() {
-  btnContinue.hide();
-  btnNewGame.hide();
-  btnPause.show();
+  menuDrawer.toggleStartButtons();
+  menuDrawer.toggleGameOverButtons();
 }
 
 function pauseGame() {
@@ -96,29 +89,21 @@ function pauseGame() {
     pauseSound.play();
   }
   isGamePaused = true;
-  btnPause.hide();
-  btnResume.show();
-  btnExit.show();
+  menuDrawer.showResumeButtons();
 }
 
 function resumeGame() {
   console.log("Game resume!")
   isGamePaused = false;
-  btnResume.hide();
-  btnExit.hide();
-  btnPause.show();
+  menuDrawer.toggleResumeButtons();
   startTime += millis() - pauseTime;
 }
 
 function exitGame() {
   console.log("Exit to the start menu!")
   isGamePaused = false;
-  drawMenu();
-  btnPause.hide();
-  btnResume.hide();
-  btnExit.hide();
-  btnNewGame.show();
-  btnContinue.show();
+  menuDrawer.drawMenu();
+  menuDrawer.showStartButtons();
   menuDisplayed = true;
 }
 
@@ -146,7 +131,6 @@ function loadRoom() {
   if (currentRoomIndex >= rooms.length) {
     isGameCompleted = true;
     console.log("Game Completed!");
-    
     return;
   }
 
@@ -160,12 +144,11 @@ function loadRoom() {
   // if (currentRoomIndex === 1) {
   //   player = new Player(playerX, playerY);
   // } else {
-    player = new Player(playerX, playerY);
-    player.hp = prevHp; // 继承血量
+  player = new Player(playerX, playerY);
+  player.hp = prevHp; // 继承血量
   // }
 
   // Load room
-  room.setup(rooms[currentRoomIndex]); 
-  
+  room.setup(rooms[currentRoomIndex]);
 }
 

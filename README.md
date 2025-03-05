@@ -99,7 +99,7 @@ Name: Kaijie Xu  Project Title:
 | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 | - | - | - | - | - | - | - |
 | | Player identification | Recognition rather than recall. | 2 | 2 | 4 | 2.67 |
-| | Differentiation mechanism | User control and  | 1 | 3 | 1 | 1.67 |
+| | Differentiation mechanism | User control and freedom. | 1 | 3 | 1 | 1.67 |
 
 
 - One quantitative evaluation (of your choice) 
