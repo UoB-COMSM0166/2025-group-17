@@ -31,8 +31,6 @@ class Player {
   display() {
     // When invincible, skip drawing for half the blink cycle.
     if (this.invincibleTimer > 0 && this.blinkCounter < 5) return;
-    // fill('red');
-    // rect(this.position.x, this.position.y, this.size.x, this.size.y);
     image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
   };
 
