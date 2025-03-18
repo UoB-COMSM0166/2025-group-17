@@ -109,13 +109,16 @@ class Player {
   updateHp(newHp) {
     if (this.hp > 0 && this.invincibleTimer === 0) {
       this.hp = max(0, newHp);
-      this.invincibleTimer = 60; // Approximately one second at 60 fps.
+      // this.invincibleTimer = 60; // Approximately one second at 60 fps.
+      this.resetInvincibleTimer(); // Approximately one second at 60 fps.
     }
     if (this.hp === 0) {
       deathSound.currentTime = 0;
       deathSound.play();
     }
   }
+
+  resetInvincibleTimer() { this.invincibleTimer = 60; }
 
   shoot(direction) {
     this.bullets.push(new Bullet(this.position.x, this.position.y, direction, this.atk));

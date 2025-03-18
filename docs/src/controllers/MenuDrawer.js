@@ -35,10 +35,10 @@ class MenuDrawer {
 
   setupPauseMenu() {
     this.btnPause = createImg('assets/icons/pause.svg', 'Click to pause');
-    this.btnPause.position(widthInPixel - hPadding, vPadding);
+    this.btnPause.position(widthInPixel - hPadding - iconSize, vPadding);
     this.btnPause.size(iconSize, iconSize);
-    this.btnPause.hide();
     this.btnPause.mousePressed(pauseGame);
+    this.btnPause.hide();
 
     this.btnResume = this.createMenuButton('Resume', -vPadding, resumeGame, true);
     this.btnExit   = this.createMenuButton('Exit', vPadding, exitGame, true);
@@ -74,6 +74,7 @@ class MenuDrawer {
     textSize(32);
     textAlign(CENTER, CENTER);
     
+    this.toggleResumeButtons();
     this.showGameOverButtons();
     text("Game Over", widthInPixel / 2, heightInPixel / 3);
     this.repositionButton(this.btnLoadLastSave, -vPadding);
@@ -124,6 +125,7 @@ class MenuDrawer {
   }
 
   showGameOverButtons() {
+    this.btnPause.hide();
     this.btnLoadLastSave.show();
     this.btnRestart.show();
   }
