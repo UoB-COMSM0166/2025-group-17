@@ -16,7 +16,6 @@ class Room {
   }
 
   setup(roomData) {
-
     // Load room configuration
     this.generateObstacles(this.obsCount);
     this.generateEnemies();
@@ -62,10 +61,14 @@ class Room {
     this.enemies = [];
     // TODO: enemyCount不同关卡设为不一样的数值。根据难度或者其他条件
     for (let i = 0; i < enemyCount; i++) {
-      let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
-      let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
-      let hp = random([smallEnemyHp, largeEnemyHp]);
-      this.enemies.push(new Enemy(x, y, hp));
+      let newEnemy;
+      do {
+        let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
+        let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
+        let hp = random([smallEnemyHp, largeEnemyHp]);
+        newEnemy = new Enemy(x, y, hp);
+      } while (this.collisionDetector.detectCollision(player, newEnemy));
+      this.enemies.push(newEnemy);
     }
   }
 

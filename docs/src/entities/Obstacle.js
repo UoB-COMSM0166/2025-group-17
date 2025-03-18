@@ -8,8 +8,6 @@ class Obstacle {
   }
 
   display() {
-    //Draw the obstacle image at its position
-    //imageMode(CORNER);
     image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 }

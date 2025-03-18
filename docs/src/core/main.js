@@ -33,6 +33,7 @@ function preload() {
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
   //load enemy image
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
+  savePointImg = loadImage('assets/savepoint/savepoint.jpg');
 
   rooms.forEach((room, i) => {
     room.backgroundImg = loadImage(room.background);
@@ -69,7 +70,7 @@ function draw() {
     return menuDrawer.renderMenu();
   }
   // Reset the button positions to support proper resizing
-  menuDrawer.btnPause.position(cnv.x + width - hPadding, cnv.y + vPadding);
+  menuDrawer.btnPause.position(cnv.x + width - hPadding, vPadding);
   updateGameState();
 }
 

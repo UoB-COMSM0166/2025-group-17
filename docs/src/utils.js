@@ -39,7 +39,7 @@ const defaultFriction = 0.85;
 let shootCooldown = 0;
 
 let player;
-let enemyCount = 1;
+let enemyCount = 4;
 let obstacleCount = 5;
 let enemies = [], obstacles = [];
 
@@ -48,8 +48,7 @@ let obstacleImages = [];
 let playerImage;
 let bulletImage;
 let enemyImage;
-
-
+let savePointImg;
 
 const doorSize = { w: 73, h: 95 };
 
@@ -60,7 +59,7 @@ const playerMaxHp = 5;
 const playerMaxSpeed = 15;
 const playerMaxAtk = 20;
 
-const iconSize = 24;
+const iconSize = 40;
 const iconPadding = 15;
 
 const bossHpWidth = 400;

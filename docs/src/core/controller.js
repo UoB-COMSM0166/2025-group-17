@@ -41,7 +41,8 @@ function saveGameData() {
   if (nearSavedPosition) return;
 
   localStorage.setItem('currentRoomIndex', currentRoomIndex);
-  localStorage.setItem('lastSavePoint', JSON.stringify(room.savePoint));
+  localStorage.setItem('lastSavePointX', JSON.stringify(room.savePoint.position.x));
+  localStorage.setItem('lastSavePointY', JSON.stringify(room.savePoint.position.y));
   localStorage.setItem('playerHp', JSON.stringify(player.hp));
   localStorage.setItem('timeSpent', JSON.stringify(timeSpent));
   lastSavedPosition.xPos = room.savePoint.position.x;
@@ -54,19 +55,24 @@ function loadGameData() {
   if (savedRoomIndex) currentRoomIndex = parseInt(savedRoomIndex);
   room.setup(rooms[currentRoomIndex]);
 
-  const savedPositionData = localStorage.getItem('lastSavePoint');
+  const savedXData = localStorage.getItem('lastSavePointX');
+  const savedYData = localStorage.getItem('lastSavePointY');
   const savedPlayerHp = localStorage.getItem('playerHp');
   const savedTimeSpent = localStorage.getItem('timeSpent');
-  if (!savedPositionData || !savedPlayerHp || !savedTimeSpent) {
+  if (!savedXData || !savedYData || !savedPlayerHp || !savedTimeSpent) {
     console.log("Parts of save data missing; starting from scratch...");
     return startNewGame();
   }
 
-  const savedPosition = JSON.parse(savedPositionData);
+  const savedPositionX = JSON.parse(savedXData);
+  const savedPositionY = JSON.parse(savedYData);
+  const savedPosition = new SavePoint(savedPositionX, savedPositionY);
   player.position.x = savedPosition.position.x;
   player.position.y = savedPosition.position.y;
   player.hp = JSON.parse(savedPlayerHp);
   startTime = millis() - JSON.parse(savedTimeSpent);
+  inputHandler.lastLoadTime = millis();
+  player.resetInvincibleTimer();
   console.log("Game Loaded!");
 
   menuDisplayed = false;

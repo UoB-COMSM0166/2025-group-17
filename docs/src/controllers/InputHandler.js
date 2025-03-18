@@ -2,7 +2,8 @@ class InputHandler {
   constructor(roomObj, cooldownTime = 2000) {
     this.currentRoom = roomObj;
     this.collisionDetector = new CollisionDetector();
-    this.collisionCoolDownTime = cooldownTime;
+    this.coolDownTime = cooldownTime;
+    this.lastLoadTime = millis();
     this.lastCollisionTime = millis();
   }
 
@@ -17,10 +18,7 @@ class InputHandler {
     if (collideWithEnemies || collideWithObstacles || playerHitBoundary) {
       player.revertPosition();
     }
-    if (collideWithEnemies) {
-      this.decreasePlayerHp();
-
-    };
+    if (collideWithEnemies) this.decreasePlayerHp();
     player.resetVelocity();
 
     // // laser
@@ -76,15 +74,14 @@ class InputHandler {
   }
 
   decreasePlayerHp() {
-    // The player will not receive any damage in the future 2 seconds.
-    if (millis() - this.lastCollisionTime < this.collisionCoolDownTime) {
-      return;
-    }
+    // The player will not receive any damage 2 seconds after loading or entering the new room.
+    if (millis() - this.lastLoadTime < this.coolDownTime) return;
 
+    // The player will not receive any damage 2 seconds after the collision.
+    if (millis() - this.lastCollisionTime < this.coolDownTime) return;
     player.updateBlinking(); // The player will blink for 2 seconds after being hit.
     player.updateHp(player.hp - 1);
     this.lastCollisionTime = millis();
-
 
     hurtSound.currentTime = 0;
     hurtSound.play();
@@ -100,7 +97,9 @@ class InputHandler {
 
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
+      this.lastLoadTime = millis();
       loadRoom();
+      player.resetInvincibleTimer();
     }
   }
 }
