@@ -21,7 +21,12 @@ class Room {
 
     this.door = new Door();
     this.generateObstacles();
-    this.generateEnemies();
+    if (roomData.id === 3){
+      this.generateBoss();
+    } else {
+      this.generateEnemies();
+    }
+    // this.generateEnemies();
 
     this.currentRoomData = roomData; // Store room data
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
@@ -31,13 +36,18 @@ class Room {
     }
   }
 
-  update() {
+  update(roomData) {
     // Use corresponding backgroundImg for current level
     image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
     
     this.savePoint.display();    
     this.updateObstacles();
-    this.updateEnemies();
+    if (roomData.id === 3){
+      this.updateBoss();
+    } else {
+      this.updateEnemies();
+    }
+   // this.updateEnemies();
     this.updateDoor();
     this.checkClearCondition();
   }
@@ -70,8 +80,28 @@ class Room {
     }
   }
 
+  generateBoss() {
+    this.boss = [];
+    const maxEntitySize = heightInPixel / 8;
+    for (let i = 0; i < enemyCount; i++) {
+      let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
+      let y = random(savePointParam.y, heightInPixel - maxEntitySize - savePointParam.y);
+      let hp = random([smallEnemyHp, largeEnemyHp]);
+      this.boss.push(new Boss(x, y, hp));
+    }
+  }
+
+
   updateObstacles() {
     this.obstacles.forEach(o => o.display());
+  }
+
+
+  updateBoss() {
+    this.boss.forEach(e => {
+      e.update();
+      e.display();
+    });
   }
 
   updateEnemies() {

@@ -69,7 +69,7 @@ function draw() {
   }  
   else {
     
-    room.update();
+    room.update(rooms[currentRoomIndex]);
     inputHandler.update();
     player.display();
     drawUiHub();
