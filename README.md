@@ -74,32 +74,36 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 - 15% ~750 words
 
 - One qualitative evaluation (your choice) 
+
 Heuristic Evaluation
-Name: Hsinyun Fan  Project Title:
-| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
-| - | - | - | - | - | - | - |
-|  | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
 
-Name: Kailin Fang  Project Title:
-| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
-| - | - | - | - | - | - | - |
-| | Instruction could be more clear (like use picture to show). | Help and doccumentation | 1 | 2 | 1 | 1.33 |
+| Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
+|----------|----------|----------|----------|----------|----------|----------|----------|
+| Hsinyun Fan | Tutorial Interface | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
+| Kailin Fang | Tutorial Interface | Instruction could be more clear (like use picture to show). | Help and documentation | 1 | 2 | 1 | 1.33 |
+| Daisy Fan | Tutorial Interface | Can pop up instruction first then begin. The HP not very clear. | Help and documentation | 1 | 2 | 1 | 1.33 |
+| Brian | Tutorial Interface | Don't know how to win or play when just eneter the game. | Visibility | 1 | 4 | 1 | 2 |
+| Kaijie Xu | "Playing" Interface | Player identification | Recognition rather than recall. | 2 | 2 | 4 | 2.67 |
+| Rowan | Pause Menu | Hard to see the pause button | Visibility of system status, Consistency and standards, Error prevention, Recognition rather than recall, Flexibility. | 1 | 1 | 0 | 0.67 |
+| Rowan | "Playing" Interface | Difficult to avoid enemies | Visibility of system status, Consistency and standards, Error prevention, Recognition rather than recall, Aesthetic | 4 | 3 | 2 | 3 |
+| Aya | "Playing" Interface | Hard to defeat enemy, takes many shoots | Flexibility and efficiency of use | 2 | 3 | 2 | 2.33 |
+| A | "Playing" Interface | I'm not used to operating keys. The display of the player's health is not very obvious and is not easy to see at a glance. | User control and freedom. | 1 | 0 | 1 | 0.67 |
+| A | "Playing" Interface | The monster is moving too fast. It is better to show the monster's health. | User control and freedom. | 2 | 2 | 1 | 1.67 |
+| James | Tutorial Interface, "Playing" Interface | It’s a little bit hard for recognize the tutorial image of the first level. | Visibility of system status, Flexibility and efficiency of use | 2 | 2 | 1 | 1.67 |
+| James | "Playing" Interface, Game Over Interface | Hard game and hard to find the button to restart the game. | User control and freedom, Recognition rather than recall | 3 | 3 | 3 | 3 |
+| Farid | "Playing" Interface | Bullet is a bit too slow | Visibility of system status, Flexibility and efficiency of use | 3 | 2 | 3 | 2.67 |
+| Jacque | "Playing" Interface | Collision with box, health visibility | User control and freedom, Aesthetic and minimalist design | 2 | 0 | 3 | 1.67 |
+| Ziqi | "Playing" Interface |  | User control and freedom | 2 | 2 | 1 | 1.67 |
+| Hao | Start Menu | The playing button is too small | Aesthetic and minimalist design  | 1 | 2 | 1 | 1.33 |
+| Beam | "Playing" Interface | Collision detection is a bt off | User control and freedom | 4 | 3 | 1 | 2.67 |
+| Marek | "Playing" Interface | Too small buttons starts very quickly, once you play it more bcomes easier  | Visibility of system status, User control and freedom  | 1 | 1 | 3 | 1.67 |
+| Oliver | "Playing" Interface | Enemies can phase through the obstacles in the level, which is unintuitive that the player can't either. The hitboxes are quite tight which can halt movement if you're colliding with 1 pixel | User control and freedom  | 1 | 1 | 3 | 1.67 |
+| Luciano | Pause Menu, "Playing" Interface | Sometimes movement didn't work. Obstacle location being random each time can make level 3 easier than level 1. | User control and freedom, Aesthetic and minimalist design  | 2 | 3 | 4 | 3 |
+| Alexandros | "Playing" Interface | The hitboxes on the blue computers were a bit too big | Flexibility and efficiency of use  | 3 | 1 | 4 | 2.67 |
+| Ashby | "Playing" Interface | The obstacles looked smaller than they actually were. It was a bit easy to just spam attack.  | User control and freedom, Consistency and standards, Flexibility and efficiency of use  | 2 | 1 | 3 | 2 |
+| Asher | "Playing" Interface | Hitboxes too large, not obvious that music notes stop when they hit obstacles, cannot move left or right when also moving into an obstacle, saving is not clear | Visibility of system status, User control and freedom, Consistency and standards, Flexibility and efficiency of use, Help users recognise, diagnose, and recover from errors | 4 | 3 | 0 | 2.33 |
+| gg | Start Menu |  | Flexibility and efficiency of use | 1 | 3 | 1 | 1.67 |
 
-Name: Daisy Fan  Project Title:
-| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
-| - | - | - | - | - | - | - |
-|  | Can pop up instruction first then begin. The HP not very clear. | Help and doccumentation | 1 | 2 | 1 | 1.33 |
-
-Name: Brian  Project Title:
-| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
-| - | - | - | - | - | - | - |
-|  | Don't know how to win or play when just eneter the game. | Visibility | 1 | 4 | 1 | 2 |
-
-Name: Kaijie Xu  Project Title:
-| Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common)  | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
-| - | - | - | - | - | - | - |
-| | Player identification | Recognition rather than recall. | 2 | 2 | 4 | 2.67 |
-| | Differentiation mechanism | User control and freedom. | 1 | 3 | 1 | 1.67 |
 
 
 - One quantitative evaluation (of your choice) 

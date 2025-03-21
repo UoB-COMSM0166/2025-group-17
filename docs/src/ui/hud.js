@@ -17,8 +17,6 @@ function adjustCanvasWithAspectRatio() {
 }
 
 function drawUiHub() {
-  // Reset the button positions to support proper resizing
-  btnPause.position(cnv.x + width - hPadding, cnv.y + vPadding);
   drawHealthBar();
   drawCurrentLevel();
   drawBossStatus();

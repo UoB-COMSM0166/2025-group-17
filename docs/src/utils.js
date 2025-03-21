@@ -6,8 +6,9 @@ let menuDisplayed = true;
 let isGamePaused = false;
 let isBossStage = false;
 let isGameCompleted = false;
-let btnPause, btnResume, btnExit, btnContinue, btnNewGame;
+let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLastSave;
 let inputHandler = null;
+let cnv, hudDrawer, menuDrawer;
 let room = null;
 
 let openDoorImg, closedDoorImg;
@@ -30,7 +31,7 @@ let minDistanceToSave = 50;
 const enemySize = 20;
 const chaserSize = 30;
 const shootSize = 25;
-const smallEnemyHp = 50;
+const smallEnemyHp = 100;
 const largeEnemyHp = 100;
 const largeEnemySize = { w: 50, h: 60 };
 const defaultAcceleration = 5.0;
@@ -38,7 +39,7 @@ const defaultFriction = 0.85;
 let shootCooldown = 0;
 
 let player;
-let enemyCount = 1;
+let enemyCount = 4;
 let obstacleCount = 5;
 let enemies = [], obstacles = [];
 
@@ -47,8 +48,7 @@ let obstacleImages = [];
 let playerImage;
 let bulletImage;
 let enemyImage;
-
-
+let savePointImg;
 
 const doorSize = { w: 73, h: 95 };
 
@@ -59,7 +59,7 @@ const playerMaxHp = 5;
 const playerMaxSpeed = 15;
 const playerMaxAtk = 20;
 
-const iconSize = 24;
+const iconSize = 40;
 const iconPadding = 15;
 
 const bossHpWidth = 400;
@@ -78,3 +78,6 @@ const playerX = leftBoundary;
 const playerY = heightInPixel / 2;
 
 const savePointParam = { x: leftBoundary + 60, y: bottomBoundary - 80, w: 30, h: 30 };
+
+const maxObstacleSize = heightInPixel / 12;
+const maxEntitySize = heightInPixel / 8;

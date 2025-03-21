@@ -33,6 +33,7 @@ function preload() {
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
   //load enemy image
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
+  savePointImg = loadImage('assets/savepoint/savepoint.jpg');
 
   rooms.forEach((room, i) => {
     room.backgroundImg = loadImage(room.background);
@@ -43,15 +44,16 @@ function preload() {
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
+  menuDrawer = new MenuDrawer();
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
   room = new Room();
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 
-  setupMenu();
-  setupPauseMenu();
-
+  menuDrawer.setupMenu();
+  menuDrawer.setupPauseMenu();
+  menuDrawer.setupGameOverPage();
 }
 
 function draw() {
@@ -63,27 +65,21 @@ function draw() {
 
   adjustCanvasWithAspectRatio();
   background(220);
-  if (menuDisplayed) {
-    drawMenu();
-  } else if (isGamePaused) {
-    drawPauseMenu();
-  } else if (isGameOver()) {
-    drawGameOver();
 
-  } else if (isGameCompleted) {
-    drawGameCompleted();
+  if (menuDisplayed || isGamePaused || isGameOver() || isGameCompleted) {
+    return menuDrawer.renderMenu();
   }
-  else {
+  // Reset the button positions to support proper resizing
+  menuDrawer.btnPause.position(cnv.x + width - hPadding, vPadding);
+  updateGameState();
+}
 
-    room.update();
-    inputHandler.update();
-    player.display();
-    drawUiHub();
-
-    checkSavePoint();
-
-  }
-  // pop();
+function updateGameState() {
+  room.update();
+  inputHandler.update();
+  player.display();
+  drawUiHub();
+  checkSavePoint();
 }
 
 function keyPressed() {
