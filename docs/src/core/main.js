@@ -9,6 +9,9 @@ let deathSound2 = new Audio("assets/music/Player_Death.mp3");
 
 let openDoorSound = new Audio("assets/music/Door_Open.mp3");
 
+let isGameRunning = false;
+
+
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
   heart = loadImage('assets/icons/heart.svg');
@@ -42,6 +45,8 @@ function preload() {
 
 }
 
+
+
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   menuDrawer = new MenuDrawer();
@@ -54,6 +59,31 @@ function setup() {
   menuDrawer.setupMenu();
   menuDrawer.setupPauseMenu();
   menuDrawer.setupGameOverPage();
+
+  initializaGame();
+}
+
+function initializaGame() {
+  console.log("Game initializing...");
+
+  if(!isGameRunning && menuMusic.paused) {
+    menuMusic.currentTime = 0;
+    menuMusic.play().then(() => {
+      console.log("Main menu music started.");
+    }).catch(error => {
+      console.warn("Autoplay blocked, waiting for user interaction.");
+    });
+  }
+
+  menuDisplayed = true;
+  menuDrawer.drawMenu();
+  menuDrawer.showStartButtons();
+
+  document.addEventListener("click", function() {
+    if(menuMusic.paused) {
+      menuMusic.play();
+    }
+  },{ once:true});
 }
 
 function draw() {

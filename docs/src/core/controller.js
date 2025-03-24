@@ -50,13 +50,18 @@ function saveGameData() {
 }
 
 function loadGameData() {
+  console.log("Loading saved game...");
+
+  isGameRunning = true;
+  menuDislayed = false;
+  if (!menuMusic.paused) {
+    menuMusic.pause();
+    menuMusic.currentTime=0;
+  }
+
   const savedRoomIndex = localStorage.getItem('currentRoomIndex');
   if (savedRoomIndex) currentRoomIndex = parseInt(savedRoomIndex);
   room.setup(rooms[currentRoomIndex]);
-
-  if (!menuMusic.paused) {
-    menuMusic.pause();
-  }
 
   const savedPositionData = localStorage.getItem('lastSavePoint');
   const savedPlayerHp = localStorage.getItem('playerHp');
@@ -81,8 +86,12 @@ function loadGameData() {
 function startNewGame() {
   console.log("New Game Start!");
 
+  isGameRunning = true;
+  menuDisplayed = false;
+
   if(!menuMusic.paused) {
     menuMusic.pause();
+    menuMusic.currentTime = 0;
   }
 
   resetGame();
@@ -110,13 +119,14 @@ function resumeGame() {
 
 function exitGame() {
   console.log("Exit to the start menu!")
+  isGameRunning = false;
   isGamePaused = false;
   menuDisplayed = true;
 
   menuDrawer.drawMenu();
   menuDrawer.showStartButtons();
 
-  if (menuMusic.paused) {
+  if (!isGameRunning && menuDisplayed && menuMusic.paused) {
     menuMusic.currentTime = 0;
     menuMusic.play();
   }
