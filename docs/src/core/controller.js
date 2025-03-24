@@ -54,6 +54,10 @@ function loadGameData() {
   if (savedRoomIndex) currentRoomIndex = parseInt(savedRoomIndex);
   room.setup(rooms[currentRoomIndex]);
 
+  if (!menuMusic.paused) {
+    menuMusic.pause();
+  }
+
   const savedPositionData = localStorage.getItem('lastSavePoint');
   const savedPlayerHp = localStorage.getItem('playerHp');
   const savedTimeSpent = localStorage.getItem('timeSpent');
@@ -76,6 +80,11 @@ function loadGameData() {
 
 function startNewGame() {
   console.log("New Game Start!");
+
+  if(!menuMusic.paused) {
+    menuMusic.pause();
+  }
+
   resetGame();
   menuDrawer.toggleStartButtons();
   menuDrawer.toggleGameOverButtons();
@@ -102,9 +111,15 @@ function resumeGame() {
 function exitGame() {
   console.log("Exit to the start menu!")
   isGamePaused = false;
+  menuDisplayed = true;
+
   menuDrawer.drawMenu();
   menuDrawer.showStartButtons();
-  menuDisplayed = true;
+
+  if (menuMusic.paused) {
+    menuMusic.currentTime = 0;
+    menuMusic.play();
+  }
 }
 
 function resetGame() {

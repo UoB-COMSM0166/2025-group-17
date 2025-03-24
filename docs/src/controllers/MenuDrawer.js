@@ -103,6 +103,7 @@ class MenuDrawer {
     this.btnExit.hide();
     this.btnNewGame.show();
     this.btnContinue.show();
+
   }
 
   toggleStartButtons() {

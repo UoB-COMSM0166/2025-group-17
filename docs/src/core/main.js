@@ -1,4 +1,5 @@
-let mainmenuSound = new Audio("assets/music/Scene_music/MainMenu.mp3");
+let menuMusic = new Audio("assets/music/Scene_music/MainMenu.mp3");
+menuMusic.loop=true;
 let pauseSound = new Audio("assets/music/Pause.mp3");
 let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
 let deathSound = new Audio("assets/music/Enemy_Death.mp3");
