@@ -30,8 +30,11 @@ https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000
 
 ### Introduction
 
-- 5% ~250 words 
-- Describe your game, what is based on, what makes it novel? 
+Our game *Out* draws inspiration from *The Binding of Isaac*, the renowned 2D platformer RPG and action-adventure game developed by Edmund McMillen. Similar to the original, players progress through a series of carefully designed levels and enemies, using projectile-based combat to defeat monsters across various dungeon environments, earning points and advancing the narrative.
+
+However, *Out* introduces several key innovations that distinguish it from its predecessor. Building on the core gameplay loop, we have implemented a procedurally generated obstacle system alongside a timer-based mechanic. These features are intended to encourage repeated playthroughs, motivating players to surpass their own completion records and embrace the satisfaction of self-improvement through challenge.
+
+On the artistic level, we have created original, hand-drawn visuals to support seamless narrative delivery. Ultimately, we hope that the game can serve not only as a medium for entertainment but also as a reflective space in which players may find resonances with their own lives.
 
 ### Requirements 
 
