@@ -14,6 +14,7 @@ class Player {
     this.blinkCounter = 0;      // Used for blinking during invincibility
     this.bullets = [];
     this.image = playerImage;
+    this.lastHealTime = null;
   }
 
   shoot(direction) {
@@ -107,6 +108,7 @@ class Player {
   };
 
   decreaseHp() {
+    console.log('Player took damage!');
     if (this.hp > 0 && this.invincibleTimer === 0) {
       this.hp = max(0, this.hp - 1);
       this.resetInvincibleTimer(); // Approximately one second at 60 fps.
@@ -118,7 +120,13 @@ class Player {
   }
 
   increaseHp() { this.hp = min(3, this.hp + 1); }
-  healByTime(time) {if (time > 300000 && this.hp == 1) this.increaseHp(); }
+  healByTime(currentTime) {
+    if (this.lastHealTime === null) this.lastHealTime = currentTime;
+    if (this.hp !== 1 || (currentTime - this.lastHealTime) < 300000) return;
+    console.log('Heal after 5 minutes...')
+    this.increaseHp();
+    this.lastHealTime = currentTime;
+  }
 
   resetInvincibleTimer() { this.invincibleTimer = 60; }
 
