@@ -65,6 +65,7 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
+![class-diagram.svg](images/class-diagram.svg)</br>
 
 ### Implementation
 
