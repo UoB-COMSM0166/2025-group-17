@@ -69,3 +69,4 @@ class CollisionDetector {
   }
 }
 
+module.exports = CollisionDetector;
