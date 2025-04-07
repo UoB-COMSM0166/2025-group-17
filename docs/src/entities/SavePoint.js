@@ -6,9 +6,7 @@ class SavePoint {
   }
 
   display() {
-    fill('blue');
     noStroke();
-    rect(this.position.x, this.position.y, this.size.x, this.size.y);
     image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
   };
 }

@@ -1,7 +1,7 @@
 const rooms = [
   {
     id: 1,
-    background: 'assets/background/room1-tutorial.png',
+    background: 'assets/background/L1_TutorialRoom.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
     // Call generation functions to generate enemies and obstacles
     // enemies: [],
@@ -9,13 +9,13 @@ const rooms = [
   },
   {
     id: 2,
-    background: 'assets/background/room2.png',
+    background: 'assets/background/L1_room1.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
 
   },
   {
     id: 3,
-    background: 'assets/background/room5.png',
+    background: 'assets/background/L1_room5.png',
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
   }
 ];
@@ -75,7 +75,7 @@ function loadGameData() {
   player.resetInvincibleTimer();
   console.log("Game Loaded!");
 
-  menuDisplayed = false;
+  mainMenuDisplayed = false;
   menuDrawer.toggleStartButtons();
   menuDrawer.toggleGameOverButtons();
 }
@@ -105,16 +105,17 @@ function resumeGame() {
   startTime += millis() - pauseTime;
 }
 
-function exitGame() {
+function exitToMenu() {
   console.log("Exit to the start menu!")
   isGamePaused = false;
   menuDrawer.drawMenu();
   menuDrawer.showStartButtons();
-  menuDisplayed = true;
+  menuDrawer.toggleGameOverButtons();
+  mainMenuDisplayed = true;
 }
 
 function resetGame() {
-  menuDisplayed = false;
+  mainMenuDisplayed = false;
   isGamePaused = false;
   isGameCompleted = false;
 
@@ -125,10 +126,6 @@ function resetGame() {
   room.setup(rooms[currentRoomIndex]); // reset to the initial room
   inputHandler = new InputHandler(room);
   console.log("Game is reset!")
-}
-
-function isGameOver() {
-  return player.hp <= 0;
 }
 
 function loadRoom() {

@@ -14,6 +14,7 @@ class Player {
     this.blinkCounter = 0;      // Used for blinking during invincibility
     this.bullets = [];
     this.image = playerImage;
+    this.lastHealTime = null;
   }
 
   shoot(direction) {
@@ -106,16 +107,25 @@ class Player {
     this.position.y -= this.velocity.y;
   };
 
-  updateHp(newHp) {
+  decreaseHp() {
+    console.log('Player took damage!');
     if (this.hp > 0 && this.invincibleTimer === 0) {
-      this.hp = max(0, newHp);
-      // this.invincibleTimer = 60; // Approximately one second at 60 fps.
+      this.hp = max(0, this.hp - 1);
       this.resetInvincibleTimer(); // Approximately one second at 60 fps.
     }
     if (this.hp === 0) {
       deathSound.currentTime = 0;
       deathSound.play();
     }
+  }
+
+  increaseHp() { this.hp = min(3, this.hp + 1); }
+  healByTime(currentTime) {
+    if (this.lastHealTime === null) this.lastHealTime = currentTime;
+    if (this.hp !== 1 || (currentTime - this.lastHealTime) < 300000) return;
+    console.log('Heal after 5 minutes...')
+    this.increaseHp();
+    this.lastHealTime = currentTime;
   }
 
   resetInvincibleTimer() { this.invincibleTimer = 60; }

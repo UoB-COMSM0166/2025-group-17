@@ -2,7 +2,8 @@
 
 let lastCollisionTime = 0;
 
-let menuDisplayed = true;
+let mainMenuDisplayed = true;
+let firstBtnToggled = false;
 let isGamePaused = false;
 let isBossStage = false;
 let isGameCompleted = false;
@@ -58,13 +59,6 @@ const defaultAtk = 50;
 const playerMaxHp = 5;
 const playerMaxSpeed = 15;
 const playerMaxAtk = 20;
-
-const iconSize = 40;
-const iconPadding = 15;
-
-const bossHpWidth = 400;
-const bossHpHeight = 30;
-const bossHpCorner = 10;
 
 const widthInPixel = 1024;
 const heightInPixel = 576;

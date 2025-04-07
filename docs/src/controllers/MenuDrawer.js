@@ -1,58 +1,82 @@
 class MenuDrawer {
   constructor() {
+    this.btnIndex = 0;
     // Buttons for the main menu
     this.btnContinue = null;
     this.btnNewGame = null;
+    this.mainMenuBtns = [];
 
     // Buttons for the pause menu
     this.btnPause = null;
     this.btnResume = null;
     this.btnExit = null;
+    this.pauseMenuBtns = [];
 
     // Buttons for the game over page
     this.btnLoadLastSave = null;
     this.btnRestart = null;
+    this.gameOverBtns = [];
   }
 
   // Helper to create a button with standard positioning and behavior
-  createMenuButton(label, yOffset, callback, hidden = false) {
-    const btn = createButton(label);
-    btn.position(windowWidth / 2 - hPadding, windowHeight / 2 + yOffset);
+  createMenuButton(imgPath, label, yOffset, callback, hidden = false) {
+    const btnHeight = 32;
+    const btnWidth = 4 * btnHeight;
+    let btn = createImg(imgPath, label);
+    btn.style('background-color', '#AFDDC9');
+    btn.size(btnWidth, btnHeight);
+    btn.position(windowWidth / 2 - btn.width / 2, windowHeight / 2 + yOffset);
+    btn.mouseClicked(() => {
+      callback();
+      this.btnIndex = 0;
+    });
+    btn.mouseOver(() => { btn.class('blink'); });
+    btn.mouseOut(() => {
+      btn.removeClass('blink');
+      this.btnIndex = 0; 
+    });
     if (hidden) btn.hide();
-    btn.mousePressed(callback);
     return btn;
   }
 
   // Helper to update button position in case of on window resizing
-  repositionButton(btn, yOffset) {
-    if (btn) btn.position(windowWidth / 2 - hPadding, windowHeight / 2 + yOffset);
+  #repositionButton(btn, yOffset) {
+    if (!btn) return;
+    btn.position(windowWidth / 2 - btn.width / 2, windowHeight / 2 + yOffset);
   }
 
   setupMenu() {
-    this.btnContinue = this.createMenuButton('Continue', -vPadding, loadGameData);
-    this.btnNewGame  = this.createMenuButton('New Game', vPadding, startNewGame);
+    this.btnContinue = this.createMenuButton('assets/buttons/Continue.png', 'Continue', -vPadding, loadGameData);
+    this.btnNewGame  = this.createMenuButton('assets/buttons/NewGame.png', 'New Game', vPadding, startNewGame);
+    this.mainMenuBtns.push(this.btnContinue, this.btnNewGame);
   }
 
   setupPauseMenu() {
-    this.btnPause = createImg('assets/icons/pause.svg', 'Click to pause');
-    this.btnPause.position(widthInPixel - hPadding - iconSize, vPadding);
-    this.btnPause.size(iconSize, iconSize);
+    let pauseBtnSize = 40;
+    this.btnPause = createImg('assets/buttons/pause.png', 'Click to pause');
+    this.btnPause.size(pauseBtnSize, pauseBtnSize);
+    this.btnPause.position(windowWidth / 2 + width / 2 - this.btnPause.width, windowHeight / 2 - height / 2);
+    // Make the button a circle
+    this.btnPause.style('border-radius', '50%');
     this.btnPause.mousePressed(pauseGame);
     this.btnPause.hide();
 
-    this.btnResume = this.createMenuButton('Resume', -vPadding, resumeGame, true);
-    this.btnExit   = this.createMenuButton('Exit', vPadding, exitGame, true);
+    this.btnResume = this.createMenuButton('assets/buttons/Resume.png', 'Resume', -vPadding, resumeGame, true);
+    this.btnExit   = this.createMenuButton('assets/buttons/Exit.png', 'Exit', vPadding, exitToMenu, true);
+    this.pauseMenuBtns.push(this.btnResume, this.btnExit);
   }
 
   setupGameOverPage() {
-    this.btnLoadLastSave = this.createMenuButton('Load Last Save', -vPadding, loadGameData, true);
-    this.btnRestart = this.createMenuButton('Restart', vPadding, startNewGame, true);
+    this.btnLoadLastSave = this.createMenuButton('assets/buttons/LastSave.png', 'Last Save', -vPadding, loadGameData, true);
+    this.btnRestart = this.createMenuButton('assets/buttons/Restart.png', 'Restart', vPadding, startNewGame, true);
+    this.gameOverBtns.push(this.btnLoadLastSave, this.btnRestart);
   }
 
   drawMenu() {
     image(startMenuImg, 0, 0, widthInPixel, heightInPixel);
-    this.repositionButton(this.btnContinue, -vPadding);
-    this.repositionButton(this.btnNewGame,  vPadding);
+    this.#repositionButton(this.btnContinue, -vPadding);
+    this.#repositionButton(this.btnNewGame,  vPadding);
+    this.mainMenuBtns[this.btnIndex].class('blink');
   }
 
   drawPauseMenu() {
@@ -63,8 +87,9 @@ class MenuDrawer {
     textAlign(CENTER, CENTER);
     text("Paused", widthInPixel / 2, heightInPixel / 3);
 
-    this.repositionButton(this.btnResume, -vPadding);
-    this.repositionButton(this.btnExit,   vPadding);
+    this.#repositionButton(this.btnResume, -vPadding);
+    this.#repositionButton(this.btnExit, vPadding);
+    this.pauseMenuBtns[this.btnIndex].class('blink');
   }
 
   drawGameOverPage() {
@@ -77,20 +102,21 @@ class MenuDrawer {
     this.toggleResumeButtons();
     this.showGameOverButtons();
     text("Game Over", widthInPixel / 2, heightInPixel / 3);
-    this.repositionButton(this.btnLoadLastSave, -vPadding);
-    this.repositionButton(this.btnRestart, vPadding);
+    this.#repositionButton(this.btnLoadLastSave, -vPadding);
+    this.#repositionButton(this.btnRestart, vPadding);
+    this.gameOverBtns[this.btnIndex].class('blink');
   }
 
-  drawGameCompleted() {
+  drawGameCompleted(totalTime) {
     clear();
     background(220);
     fill(255, 0, 0);
     textSize(32);
     textAlign(CENTER, CENTER);
 
-    let totalSecs = floor(timeSpent / 1000);
-    let mins = floor(totalSecs / 60);
-    let secs = totalSecs % 60;
+    const totalSecs = floor(totalTime / 1000);
+    const mins = floor(totalSecs / 60);
+    const secs = totalSecs % 60;
     text(
       `YOU WON! Took ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} seconds`,
       widthInPixel / 2,
@@ -135,10 +161,67 @@ class MenuDrawer {
     this.btnRestart.hide();
   }
 
-  renderMenu() {
-    if (menuDisplayed) return this.drawMenu();
-    if (isGamePaused) return this.drawPauseMenu();
-    if (isGameOver()) return this.drawGameOverPage();
-    if (isGameCompleted) return this.drawGameCompleted();
+  renderMenu(playerObj, timeSpent) {
+    const shouldRender = mainMenuDisplayed || isGamePaused || isGameCompleted || this.#isGameOver(playerObj);
+    if (!shouldRender) return false;
+
+    if (mainMenuDisplayed) this.drawMenu();
+    if (isGamePaused) this.drawPauseMenu();
+    if (isGameCompleted) this.drawGameCompleted(timeSpent);
+    if (this.#isGameOver(playerObj)) this.drawGameOverPage();
+    return true;
+  }
+
+  updatePauseBtnPosition() {
+    // Reset the button positions to support proper resizing
+    let btnPositionX = windowWidth / 2 + width / 2 - this.btnPause.width;
+    let btnPositionY = windowHeight / 2 - height / 2;
+    this.btnPause.position(btnPositionX, btnPositionY);
+  }
+
+  handleBtnPressed(playerObj) {
+    const gameSetupFunctions = [loadGameData, startNewGame];
+    const gameSessionFunctions = [resumeGame, exitToMenu];
+    this.#returnToPrevPage(playerObj);
+    if (mainMenuDisplayed) this.#controlBtnsByKeys(this.mainMenuBtns, gameSetupFunctions);
+    if (this.#isGameOver(playerObj)) this.#controlBtnsByKeys(this.gameOverBtns, gameSetupFunctions);
+    if (isGamePaused) this.#controlBtnsByKeys(this.pauseMenuBtns, gameSessionFunctions);
+  }
+
+  #returnToPrevPage(playerObj) {
+    if (!keyIsDown(ESCAPE)) return;
+    if (mainMenuDisplayed) return;
+
+    this.btnIndex = 0;
+    if (isGameCompleted || this.#isGameOver(playerObj)) return exitToMenu();
+    if (isGamePaused) return resumeGame();
+    pauseGame();
+  }
+
+  #controlBtnsByKeys(buttons, gameStateFunctions) {
+    if (keyIsDown(ENTER)) this.#pressBtnsByKeys(buttons, gameStateFunctions);
+    if (keyIsDown(DOWN_ARROW) || keyIsDown(UP_ARROW)) this.#moveBetweenBtnsByKeys(buttons);
+  }
+
+  #pressBtnsByKeys(buttons, gameStateFunctions) {
+    const prevBtnIndex = this.btnIndex;      
+    // Reset previous button style
+    buttons[prevBtnIndex].removeClass('blink');
+    // Reset before the game state function to make sure the correct button is highlighted
+    this.btnIndex = 0;
+    gameStateFunctions[prevBtnIndex]();
+  }
+
+  #moveBetweenBtnsByKeys(buttons) {
+    const direction = keyIsDown(DOWN_ARROW) ? 1 : -1;
+    buttons[this.btnIndex].removeClass('blink');
+
+    // Highlight new button
+    this.btnIndex = (this.btnIndex + direction + buttons.length) % buttons.length;
+    buttons[this.btnIndex].class('blink');
+  }
+
+  #isGameOver(playerObj) {
+    return !mainMenuDisplayed && playerObj.hp <= 0; 
   }
 }

@@ -19,12 +19,14 @@ function adjustCanvasWithAspectRatio() {
 function drawUiHub() {
   drawHealthBar();
   drawCurrentLevel();
-  drawBossStatus();
+  // drawBossStatus();
   timeSpent = millis() - startTime;
   drawTimer();
 }
 
 function drawHealthBar() {
+  const iconSize = 40;
+  const iconPadding = 15;
   // Draw current HP
   for (let h = 0; h < player.hp; h++) {
     image(heart, hPadding + h * (iconSize + iconPadding), vPadding, iconSize, iconSize);
@@ -42,32 +44,36 @@ function drawCurrentLevel() {
   strokeWeight(5);
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
-//  text(`Level:${currentLevel}-${currentStage}`, hPadding, heightInPixel - vPadding);
   text(`Level: ${currentRoomIndex} / ${rooms.length}`, hPadding, heightInPixel - vPadding);
 
 }
 
-function drawBossStatus() {
+function drawBossStatus(bossObj) {
   if (!isBossStage) return;
-  let hpPercentage = boss.hp / boss.maxHp;
-  let barX = (widthInPixel / 2) - (bossHpWidth / 2);
+  const hpPercentage = bossObj.hp / bossObj.maxHp;
+  const positionX = widthInPixel / 2 - bossHpWidth / 2;
+  const bossHpWidth = 400;
+  const bossHpHeight = 30;
+  const bossHpCorner = 10;
 
   // Draw HP bar background
-  fill(0);
-  rect(barX, vPadding, bossHpWidth, bossHpHeight, bossHpCorner);
+  stroke(0);
+  strokeWeight(3);
+  fill(230, 127); // 127 makes it 50% transparent
+  rect(positionX, vPadding, bossHpWidth, bossHpHeight, bossHpCorner);
 
   // Draw HP bar
+  noStroke();
   adjustBossStatusColor(hpPercentage);
-  rect(barX, vPadding, bossHpWidth * hpPercentage, bossHpHeight);
+  const margin = 5;
+  const barWidth = (bossHpWidth - margin * 2) * hpPercentage;
+  rect(positionX + margin, vPadding + margin, barWidth, bossHpHeight - margin * 2);
 
   // Draw percentage markers
   for (let i of [0.25, 0.5, 0.75]) {
-    let lineX = barX + bossHpWidth * i;
+    let lineX = positionX + bossHpWidth * i;
     line(lineX, vPadding, lineX, vPadding + bossHpHeight);
   }
-
-  // Back to default weight
-  strokeWeight(1);
 }
 
 function adjustBossStatusColor(percentage) {

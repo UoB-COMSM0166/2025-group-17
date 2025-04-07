@@ -5,6 +5,27 @@ class CollisionDetector {
     // TODO: Update it once the attack method of the boss has been implemented.
     return objArr.some(obj => this.detectCollision(playerObj, obj));
   }
+
+  handleEnemyCollision(enemyArr) {
+    for (let i = 0; i < enemyArr.length; i++) {
+      for (let j = i + 1; j < enemyArr.length; j++) {
+        if (this.detectCollision(enemyArr[i], enemyArr[j])) {
+          enemyArr[i].collide();
+          enemyArr[j].collide();
+        }
+      }
+    }
+  }
+
+  handleEnemyObstacleCollision(enemyArr, obstacleArr) {
+    enemyArr.forEach(enemy => {
+      obstacleArr.forEach(obstacle => {
+        if (this.detectCollision(enemy, obstacle)) {
+          enemy.collide();
+        }
+      });
+    });
+  }
  
   detectBulletEnemyCollision(bulletArr, enemyArr) {
     // Check the collision between bullets and enemies. If there is a collision, 
@@ -31,7 +52,7 @@ class CollisionDetector {
     // Check the collision between bullets, walls and obstacles. If there is a collision, 
     // the bullet vanishes.
     bulletArr.forEach((bulletObj, bulletIndex) => {
-      if (this.isBulletHitWall(bulletObj)) bulletArr.splice(bulletIndex, 1);
+      if (this.#isBulletHitWall(bulletObj)) bulletArr.splice(bulletIndex, 1);
       else if (obstacleArr.some(obstacleObj => this.detectCollisionWithBullet(bulletObj, obstacleObj))) {
         hitSound.currentTime = 0;
         hitSound.play();
@@ -85,7 +106,7 @@ class CollisionDetector {
     return x < leftBoundary || x > rightBoundary - obj.size.x || y < topBoundary || y > bottomBoundary - obj.size.y;
   }
 
-  isBulletHitWall(bulletObj) {
+  #isBulletHitWall(bulletObj) {
     const wallMarginX = boundaryInPixel.w / 3;
     const wallMarginY = boundaryInPixel.h / 3;
     const { x, y } = bulletObj.position;

@@ -10,8 +10,8 @@ let openDoorSound = new Audio("assets/music/Door_Open.mp3");
 
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
-  heart = loadImage('assets/icons/heart.svg');
-  damagedHeart = loadImage('assets/icons/damagedHeart.svg');
+  heart = loadImage('assets/icons/full_heart.png');
+  damagedHeart = loadImage('assets/icons/empty_heart.png');
   startMenuImg = loadImage('assets/background/menu_start.png');
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
@@ -65,31 +65,23 @@ function draw() {
 
   adjustCanvasWithAspectRatio();
   background(220);
-
-  if (menuDisplayed || isGamePaused || isGameOver() || isGameCompleted) {
-    return menuDrawer.renderMenu();
-  }
-  // Reset the button positions to support proper resizing
-  menuDrawer.btnPause.position(cnv.x + width - hPadding, vPadding);
-  updateGameState();
+  if (!menuDrawer.renderMenu(player, timeSpent)) updateGameState();
 }
 
 function updateGameState() {
+  menuDrawer.updatePauseBtnPosition();
   room.update();
-  inputHandler.update();
+  inputHandler.update(player);
   player.display();
+  player.healByTime(timeSpent);
   drawUiHub();
   checkSavePoint();
 }
 
 function keyPressed() {
-  inputHandler.handlePlayerShooting();
+  menuDrawer.handleBtnPressed(player);
+  inputHandler.handlePlayerShooting(player);
 }
-
-let boss = {
-  hp: 30,
-  maxHp: 100
-};
 
 // //for testing the loading bar of the pictures
 // function checkLoadingComplete() {
