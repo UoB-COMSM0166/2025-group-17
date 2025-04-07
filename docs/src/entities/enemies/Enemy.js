@@ -20,11 +20,11 @@ class Enemy {
     }
   }
 
-  display() {
-    //imageMode(CENTER);
-    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
-    // fill('green');
-    // rect(this.position.x, this.position.y, this.size.x, this.size.y);
+  display() { image(this.image, this.position.x, this.position.y, this.size.x, this.size.y); }
+
+  collide() {
+    this.position.sub(this.velocity);
+    this.velocity.mult(-1);
   }
 }
 

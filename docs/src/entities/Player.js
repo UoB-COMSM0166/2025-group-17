@@ -106,10 +106,9 @@ class Player {
     this.position.y -= this.velocity.y;
   };
 
-  updateHp(newHp) {
+  decreaseHp() {
     if (this.hp > 0 && this.invincibleTimer === 0) {
-      this.hp = max(0, newHp);
-      // this.invincibleTimer = 60; // Approximately one second at 60 fps.
+      this.hp = max(0, this.hp - 1);
       this.resetInvincibleTimer(); // Approximately one second at 60 fps.
     }
     if (this.hp === 0) {
@@ -117,6 +116,9 @@ class Player {
       deathSound.play();
     }
   }
+
+  increaseHp() { this.hp = min(3, this.hp + 1); }
+  healByTime(time) {if (time > 300000 && this.hp == 1) this.increaseHp(); }
 
   resetInvincibleTimer() { this.invincibleTimer = 60; }
 

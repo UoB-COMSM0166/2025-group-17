@@ -7,33 +7,31 @@ class InputHandler {
     this.lastCollisionTime = millis();
   }
 
-  update() {
+  update(playerObj) {
     this.currentRoom.update();
-    player.updateVelocity();
-    player.updatePosition();
-    player.updateBlinking(); // The player will blink for 2 seconds after being hit.
-    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.enemies);
-    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(player, this.currentRoom.obstacles);
-    const playerHitBoundary = this.collisionDetector.isHitBoundary(player);
+    playerObj.updateVelocity();
+    playerObj.updatePosition();
+    playerObj.updateBlinking(); // The player will blink for 2 seconds after being hit.
+    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(playerObj, this.currentRoom.enemies);
+    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(playerObj, this.currentRoom.obstacles);
+    const playerHitBoundary = this.collisionDetector.isHitBoundary(playerObj);
     if (collideWithEnemies || collideWithObstacles || playerHitBoundary) {
-      player.revertPosition();
+      playerObj.revertPosition();
     }
-    if (collideWithEnemies) this.decreasePlayerHp();
-    player.resetVelocity();
+    if (collideWithEnemies) this.decreasePlayerHp(playerObj);
+    playerObj.resetVelocity();
 
-    // // laser
-    // const direction = key.toLowerCase();
-    // if (direction === 'w' || direction === 'a' || direction === 's' || direction === 'd') {
-    //   player.shoot(direction);
-    // }
-    this.updateBullets();
-    this.collisionDetector.detectBulletEnemyCollision(player.bullets, this.currentRoom.enemies);
-    this.collisionDetector.detectBulletObstacleCollision(player.bullets, this.currentRoom.obstacles);
+    this.collisionDetector.handleEnemyCollision(this.currentRoom.enemies);
+    this.collisionDetector.handleEnemyObstacleCollision(this.currentRoom.enemies, this.currentRoom.obstacles);
+
+    this.updateBullets(playerObj);
+    this.collisionDetector.detectBulletEnemyCollision(playerObj.bullets, this.currentRoom.enemies);
+    this.collisionDetector.detectBulletObstacleCollision(playerObj.bullets, this.currentRoom.obstacles);
     this.removeEnemies(this.currentRoom.enemies);
-    this.moveToNextRoom();
+    this.moveToNextRoom(playerObj);
   }
 
-  handlePlayerShooting() {
+  handlePlayerShooting(playerObj) {
     // let shootDirection = createVector(0, 0);
     // if (keyIsDown(87)) shootDirection.y = -1; // W
     // if (keyIsDown(83)) shootDirection.y = 1; // S
@@ -54,12 +52,12 @@ class InputHandler {
     const direction = key.toLowerCase();
     if (direction === 'w' || direction === 'a' || direction === 's' || direction === 'd') {
       console.log("Bullet input detected!")
-      player.shoot(direction);
+      playerObj.shoot(direction);
     }
   }
 
-  updateBullets() {
-    player.bullets.forEach(b => {
+  updateBullets(playerObj) {
+    playerObj.bullets.forEach(b => {
       b.update();
       b.display();
     });
@@ -73,25 +71,25 @@ class InputHandler {
     });
   }
 
-  decreasePlayerHp() {
+  decreasePlayerHp(playerObj) {
     // The player will not receive any damage 2 seconds after loading or entering the new room.
     if (millis() - this.lastLoadTime < this.coolDownTime) return;
 
     // The player will not receive any damage 2 seconds after the collision.
     if (millis() - this.lastCollisionTime < this.coolDownTime) return;
-    player.updateBlinking(); // The player will blink for 2 seconds after being hit.
-    player.updateHp(player.hp - 1);
+    playerObj.updateBlinking(); // The player will blink for 2 seconds after being hit.
+    playerObj.decreaseHp();
     this.lastCollisionTime = millis();
 
     hurtSound.currentTime = 0;
     hurtSound.play();
   }
 
-  moveToNextRoom(tolerance = player.size.x) {
+  moveToNextRoom(playerObj, tolerance = playerObj.size.x) {
     if (!this.currentRoom.checkClearCondition()) return;
 
-    const playerMidX = player.position.x + player.size.x / 2;
-    const playerMidY = player.position.y + player.size.y / 2;
+    const playerMidX = playerObj.position.x + playerObj.size.x / 2;
+    const playerMidY = playerObj.position.y + playerObj.size.y / 2;
     const doorX = this.currentRoom.door.position.x;
     const doorY = this.currentRoom.door.position.y + this.currentRoom.door.size.y / 2;
 
@@ -99,7 +97,7 @@ class InputHandler {
       console.log("Move to the next room!");
       this.lastLoadTime = millis();
       loadRoom();
-      player.resetInvincibleTimer();
+      playerObj.resetInvincibleTimer();
     }
   }
 }
