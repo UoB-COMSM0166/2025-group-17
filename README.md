@@ -43,6 +43,9 @@ On the artistic level, we have created original, hand-drawn visuals to support s
 <!-- Early stages design & Ideation process -->
 We started the ideation process by exploring games on the markets in Week 1 and came up a list of possible game mechanisms and ideas. After brainstorming and discussion in Week 2, we narrowed down the list to two ideas below. Despite the rest of the game ideas have not been prototyped, the mechanisms extracted from them, such as using random events to improve users' engagement, have set the foundation for the finalised game. Finally, we considered the feasibility of implementation, and the feedback gained from other teams during the workshop in Week 3. As a result, we decided to go with an action advantage game similar to The Binding of Isaac.
 
+Prototype Ideas Video
+https://youtu.be/wU7b8NAj1_g?si=eox95n0rkYJhKN4H
+
 <!-- TODO: Finalised two ideas -->
 | Game Idea | Inspried by | Game Mechanisms | Possible Challenges |
 |-|-|-|-|
