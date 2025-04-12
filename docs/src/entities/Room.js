@@ -3,6 +3,8 @@ class Room {
     this.savePoint = null;
     this.door = null;
     this.enemies = [];
+    this.chaser = [];
+    this.shooter = [];
     this.obstacles = [];
     this.obsCount = obstacleCount;
 
@@ -16,14 +18,28 @@ class Room {
   }
 
   setup(roomData) {
+    this.currentRoomData = roomData;
     // Load room configuration
     this.generateObstacles(this.obsCount);
+    
+    // 按房间 ID 指定不同的生成逻辑
+  if (roomData.id === 4) {
+    this.generateChaser();
+  } else if (roomData.id === 5) {
+    this.generateShooter();
+  } else if (roomData.id === 6) {
+    this.generateFinalBossRoom(); // 2 chasers + 1 shooter
+  } else {
     this.generateEnemies();
+  }
+
+
+    //this.generateEnemies();
     this.backgroundImg = roomData.backgroundImg;
     this.door = new Door();
     this.door.close();
 
-    this.currentRoomData = roomData; // Store room data
+
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
 
     if (roomData.id == 1) {
@@ -37,7 +53,21 @@ class Room {
     
     this.savePoint.display();    
     this.updateObstacles();
+
+   // 分别处理三种房间
+  if (this.currentRoomData.id === 4) {
+    this.updateChaser();
+  } else if (this.currentRoomData.id === 5) {
+    this.updateShooter();
+  } else if (this.currentRoomData.id === 6) {
+    this.updateChaser();
+    this.updateShooter();
+  } else {
     this.updateEnemies();
+  }
+
+
+   // this.updateEnemies();
     this.updateDoor();
     this.checkClearCondition();
   }
@@ -72,6 +102,29 @@ class Room {
     }
   }
 
+
+  
+  generateChaser() {
+    this.chaser = [];
+    this.chaser.push(new Chaser(400, 300));
+  }
+
+
+
+  generateShooter() {
+    this.shooter = [];
+    this.shooter.push(new Shooter(400, 300));
+  }
+
+  generateFinalBossRoom() {
+    this.chaser = [];
+    this.shooter = [];
+    this.chaser.push(new Chaser(300, 250));
+    this.chaser.push(new Chaser(500, 350));
+    this.shooter.push(new Shooter(400, 400));
+  }
+  
+
   updateObstacles() {
     this.obstacles.forEach(o => o.display());
   }
@@ -83,6 +136,32 @@ class Room {
     });
   }
 
+  updateChaser() {
+    this.chaser = this.chaser.filter(c => c.hp > 0);
+    this.chaser.forEach(c => {
+      c.update();
+      c.display();
+      c.detectBulletCollision(player.bullets);
+      if (this.collisionDetector.detectCollision(player, c)) {
+        inputHandler.decreasePlayerHp();
+      }
+    });
+  }
+
+
+
+  updateShooter() {
+    this.shooter = this.shooter.filter(s => s.hp > 0);
+    this.shooter.forEach(s => {
+      s.update();
+      s.display();
+      s.detectBulletCollision(player.bullets);
+      s.detectPlayerCollision();
+    });
+  }
+  
+
+
   updateDoor() {
     if (this.checkClearCondition()) this.door.open();
     else this.door.close();
@@ -90,6 +169,11 @@ class Room {
   }
 
   checkClearCondition() {
-    return (this.enemies.length === 0 && player.hp > 0);
+    const noEnemies = this.enemies.length === 0;
+    const noChaser = this.chaser.length === 0;
+    const noShooter = this.shooter.length === 0;
+  
+    return noEnemies && noChaser && noShooter && player.hp > 0;
   }
+  
 }
