@@ -135,9 +135,33 @@ Heuristic Evaluation
 
 ### Process 
 
-- 15% ~750 words
 
-- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together. 
+---
+
+## Team Collaboration and Workflow
+
+At the beginning of the project, we held collaborative discussions to define the core game states necessary for a minimum viable product (MVP), as well as potential extended features that could be added later in the development cycle. In hindsight, our progress could have benefited from a clearer overall structure regarding functionality planning and workflow management early on. A more refined understanding of the software requirements and a better-coordinated development pipeline might have streamlined our implementation process.
+
+Throughout the development period, we maintained regular in-person meetings in the Software Engineering lab. These weekly sessions provided an opportunity to check progress, align tasks, and address any technical or design issues that emerged. Our communication was both effective and enjoyable, which significantly contributed to team morale and productivity. For day-to-day coordination, we relied heavily on a WeChat group chat. This channel allowed us to share quick updates, raise unexpected issues, and propose small changes in real time. For more formal discussions, especially those involving critical decisions or feature planning, we used Microsoft Teams and recorded key meetings to ensure that important information could be reviewed later when needed.
+
+## Tools and Technologies
+
+**Project Management Tools:**  
+We used GitHub for version control and collaborative coding. Each team member worked on individual feature branches—for example, a dedicated branch was created solely for the menu state. The main branch was kept stable at all times to ensure that we always had a functioning build available. GitHub’s protection features, including the use of pull requests, allowed us to thoroughly review and test each other’s contributions before merging. This not only improved code quality but also helped prevent merge conflicts and maintained consistency in how features were implemented.
+
+Given the complexity of our game, which involved multiple interconnected game states, we adopted Notion as our project management tool. Notion enabled us to track progress on various tasks, delegate responsibilities, and visualize our workflow clearly. We divided work based on game modules and assigned responsibilities accordingly. In retrospect, we realized that we could have further broken down larger tasks into smaller sub-tasks—such as dividing the development of the shop state into UI design, game logic, and asset integration. This would have given us a more granular understanding of our progress and helped balance the workload more effectively.
+
+**Development Tools:**  
+For the core of our game development, we used **P5.js**, a JavaScript-based creative coding framework that supports dynamic rendering and a wide variety of extension libraries. Early on, we encountered some difficulties with debugging and extending functionality using P5.js, particularly since many team members were unfamiliar with it. However, through collaboration and consistent practice, we were able to overcome these challenges and gain proficiency, which in turn accelerated the later stages of development.
+
+In terms of visual design, team member **Shuzhou Huang** led the creation of all original artwork. Using **Aseprite**, a pixel art tool, he designed characters, backgrounds, UI components, and animations, all by hand. These assets contributed significantly to the game’s unique aesthetic and atmosphere.
+
+For sound design, we sourced royalty-free audio from public platforms, and then processed and edited the sound effects using **Logic Pro X**. This allowed us to fine-tune the quality and timing of audio elements, enhancing the overall immersion of the game.
+
+
+
+- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together.
+
 
 ### Conclusion
 
