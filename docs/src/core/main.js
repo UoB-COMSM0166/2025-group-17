@@ -49,7 +49,7 @@ function setup() {
   player = new Player(playerX, playerY);
   room = new Room();
   
-  currentRoomIndex = 3;
+  currentRoomIndex = 0;
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 

@@ -69,6 +69,7 @@ class Room {
   } else if (this.currentRoomData.id === 6) {
     this.updateChaser();
     this.updateShooter();
+    this.resolveBossCollision(); // ✅ 加上怪物间物理阻挡
   } else {
     this.updateEnemies();
   }
@@ -181,6 +182,23 @@ class Room {
     const noShooter = this.shooter.length === 0;
   
     return noEnemies && noChaser && noShooter && player.hp > 0;
+  }
+  
+  resolveBossCollision() {
+    const bosses = [...this.chaser, ...this.shooter];
+  
+    for (let i = 0; i < bosses.length; i++) {
+      for (let j = i + 1; j < bosses.length; j++) {
+        const b1 = bosses[i];
+        const b2 = bosses[j];
+  
+        if (this.collisionDetector.detectCollision(b1, b2)) {
+          const push = p5.Vector.sub(b1.position, b2.position).normalize().mult(2);
+          b1.position.add(push);
+          b2.position.sub(push);
+        }
+      }
+    }
   }
   
 }
