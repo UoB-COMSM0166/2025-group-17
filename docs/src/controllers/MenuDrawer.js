@@ -224,4 +224,8 @@ class MenuDrawer {
   #isGameOver(playerObj) {
     return !mainMenuDisplayed && playerObj.hp <= 0; 
   }
+  showGameOverPage() {
+    this.drawGameOverPage();
+  }
+  
 }
