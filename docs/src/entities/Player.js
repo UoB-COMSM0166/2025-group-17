@@ -21,12 +21,31 @@ class Player {
 
 
 
-  updateHp(newHp) {
+  //updateHp(newHp) {
+  //  this.hp = newHp;
+  //  console.log("Player hp updated to", this.hp);
+  //}
+
+
+   
+  updateHp(newHp, invincibleDuration = 60) {
+    if (this.invincibleTimer > 0) return;
+  
     this.hp = newHp;
     console.log("Player hp updated to", this.hp);
+  
+    if (this.hp <= 0) {
+      deathSound.currentTime = 0;
+      deathSound.play();
+      if (typeof menuDrawer !== "undefined") {
+        menuDrawer.isGameOver = true;
+      }
+    }
+  
+    this.resetInvincibleTimer(invincibleDuration); // ✅ 用参数设定无敌时间
   }
 
-
+  
   shoot(direction) {
     bullets.push(new Bullet(this.position.x, this.position.y, direction));
 
@@ -138,7 +157,11 @@ class Player {
     this.lastHealTime = currentTime;
   }
 
-  resetInvincibleTimer() { this.invincibleTimer = 10; }
+  //resetInvincibleTimer() { this.invincibleTimer = 10; }
+  resetInvincibleTimer(duration = 60) {
+    this.invincibleTimer = duration;
+  }
+  
 
   shoot(direction) {
     this.bullets.push(new Bullet(this.position.x, this.position.y, direction, this.atk));
