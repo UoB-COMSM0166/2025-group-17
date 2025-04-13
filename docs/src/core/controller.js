@@ -134,7 +134,7 @@ function resetGame() {
   isGamePaused = false;
   isGameCompleted = false;
 
-  currentRoomIndex = 0;
+  //currentRoomIndex = 0;
 
   player = new Player(playerX, playerY);
   //room = new Room();

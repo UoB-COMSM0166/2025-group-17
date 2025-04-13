@@ -12,10 +12,20 @@ class Player {
     this.size = createVector(heightInPixel / 8, heightInPixel / 8);
     this.invincibleTimer = 0;   // Frames remaining for invincibility
     this.blinkCounter = 0;      // Used for blinking during invincibility
+    this.invincibleTimer = 0;   // 剩余无敌帧数
+    this.blinkCounter = 0;      // 用于无敌闪烁效果
     this.bullets = [];
     this.image = playerImage;
     this.lastHealTime = null;
   }
+
+
+
+  updateHp(newHp) {
+    this.hp = newHp;
+    console.log("Player hp updated to", this.hp);
+  }
+
 
   shoot(direction) {
     bullets.push(new Bullet(this.position.x, this.position.y, direction));
@@ -128,7 +138,7 @@ class Player {
     this.lastHealTime = currentTime;
   }
 
-  resetInvincibleTimer() { this.invincibleTimer = 60; }
+  resetInvincibleTimer() { this.invincibleTimer = 10; }
 
   shoot(direction) {
     this.bullets.push(new Bullet(this.position.x, this.position.y, direction, this.atk));

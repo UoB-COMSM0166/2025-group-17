@@ -4,37 +4,34 @@ class Shooter {
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
     this.hp = 800;
     this.speed = 2;
-    this.moveCooldown = 60; // 每 60 帧改变方向
+    this.moveCooldown = 60;
     this.currentMoveCooldown = 0;
     this.direction = p5.Vector.random2D().mult(this.speed);
-    this.shootCooldown = 180; // 每 180 帧（3 秒）发射一次子弹
+    this.shootCooldown = 180;
     this.currentShootCooldown = 0;
     this.bullets = [];
   }
 
   update() {
-    if (this.hp <= 0) return; // Boss 死亡后不更新
-    
-    // 移动逻辑
+    if (this.hp <= 0) return;
+
     if (this.currentMoveCooldown <= 0) {
       this.direction = p5.Vector.random2D().mult(this.speed);
       this.currentMoveCooldown = this.moveCooldown;
     } else {
       this.currentMoveCooldown--;
     }
-    
+
     this.position.add(this.direction);
     this.checkBoundaryCollision();
-    
-    // 射击逻辑
+
     if (this.currentShootCooldown <= 0) {
       this.shoot();
       this.currentShootCooldown = this.shootCooldown;
     } else {
       this.currentShootCooldown--;
     }
-    
-    // 更新子弹
+
     this.bullets.forEach(bullet => bullet.update());
   }
 
@@ -48,13 +45,13 @@ class Shooter {
   }
 
   shoot() {
-    let directions = [
+    const directions = [
       createVector(1, 0), createVector(-1, 0),
       createVector(0, 1), createVector(0, -1),
       createVector(1, 1), createVector(-1, -1),
       createVector(1, -1), createVector(-1, 1)
     ];
-    
+
     directions.forEach(dir => {
       dir.normalize();
       this.bullets.push(new Bullet(this.position.x, this.position.y, dir, 50));
@@ -92,7 +89,7 @@ class Shooter {
   detectPlayerCollision() {
     this.bullets.forEach((bullet, index) => {
       if (this.checkPlayerCollision(bullet)) {
-        player.updateHp(player.hp - 50); // 造成伤害
+        player.updateHp(player.hp - 50);
         this.bullets.splice(index, 1);
       }
     });
@@ -108,7 +105,7 @@ class Shooter {
   }
 
   display() {
-    if (this.hp <= 0) return; // Boss 死亡后不显示
+    if (this.hp <= 0) return;
     fill('blue');
     rect(this.position.x, this.position.y, this.size.x, this.size.y);
     this.bullets.forEach(bullet => bullet.display());
