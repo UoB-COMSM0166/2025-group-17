@@ -8,6 +8,7 @@ let deathSound2 = new Audio("assets/music/Player_Death.mp3");
 
 let openDoorSound = new Audio("assets/music/Door_Open.mp3");
 
+
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
   heart = loadImage('assets/icons/full_heart.png');
@@ -33,6 +34,9 @@ function preload() {
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
   //load enemy image
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
+  chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
+  shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
+  shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
   savePointImg = loadImage('assets/savepoint/savepoint.jpg');
 
   rooms.forEach((room, i) => {
@@ -49,7 +53,7 @@ function setup() {
   player = new Player(playerX, playerY);
   room = new Room();
   
-  currentRoomIndex = 0;
+  currentRoomIndex = 5;
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 
