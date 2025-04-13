@@ -48,6 +48,8 @@ function setup() {
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
   room = new Room();
+  
+  currentRoomIndex = 3;
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 
@@ -65,6 +67,13 @@ function draw() {
 
   adjustCanvasWithAspectRatio();
   background(220);
+  player.updateBlinking();
+  if (menuDrawer.isGameOver) {
+    menuDrawer.showGameOverPage(); // ✅ 主动显示 Game Over 页面
+    return; // ❗停止其他更新逻辑
+  }
+
+
   if (!menuDrawer.renderMenu(player, timeSpent)) updateGameState();
 }
 
@@ -73,7 +82,7 @@ function updateGameState() {
   room.update();
   inputHandler.update(player);
   player.display();
-  player.healByTime(timeSpent);
+  //player.healByTime(timeSpent);
   drawUiHub();
   checkSavePoint();
 }
