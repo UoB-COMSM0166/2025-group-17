@@ -1,24 +1,24 @@
-const rooms = [
-  {
-    id: 1,
-    background: 'assets/background/L1_TutorialRoom.png',
-    savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
-    // Call generation functions to generate enemies and obstacles
-    // enemies: [],
-    // obstacles: []
-  },
-  {
-    id: 2,
-    background: 'assets/background/L1_room1.png',
-    savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
+// const rooms = [
+//   {
+//     id: 1,
+//     background: 'assets/background/L1_TutorialRoom.png',
+//     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
+//     // Call generation functions to generate enemies and obstacles
+//     // enemies: [],
+//     // obstacles: []
+//   },
+//   {
+//     id: 2,
+//     background: 'assets/background/L1_room1.png',
+//     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
 
-  },
-  {
-    id: 3,
-    background: 'assets/background/L1_room5.png',
-    savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
-  }
-];
+//   },
+//   {
+//     id: 3,
+//     background: 'assets/background/L1_room5.png',
+//     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
+//   }
+// ];
 let currentRoomIndex = 0;
 
 function checkSavePoint() {

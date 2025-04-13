@@ -35,15 +35,18 @@ function preload() {
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
   savePointImg = loadImage('assets/savepoint/savepoint.jpg');
 
-  rooms.forEach((room, i) => {
-    room.backgroundImg = loadImage(room.background);
-    rooms[i] = room; // Ensure the reference is updated
-  });
+  rawData = loadJSON("assets/rooms.json");
 
 }
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
+
+  rooms = rawData.rooms;
+  rooms.forEach(room => {
+    room.backgroundImg = loadImage(room.background);
+  });
+  
   menuDrawer = new MenuDrawer();
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
@@ -57,12 +60,6 @@ function setup() {
 }
 
 function draw() {
-  // // If loading is not complete, display the loading bar.
-  // if (!loadingComplete) {
-  //   drawLoadingBar();
-  //   return;
-  // }
-
   adjustCanvasWithAspectRatio();
   background(220);
   if (!menuDrawer.renderMenu(player, timeSpent)) updateGameState();
@@ -82,39 +79,3 @@ function keyPressed() {
   menuDrawer.handleBtnPressed(player);
   inputHandler.handlePlayerShooting(player);
 }
-
-// //for testing the loading bar of the pictures
-// function checkLoadingComplete() {
-//   if (assetsLoaded === totalAssets) {
-//     loadingComplete = true;
-//   }
-// }
-// // Function to draw the loading bar on screen.
-// function drawLoadingBar() {
-//   background(50);
-
-//   // Calculate progress as a fraction.
-//   let progress = assetsLoaded / totalAssets;
-
-//   // Define dimensions and position for the loading bar.
-//   let barWidth = width - 200;
-//   let barHeight = 20;
-//   let x = 100;
-//   let y = height / 2;
-
-//   // Draw the empty bar outline.
-//   noFill();
-//   stroke(255);
-//   rect(x, y, barWidth, barHeight);
-
-//   // Draw the filled portion of the bar.
-//   noStroke();
-//   fill(0, 255, 0);
-//   rect(x, y, progress * barWidth, barHeight);
-
-//   // Draw the loading percentage text.
-//   fill(255);
-//   textAlign(CENTER, CENTER);
-//   textSize(20);
-//   text("Loading... " + floor(progress * 100) + "%", width / 2, y - 30);
-// }
