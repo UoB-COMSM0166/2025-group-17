@@ -57,6 +57,16 @@ class Chaser {
       }
     }
     console.log(`Frame: ${frameCount}, isDashing: ${this.isDashing}, currentDashTime: ${this.currentDashTime}, distanceToPlayer: ${distanceToPlayer.toFixed(2)}, dashDamageApplied: ${this.dashDamageApplied}`);
+  // 非 dash 状态：只阻挡，不扣血
+  if (!this.isDashing && this.checkPlayerCollision()) {
+    const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(4);
+    player.position.add(pushDir);
+  
+    // ✅ 保证 player 位置在边界内
+    player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
+    player.position.y = constrain(player.position.y, topBoundary, bottomBoundary - player.size.y);
+  }
+  
 
   }
 
