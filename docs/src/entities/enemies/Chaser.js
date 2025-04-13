@@ -13,6 +13,7 @@ class Chaser {
     // 新增：dash 最大持续帧数
     this.dashDuration = 10; // 例如 30 帧
     this.currentDashTime = 0; // 当前 dash 状态持续时间计时器
+    this.image = chaserImage; // 你需要在 preload 中加载这个图片
   }
 
   update() {
@@ -159,6 +160,7 @@ class Chaser {
   display() {
     if (this.hp <= 0) return;
     fill(this.isDashing ? 'red' : 'purple');
-    rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    //rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 }
