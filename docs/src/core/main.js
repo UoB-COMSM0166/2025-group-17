@@ -1,11 +1,9 @@
-let mainmenuSound = new Audio("assets/music/Scene_music/MainMenu.mp3");
 let pauseSound = new Audio("assets/music/Pause.mp3");
 let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
 let deathSound = new Audio("assets/music/Enemy_Death.mp3");
 let shootSound = new Audio("assets/music/Player_Shoot.mp3");
 let hurtSound = new Audio("assets/music/Player_Hurt.mp3");
 let deathSound2 = new Audio("assets/music/Player_Death.mp3");
-
 let openDoorSound = new Audio("assets/music/Door_Open.mp3");
 
 function preload() {
@@ -33,35 +31,39 @@ function preload() {
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
   //load enemy image
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
+  chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
+  shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
+  shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
   savePointImg = loadImage('assets/savepoint/savepoint.jpg');
-
   rawData = loadJSON("assets/rooms.json");
-
 }
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   setRoomBgImg();  
-  menuDrawer = new MenuDrawer();
+  const eventBus = new EventBus();
+  const menuDrawer = new MenuDrawer(eventBus);
+  menuDrawer.setupMenu();
+  menuDrawer.setupPauseMenu();
+  menuDrawer.setupGameOverPage();
+  gameStateManager = new GameStateManager(eventBus, menuDrawer);
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
   room = new Room();
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
-
-  menuDrawer.setupMenu();
-  menuDrawer.setupPauseMenu();
-  menuDrawer.setupGameOverPage();
 }
 
 function draw() {
   adjustCanvasWithAspectRatio();
   background(220);
-  if (!menuDrawer.renderMenu(player, timeSpent)) updateGameState();
+  player.updateBlinking();
+  if (gameStateManager.menuDrawer.shouldRenderMenu(player)) return gameStateManager.menuDrawer.renderMenu(player, timeSpent);
+  updateGameState();
 }
 
 function updateGameState() {
-  menuDrawer.updatePauseBtnPosition();
+  gameStateManager.menuDrawer.updatePauseBtnPosition();
   room.update();
   inputHandler.update(player);
   player.display();
@@ -71,8 +73,8 @@ function updateGameState() {
 }
 
 function keyPressed() {
-  menuDrawer.handleBtnPressed(player);
-  inputHandler.handlePlayerShooting(player);
+  gameStateManager.menuDrawer.handleBtnPressed(player);
+  if (!gameStateManager.menuDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
 }
 
 function setRoomBgImg() {
