@@ -15,6 +15,8 @@ class InputHandler {
     const collideWithEnemies = this.collisionDetector.detectPlayerCollision(playerObj, this.currentRoom.enemies);
     const collideWithObstacles = this.collisionDetector.detectPlayerCollision(playerObj, this.currentRoom.obstacles);
     const playerHitBoundary = this.collisionDetector.isHitBoundary(playerObj);
+    
+    
     if (collideWithEnemies || collideWithObstacles || playerHitBoundary) {
       playerObj.revertPosition();
     }

@@ -2,9 +2,7 @@
 
 let lastCollisionTime = 0;
 
-let mainMenuDisplayed = true;
 let firstBtnToggled = false;
-let isGamePaused = false;
 let isBossStage = false;
 let isGameCompleted = false;
 let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLastSave;
