@@ -167,14 +167,14 @@ class MenuDrawer {
   }
 
   renderMenu(playerObj, timeSpent) {
-    const shouldRender = mainMenuDisplayed || isGamePaused || isGameCompleted || this.#isGameOver(playerObj);
-    if (!shouldRender) return false;
-
     if (mainMenuDisplayed) this.drawMenu();
     if (isGamePaused) this.drawPauseMenu();
     if (isGameCompleted) this.drawGameCompleted(timeSpent);
     if (this.#isGameOver(playerObj)) this.drawGameOverPage();
-    return true;
+  }
+
+  shouldRenderMenu(playerObj) {
+    return mainMenuDisplayed || isGamePaused || isGameCompleted || this.#isGameOver(playerObj);
   }
 
   updatePauseBtnPosition() {

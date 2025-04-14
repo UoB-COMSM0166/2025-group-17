@@ -38,7 +38,8 @@ function draw() {
   //   return; // ❗停止其他更新逻辑
   // }
 
-  if (!menuDrawer.renderMenu(player, timeSpent)) updateGameState();
+  if (menuDrawer.shouldRenderMenu(player)) return menuDrawer.renderMenu(player, timeSpent);
+  updateGameState();
 }
 
 function updateGameState() {
@@ -53,7 +54,7 @@ function updateGameState() {
 
 function keyPressed() {
   menuDrawer.handleBtnPressed(player);
-  inputHandler.handlePlayerShooting(player);
+  if (!menuDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
 }
 
 // //for testing the loading bar of the pictures
