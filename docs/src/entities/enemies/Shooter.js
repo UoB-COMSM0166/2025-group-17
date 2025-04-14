@@ -10,6 +10,7 @@ class Shooter {
     this.shootCooldown = 180;
     this.currentShootCooldown = this.shootCooldown;
     this.bullets = [];
+    this.image = shooterImage; // 你需要在 preload 中加载这个图片
   }
 
   update() {
@@ -159,7 +160,8 @@ class Shooter {
   display() {
     if (this.hp <= 0) return;
     fill('blue');
-    rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    //rect(this.position.x, this.position.y, this.size.x, this.size.y);
+    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
     this.bullets.forEach(bullet => bullet.display());
   }
 }

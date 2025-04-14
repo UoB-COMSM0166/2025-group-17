@@ -18,9 +18,13 @@ class Room {
   }
 
   setup(roomData) {
-    this.currentRoomData = roomData;
     // Load room configuration
-    //this.generateObstacles(this.obsCount);
+    this.currentRoomData = roomData;
+    // Empty every entity in room to make the clear condition work properly
+    this.enemies = [];
+    this.chaser = [];
+    this.shooter = [];
+    this.obstacles = [];
 
     // 只有普通关卡生成障碍物（排除 id 4、5、6）
   if (![4, 5, 6].includes(roomData.id)) {
