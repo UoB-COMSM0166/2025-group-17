@@ -23,10 +23,16 @@ function preload() {
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
   //load enemy image
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
-  savePointImg = loadImage('assets/savepoint/savepoint.jpg');
+  chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
+  shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
+  shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
+
+  savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
+  checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
 
   rooms.forEach((room, i) => {
     room.backgroundImg = loadImage(room.background);
     rooms[i] = room; // Ensure the reference is updated
   });
+
 }

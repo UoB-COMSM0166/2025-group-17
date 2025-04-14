@@ -157,7 +157,6 @@ class Player {
     this.lastHealTime = currentTime;
   }
 
-  //resetInvincibleTimer() { this.invincibleTimer = 10; }
   resetInvincibleTimer(duration = 60) {
     this.invincibleTimer = duration;
   }

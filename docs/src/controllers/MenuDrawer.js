@@ -57,7 +57,7 @@ class MenuDrawer {
 
   setupPauseMenu() {
     let pauseBtnSize = 40;
-    this.btnPause = createImg('assets/buttons/pause.png', 'Click to pause');
+    this.btnPause = createImg('assets/buttons/Pause.png', 'Click to pause');
     this.btnPause.size(pauseBtnSize, pauseBtnSize);
     this.btnPause.position(windowWidth / 2 + width / 2 - this.btnPause.width, windowHeight / 2 - height / 2);
     // Make the button a circle

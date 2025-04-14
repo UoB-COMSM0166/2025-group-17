@@ -52,7 +52,6 @@ class GameStateManager {
     currentRoomIndex = 0;
   
     player = new Player(playerX, playerY);
-    //room = new Room();
     room.setup(rooms[currentRoomIndex]); // reset to the initial room
     inputHandler = new InputHandler(room);
     console.log("Game is reset!")

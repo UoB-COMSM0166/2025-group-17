@@ -34,7 +34,6 @@ const rooms = [
     savePoint: { x: savePointParam.x, y: savePointParam.y, w: savePointParam.w, h: savePointParam.h }
   }  
 ];
-let currentRoomIndex = 0;
 
 function checkSavePoint() {
   // Save when player crosses the target position
@@ -42,6 +41,7 @@ function checkSavePoint() {
   const distanceY = abs(player.position.y - room.savePoint.position.y);
   if (!nearSavedPosition && distanceX < player.size.x && distanceY < player.size.y) {
     saveGameData();
+    room.savePoint.checked();
     nearSavedPosition = true;
   }
 
