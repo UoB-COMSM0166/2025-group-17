@@ -17,7 +17,6 @@ class Room {
   }
 
   setup(roomData) {
-    
     this.currentRoomData = roomData; // Store room data
     this.generateObstacles(this.currentRoomData.id);
     this.generateEnemies(this.currentRoomData.id);
@@ -48,20 +47,18 @@ class Room {
       this.updateEnemies();
     }
 
-  this.updateDoor();
-  this.checkClearCondition();
+    this.updateDoor();
+    this.checkClearCondition();
   }
 
   generateObstacles(currentRoomId) {
     this.obstacles = [];
     this.setObstacleCount(currentRoomId);
-    
     if (obstacleCount === 1) {
       this.generateTutorialObs();
       return;
     }
     if (obstacleCount === 0) { // No obstacles in Boss level
-      
       return;
     }
 
