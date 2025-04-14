@@ -16,6 +16,37 @@ function preload() {
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
 
+  playerAnim = {
+    down: loadAnimation(
+      'assets/spritesheet/down0.png',
+      'assets/spritesheet/down1.png',
+      'assets/spritesheet/down2.png',
+      'assets/spritesheet/down3.png',
+      'assets/spritesheet/down4.png'
+    ),
+    up: loadAnimation(
+      'assets/spritesheet/up0.png',
+      'assets/spritesheet/up1.png',
+      'assets/spritesheet/up2.png',
+      'assets/spritesheet/up3.png',
+      'assets/spritesheet/up4.png'
+    ),
+    left: loadAnimation(
+      'assets/spritesheet/left0.png',
+      'assets/spritesheet/left1.png',
+      'assets/spritesheet/left2.png',
+      'assets/spritesheet/left3.png',
+      'assets/spritesheet/left4.png'
+    ),
+    right: loadAnimation(
+      'assets/spritesheet/right0.png',
+      'assets/spritesheet/right1.png',
+      'assets/spritesheet/right2.png',
+      'assets/spritesheet/right3.png',
+      'assets/spritesheet/right4.png'
+    ),
+  };
+  
   //load obstacles images
   //obstacleImages.push(loadImage('assets/obstacles/level1/pillow1.png'));
   //obstacleImages.push(loadImage('assets/obstacles/level1/pillow2.png'));
@@ -46,7 +77,8 @@ function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   menuDrawer = new MenuDrawer();
   adjustCanvasWithAspectRatio();
-  player = new Player(playerX, playerY);
+  if (player) player.destroy(); // 移除旧 Sprite
+  player = new Player(playerX, playerY);  
   room = new Room();
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
@@ -56,17 +88,34 @@ function setup() {
   menuDrawer.setupGameOverPage();
 }
 
-function draw() {
-  // // If loading is not complete, display the loading bar.
-  // if (!loadingComplete) {
-  //   drawLoadingBar();
-  //   return;
-  // }
 
-  adjustCanvasWithAspectRatio();
-  background(220);
-  if (!menuDrawer.renderMenu(player, timeSpent)) updateGameState();
-}
+  
+
+
+      // // If loading is not complete, display the loading bar.
+      // if (!loadingComplete) {
+      //   drawLoadingBar();
+      //   return;
+      // }
+
+      function draw() {
+        adjustCanvasWithAspectRatio();
+        background(220);
+      
+        const menuActive = menuDrawer.renderMenu(player, timeSpent);
+      
+        // 如果菜单 / 暂停 / 游戏完成，则隐藏 player sprite
+        if (menuActive || isGamePaused || isGameCompleted || mainMenuDisplayed) {
+          if (player) player.sprite.visible = false;
+          return;
+        }
+      
+        // 游戏中则确保显示
+        if (player) player.sprite.visible = true;
+      
+        updateGameState();
+      }
+      
 
 function updateGameState() {
   menuDrawer.updatePauseBtnPosition();

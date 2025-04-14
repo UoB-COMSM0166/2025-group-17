@@ -12,10 +12,10 @@ class Bullet {
    update() {
       // Move the bullet along its direction
       //this.position.add(p5.Vector.mult(this.direction, this.speed));
-      if (this.direction === 'w') this.position.y -= this.speed;
-      if (this.direction === 'a') this.position.x -= this.speed;
-      if (this.direction === 's') this.position.y += this.speed;
-      if (this.direction === 'd') this.position.x += this.speed;
+      if (this.direction === 'up') this.position.y -= this.speed;
+      if (this.direction === 'down') this.position.y += this.speed;
+      if (this.direction === 'left') this.position.x -= this.speed;
+      if (this.direction === 'right') this.position.x += this.speed;      
       this.angle += 0.1;
 
    }

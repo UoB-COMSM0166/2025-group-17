@@ -49,12 +49,34 @@ class InputHandler {
     // if (shootCooldown > 0) {
     //   shootCooldown--;
     // }
-    const direction = key.toLowerCase();
-    if (direction === 'w' || direction === 'a' || direction === 's' || direction === 'd') {
-      console.log("Bullet input detected!")
-      playerObj.shoot(direction);
+      let shootDirection = null;
+    
+      // ✅ 使用 W A S D 控制射击方向
+      if (keyIsDown(87)) {
+        shootDirection = 'up';     // W
+      } else if (keyIsDown(65)) {
+        shootDirection = 'left';   // A
+      } else if (keyIsDown(83)) {
+        shootDirection = 'down';   // S
+      } else if (keyIsDown(68)) {
+        shootDirection = 'right';  // D
+      }
+    
+      if (shootDirection) {
+        if (shootCooldown <= 0) {
+          playerObj.facing = shootDirection; // 更新朝向
+          playerObj.shoot(shootDirection);
+          shootCooldown = 1; // X帧冷却
+        }
+      }
+    
+      if (shootCooldown > 0) {
+        shootCooldown--;
+      }
     }
-  }
+    
+    
+    
 
   updateBullets(playerObj) {
     playerObj.bullets.forEach(b => {

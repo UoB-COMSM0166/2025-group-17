@@ -64,15 +64,18 @@ function loadGameData() {
     return startNewGame();
   }
 
+  // 销毁旧角色
+  if (player) player.destroy();
+
   const savedPositionX = JSON.parse(savedXData);
   const savedPositionY = JSON.parse(savedYData);
   const savedPosition = new SavePoint(savedPositionX, savedPositionY);
-  player.position.x = savedPosition.position.x;
-  player.position.y = savedPosition.position.y;
+  player = new Player(savedPosition.position.x, savedPosition.position.y);
   player.hp = JSON.parse(savedPlayerHp);
   startTime = millis() - JSON.parse(savedTimeSpent);
   inputHandler.lastLoadTime = millis();
   player.resetInvincibleTimer();
+
   console.log("Game Loaded!");
 
   mainMenuDisplayed = false;
@@ -89,18 +92,26 @@ function startNewGame() {
 
 function pauseGame() {
   pauseTime = millis();
+  isGamePaused = true;
   console.log("Game pause!");
 
   if (pauseSound) {
     pauseSound.play();
   }
-  isGamePaused = true;
+
+  // 可选：停止动画
+  if (player) player.sprite.animation.stop();
+
   menuDrawer.showResumeButtons();
 }
 
 function resumeGame() {
-  console.log("Game resume!")
   isGamePaused = false;
+  console.log("Game resume!");
+
+  // 可选：恢复动画
+  if (player) player.sprite.animation.play();
+
   menuDrawer.toggleResumeButtons();
   startTime += millis() - pauseTime;
 }
@@ -121,37 +132,36 @@ function resetGame() {
 
   currentRoomIndex = 0;
 
+  // ✅ 销毁旧角色
+  if (player) player.destroy();
+
   player = new Player(playerX, playerY);
-  //room = new Room();
   room.setup(rooms[currentRoomIndex]); // reset to the initial room
   inputHandler = new InputHandler(room);
-  console.log("Game is reset!")
+  console.log("Game is reset!");
 }
+
 
 function loadRoom() {
   currentRoomIndex++;
 
   if (currentRoomIndex >= rooms.length) {
     isGameCompleted = true;
-    console.log("Game Completed!");
+    console.log("✅ Game Completed!");
+
+    if (player) player.destroy();
     return;
   }
 
-  // Keep play hp (need or not)
-  // TODO: 在player类中设置resetStatus函数，在除了宝箱房外的房间内调用
-  // Reset status of player (keep HP)
-  // player.resetStatus()
+  console.log("🟦 Loading Room Index:", currentRoomIndex);
+  console.log("🟦 Room Data:", rooms[currentRoomIndex]);
+
   const prevHp = player.hp;
 
-  // // 如果 currentRoomIndex 是 1，不继承血量
-  // if (currentRoomIndex === 1) {
-  //   player = new Player(playerX, playerY);
-  // } else {
-  player = new Player(playerX, playerY);
-  player.hp = prevHp; // 继承血量
-  // }
+  if (player) player.destroy();
 
-  // Load room
+  player = new Player(playerX, playerY);
+  player.hp = prevHp;
   room.setup(rooms[currentRoomIndex]);
 }
 

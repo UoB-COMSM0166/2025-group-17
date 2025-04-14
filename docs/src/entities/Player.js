@@ -1,5 +1,6 @@
 class Player {
   constructor(x, y) {
+    // 逻辑属性
     this.position = createVector(x, y);
     this.hp = defaultHp;
     this.speed = defaultSpeed;
@@ -10,16 +11,20 @@ class Player {
     this.atk = defaultAtk;
     this.maxAtk = playerMaxAtk;
     this.size = createVector(heightInPixel / 8, heightInPixel / 8);
-    this.invincibleTimer = 0;   // Frames remaining for invincibility
-    this.blinkCounter = 0;      // Used for blinking during invincibility
+    this.invincibleTimer = 0;
+    this.blinkCounter = 0;
     this.bullets = [];
-    this.image = playerImage;
     this.lastHealTime = null;
-  }
 
-  shoot(direction) {
-    bullets.push(new Bullet(this.position.x, this.position.y, direction));
-
+    // 动画属性（p5play Sprite）
+    this.sprite = new Sprite(this.position.x, this.position.y, this.size.x, this.size.y);
+    this.sprite.addAnimation('down', playerAnim.down);
+    this.sprite.addAnimation('up', playerAnim.up);
+    this.sprite.addAnimation('left', playerAnim.left);
+    this.sprite.addAnimation('right', playerAnim.right);
+    this.sprite.changeAnimation('down');
+    this.facing = 'down';
+    this.sprite.collider = 'none'; // 关闭默认碰撞体积
   }
 
   updateBlinking() {
@@ -30,88 +35,79 @@ class Player {
   }
 
   display() {
-    // When invincible, skip drawing for half the blink cycle.
-    if (this.invincibleTimer > 0 && this.blinkCounter < 5) return;
-    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
-  };
+    // 同步精灵位置和大小
+    this.sprite.x = this.position.x;
+    this.sprite.y = this.position.y;
+    this.sprite.width = this.size.x;
+    this.sprite.height = this.size.y;
+
+    // 处理闪烁
+    if (this.invincibleTimer > 0 && this.blinkCounter < 5) {
+      this.sprite.visible = false;
+    } else {
+      this.sprite.visible = true;
+    }
+  }
 
   updateVelocity() {
-    //let moving = false; //记录玩家是否在移动
     let input = createVector(0, 0);
     let desiredVel = createVector(0, 0);
-    if (keyIsDown(LEFT_ARROW)) {
-      input.x = -1;
-      // moving = true;
-    }
-    if (keyIsDown(RIGHT_ARROW)) {
-      input.x = 1;
-      //  moving = true;
-    }
-    if (keyIsDown(UP_ARROW)) {
-      input.y = -1;
-      //  moving = true;
-    }
-    if (keyIsDown(DOWN_ARROW)) {
-      input.y = 1;
-      //  moving = true;
-    }
-    /**way one **/
-    // input.normalize().mult(this.acceleration);
-    // this.velocity.add(input);
-    // this.velocity.mult(this.friction);
 
-    /**way two**/
+    if (keyIsDown(LEFT_ARROW)) input.x = -1;
+    if (keyIsDown(RIGHT_ARROW)) input.x = 1;
+    if (keyIsDown(UP_ARROW)) input.y = -1;
+    if (keyIsDown(DOWN_ARROW)) input.y = 1;
+
     if (input.mag() > 0) {
       input.normalize();
       desiredVel = p5.Vector.mult(input, this.speed);
     }
-    // Smoothly update velocity
+
     this.velocity.lerp(desiredVel, 0.8);
-    // If no input, apply friction
+
     if (input.mag() === 0) {
       this.velocity.mult(this.friction);
+      this.sprite.animation.stop(); // 停止动画
+    } else {
+      this.sprite.animation.play();
+    
+      // 根据移动方向选择动画，但不修改 this.facing
+      let anim = this.sprite.animation.label;
+    
+      if (abs(input.x) > abs(input.y)) {
+        anim = input.x > 0 ? 'right' : 'left';
+      } else {
+        anim = input.y > 0 ? 'down' : 'up';
+      }
+    
+      this.sprite.changeAnimation(anim);
     }
-
-
-    // if (keyIsDown(LEFT_ARROW)) {
-    //   this.velocity.x -= this.speed;
-    //   moving = true;
-    // }
-    // if (keyIsDown(RIGHT_ARROW)) {
-    //   this.velocity.x += this.speed;
-    //   moving = true;
-    // }
-    // if (keyIsDown(UP_ARROW)) {
-    //   this.velocity.y -= this.speed;
-    //   moving = true;
-    // }
-    // if (keyIsDown(DOWN_ARROW)) {
-    //   this.velocity.y += this.speed;
-    //   moving = true;
-    // }
-
-  }
-
-  resetVelocity() {
-    this.velocity.x = 0;
-    this.velocity.y = 0;
   }
 
   updatePosition() {
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
-  };
+    this.position.add(this.velocity);
+  }
+
+  resetVelocity() {
+    this.velocity.set(0, 0);
+  }
 
   revertPosition() {
-    this.position.x -= this.velocity.x;
-    this.position.y -= this.velocity.y;
-  };
+    this.position.sub(this.velocity);
+  }
+
+  shoot(direction) {
+    this.bullets.push(new Bullet(this.position.x, this.position.y, direction, this.atk));
+    console.log("A bullet has been shot");
+    shootSound.currentTime = 0;
+    shootSound.play();
+  }
 
   decreaseHp() {
     console.log('Player took damage!');
     if (this.hp > 0 && this.invincibleTimer === 0) {
       this.hp = max(0, this.hp - 1);
-      this.resetInvincibleTimer(); // Approximately one second at 60 fps.
+      this.resetInvincibleTimer();
     }
     if (this.hp === 0) {
       deathSound.currentTime = 0;
@@ -119,25 +115,26 @@ class Player {
     }
   }
 
-  increaseHp() { this.hp = min(3, this.hp + 1); }
+  increaseHp() {
+    this.hp = min(3, this.hp + 1);
+  }
+
   healByTime(currentTime) {
     if (this.lastHealTime === null) this.lastHealTime = currentTime;
     if (this.hp !== 1 || (currentTime - this.lastHealTime) < 300000) return;
-    console.log('Heal after 5 minutes...')
+    console.log('Heal after 5 minutes...');
     this.increaseHp();
     this.lastHealTime = currentTime;
   }
 
-  resetInvincibleTimer() { this.invincibleTimer = 60; }
-
-  shoot(direction) {
-    this.bullets.push(new Bullet(this.position.x, this.position.y, direction, this.atk));
-    console.log("A bullet has been shot");
-
-    shootSound.currentTime = 0;
-    shootSound.play();
+  resetInvincibleTimer() {
+    this.invincibleTimer = 60;
   }
 
+  destroy() {
+    this.sprite.remove();
+  }
+  
 
   // resetStatus() {
   //   this.position.set(playerX, playerY); // 重置到初始位置
