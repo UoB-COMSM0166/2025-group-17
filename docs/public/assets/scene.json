@@ -1,0 +1,71 @@
+{
+    "start": [
+      {
+        "label": "scene1_line1",
+        "image": "scene1_1",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "scene1_line2",
+        "image": "scene1_2",
+        "sound": {
+          "type": "se",
+          "name": "Player_Hurt"
+        }
+      },
+      {
+        "label": "scene1_line3",
+        "image": "scene1_3",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "scene1_line4",
+        "image": "scene1_4",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      }
+    ],
+    "end": [
+      {
+        "label": "scene1_line5",
+        "image": "scene1_4",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "scene1_line6",
+        "image": "scene1_3",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene2_Street"
+        }
+      },
+      {
+        "label": "scene1_line7",
+        "image": "scene1_2",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "scene1_line8",
+        "image": "scene1_1",
+        "sound": {
+          "type": "bgm",
+          "name": "MainMenu"
+        }
+      }
+    ]
+  }
+  

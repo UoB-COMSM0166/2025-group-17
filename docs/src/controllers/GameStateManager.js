@@ -1,12 +1,12 @@
 class GameStateManager {
-  // Manage which menu and buttons to draw
-  constructor(eventBus, menuDrawer) {
-    this.menuDrawer = menuDrawer;
+  // Manage which page and buttons to draw
+  constructor(eventBus, pageDrawer) {
+    this.pageDrawer = pageDrawer;
     this.pauseTime = null;
     eventBus.subscribe('LOAD_GAME', () => this.loadGameData());
     eventBus.subscribe('START_NEW_GAME', () => this.startNewGame());
     eventBus.subscribe('RESUME_GAME', () => this.resumeGame());
-    eventBus.subscribe('EXIT_TO_MENU', () => this.exitToMenu());
+    eventBus.subscribe('EXIT_TO_MAIN_MENU', () => this.exitToMainMenu());
     eventBus.subscribe('PAUSE_GAME', () => this.pauseGame());
   }
 
@@ -36,16 +36,16 @@ class GameStateManager {
     player.resetInvincibleTimer();
     console.log("Game Loaded!");
   
-    this.menuDrawer.toggleStartButtons();
-    this.menuDrawer.toggleGameOverButtons();
+    this.pageDrawer.toggleStartButtons();
+    this.pageDrawer.toggleGameOverButtons();
   }
 
   startNewGame() {
     console.log("New Game Start!");
     this.#resetGame();
-    this.menuDrawer.toggleResumeButtons();
-    this.menuDrawer.toggleStartButtons();
-    this.menuDrawer.toggleGameOverButtons();
+    this.pageDrawer.toggleResumeButtons();
+    this.pageDrawer.toggleStartButtons();
+    this.pageDrawer.toggleGameOverButtons();
   }
 
   #resetGame() {
@@ -63,21 +63,20 @@ class GameStateManager {
     console.log("Game pause!");
   
     if (pauseSound) pauseSound.play();
-    this.menuDrawer.showResumeButtons();
+    this.pageDrawer.showResumeButtons();
   }
   
   resumeGame() {
     console.log("Game resume!");
-    this.menuDrawer.toggleResumeButtons();
+    this.pageDrawer.toggleResumeButtons();
     startTime += millis() - this.pauseTime;
   }
   
-  exitToMenu() {
-    console.log("Exit to the start menu!")
+  exitToMainMenu() {
+    console.log("Exit to the main menu!")
     isGameCompleted = false;
-    this.menuDrawer.isGamePaused = false;
-    this.menuDrawer.drawMenu();
-    this.menuDrawer.showStartButtons();
-    this.menuDrawer.toggleGameOverButtons();
+    this.pageDrawer.drawMainMenu();
+    this.pageDrawer.showStartButtons();
+    this.pageDrawer.toggleGameOverButtons();
   }
 }

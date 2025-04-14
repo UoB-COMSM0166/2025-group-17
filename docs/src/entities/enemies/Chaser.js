@@ -79,8 +79,8 @@ class Chaser {
     hurtSound.play();
     this.dashDamageApplied = true;
 
-    if (player.hp <= 0 && typeof menuDrawer !== 'undefined') {
-      menuDrawer.showGameOverPage();
+    if (player.hp <= 0 && typeof pageDrawer !== 'undefined') {
+      pageDrawer.showGameOverPage();
     }
   }
 
