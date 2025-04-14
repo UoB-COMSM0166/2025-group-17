@@ -40,18 +40,16 @@ class Room {
     this.generateEnemies();
   }
 
-
-    //this.generateEnemies();
-    this.backgroundImg = roomData.backgroundImg;
-    this.door = new Door();
-    this.door.close();
+  this.backgroundImg = roomData.backgroundImg;
+  this.door = new Door();
+  this.door.close();
 
 
-    this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
+  this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
 
-    if (roomData.id == 1) {
-      startTime = millis();
-    }
+  if (roomData.id == 1) {
+    startTime = millis();
+  }
   }
 
   update() {
@@ -74,10 +72,8 @@ class Room {
     this.updateEnemies();
   }
 
-
-   // this.updateEnemies();
-    this.updateDoor();
-    this.checkClearCondition();
+  this.updateDoor();
+  this.checkClearCondition();
   }
 
   generateObstacles(obsCount) {

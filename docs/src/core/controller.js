@@ -123,6 +123,7 @@ function resumeGame() {
 function exitToMenu() {
   console.log("Exit to the start menu!")
   isGamePaused = false;
+  isGameCompleted = false;
   menuDrawer.drawMenu();
   menuDrawer.showStartButtons();
   menuDrawer.toggleGameOverButtons();
@@ -134,7 +135,7 @@ function resetGame() {
   isGamePaused = false;
   isGameCompleted = false;
 
-  //currentRoomIndex = 0;
+  currentRoomIndex = 0;
 
   player = new Player(playerX, playerY);
   //room = new Room();
