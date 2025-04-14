@@ -1,13 +1,13 @@
 class Shooter {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.size = createVector(heightInPixel / 4, heightInPixel / 4);
+    this.size = createVector(heightInPixel / 6, heightInPixel / 6);
     this.hp = 800;
     this.speed = 1;
     this.moveCooldown = 60;
     this.currentMoveCooldown = 0;
     this.direction = p5.Vector.random2D().mult(this.speed);
-    this.shootCooldown = 180;
+    this.shootCooldown = 240;
     this.currentShootCooldown = this.shootCooldown;
     this.bullets = [];
     this.image = shooterImage; // 你需要在 preload 中加载这个图片
