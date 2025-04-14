@@ -1,5 +1,3 @@
-let currentRoomIndex = 0;
-
 function checkSavePoint() {
   // Save when player crosses the target position
   const nearSavePoint = player.position.x < room.savePoint.position.x + room.savePoint.size.x &&
