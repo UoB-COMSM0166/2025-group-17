@@ -9,8 +9,8 @@ class SavePoint {
   }
 
   display() {
-    // Turn red once checked, and back to unchecked after 1 second
-    if (this.isChecked && (millis() - this.lastSaveTime < 1000)) {
+    // Turn red once checked, and back to unchecked after 0.5 second
+    if (this.isChecked && (millis() - this.lastSaveTime < 500)) {
       image(this.checkedImg, this.position.x, this.position.y, this.size.x, this.size.y);
     } else {
       this.isChecked = false;

@@ -11,6 +11,7 @@ class GameStateManager {
   }
 
   loadGameData() {
+    nearSavedPosition = true;
     const savedRoomIndex = localStorage.getItem('currentRoomIndex');
     if (savedRoomIndex) currentRoomIndex = parseInt(savedRoomIndex);
     room.setup(rooms[currentRoomIndex]);
