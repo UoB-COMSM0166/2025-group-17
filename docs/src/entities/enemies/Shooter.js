@@ -1,9 +1,9 @@
 class Shooter {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.size = createVector(heightInPixel / 6, heightInPixel / 6);
+    this.size = createVector(heightInPixel / 4, heightInPixel / 4);
     this.hp = 800;
-    this.speed = 1;
+    this.speed = 0.8;
     this.moveCooldown = 60;
     this.currentMoveCooldown = 0;
     this.direction = p5.Vector.random2D().mult(this.speed);
