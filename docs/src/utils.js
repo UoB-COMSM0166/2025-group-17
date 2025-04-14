@@ -9,7 +9,6 @@ let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLa
 let inputHandler = null;
 let cnv, hudDrawer, menuDrawer;
 let rooms;
-let currentRoomIndex = 0;
 
 let openDoorImg, closedDoorImg;
 
