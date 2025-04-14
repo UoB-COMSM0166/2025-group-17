@@ -6,6 +6,39 @@ let hurtSound = new Audio("assets/music/Player_Hurt.mp3");
 let deathSound2 = new Audio("assets/music/Player_Death.mp3");
 let openDoorSound = new Audio("assets/music/Door_Open.mp3");
 
+function preload() {
+  uiFont = loadFont('assets/fonts/PressStart2P.ttf');
+  heart = loadImage('assets/icons/full_heart.png');
+  damagedHeart = loadImage('assets/icons/empty_heart.png');
+  startMenuImg = loadImage('assets/background/menu_start.png');
+  closedDoorImg = loadImage('assets/door/close-right.png');
+  openDoorImg = loadImage('assets/door/open-right.png');
+
+  //load obstacles images
+  //obstacleImages.push(loadImage('assets/obstacles/level1/pillow1.png'));
+  //obstacleImages.push(loadImage('assets/obstacles/level1/pillow2.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-1.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-2.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-3.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-4.png'));
+  obstacleImages.push(loadImage('assets/obstacles/level1/PC-5.png'));
+  ///obstacleImages.push(loadImage('assets/obstacles/level1/desk.png'));
+  //obstacleImages.push(loadImage('assets/obstacles/level1/chair.png'));
+
+  //load player image
+  playerImage = loadImage('assets/character/Character.png');
+  //load bullet image
+  bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
+  //load enemy image
+  enemyImage = loadImage('assets/enemies/level1/CCTV.png');
+  chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
+  shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
+  shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
+  savePointImg = loadImage('assets/savepoint/savepoint.jpg');
+  //load room data
+  rawData = loadJSON("assets/rooms.json");
+}
+
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   setRoomBgImg();  
