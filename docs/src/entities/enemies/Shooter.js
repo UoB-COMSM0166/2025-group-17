@@ -11,6 +11,8 @@ class Shooter {
     this.currentShootCooldown = this.shootCooldown;
     this.bullets = [];
     this.image = shooterImage; // 你需要在 preload 中加载这个图片
+    this.warningTime = 0; // 添加一个警告计时器
+    this.warningDuration = 60; // 设置警告持续的时间，比如 60 帧 = 1秒
   }
 
   update() {
@@ -26,7 +28,17 @@ class Shooter {
     this.position.add(this.direction);
     this.checkBoundaryCollision();
 
+    if (this.warningTime > 0) {
+      this.warningTime--; // 显示特效的时间减少
+    }
+
+     // 发射子弹前几秒触发警告
+     if (this.currentShootCooldown <= this.warningDuration) {
+      this.warningTime = this.warningDuration; // 在发射前几秒显示警告
+     }
+
     if (this.currentShootCooldown <= 0) {
+      this.warningTime = 60; // 在发射前触发警告效果，60帧后显示
       this.shoot();
       this.currentShootCooldown = this.shootCooldown;
     } else {
@@ -164,5 +176,21 @@ class Shooter {
     //rect(this.position.x, this.position.y, this.size.x, this.size.y);
     image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
     this.bullets.forEach(bullet => bullet.display());
+
+    // 如果有警告时间，显示特效
+    if (this.warningTime > 0) {
+      this.displayWarningEffect();
+    }
+  }
+
+  // 显示警告特效
+  displayWarningEffect() {
+    push();
+    noFill();
+    stroke(255, 255, 0); // 黄色的警告
+    strokeWeight(4);
+    ellipse(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2, this.size.x * 1.5, this.size.y * 1.5);
+    pop();
+  
   }
 }
