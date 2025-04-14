@@ -120,9 +120,25 @@ class Room {
   generateFinalBossRoom() {
     this.chaser = [];
     this.shooter = [];
-    this.chaser.push(new Chaser(300, 250));
-    this.chaser.push(new Chaser(500, 350));
-    this.shooter.push(new Shooter(400, 400));
+  
+    const minX = widthInPixel / 2 + 50; // 右半边稍微往内
+    const maxX = widthInPixel - 100;    // 留点边距
+    const minY = 150;
+    const maxY = heightInPixel - 150;
+  
+    const randomPos = () => {
+      const x = random(minX, maxX);
+      const y = random(minY, maxY);
+      return { x, y };
+    };
+  
+    let pos1 = randomPos();
+    let pos2 = randomPos();
+    let shooterPos = randomPos();
+  
+    this.chaser.push(new Chaser(pos1.x, pos1.y));
+    this.chaser.push(new Chaser(pos2.x, pos2.y));
+    this.shooter.push(new Shooter(shooterPos.x, shooterPos.y));
   }
   
   updateObstacles() {
