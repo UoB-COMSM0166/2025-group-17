@@ -9,7 +9,13 @@ let openDoorSound = new Audio("assets/music/Door_Open.mp3");
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
-  menuDrawer = new MenuDrawer();
+  const eventBus = new EventBus();
+  const menuDrawer = new MenuDrawer(eventBus);
+  menuDrawer.setupMenu();
+  menuDrawer.setupPauseMenu();
+  menuDrawer.setupGameOverPage();
+  
+  gameStateManager = new GameStateManager(eventBus, menuDrawer);
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
   room = new Room();
@@ -17,10 +23,6 @@ function setup() {
   currentRoomIndex = 0;
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
-
-  menuDrawer.setupMenu();
-  menuDrawer.setupPauseMenu();
-  menuDrawer.setupGameOverPage();
 }
 
 function draw() {
@@ -38,12 +40,12 @@ function draw() {
   //   return; // ❗停止其他更新逻辑
   // }
 
-  if (menuDrawer.shouldRenderMenu(player)) return menuDrawer.renderMenu(player, timeSpent);
+  if (gameStateManager.menuDrawer.shouldRenderMenu(player)) return gameStateManager.menuDrawer.renderMenu(player, timeSpent);
   updateGameState();
 }
 
 function updateGameState() {
-  menuDrawer.updatePauseBtnPosition();
+  gameStateManager.menuDrawer.updatePauseBtnPosition();
   room.update();
   inputHandler.update(player);
   player.display();
@@ -53,8 +55,8 @@ function updateGameState() {
 }
 
 function keyPressed() {
-  menuDrawer.handleBtnPressed(player);
-  if (!menuDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
+  gameStateManager.menuDrawer.handleBtnPressed(player);
+  if (!gameStateManager.menuDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
 }
 
 // //for testing the loading bar of the pictures
