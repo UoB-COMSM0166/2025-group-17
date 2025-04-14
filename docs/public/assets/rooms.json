@@ -1,0 +1,34 @@
+{
+   "rooms": [
+      {
+         "id": 1,
+         "background": "assets/background/L1_TutorialRoom.png",
+         "savePoint": {
+             "x": 140,
+             "y": 424,
+             "w": 30,
+             "h": 30
+         }
+     },
+     {
+         "id": 2,
+         "background": "assets/background/L1_room1.png",
+         "savePoint": {
+             "x": 140,
+             "y": 424,
+             "w": 30,
+             "h": 30
+         }
+     },
+     {
+         "id": 3,
+         "background": "assets/background/L1_room5.png",
+         "savePoint": {
+             "x": 140,
+             "y": 424,
+             "w": 30,
+             "h": 30
+         }
+     }
+   ]
+}

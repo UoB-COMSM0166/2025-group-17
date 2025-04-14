@@ -8,7 +8,7 @@ let isGameCompleted = false;
 let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLastSave;
 let inputHandler = null;
 let cnv, hudDrawer, menuDrawer;
-let room = null;
+let rooms;
 
 let openDoorImg, closedDoorImg;
 
