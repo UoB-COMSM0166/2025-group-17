@@ -32,7 +32,7 @@ function preload() {
   rawData = loadJSON("assets/rooms.json");
 
   // Use a callback to make sure we don't access data before loaded
- sceneData = loadJSON("assets/scene.json", preloadScenes);
+  sceneData = loadJSON("assets/scene.json", preloadScenes);
 }
 
 function preloadScenes() {
