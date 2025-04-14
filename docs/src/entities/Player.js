@@ -38,9 +38,6 @@ class Player {
     if (this.hp <= 0) {
       deathSound.currentTime = 0;
       deathSound.play();
-      if (typeof pageDrawer !== "undefined") {
-        pageDrawer.isGameOver = true;
-      }
     }
   
     this.resetInvincibleTimer(invincibleDuration); // ✅ 用参数设定无敌时间

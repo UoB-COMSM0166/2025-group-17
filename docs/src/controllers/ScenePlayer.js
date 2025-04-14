@@ -57,6 +57,7 @@ class ScenePlayer {
   }
 
   setScene(sceneName) {
+    console.log(`Set scene to ${sceneName}`);
     this.stopBGM();
     this.#currentScene = this.#data[sceneName];
     this.#currentIndex = 0;

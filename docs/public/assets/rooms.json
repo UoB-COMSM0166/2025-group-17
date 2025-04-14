@@ -49,16 +49,6 @@
             "w": 30,
             "h": 30
         }
-     }, 
-     {
-        "id": 6,
-        "background": "assets/background/L2_room10.png",
-        "savePoint": {
-            "x": 140,
-            "y": 424,
-            "w": 30,
-            "h": 30
-        }
      }
    ]
 }

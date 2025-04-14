@@ -17,6 +17,10 @@ class Room {
   }
 
   setup(roomData) {
+    this.enemies = [];
+    this.chaser = [];
+    this.shooter = [];
+    this.obstacles = [];
     this.currentRoomData = roomData; // Store room data
     this.generateObstacles(this.currentRoomData.id);
     this.generateEnemies(this.currentRoomData.id);

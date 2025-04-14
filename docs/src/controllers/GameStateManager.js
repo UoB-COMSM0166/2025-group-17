@@ -11,7 +11,6 @@ class GameStateManager {
   }
 
   loadGameData() {
-    nearSavedPosition = true;
     const savedRoomIndex = localStorage.getItem('currentRoomIndex');
     if (savedRoomIndex) currentRoomIndex = parseInt(savedRoomIndex);
     room.setup(rooms[currentRoomIndex]);
@@ -37,6 +36,7 @@ class GameStateManager {
     console.log("Game Loaded!");
   
     this.pageDrawer.toggleStartButtons();
+    this.pageDrawer.setInGameState();
     this.pageDrawer.toggleGameOverButtons();
   }
 
@@ -69,6 +69,7 @@ class GameStateManager {
   resumeGame() {
     console.log("Game resume!");
     this.pageDrawer.toggleResumeButtons();
+    this.pageDrawer.setInGameState();
     startTime += millis() - this.pauseTime;
   }
   

@@ -21,7 +21,6 @@ const uiTextSize = 20;
 const hPadding = 50;
 const vPadding = 20;
 
-let nearSavedPosition = false;
 let lastSavedPosition = { xPos: null, yPos: null };
 let minDistanceToSave = 50;
 

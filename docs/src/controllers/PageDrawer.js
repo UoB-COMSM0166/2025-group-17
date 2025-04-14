@@ -62,7 +62,9 @@ class PageDrawer {
   #handleNewGame() {
     console.log("Load start scene..");
     this.#playStartScene();
+    console.log("Start new game..");
     this.eventBus.publish('START_NEW_GAME');
+    this.btnPause.hide();
   }
 
   #playStartScene() {
@@ -128,6 +130,10 @@ class PageDrawer {
     if (this.btnIndex !== null) this.gameOverBtns[this.btnIndex].class('blink');
   }
 
+  setInGameState() {
+    this.#state = "inGame";
+  }
+
   drawGameCompleted(totalTime) {
     clear();
     this.btnPause.hide();
@@ -162,7 +168,6 @@ class PageDrawer {
   }
 
   toggleStartButtons() {
-    this.#state = "inGame";
     this.btnContinue.hide();
     this.btnNewGame.hide();
     this.btnPause.show();
@@ -176,7 +181,6 @@ class PageDrawer {
   }
 
   toggleResumeButtons() {
-    this.#state = "inGame";
     this.btnPause.show();
     this.btnResume.hide();
     this.btnExit.hide();
@@ -206,7 +210,7 @@ class PageDrawer {
   }
 
   shouldRenderMenu(playerObj) {
-    return (this.#state === "mainMenu") || (this.#state === "paused") || isGameCompleted || this.#isGameOver(playerObj) || this.#isScenePage();
+    return this.#state === "mainMenu" || this.#state === "paused" || isGameCompleted || this.#isGameOver(playerObj) || this.#isScenePage();
   }
 
   updatePauseBtnPosition() {
@@ -218,7 +222,6 @@ class PageDrawer {
 
   handleBtnPressed(playerObj) {
     this.#returnToPrevPage(playerObj);
-
     if (isGameCompleted || this.#isScenePage()) this.#handleSceneProgress();
     else if (this.#state === "mainMenu") {
       this.#controlBtnsByKeys(this.mainMenuBtns, ['LOAD_GAME', 'START_NEW_GAME']);
@@ -237,12 +240,14 @@ class PageDrawer {
 
   #playNextStoryLine() {
     this.#scenePlayer.next();
+    console.log(this.#scenePlayer.isSceneComplete());
     if (!this.#scenePlayer.isSceneComplete()) return;
     
     this.#scenePlayer.stopBGM();
     switch (this.#state) {
       case "startScene":
         this.#state = "inGame";
+        this.btnPause.show();
         console.log("Progress to playing..");
         break;
       case "endScene":
@@ -288,6 +293,7 @@ class PageDrawer {
     this.btnIndex = 0;
     if (buttons[prevBtnIndex] === this.btnNewGame) this.#handleNewGame();
     this.eventBus.publish(eventTypes[prevBtnIndex]);
+    if (buttons[prevBtnIndex] === this.btnNewGame) this.btnPause.hide();
   }
 
   #moveBetweenBtnsByKeys(buttons) {
@@ -303,8 +309,4 @@ class PageDrawer {
   #isGameOver(playerObj) {
     return (this.#state !== "mainMenu") && playerObj.hp <= 0; 
   }
-  showGameOverPage() {
-    this.drawGameOverPage();
-  }
-  
 }
