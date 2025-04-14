@@ -156,18 +156,25 @@ class Shooter {
       p.position.y + p.size.y > s.position.y;
   
     if (collided) {
-      // ✅ 推开 player（不管从哪个方向）
+      // 计算玩家和 shooter 之间的偏移方向
       const pushDir = p5.Vector.sub(p.position.copy().add(p.size.x / 2, p.size.y / 2), 
                                     s.position.copy().add(s.size.x / 2, s.size.y / 2))
-                           .normalize().mult(5);
-      player.position.add(pushDir);
+                             .normalize().mult(5);  // 稍微推开玩家
   
-      // ✅ 造成一次伤害（带无敌时间）
+      // 让玩家稍微偏移，避免卡住
+      p.position.add(pushDir);
+  
+      // 限制玩家位置，防止其超出边界
+      p.position.x = constrain(p.position.x, leftBoundary, rightBoundary - p.size.x);
+      p.position.y = constrain(p.position.y, topBoundary, bottomBoundary - p.size.y);
+  
+      // 造成一次伤害（带无敌时间）
       if (player.invincibleTimer <= 0) {
         player.updateHp(player.hp - 1, 90); // 扣1血 + 无敌90帧
       }
     }
   }
+  
   
   
   display() {
