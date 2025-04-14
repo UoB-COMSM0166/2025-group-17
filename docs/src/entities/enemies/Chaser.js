@@ -72,12 +72,22 @@ class Chaser {
   }
 
   applyDashDamage() {
-    // 移除无敌检查
     player.updateHp(player.hp - 0.5);
     console.log('Dash damage applied at frame ' + frameCount + ', player HP: ' + player.hp);
     hurtSound.currentTime = 0;
     hurtSound.play();
     this.dashDamageApplied = true;
+  
+    // ✅ 添加反弹
+    const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(20);
+    player.position.add(pushDir);
+  
+    player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
+    player.position.y = constrain(player.position.y, topBoundary, bottomBoundary - player.size.y);
+  
+    if (player.hp <= 0 && typeof menuDrawer !== 'undefined') {
+      menuDrawer.showGameOverPage();
+    }
   }
 
 
