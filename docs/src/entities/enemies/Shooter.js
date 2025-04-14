@@ -7,7 +7,7 @@ class Shooter {
     this.moveCooldown = 60;
     this.currentMoveCooldown = 0;
     this.direction = p5.Vector.random2D().mult(this.speed);
-    this.shootCooldown = 240;
+    this.shootCooldown = 280;
     this.currentShootCooldown = this.shootCooldown;
     this.bullets = [];
     this.image = shooterImage; // 你需要在 preload 中加载这个图片
@@ -67,7 +67,8 @@ class Shooter {
           this.position.x + this.size.x / 2 + offset.x,
           this.position.y + this.size.y / 2 + offset.y,
           dir.copy(),
-          1
+          1,
+          3
         );
         this.bullets.push(bullet);
       }
