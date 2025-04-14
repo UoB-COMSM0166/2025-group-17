@@ -41,12 +41,7 @@ function preload() {
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
-
-  rooms = rawData.rooms;
-  rooms.forEach(room => {
-    room.backgroundImg = loadImage(room.background);
-  });
-  
+  setRoomBgImg();  
   menuDrawer = new MenuDrawer();
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
@@ -78,4 +73,11 @@ function updateGameState() {
 function keyPressed() {
   menuDrawer.handleBtnPressed(player);
   inputHandler.handlePlayerShooting(player);
+}
+
+function setRoomBgImg() {
+  rooms = rawData.rooms;
+  rooms.forEach(room => {
+    room.backgroundImg = loadImage(room.background);
+  });
 }
