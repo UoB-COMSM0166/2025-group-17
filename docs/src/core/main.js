@@ -1,4 +1,3 @@
-let mainmenuSound = new Audio("assets/music/Scene_music/MainMenu.mp3");
 let pauseSound = new Audio("assets/music/Pause.mp3");
 let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
 let deathSound = new Audio("assets/music/Enemy_Death.mp3");
@@ -48,7 +47,13 @@ function preload() {
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
-  menuDrawer = new MenuDrawer();
+  const eventBus = new EventBus();
+  const menuDrawer = new MenuDrawer(eventBus);
+  menuDrawer.setupMenu();
+  menuDrawer.setupPauseMenu();
+  menuDrawer.setupGameOverPage();
+  
+  gameStateManager = new GameStateManager(eventBus, menuDrawer);
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
   room = new Room();
@@ -56,10 +61,6 @@ function setup() {
   currentRoomIndex = 5;
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
-
-  menuDrawer.setupMenu();
-  menuDrawer.setupPauseMenu();
-  menuDrawer.setupGameOverPage();
 }
 
 function draw() {
@@ -72,28 +73,28 @@ function draw() {
   adjustCanvasWithAspectRatio();
   background(220);
   player.updateBlinking();
-  if (menuDrawer.isGameOver) {
-    menuDrawer.showGameOverPage(); // ✅ 主动显示 Game Over 页面
-    return; // ❗停止其他更新逻辑
-  }
+  // if (menuDrawer.isGameOver) {
+  //   menuDrawer.showGameOverPage(); // ✅ 主动显示 Game Over 页面
+  //   return; // ❗停止其他更新逻辑
+  // }
 
-
-  if (!menuDrawer.renderMenu(player, timeSpent)) updateGameState();
+  if (gameStateManager.menuDrawer.shouldRenderMenu(player)) return gameStateManager.menuDrawer.renderMenu(player, timeSpent);
+  updateGameState();
 }
 
 function updateGameState() {
-  menuDrawer.updatePauseBtnPosition();
+  gameStateManager.menuDrawer.updatePauseBtnPosition();
   room.update();
   inputHandler.update(player);
   player.display();
-  //player.healByTime(timeSpent);
+  player.healByTime(timeSpent);
   drawUiHub();
   checkSavePoint();
 }
 
 function keyPressed() {
-  menuDrawer.handleBtnPressed(player);
-  inputHandler.handlePlayerShooting(player);
+  gameStateManager.menuDrawer.handleBtnPressed(player);
+  if (!gameStateManager.menuDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
 }
 
 // //for testing the loading bar of the pictures
