@@ -15,8 +15,7 @@ let openDoorImg, closedDoorImg;
 let startTime;
 let timeSpent = 0;
 
-let currentLevel = 1;
-let currentStage = 1;
+let currentRoomIndex = 0;
 
 const uiTextSize = 20;
 const hPadding = 50;

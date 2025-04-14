@@ -2,22 +2,19 @@ let currentRoomIndex = 0;
 
 function checkSavePoint() {
   // Save when player crosses the target position
-  const distanceX = abs(player.position.x - room.savePoint.position.x);
-  const distanceY = abs(player.position.y - room.savePoint.position.y);
-  if (!nearSavedPosition && distanceX < player.size.x && distanceY < player.size.y) {
+  const nearSavePoint = player.position.x < room.savePoint.position.x + room.savePoint.size.x &&
+  player.position.x + player.size.x > room.savePoint.position.x &&
+  player.position.y < room.savePoint.position.y + room.savePoint.size.y &&
+  player.position.y + player.size.y > room.savePoint.position.y;
+  if (!room.savePoint.isChecked && nearSavePoint) {
     saveGameData();
-    nearSavedPosition = true;
-  }
-
-  const moveDistance = dist(player.position.x, player.position.y, lastSavedPosition.xPos, lastSavedPosition.yPos);
-  if (nearSavedPosition && moveDistance > minDistanceToSave) {
-    console.log("Can be saved again!");
-    nearSavedPosition = false;
+    room.savePoint.checked();
   }
 }
 
 function saveGameData() {
-  if (nearSavedPosition) return;
+  if (room.savePoint.isChecked) return;
+  console.log("Can be saved again!");
 
   localStorage.setItem('currentRoomIndex', currentRoomIndex);
   localStorage.setItem('lastSavePointX', JSON.stringify(room.savePoint.position.x));

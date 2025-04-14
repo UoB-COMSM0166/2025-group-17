@@ -17,6 +17,7 @@ class Room {
   }
 
   setup(roomData) {
+    // Load room configuration
     this.currentRoomData = roomData;
     // Load room configuration
 
