@@ -4,31 +4,61 @@
          "id": 1,
          "background": "assets/background/L1_TutorialRoom.png",
          "savePoint": {
-             "x": 140,
-             "y": 424,
-             "w": 30,
-             "h": 30
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
          }
      },
      {
          "id": 2,
          "background": "assets/background/L1_room1.png",
          "savePoint": {
-             "x": 140,
-             "y": 424,
-             "w": 30,
-             "h": 30
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
          }
      },
      {
          "id": 3,
          "background": "assets/background/L1_room5.png",
          "savePoint": {
-             "x": 140,
-             "y": 424,
-             "w": 30,
-             "h": 30
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
          }
+     },
+     {
+        "id": 4,
+        "background": "assets/background/L1_BossRoom.png",
+        "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+        }
+     },
+     {
+        "id": 5,
+        "background": "assets/background/L2_BossRoom.png",
+        "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+        }
+     }, 
+     {
+        "id": 6,
+        "background": "assets/background/L2_room10.png",
+        "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+        }
      }
    ]
 }

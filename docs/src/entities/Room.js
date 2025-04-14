@@ -17,9 +17,7 @@ class Room {
   }
 
   setup(roomData) {
-    this.currentRoomData = roomData;
-    // Load room configuration
-
+    
     this.currentRoomData = roomData; // Store room data
     this.generateObstacles(this.currentRoomData.id);
     this.generateEnemies(this.currentRoomData.id);
@@ -29,24 +27,6 @@ class Room {
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
     this.setGameTime(this.currentRoomData.id);
 
-    // 只有普通关卡生成障碍物（排除 id 4、5、6）
-  if (![4, 5, 6].includes(roomData.id)) {
-    this.generateObstacles(this.obsCount);
-  } else {
-    this.obstacles = [];
-  }
-    
-    // 按房间 ID 指定不同的生成逻辑
-  if (roomData.id === 4) {
-    this.generateChaser();
-  } else if (roomData.id === 5) {
-    this.generateShooter();
-  } else if (roomData.id === 6) {
-    this.generateFinalBossRoom(); // 2 chasers + 1 shooter
-  } else {
-    this.generateEnemies();
-  }
-
   }
 
   update() {
@@ -55,31 +35,36 @@ class Room {
     this.savePoint.display();    
     this.updateObstacles();
 
-   // 分别处理三种房间
-  if (this.currentRoomData.id === 4) {
-    this.updateChaser();
-  } else if (this.currentRoomData.id === 5) {
-    this.updateShooter();
-  } else if (this.currentRoomData.id === 6) {
-    this.updateChaser();
-    this.updateShooter();
-    this.resolveBossCollision(); // ✅ 加上怪物间物理阻挡
-  } else {
-    this.updateEnemies();
-  }
+    // Treat three types of rooms separately
+    if (this.currentRoomData.id === 4) {
+      this.updateChaser();
+    } else if (this.currentRoomData.id === 5) {
+      this.updateShooter();
+    } else if (this.currentRoomData.id === 6) {
+      this.updateChaser();
+      this.updateShooter();
+      this.resolveBossCollision(); // Add physical barriers between monsters
+    } else {
+      this.updateEnemies();
+    }
 
   this.updateDoor();
   this.checkClearCondition();
   }
 
   generateObstacles(currentRoomId) {
-    this.setObstacleCount(currentRoomId);
     this.obstacles = [];
-    // TODO: obstacleCount不同关卡设为不一样的数值。根据难度或者其他条件
+    this.setObstacleCount(currentRoomId);
+    
     if (obstacleCount === 1) {
       this.generateTutorialObs();
       return;
     }
+    if (obstacleCount === 0) { // No obstacles in Boss level
+      
+      return;
+    }
+
     for (let i = 0; i < obstacleCount; i++) {
       let newObstacle;
       do {
@@ -93,8 +78,22 @@ class Room {
 
   generateEnemies(currentRoomId) {
     this.enemies = [];
-    this.setEnemyCount(currentRoomId);
-    // TODO: enemyCount不同关卡设为不一样的数值。根据难度或者其他条件
+    if (![4, 5, 6].includes(currentRoomId)) {
+      this.setEnemyCount(currentRoomId);
+    }
+    
+    // Specify different enemy generation logic by room ID
+    if (currentRoomId === 4) {
+      this.generateChaser();
+      return;
+    } else if (currentRoomId === 5) {
+      this.generateShooter();
+      return;
+    } else if (currentRoomId === 6) {
+      this.generateFinalBossRoom(); // 2 chasers + 1 shooter
+      return;
+    } 
+
     for (let i = 0; i < enemyCount; i++) {
       let newEnemy;
       do {
@@ -107,14 +106,10 @@ class Room {
     }
   }
 
-
-  
   generateChaser() {
     this.chaser = [];
     this.chaser.push(new Chaser(400, 300));
   }
-
-
 
   generateShooter() {
     this.shooter = [];
@@ -129,7 +124,6 @@ class Room {
     this.shooter.push(new Shooter(400, 400));
   }
   
-
   updateObstacles() {
     this.obstacles.forEach(o => o.display());
   }
@@ -205,9 +199,12 @@ class Room {
   setObstacleCount(currentRoomId) {
     if (currentRoomId === 1) {
       obstacleCount = 1;
-
-    } else if (currentRoomId === 2) {
+      return;
+    } 
+    if (![4, 5, 6].includes(currentRoomId)) {
       obstacleCount = 5;
+    } else {
+      obstacleCount = 0;
     }
   }
 

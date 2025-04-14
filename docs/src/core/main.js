@@ -35,6 +35,7 @@ function preload() {
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
   shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
   savePointImg = loadImage('assets/savepoint/savepoint.jpg');
+  //load room data
   rawData = loadJSON("assets/rooms.json");
 }
 
