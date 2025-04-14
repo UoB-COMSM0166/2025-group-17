@@ -51,6 +51,8 @@ function setup() {
   adjustCanvasWithAspectRatio();
   player = new Player(playerX, playerY);
   room = new Room();
+  
+  currentRoomIndex = 0;
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 }
