@@ -6,7 +6,6 @@ class Room {
     this.chaser = [];
     this.shooter = [];
     this.obstacles = [];
-    this.obsCount = obstacleCount;
 
     this.currentRoomData = null;
     this.backgroundImg = null;
@@ -20,11 +19,16 @@ class Room {
   setup(roomData) {
     // Load room configuration
     this.currentRoomData = roomData;
-    // Empty every entity in room to make the clear condition work properly
-    this.enemies = [];
-    this.chaser = [];
-    this.shooter = [];
-    this.obstacles = [];
+    // Load room configuration
+
+    this.currentRoomData = roomData; // Store room data
+    this.generateObstacles(this.currentRoomData.id);
+    this.generateEnemies(this.currentRoomData.id);
+    this.backgroundImg = roomData.backgroundImg;
+    this.door = new Door();
+    this.door.close();
+    this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
+    this.setGameTime(this.currentRoomData.id);
 
     // 只有普通关卡生成障碍物（排除 id 4、5、6）
   if (![4, 5, 6].includes(roomData.id)) {
@@ -44,22 +48,11 @@ class Room {
     this.generateEnemies();
   }
 
-  this.backgroundImg = roomData.backgroundImg;
-  this.door = new Door();
-  this.door.close();
-
-
-  this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
-
-  if (roomData.id == 1) {
-    startTime = millis();
-  }
   }
 
   update() {
     // Use corresponding backgroundImg for current level
     image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
-    
     this.savePoint.display();    
     this.updateObstacles();
 
@@ -80,11 +73,15 @@ class Room {
   this.checkClearCondition();
   }
 
-  generateObstacles(obsCount) {
+  generateObstacles(currentRoomId) {
+    this.setObstacleCount(currentRoomId);
     this.obstacles = [];
-
     // TODO: obstacleCount不同关卡设为不一样的数值。根据难度或者其他条件
-    for (let i = 0; i < obsCount; i++) {
+    if (obstacleCount === 1) {
+      this.generateTutorialObs();
+      return;
+    }
+    for (let i = 0; i < obstacleCount; i++) {
       let newObstacle;
       do {
         const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
@@ -95,8 +92,9 @@ class Room {
     }
   }
 
-  generateEnemies() {
+  generateEnemies(currentRoomId) {
     this.enemies = [];
+    this.setEnemyCount(currentRoomId);
     // TODO: enemyCount不同关卡设为不一样的数值。根据难度或者其他条件
     for (let i = 0; i < enemyCount; i++) {
       let newEnemy;
@@ -156,8 +154,6 @@ class Room {
     });
   }
 
-
-
   updateShooter() {
     this.shooter = this.shooter.filter(s => s.hp > 0);
     this.shooter.forEach(s => {
@@ -168,8 +164,6 @@ class Room {
     });
   }
   
-
-
   updateDoor() {
     if (this.checkClearCondition()) this.door.open();
     else this.door.close();
@@ -200,5 +194,39 @@ class Room {
       }
     }
   }
-  
+
+  setEnemyCount(currentRoomId) {
+    if (currentRoomId === 1) {
+      enemyCount = 1;
+    } else if (currentRoomId === 2) {
+      enemyCount = 4;
+    }
+  }
+
+  setObstacleCount(currentRoomId) {
+    if (currentRoomId === 1) {
+      obstacleCount = 1;
+
+    } else if (currentRoomId === 2) {
+      obstacleCount = 5;
+    }
+  }
+
+  generateTutorialObs() {
+    let newObstacle;
+    const x = savePointParam.x + player.size.x + widthInPixel / 4;
+    const y = topBoundary + player.size.y + heightInPixel / 4;
+    newObstacle = new Obstacle(x, y);
+    this.obstacles.push(newObstacle);
+  }
+
+  setGameTime(currentRoomId) {
+    if (currentRoomId === 1) {
+      startTime = millis();
+    }
+    if (currentRoomId === 2) {
+      startTime = millis();
+    }
+  }
+
 }

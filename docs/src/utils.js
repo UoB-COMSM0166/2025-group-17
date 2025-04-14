@@ -7,8 +7,8 @@ let isBossStage = false;
 let isGameCompleted = false;
 let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLastSave;
 let inputHandler = null;
-let cnv, hudDrawer, menuDrawer;
-let room = null;
+let cnv, hudDrawer, pageDrawer;
+let rooms;
 
 let openDoorImg, closedDoorImg;
 
@@ -51,7 +51,6 @@ let savePointImg;
 const doorSize = { w: 73, h: 95 };
 
 const defaultSpeed = 5;
-const defaultHp = 3;
 const defaultAtk = 50;
 const playerMaxHp = 5;
 const playerMaxSpeed = 15;
@@ -72,3 +71,7 @@ const savePointParam = { x: leftBoundary + 60, y: bottomBoundary - 80, w: 30, h:
 
 const maxObstacleSize = heightInPixel / 12;
 const maxEntitySize = heightInPixel / 8;
+
+let sceneData;
+let sceneImgs = {};
+let sceneSounds = {};

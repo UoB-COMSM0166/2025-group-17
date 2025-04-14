@@ -1,5 +1,5 @@
 class BaseMenu {
-  // TODO: separate parts of MenuDrawer into menu classes
+  // TODO: separate parts of PageDrawer into menu classes
   #btnIndex = 0;
   #buttons = [];
 

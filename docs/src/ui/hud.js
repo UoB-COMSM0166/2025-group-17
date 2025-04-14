@@ -29,12 +29,12 @@ function drawHealthBar() {
   const iconPadding = 15;
   // Draw current HP
   for (let h = 0; h < player.hp; h++) {
-    image(heart, hPadding + h * (iconSize + iconPadding), vPadding, iconSize, iconSize);
+    image(heartImg, hPadding + h * (iconSize + iconPadding), vPadding, iconSize, iconSize);
   }
 
   // Draw lost HP
-  for (let dh = 0; dh < defaultHp - player.hp; dh++) {
-    image(damagedHeart, hPadding + (dh + player.hp) * (iconSize + iconPadding), vPadding, iconSize, iconSize);
+  for (let dh = 0; dh < player.maxHp - player.hp; dh++) {
+    image(damagedHeartImg, hPadding + (dh + player.hp) * (iconSize + iconPadding), vPadding, iconSize, iconSize);
   }
 }
 

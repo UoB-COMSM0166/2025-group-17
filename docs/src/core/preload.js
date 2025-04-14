@@ -1,7 +1,7 @@
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
-  heart = loadImage('assets/icons/full_heart.png');
-  damagedHeart = loadImage('assets/icons/empty_heart.png');
+  heartImg = loadImage('assets/icons/full_heart.png');
+  damagedHeartImg = loadImage('assets/icons/empty_heart.png');
   startMenuImg = loadImage('assets/background/menu_start.png');
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
@@ -29,10 +29,23 @@ function preload() {
 
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
+  rawData = loadJSON("assets/rooms.json");
 
-  rooms.forEach((room, i) => {
-    room.backgroundImg = loadImage(room.background);
-    rooms[i] = room; // Ensure the reference is updated
-  });
+  // Use a callback to make sure we don't access data before loaded
+ sceneData = loadJSON("assets/scene.json", preloadScenes);
+}
 
+function preloadScenes() {
+  const allScenes = [...sceneData.start, ...sceneData.end];
+  for (let line of allScenes) {
+    // Load once per unique filename
+    if (line.image && !sceneImgs[line.image]) {
+      sceneImgs[line.image] = loadImage(`assets/scenes/${line.image}.png`);
+    }
+  
+    if (line.sound && !sceneSounds[line.sound.name]) {
+      const folder = line.sound.type === "bgm" ? "assets/music/bgm" : "assets/music/se";
+      sceneSounds[line.sound.name] = loadSound(`${folder}/${line.sound.name}.mp3`);
+    }
+  }
 }

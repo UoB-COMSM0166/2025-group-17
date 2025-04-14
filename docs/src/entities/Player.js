@@ -1,7 +1,8 @@
 class Player {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.hp = defaultHp;
+    this.hp = 3;
+    this.maxHp = 3;
     this.speed = defaultSpeed;
     this.maxSpeed = playerMaxSpeed;
     this.acceleration = defaultAcceleration;
@@ -37,8 +38,8 @@ class Player {
     if (this.hp <= 0) {
       deathSound.currentTime = 0;
       deathSound.play();
-      if (typeof menuDrawer !== "undefined") {
-        menuDrawer.isGameOver = true;
+      if (typeof pageDrawer !== "undefined") {
+        pageDrawer.isGameOver = true;
       }
     }
   

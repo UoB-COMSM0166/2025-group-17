@@ -1,22 +1,22 @@
-let pauseSound = new Audio("assets/music/Pause.mp3");
-let hitSound = new Audio("assets/music/Enemy_Hurt.mp3");
-let deathSound = new Audio("assets/music/Enemy_Death.mp3");
-let shootSound = new Audio("assets/music/Player_Shoot.mp3");
-let hurtSound = new Audio("assets/music/Player_Hurt.mp3");
-let deathSound2 = new Audio("assets/music/Player_Death.mp3");
-
-let openDoorSound = new Audio("assets/music/Door_Open.mp3");
+let pauseSound = new Audio("assets/music/se/Pause.mp3");
+let hitSound = new Audio("assets/music/se/Enemy_Hurt.mp3");
+let deathSound = new Audio("assets/music/se/Enemy_Death.mp3");
+let shootSound = new Audio("assets/music/se/Player_Shoot.mp3");
+let hurtSound = new Audio("assets/music/se/Player_Hurt.mp3");
+let deathSound2 = new Audio("assets/music/se/Player_Death.mp3");
+let openDoorSound = new Audio("assets/music/se/Door_Open.mp3");
 
 function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
+  setRoomBgImg();  
   const eventBus = new EventBus();
-  const menuDrawer = new MenuDrawer(eventBus);
-  menuDrawer.setupMenu();
-  menuDrawer.setupPauseMenu();
-  menuDrawer.setupGameOverPage();
-  
-  gameStateManager = new GameStateManager(eventBus, menuDrawer);
-  adjustCanvasWithAspectRatio();
+  const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds);
+  pageDrawer.setupMainMenu();
+  pageDrawer.setupPauseMenu();
+  pageDrawer.setupGameOverPage();
+  gameStateManager = new GameStateManager(eventBus, pageDrawer);
+
+  hudDrawer = new HudDrawer(cnv, uiFont, heartImg, damagedHeartImg);
   player = new Player(playerX, playerY);
   room = new Room();
   
@@ -26,71 +26,36 @@ function setup() {
 }
 
 function draw() {
-  // // If loading is not complete, display the loading bar.
-  // if (!loadingComplete) {
-  //   drawLoadingBar();
-  //   return;
-  // }
-
+  // hudDrawer.adjustCanvasWithAspectRatio();
   adjustCanvasWithAspectRatio();
   background(220);
   player.updateBlinking();
-  // if (menuDrawer.isGameOver) {
-  //   menuDrawer.showGameOverPage(); // ✅ 主动显示 Game Over 页面
-  //   return; // ❗停止其他更新逻辑
-  // }
-
-  if (gameStateManager.menuDrawer.shouldRenderMenu(player)) return gameStateManager.menuDrawer.renderMenu(player, timeSpent);
+  if (gameStateManager.pageDrawer.shouldRenderMenu(player)) {
+    return gameStateManager.pageDrawer.renderMenu(player, timeSpent);
+  }
   updateGameState();
 }
 
 function updateGameState() {
-  gameStateManager.menuDrawer.updatePauseBtnPosition();
+  gameStateManager.pageDrawer.updatePauseBtnPosition();
   room.update();
   inputHandler.update(player);
   player.display();
   player.healByTime(timeSpent);
-  drawUiHub();
+  // hudDrawer.drawUiHub(player, startTime, currentRoomIndex);
+  drawUiHub(player, startTime, currentRoomIndex);
+
   checkSavePoint();
 }
 
 function keyPressed() {
-  gameStateManager.menuDrawer.handleBtnPressed(player);
-  if (!gameStateManager.menuDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
+  gameStateManager.pageDrawer.handleBtnPressed(player);
+  if (!gameStateManager.pageDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
 }
 
-// //for testing the loading bar of the pictures
-// function checkLoadingComplete() {
-//   if (assetsLoaded === totalAssets) {
-//     loadingComplete = true;
-//   }
-// }
-// // Function to draw the loading bar on screen.
-// function drawLoadingBar() {
-//   background(50);
-
-//   // Calculate progress as a fraction.
-//   let progress = assetsLoaded / totalAssets;
-
-//   // Define dimensions and position for the loading bar.
-//   let barWidth = width - 200;
-//   let barHeight = 20;
-//   let x = 100;
-//   let y = height / 2;
-
-//   // Draw the empty bar outline.
-//   noFill();
-//   stroke(255);
-//   rect(x, y, barWidth, barHeight);
-
-//   // Draw the filled portion of the bar.
-//   noStroke();
-//   fill(0, 255, 0);
-//   rect(x, y, progress * barWidth, barHeight);
-
-//   // Draw the loading percentage text.
-//   fill(255);
-//   textAlign(CENTER, CENTER);
-//   textSize(20);
-//   text("Loading... " + floor(progress * 100) + "%", width / 2, y - 30);
-// }
+function setRoomBgImg() {
+  rooms = rawData.rooms;
+  rooms.forEach(room => {
+    room.backgroundImg = loadImage(room.background);
+  });
+}
