@@ -251,6 +251,32 @@ Regarding visual design, team member **Shuzhou Huang** led the creation of all o
 We sourced royalty-free audio from public platforms for sound design and then processed and edited the sound effects using **Logic Pro X**. This allowed us to fine-tune the quality and timing of audio elements, enhancing the overall immersion of the game.
 ![d8e7d67450a08bffac6aacd4a66122e](https://github.com/user-attachments/assets/16c0db61-2bbc-47ef-abbd-c04069e6d9dd)
 
+###  Sustainability, Ethics and Accessibility
+#### Green Software Foundation Implementation Patterns Applied in the Project
+ 1. Efficient Asset Management
+   - **Pattern**: Properly Sized Images  
+   - **Specific Application**:
+     - In the project, various game elements such as player, enemies, bullets, and background images are used. By optimizing these images' resolution and size, unnecessary high-resolution images are avoided, reducing memory usage and loading time. In the `preload.js` file, many game resources (e.g., `shooterImage`, `chaserImage`, `bulletImage`) are loaded in an efficient way. 
+     - The function `adjustCanvasWithAspectRatio` in `hud.js` adjusts the canvas size based on the aspect ratio of the screen. This method adapts and resizes the game screen when the window size changes, preventing unnecessary image stretching or scaling, further reducing rendering resource waste.
+     - **Performance Impact**: This approach reduces unnecessary image loading, speeds up loading times, and minimizes memory consumption. It also reduces server load, which helps in lowering overall energy consumption【67†source】【16†source】.
+
+2. Event-Driven Architecture
+   - **Pattern**: Event-Driven and Modular Code  
+   - **Specific Application**:
+     - In `EventBus.js`, an event-driven architecture is implemented. This allows seamless transitions between different game states (e.g., from the main menu to the game, from pause to resume). For example, by publishing (`publish`) and subscribing (`subscribe`) to events, `GameStateManager.js` listens for different events such as `START_NEW_GAME`, `PAUSE_GAME`, etc., and responds accordingly. This makes the game logic more modular, reducing coupling between different modules and making the system easier to maintain and extend.
+     - **Performance Impact**: Event-driven architecture decouples different components, ensuring that resources are only loaded or updated when necessary, avoiding unnecessary computations and resource consumption. For instance, when the game is paused, only `GameStateManager` needs to update the game state, while other modules (such as enemies, player, etc.) do not perform unnecessary computations, reducing CPU load and saving energy【14†source】【69†source】.
+
+3. Performance Optimization and Caching
+   - **Pattern**: Efficient Memory Usage and Caching  
+   - **Specific Application**:
+     - In `SavePoint.js` and `GameStateManager.js`, caching mechanisms are used to store the game progress. For example, when the player approaches a save point, the game state is saved (`saveGameData`), and this data is stored in the browser's `localStorage`, preventing the game from reloading from scratch each time. This mechanism reduces unnecessary reloading and computations, improving the game's responsiveness and performance.
+     - Furthermore, in `Room.js`, enemies and obstacles are generated dynamically based on the current room data. This reduces the initialization time for each room, ensuring that game data is only loaded and computed when the player enters a room. For larger games, dynamically loading resources instead of loading everything at once significantly reduces memory consumption and improves performance.
+     - **Performance Impact**: By storing and caching game states, unnecessary data reloads are avoided, improving performance and saving bandwidth and memory. Especially in web games, caching player progress in `localStorage` reduces server load and the need for data transmission, optimizing overall energy efficiency.
+
+
+
+
+
 ### Contributions
 
 | Name          | Role / Responsibility           | Contributions          |
