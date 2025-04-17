@@ -151,7 +151,10 @@ The feedback of personal user experience is concluded and classified into five c
 | User 09 | 5                                                   | 3                                        | 5                                    | 2                                                                                                | 5                                                                      | 1                                                            | 2                                                                                       | 3                                        | 5                                   | 1                                                                                  |
 | User 10| 4                                                   | 2                                        | 3                                    | 3                                                                                                | 5                                                                      | 3                                                            | 4                                                                                       | 3                                        | 4                                   | 2                                                                                  |
 | User 11| 4                                                   | 2                                        | 2                                    | 4                                                                                                | 5                                                                      | 2                                                            | 3                                                                                       | 2                                        | 2                                   | 2                                                                                  |
+
+
 SUS Results of Easy Mode
+
 
 
 | User ID | I think I would like to use this system frequently | I found the system unnecessarily complex | I thought the system was easy to use | I think that I would need the support of a technical person to be able to use this system | I found the various functions in this system were well integrated | I thought there was too much inconsistency in this system | I would imagine that most people would learn to use this system very quickly | I found the system very cumbersome to use | I felt very confident using the system | I needed to learn a lot of things before I could get going with this system |
@@ -167,7 +170,10 @@ SUS Results of Easy Mode
 | User 09 | 5 | 2 | 5 | 1 | 5 | 1 | 5 | 3 | 5 | 1 |
 | User 10 | 3 | 2 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 2 |
 | User 11 | 3 | 2 | 2 | 5 | 4 | 2 | 1 | 4 | 2 | 2 |
+
+
 SUS Results of Hard Mode
+
 
 | User ID | Easy Mode | Hard Mode |
 |---------|------------|------------|
@@ -182,9 +188,13 @@ SUS Results of Hard Mode
 | User 09 | 80.0       | 92.5       |
 | User 10 | 67.5       | 55.0       |
 | User 11 | 60.0       | 42.5       |
+
+
 Statistical testing (Wilcoxon sign-ranked test) Results
 
+
 Higher SUS scores indicate better perceived usability. The Easy Mode has higher usability score than that of the Hard Mode, suggesting that users found the game more intuitive and accessible in Easy Mode. We conducted the Wilcoxon signed-rank test on the SUS data. The results show obvious significance. For a group of 11 participants, the calculated test statistic W is 5.5, which indicates that the significance level reached 0.025, or 97.5% according to the critical values table. The result determined that there was an significant difference between the easy mode and hard mode. However, this result does not determine exactly what causes the difference between the two modes. This uncertainty about whether there is really a difference in the usablity of two modes is related to one or more items of SUS.
+
 
 | SUS Item                                                                                 | Easy | Hard |
 |-----------------------------------------------------------------------------------------------|------|------|
@@ -198,7 +208,9 @@ Higher SUS scores indicate better perceived usability. The Easy Mode has higher 
 | I found the system very cumbersome to use                                                     | 2.5  | 3.1  |
 | I felt very confident using the system                                                        | 3.8  | 3.4  |
 | I needed to learn a lot of things before I could get going with this system                   | 2.4  | 2.3  |
+
 The average score of each item on the scale is of the easy mode and the difficult mode
+
 
 The average scores of the easy mode and the hard mode are 73.2 and 62.3 respectively. The latter is lower than the general usability benchmark of 68. Based on the results of the above table, we decided to improve the control methods of the player, the collision logic between classes, and the UI design of non-game interfaces to enhance the integrity of the hard mode system and make it easier for users to master and proficiently use the game system with the expectation of bringing the usability score of hard mode to the 68 benchmark.
 
