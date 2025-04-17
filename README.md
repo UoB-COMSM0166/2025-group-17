@@ -253,7 +253,7 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 
 ###  Sustainability, Ethics and Accessibility
 #### Green Software Foundation Implementation Patterns Applied in the Project
- 1. Efficient Asset Management
+1. Efficient Asset Management
    - **Pattern**: Properly Sized Images  
    - **Specific Application**:
      - In the project, various game elements such as player, enemies, bullets, and background images are used. By optimizing these images' resolution and size, unnecessary high-resolution images are avoided, reducing memory usage and loading time. In the `preload.js` file, many game resources (e.g., `shooterImage`, `chaserImage`, `bulletImage`) are loaded in an efficient way. 
