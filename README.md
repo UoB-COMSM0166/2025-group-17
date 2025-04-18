@@ -213,7 +213,7 @@ Higher SUS scores indicate better perceived usability. The Easy Mode has higher 
 | I felt very confident using the system                                                        | 3.8  | 3.4  |
 | I needed to learn a lot of things before I could get going with this system                   | 2.4  | 2.3  |
 
-*The average score of each item on the scale is of the easy mode and the difficult mode*
+*The average score of each item on SUS of the easy mode and the hard mode*
 
 
 The average scores of the easy mode and the hard mode are 73.2 and 62.3 respectively. The latter is lower than the general usability benchmark of 68. Based on the results of the above table, we decided to improve the control methods of the player, the collision logic between classes, and the UI design of non-game interfaces to enhance the integrity of the hard mode system and make it easier for users to master and proficiently use the game system with the expectation of bringing the usability score of hard mode to the 68 benchmark.
