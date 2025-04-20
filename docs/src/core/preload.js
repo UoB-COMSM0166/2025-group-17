@@ -58,7 +58,7 @@ function preload() {
 
   // 加载 Boss 精灵图（整张），等 setup 同步切帧
   bossSpriteSheet = loadImage("assets/spritesheet/Crab_Boss.png");
-  shooterSpriteSheet = loadImage("assets/spritesheet/Shooter_Boss.png");
+  shooterSpriteSheet = loadImage("assets/spritesheet/shooter_Boss.png");
   enemySpriteSheet = loadImage("assets/spritesheet/enemy.png"); 
 
 }
