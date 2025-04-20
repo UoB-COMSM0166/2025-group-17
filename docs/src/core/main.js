@@ -7,7 +7,7 @@ let deathSound2 = new Audio("assets/music/se/Player_Death.mp3");
 let openDoorSound = new Audio("assets/music/se/Door_Open.mp3");
 
 function setup() {
-  // ✅ 防止 bossSpriteSheet 未加载时报错
+  // 防止 bossSpriteSheet 未加载时报错
   if (!bossSpriteSheet) {
     console.warn("⚠️ bossSpriteSheet not loaded yet!");
     return;
@@ -68,11 +68,11 @@ function draw() {
     return gameStateManager.pageDrawer.renderMenu(player, timeSpent);
   }
   updateGameState();
-  drawDebugCollisionBoxes(); // 这里是用于碰撞测试
+ //drawDebugCollisionBoxes(); // 这里是用于碰撞测试
 }
 
 //-----------------------------------------------------------------------------------------------------
-// 这里是用于绘制碰撞测试边界的！！！！！！！！！！！屏蔽的和上面37行  drawDebugCollisionBoxes();一起注释掉
+// 这里是用于绘制碰撞测试边界的！！！！！！！！！！！注释掉前面 drawDebugCollisionBoxes();就行
 function drawDebugCollisionBoxes() {
   noFill();
 
