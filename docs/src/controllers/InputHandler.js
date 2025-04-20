@@ -10,18 +10,30 @@ class InputHandler {
   update(playerObj) {
     this.currentRoom.update();
     playerObj.updateVelocity();
-    playerObj.updatePosition();
-    playerObj.updateBlinking(); // The player will blink for 2 seconds after being hit.
-    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(playerObj, this.currentRoom.enemies);
-    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(playerObj, this.currentRoom.obstacles);
-    const playerHitBoundary = this.collisionDetector.isHitBoundary(playerObj);
-    
-    
-    if (collideWithEnemies || collideWithObstacles || playerHitBoundary) {
-      playerObj.revertPosition();
+
+    // ✅ 预测下一步的位置
+    const nextX = playerObj.position.x + playerObj.velocity.x;
+    const nextY = playerObj.position.y + playerObj.velocity.y;
+
+    // ✅ 构造临时对象用于碰撞判断（必须包含 velocity 否则报错）
+    const tempPlayer = {
+      position: createVector(nextX, nextY),
+      size: playerObj.size,
+      velocity: playerObj.velocity
+    };
+
+    // ✅ 使用预测位置检测碰撞
+    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(tempPlayer, this.currentRoom.enemies);
+    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(tempPlayer, this.currentRoom.obstacles);
+    const playerHitBoundary = this.collisionDetector.isHitBoundary(tempPlayer);
+
+    if (!collideWithEnemies && !collideWithObstacles && !playerHitBoundary) {
+      // ✅ 没有碰撞，更新位置
+      playerObj.updatePosition();
+    } else {
+      // ⛔ 碰撞时强制停下
+      playerObj.resetVelocity();
     }
-    if (collideWithEnemies) this.decreasePlayerHp(playerObj);
-    playerObj.resetVelocity();
 
     this.collisionDetector.handleEnemyCollision(this.currentRoom.enemies);
     this.collisionDetector.handleEnemyObstacleCollision(this.currentRoom.enemies, this.currentRoom.obstacles);
@@ -53,7 +65,7 @@ class InputHandler {
     // }
     const direction = key.toLowerCase();
     if (direction === 'w' || direction === 'a' || direction === 's' || direction === 'd') {
-      console.log("Bullet input detected!")
+      console.log("Bullet input detected!");
       playerObj.shoot(direction);
     }
   }

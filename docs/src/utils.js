@@ -46,10 +46,9 @@ let playerImage;
 let bulletImage;
 let enemyImage;
 let savePointImg;
-
 const doorSize = { w: 73, h: 95 };
 
-const defaultSpeed = 5;
+const defaultSpeed = 3;
 const defaultAtk = 50;
 const playerMaxHp = 5;
 const playerMaxSpeed = 15;
