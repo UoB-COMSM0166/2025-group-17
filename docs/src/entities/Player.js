@@ -10,43 +10,52 @@ class Player {
     this.velocity = createVector(0, 0);
     this.atk = defaultAtk;
     this.maxAtk = playerMaxAtk;
-    this.size = createVector(heightInPixel / 8, heightInPixel / 8);
+
+    // 判定框尺寸（红框用来检测碰撞）！！！
+    this.size = createVector(36, 52);  // ← 可调整碰撞判定大小（原本是 heightInPixel / 7）
+
+    //  图像显示尺寸（不会影响判定框）！！！
+    this.displaySize = createVector(72, 72); // ← 建议大于判定框，让图像不被裁剪
+
     this.invincibleTimer = 0;   // Frames remaining for invincibility
     this.blinkCounter = 0;      // Used for blinking during invincibility
     this.invincibleTimer = 0;   // 剩余无敌帧数
     this.blinkCounter = 0;      // 用于无敌闪烁效果
     this.bullets = [];
-    this.image = playerImage;
+
+    this.image = playerImage; // 初始静态图像
     this.lastHealTime = null;
+
+    // 动画相关初始化
+    this.animations = window.playerAnimations; // 从 preload.js 获取动画帧
+    this.direction = 'down';                   // 初始朝向
+    this.currentFrame = 0;                     // 当前帧索引
+    this.frameCounter = 0;                     // 动画播放计数器
+    this.frameDelay = 6;                       // 每几帧切换一次动画
   }
 
-
-
-  //updateHp(newHp) {
-  //  this.hp = newHp;
-  //  console.log("Player hp updated to", this.hp);
-  //}
-
-
-   
   updateHp(newHp, invincibleDuration = 60) {
     if (this.invincibleTimer > 0) return;
-  
+
     this.hp = newHp;
     console.log("Player hp updated to", this.hp);
-  
+
     if (this.hp <= 0) {
       deathSound.currentTime = 0;
       deathSound.play();
     }
-  
-    this.resetInvincibleTimer(invincibleDuration); // ✅ 用参数设定无敌时间
+
+    this.resetInvincibleTimer(invincibleDuration); // 用参数设定无敌时间
   }
 
-  
   shoot(direction) {
-    bullets.push(new Bullet(this.position.x, this.position.y, direction));
+    const centerX = this.position.x + this.size.x / 2;
+    const centerY = this.position.y + this.size.y / 2;
+    this.bullets.push(new Bullet(centerX, centerY, direction, this.atk));
+    console.log("A bullet has been shot");
 
+    shootSound.currentTime = 0;
+    shootSound.play();
   }
 
   updateBlinking() {
@@ -59,64 +68,56 @@ class Player {
   display() {
     // When invincible, skip drawing for half the blink cycle.
     if (this.invincibleTimer > 0 && this.blinkCounter < 5) return;
-    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
-  };
+
+    // ✅ 偏移显示图像，使图像居中对齐碰撞框
+    const offsetX = (this.size.x - this.displaySize.x) / 2;
+    const offsetY = (this.size.y - this.displaySize.y) / 2;
+
+    image(
+      this.image,
+      this.position.x + offsetX,
+      this.position.y + offsetY,
+      this.displaySize.x,
+      this.displaySize.y
+    );
+  }
 
   updateVelocity() {
-    //let moving = false; //记录玩家是否在移动
     let input = createVector(0, 0);
-    let desiredVel = createVector(0, 0);
-    if (keyIsDown(LEFT_ARROW)) {
-      input.x = -1;
-      // moving = true;
-    }
-    if (keyIsDown(RIGHT_ARROW)) {
-      input.x = 1;
-      //  moving = true;
-    }
-    if (keyIsDown(UP_ARROW)) {
-      input.y = -1;
-      //  moving = true;
-    }
-    if (keyIsDown(DOWN_ARROW)) {
-      input.y = 1;
-      //  moving = true;
-    }
-    /**way one **/
-    // input.normalize().mult(this.acceleration);
-    // this.velocity.add(input);
-    // this.velocity.mult(this.friction);
 
-    /**way two**/
+    if (keyIsDown(LEFT_ARROW)) input.x = -1;
+    if (keyIsDown(RIGHT_ARROW)) input.x = 1;
+    if (keyIsDown(UP_ARROW)) input.y = -1;
+    if (keyIsDown(DOWN_ARROW)) input.y = 1;
+
+    // ✅ 立即响应速度，无 lerp（避免滑动穿墙）
     if (input.mag() > 0) {
       input.normalize();
-      desiredVel = p5.Vector.mult(input, this.speed);
-    }
-    // Smoothly update velocity
-    this.velocity.lerp(desiredVel, 0.8);
-    // If no input, apply friction
-    if (input.mag() === 0) {
-      this.velocity.mult(this.friction);
+      this.velocity = p5.Vector.mult(input, this.speed);
+    } else {
+      this.velocity.set(0, 0);
     }
 
+    // 方向判定用于动画（优先水平）
+    if (abs(input.x) > abs(input.y)) {
+      this.direction = input.x > 0 ? 'right' : 'left';
+    } else if (input.y !== 0) {
+      this.direction = input.y > 0 ? 'down' : 'up';
+    }
 
-    // if (keyIsDown(LEFT_ARROW)) {
-    //   this.velocity.x -= this.speed;
-    //   moving = true;
-    // }
-    // if (keyIsDown(RIGHT_ARROW)) {
-    //   this.velocity.x += this.speed;
-    //   moving = true;
-    // }
-    // if (keyIsDown(UP_ARROW)) {
-    //   this.velocity.y -= this.speed;
-    //   moving = true;
-    // }
-    // if (keyIsDown(DOWN_ARROW)) {
-    //   this.velocity.y += this.speed;
-    //   moving = true;
-    // }
+    // 动画帧切换逻辑
+    if (this.velocity.mag() > 0.1) {
+      this.frameCounter++;
+      if (this.frameCounter >= this.frameDelay) {
+        this.frameCounter = 0;
+        this.currentFrame = (this.currentFrame + 1) % this.animations[this.direction].length;
+      }
+    } else {
+      this.currentFrame = 0;
+    }
 
+    // 更新当前图像为对应方向动画帧
+    this.image = this.animations[this.direction][this.currentFrame];
   }
 
   resetVelocity() {
@@ -127,18 +128,18 @@ class Player {
   updatePosition() {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
-  };
+  }
 
   revertPosition() {
     this.position.x -= this.velocity.x;
     this.position.y -= this.velocity.y;
-  };
+  }
 
   decreaseHp() {
     console.log('Player took damage!');
     if (this.hp > 0 && this.invincibleTimer === 0) {
       this.hp = max(0, this.hp - 1);
-      this.resetInvincibleTimer(); // Approximately one second at 60 fps.
+      this.resetInvincibleTimer();
     }
     if (this.hp === 0) {
       deathSound.currentTime = 0;
@@ -147,6 +148,7 @@ class Player {
   }
 
   increaseHp() { this.hp = min(3, this.hp + 1); }
+
   healByTime(currentTime) {
     if (this.lastHealTime === null) this.lastHealTime = currentTime;
     if (this.hp !== 1 || (currentTime - this.lastHealTime) < 300000) return;
@@ -158,22 +160,4 @@ class Player {
   resetInvincibleTimer(duration = 60) {
     this.invincibleTimer = duration;
   }
-  
-
-  shoot(direction) {
-    this.bullets.push(new Bullet(this.position.x, this.position.y, direction, this.atk));
-    console.log("A bullet has been shot");
-
-    shootSound.currentTime = 0;
-    shootSound.play();
-  }
-
-
-  // resetStatus() {
-  //   this.position.set(playerX, playerY); // 重置到初始位置
-  //   this.speed = defaultSpeed;          // 重置速度
-  //   this.atk = defaultAtk;              // 重置攻击力
-  //   this.bullets = [];                  // 清空子弹
-
-  // }
 }

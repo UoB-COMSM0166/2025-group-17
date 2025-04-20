@@ -1,3 +1,7 @@
+let bossSpriteSheet;
+let shooterSpriteSheet;
+let enemySpriteSheet;
+
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
   heartImg = loadImage('assets/icons/full_heart.png');
@@ -33,6 +37,30 @@ function preload() {
 
   // Use a callback to make sure we don't access data before loaded
   sceneData = loadJSON("assets/scene.json", preloadScenes);
+
+  // -------------------------------------------
+  // 加载玩家角色四方向动画帧（每个方向5张）
+  // 存入全局变量 window.playerAnimations 供 Player.js 使用
+  // -------------------------------------------
+  window.playerAnimations = {
+    up: [],
+    down: [],
+    left: [],
+    right: []
+  };
+
+  ['up', 'down', 'left', 'right'].forEach(direction => {
+    for (let i = 0; i < 5; i++) {
+      const path = `assets/spritesheet/${direction}${i}.png`;
+      window.playerAnimations[direction].push(loadImage(path));
+    }
+  });
+
+  // 加载 Boss 精灵图（整张），等 setup 同步切帧
+  bossSpriteSheet = loadImage("assets/spritesheet/Crab_Boss.png");
+  shooterSpriteSheet = loadImage("assets/spritesheet/Shooter_Boss.png");
+  enemySpriteSheet = loadImage("assets/spritesheet/enemy.png"); 
+
 }
 
 function preloadScenes() {
@@ -42,7 +70,7 @@ function preloadScenes() {
     if (line.image && !sceneImgs[line.image]) {
       sceneImgs[line.image] = loadImage(`assets/scenes/${line.image}.png`);
     }
-  
+
     if (line.sound && !sceneSounds[line.sound.name]) {
       const folder = line.sound.type === "bgm" ? "assets/music/bgm" : "assets/music/se";
       sceneSounds[line.sound.name] = loadSound(`${folder}/${line.sound.name}.mp3`);
