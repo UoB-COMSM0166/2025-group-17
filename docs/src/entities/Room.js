@@ -29,7 +29,7 @@ class Room {
     this.door.close();
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
     this.setGameTime(currentRoomIndex);
-
+    gameStateManager?.playBGMForRoom?.(currentRoomIndex); // 进入房间后自动播放对应 BGM
   }
 
   update() {
