@@ -1,4 +1,5 @@
 class Enemy {
+  /*
   constructor(x, y, hp) {
     this.hp = hp;
     this.position = createVector(x, y);
@@ -8,6 +9,24 @@ class Enemy {
     );
     this.velocity = createVector(random([-1, 1]), random([-1, 1]));
     this.image = enemyImage; // 默认图像（兼容旧逻辑）
+
+    // 添加动画帧相关
+    this.frames = window.enemyFrames || [enemyImage]; // 确保不报错
+    this.currentFrame = 0;
+    this.frameCounter = 0;
+    this.frameDelay = 10; // 控制播放速度，越大越慢
+  }
+  */
+
+  constructor(x, y, hp, enImage) {
+    this.hp = hp;
+    this.position = createVector(x, y);
+    this.size = createVector(
+      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.w,
+      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.h
+    );
+    this.velocity = createVector(random([-1, 1]), random([-1, 1]));
+    this.image = enImage;
 
     // 添加动画帧相关
     this.frames = window.enemyFrames || [enemyImage]; // 确保不报错

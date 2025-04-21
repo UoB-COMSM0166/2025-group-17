@@ -123,5 +123,10 @@ function setRoomImg() {
         obs.img = loadImage(obs.image);
       });
     }
+    if (room.enemies) {
+      room.enemies.forEach(enes => {
+        enes.img = loadImage(enes.image);
+      });
+    }
   });
 }
