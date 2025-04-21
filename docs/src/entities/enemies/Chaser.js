@@ -69,7 +69,7 @@ class Chaser {
   }
 
   applyDashDamage() {
-    player.updateHp(player.hp - 0.5);
+    player.updateHp(player.hp - 1);
     hurtSound.currentTime = 0;
     hurtSound.play();
     this.dashDamageApplied = true;

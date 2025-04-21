@@ -102,29 +102,29 @@ class PageDrawer {
   }
 
   drawPauseMenu() {
-    fill(255);
-    stroke(0);
-    strokeWeight(5);
-    textFont(uiFont, uiTextSize);
-    textAlign(CENTER, CENTER);
-    text("Paused", widthInPixel / 2, heightInPixel / 3);
-
+    this.#drawMainMsg("Paused");
     this.#repositionButton(this.btnResume, -1.1);
     this.#repositionButton(this.btnExit, 1.1);
     if (this.btnIndex !== null) this.pauseMenuBtns[this.btnIndex].class('blink');
+  }
+
+  #drawMainMsg(title) {
+    stroke(0);
+    strokeWeight(5);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill('#AFDDC9');
+    text(title, widthInPixel / 2, heightInPixel / 3);
   }
 
   drawGameOverPage() {
     console.log("Drawing game over page..")
     clear();
     background(220);
-    fill(255, 0, 0);
-    textFont(uiFont, 32);
-    textAlign(CENTER, CENTER);
     
     this.toggleResumeButtons();
     this.showGameOverButtons();
-    text("Game Over", widthInPixel / 2, heightInPixel / 3);
+    this.#drawMainMsg("Game Over");
     this.#repositionButton(this.btnLoadLastSave, -1.1);
     this.#repositionButton(this.btnRestart, 1.1);
     if (this.btnIndex !== null) this.gameOverBtns[this.btnIndex].class('blink');
@@ -138,23 +138,14 @@ class PageDrawer {
     clear();
     this.btnPause.hide();
     background(220);
-    fill(255, 0, 0);
-    textFont(uiFont, 32);
-    textAlign(CENTER, CENTER);
 
     const totalSecs = floor(totalTime / 1000);
     const mins = floor(totalSecs / 60);
     const secs = totalSecs % 60;
-    text(
-      `YOU WON! Took ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} seconds`,
-      widthInPixel / 2,
-      heightInPixel / 2
-    );
+    this.#drawMainMsg(`YOU WON! Took ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} seconds`);
 
     textSize(24);
     text(`Press ENTER to enter the epilogue`, widthInPixel / 2, 2 * heightInPixel / 3);
-
-    textSize(24);
     text(`Press ESC to return`, widthInPixel / 2, 5 * heightInPixel / 6);
   }
 

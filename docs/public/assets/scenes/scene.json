@@ -1,0 +1,262 @@
+{
+    "start": [
+      {
+        "label": "start_clip1",
+        "image": "start/clip1",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip2",
+        "image": "start/clip2",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip3",
+        "image": "start/clip3",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip4",
+        "image": "start/clip4",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip5",
+        "image": "start/clip5",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip6",
+        "image": "start/clip6",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip7",
+        "image": "start/clip7",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip8",
+        "image": "start/clip8",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip9",
+        "image": "start/clip9",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip10",
+        "image": "start/clip10",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene1_Office"
+        }
+      },
+      {
+        "label": "start_clip11",
+        "image": "start/clip11",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene2_Street"
+        }
+      },
+      {
+        "label": "start_clip12",
+        "image": "start/clip12",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene2_Street"
+        }
+      },
+      {
+        "label": "start_clip13",
+        "image": "start/clip13",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip14",
+        "image": "start/clip14",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip15",
+        "image": "start/clip15",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip16",
+        "image": "start/clip16",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip17",
+        "image": "start/clip17",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip18",
+        "image": "start/clip18",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip19",
+        "image": "start/clip19",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip20",
+        "image": "start/clip20",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip21",
+        "image": "start/clip21",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip22",
+        "image": "start/clip22",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "start_clip23",
+        "image": "start/clip23",
+        "sound": {
+          "type": "bgm",
+          "name": "L1_Office"
+        }
+      },
+      {
+        "label": "start_clip24",
+        "image": "start/clip24",
+        "sound": {
+          "type": "bgm",
+          "name": "L1_Office"
+        }
+      }
+    ],
+    "end": [
+      {
+        "label": "end_clip1",
+        "image": "end/clip1",
+        "sound": {
+          "type": "bgm",
+          "name": "L4_Extra"
+        }
+      },
+      {
+        "label": "end_clip2",
+        "image": "end/clip2",
+        "sound": {
+          "type": "bgm",
+          "name": "L4_Extra"
+        }
+      },
+      {
+        "label": "end_clip3",
+        "image": "end/clip3",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "end_clip4",
+        "image": "end/clip4",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "end_clip5",
+        "image": "end/clip5",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "end_clip6",
+        "image": "end/clip6",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "end_clip7",
+        "image": "end/clip7",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      },
+      {
+        "label": "end_clip8",
+        "image": "end/clip8",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
+      }
+    ]
+  }
