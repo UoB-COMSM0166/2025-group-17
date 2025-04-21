@@ -84,7 +84,60 @@ Onion Model
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
 ![class-diagram.svg](images/class-diagram.svg)</br>
-![sequence-diagram.svg](images/sequence-diagram.svg)</br>
+```sequenceDiagram 
+    participant Player 
+    participant InputHandler 
+    participant CollisionDetector 
+    participant Bullet 
+    participant Enemy 
+    participant Obstacle 
+    participant Room 
+    participant Door 
+ 
+    Note right of Player: Player movement logic 
+    Player->>InputHandler: Direction key pressed
+    InputHandler->>Player: updateVelocity()
+    Player->>Player: updatePosition()
+    Player->>CollisionDetector: Detect collision 
+    CollisionDetector-->>Player: Return collision result 
+    alt If collision occurs 
+        Player->>Player: revertPosition()
+    end 
+ 
+    Note right of Player: Player shooting logic 
+    Player->>InputHandler: Shoot button pressed
+    InputHandler->>Player: shoot(direction)
+    Player->>Bullet: new Bullet()
+    Bullet->>Bullet: update()
+    Bullet->>Bullet: display()
+ 
+    Note right of CollisionDetector: Bullet collision detection 
+    CollisionDetector->>Bullet: detectCollisionWithBullet()
+    alt If collides with enemy 
+        Bullet->>Enemy: Inflict damage 
+        Enemy-->>CollisionDetector: hp -= damage 
+        CollisionDetector->>Bullet: splice()
+    else If collides with obstacle
+        Bullet-->>CollisionDetector: Disappear 
+        CollisionDetector->>Bullet: splice()
+    end 
+ 
+    Note right of Room: Room state update 
+    Room->>Enemy: updateEnemies()
+    Enemy->>Enemy: update()
+    Enemy->>Enemy: display()
+    Room->>Obstacle: updateObstacles()
+    Obstacle->>Obstacle: display()
+    Room->>Door: updateDoor()
+    Door->>Door: open() or close()
+ 
+    Note right of InputHandler: Room switching logic 
+    InputHandler->>Room: checkClearCondition()
+    alt If all enemies are defeated 
+        InputHandler->>Room: loadRoom()
+        Room->>Room: setup(nextRoomData)
+    end
+```
 
 ### Implementation
 
