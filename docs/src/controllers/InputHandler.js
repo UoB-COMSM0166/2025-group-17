@@ -11,27 +11,27 @@ class InputHandler {
     this.currentRoom.update();
     playerObj.updateVelocity();
 
-    // ✅ 预测下一步的位置
+    // 预测下一步的位置
     const nextX = playerObj.position.x + playerObj.velocity.x;
     const nextY = playerObj.position.y + playerObj.velocity.y;
 
-    // ✅ 构造临时对象用于碰撞判断（必须包含 velocity 否则报错）
+    // 构造临时对象用于碰撞判断（必须包含 velocity 否则报错）
     const tempPlayer = {
       position: createVector(nextX, nextY),
       size: playerObj.size,
       velocity: playerObj.velocity
     };
 
-    // ✅ 使用预测位置检测碰撞
+    // 使用预测位置检测碰撞
     const collideWithEnemies = this.collisionDetector.detectPlayerCollision(tempPlayer, this.currentRoom.enemies);
     const collideWithObstacles = this.collisionDetector.detectPlayerCollision(tempPlayer, this.currentRoom.obstacles);
     const playerHitBoundary = this.collisionDetector.isHitBoundary(tempPlayer);
 
     if (!collideWithEnemies && !collideWithObstacles && !playerHitBoundary) {
-      // ✅ 没有碰撞，更新位置
+      // 没有碰撞，更新位置
       playerObj.updatePosition();
     } else {
-      // ⛔ 碰撞时强制停下
+      // 碰撞时强制停下
       playerObj.resetVelocity();
     }
 
