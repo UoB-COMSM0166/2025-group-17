@@ -16,6 +16,13 @@
                "y": 224,
                "image": "assets/obstacles/level1/PC-1.png"
             }
+         ],
+         "enemies":[
+            {
+               "x": 715,
+               "y": 405,
+               "image": "assets/enemies/level1/CCTV.png"
+            }
          ]
       },
       {
@@ -53,6 +60,28 @@
                "x": 358,
                "y": 264,
                "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ],
+         "enemies":[
+            {
+               "x": 315,
+               "y": 405,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 858,
+               "y": 308,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 534,
+               "y": 107,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 786,
+               "y": 357,
+               "image": "assets/enemies/level1/CCTV.png"
             }
          ]
       },
@@ -92,6 +121,28 @@
                "y": 222,
                "image": "assets/obstacles/level1/PC-5.png"
             }
+         ],
+         "enemies":[
+            {
+               "x": 338,
+               "y": 389,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 568,
+               "y": 378,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 735,
+               "y": 106,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 614,
+               "y": 274,
+               "image": "assets/enemies/level1/CCTV.png"
+            }
          ]
       },
       {
@@ -129,6 +180,28 @@
                "x": 360,
                "y": 191,
                "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ],
+         "enemies":[
+            {
+               "x": 435,
+               "y": 369,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 771,
+               "y": 210,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 288,
+               "y": 163,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 765,
+               "y": 292,
+               "image": "assets/enemies/level1/CCTV.png"
             }
          ]
       },
@@ -168,6 +241,28 @@
                "y": 329,
                "image": "assets/obstacles/level1/PC-5.png"
             }
+         ],
+         "enemies":[
+            {
+               "x": 629,
+               "y": 116,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 653,
+               "y": 392,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 732,
+               "y": 266,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 542,
+               "y": 235,
+               "image": "assets/enemies/level1/CCTV.png"
+            }
          ]
       },
       {
@@ -206,6 +301,28 @@
                "y": 203,
                "image": "assets/obstacles/level1/PC-5.png"
             }
+         ],
+         "enemies":[
+            {
+               "x": 789,
+               "y": 168,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 473,
+               "y": 418,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 773,
+               "y": 92,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 408,
+               "y": 206,
+               "image": "assets/enemies/level1/CCTV.png"
+            }
          ]
       },
       {
@@ -243,6 +360,28 @@
                "x": 515,
                "y": 302,
                "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ],
+         "enemies":[
+            {
+               "x": 634,
+               "y": 72,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 729,
+               "y": 123,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 701,
+               "y": 407,
+               "image": "assets/enemies/level1/CCTV.png"
+            },
+            {
+               "x": 656,
+               "y": 154,
+               "image": "assets/enemies/level1/CCTV.png"
             }
          ]
       },

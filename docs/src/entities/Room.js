@@ -28,7 +28,7 @@ class Room {
     this.door = new Door();
     this.door.close();
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
-    this.setGameTime(this.currentRoomData.id);
+    this.setGameTime(currentRoomIndex);
 
   }
 
@@ -69,9 +69,12 @@ class Room {
 
     for(let i = 0; i < currentRoomData.obstacles.length; i++) {
       let newObstacle;
-      const obsData = currentRoomData.obstacles[i];
+      do {
+        const obsData = currentRoomData.obstacles[i];
       newObstacle = new Obstacle(obsData.x, obsData.y, obsData.img);
+      } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
       this.obstacles.push(newObstacle);
+      
     }
 
     // for (let i = 0; i < obstacleCount; i++) {
@@ -101,18 +104,29 @@ class Room {
     } else if (currentRoomData.type === 3) {
       this.generateFinalBossRoom(); // 2 chasers + 1 shooter
       return;
-    } 
-
-    for (let i = 0; i < enemyCount; i++) {
+    }
+    
+    for(let i = 0; i < currentRoomData.enemies.length; i++) {
       let newEnemy;
       do {
-        let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
-        let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
-        let hp = random([smallEnemyHp, largeEnemyHp]);
-        newEnemy = new Enemy(x, y, hp);
+        const enemiesData = currentRoomData.enemies[i];
+      let hp = random([smallEnemyHp, largeEnemyHp]);
+      newEnemy = new Enemy(enemiesData.x, enemiesData.y, hp, enemiesData.img);
       } while (this.collisionDetector.detectCollision(player, newEnemy));
+      
       this.enemies.push(newEnemy);
     }
+
+    // for (let i = 0; i < enemyCount; i++) {
+    //   let newEnemy;
+    //   do {
+    //     let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
+    //     let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
+    //     let hp = random([smallEnemyHp, largeEnemyHp]);
+    //     newEnemy = new Enemy(x, y, hp);
+    //   } while (this.collisionDetector.detectCollision(player, newEnemy));
+    //   this.enemies.push(newEnemy);
+    // }
   }
 
   generateChaser() {
@@ -241,11 +255,11 @@ class Room {
     this.obstacles.push(newObstacle);
   }
 
-  setGameTime(currentRoomId) {
-    if (currentRoomId === 0) {
+  setGameTime(currentRoomIndex) {
+    if (currentRoomIndex === 0) {
       startTime = millis();
     }
-    if (currentRoomId === 1) {
+    if (currentRoomIndex === 1) {
       startTime = millis();
     }
   }
