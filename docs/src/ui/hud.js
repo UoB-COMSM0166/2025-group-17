@@ -44,7 +44,7 @@ function drawCurrentLevel() {
   strokeWeight(5);
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
-  text(`Level: ${currentRoomIndex} / ${rooms.length}`, hPadding, heightInPixel - vPadding);
+  text(`Level: ${currentRoomIndex} / ${rooms.length - 1}`, hPadding, heightInPixel - vPadding);
 
 }
 

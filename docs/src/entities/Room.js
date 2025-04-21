@@ -22,8 +22,8 @@ class Room {
     this.shooter = [];
     this.obstacles = [];
     this.currentRoomData = roomData; // Store room data
-    this.generateObstacles(this.currentRoomData.id);
-    this.generateEnemies(this.currentRoomData.id);
+    this.generateObstacles(this.currentRoomData);
+    this.generateEnemies(this.currentRoomData);
     this.backgroundImg = roomData.backgroundImg;
     this.door = new Door();
     this.door.close();
@@ -39,11 +39,11 @@ class Room {
     this.updateObstacles();
 
     // Treat three types of rooms separately
-    if (this.currentRoomData.id === 4) {
+    if (this.currentRoomData.type === 1) {
       this.updateChaser();
-    } else if (this.currentRoomData.id === 5) {
+    } else if (this.currentRoomData.type === 2) {
       this.updateShooter();
-    } else if (this.currentRoomData.id === 6) {
+    } else if (this.currentRoomData.type === 3) {
       this.updateChaser();
       this.updateShooter();
       this.resolveBossCollision(); // Add physical barriers between monsters
@@ -55,42 +55,50 @@ class Room {
     this.checkClearCondition();
   }
 
-  generateObstacles(currentRoomId) {
+  generateObstacles(currentRoomData) {
     this.obstacles = [];
-    this.setObstacleCount(currentRoomId);
+    this.setObstacleCount(currentRoomData);
     if (obstacleCount === 1) {
-      this.generateTutorialObs();
+      const obsData = currentRoomData.obstacles[0];
+      this.generateTutorialObs(obsData);
       return;
     }
     if (obstacleCount === 0) { // No obstacles in Boss level
       return;
     }
 
-    for (let i = 0; i < obstacleCount; i++) {
+    for(let i = 0; i < currentRoomData.obstacles.length; i++) {
       let newObstacle;
-      do {
-        const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
-        const y = random(topBoundary + player.size.y, bottomBoundary - maxObstacleSize - player.size.y);
-        newObstacle = new Obstacle(x, y);
-      } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
+      const obsData = currentRoomData.obstacles[i];
+      newObstacle = new Obstacle(obsData.x, obsData.y, obsData.img);
       this.obstacles.push(newObstacle);
     }
+
+    // for (let i = 0; i < obstacleCount; i++) {
+    //   let newObstacle;
+    //   do {
+    //     const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
+    //     const y = random(topBoundary + player.size.y, bottomBoundary - maxObstacleSize - player.size.y);
+    //     newObstacle = new Obstacle(x, y);
+    //   } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
+    //   this.obstacles.push(newObstacle);
+    // }
   }
 
-  generateEnemies(currentRoomId) {
+  generateEnemies(currentRoomData) {
     this.enemies = [];
-    if (![4, 5, 6].includes(currentRoomId)) {
-      this.setEnemyCount(currentRoomId);
+    if (currentRoomData.type === 0) {
+      this.setEnemyCount(currentRoomData.id);
     }
     
     // Specify different enemy generation logic by room ID
-    if (currentRoomId === 4) {
+    if (currentRoomData.type === 1) {
       this.generateChaser();
       return;
-    } else if (currentRoomId === 5) {
+    } else if (currentRoomData.type === 2) {
       this.generateShooter();
       return;
-    } else if (currentRoomId === 6) {
+    } else if (currentRoomData.type === 3) {
       this.generateFinalBossRoom(); // 2 chasers + 1 shooter
       return;
     } 
@@ -206,38 +214,38 @@ class Room {
   }
 
   setEnemyCount(currentRoomId) {
-    if (currentRoomId === 1) {
+    if (currentRoomId === 0) {
       enemyCount = 1;
-    } else if (currentRoomId === 2) {
+    } else {
       enemyCount = 4;
     }
   }
 
-  setObstacleCount(currentRoomId) {
-    if (currentRoomId === 1) {
+  setObstacleCount(currentRoomData) {
+    if (currentRoomData.id === 0) {
       obstacleCount = 1;
       return;
     } 
-    if (![4, 5, 6].includes(currentRoomId)) {
+    if (currentRoomData.type === 0) {
       obstacleCount = 5;
     } else {
       obstacleCount = 0;
     }
   }
 
-  generateTutorialObs() {
+  generateTutorialObs(obsData) {
     let newObstacle;
     const x = savePointParam.x + player.size.x + widthInPixel / 4;
     const y = topBoundary + player.size.y + heightInPixel / 4;
-    newObstacle = new Obstacle(x, y);
+    newObstacle = new Obstacle(x, y, obsData.img);
     this.obstacles.push(newObstacle);
   }
 
   setGameTime(currentRoomId) {
-    if (currentRoomId === 1) {
+    if (currentRoomId === 0) {
       startTime = millis();
     }
-    if (currentRoomId === 2) {
+    if (currentRoomId === 1) {
       startTime = millis();
     }
   }

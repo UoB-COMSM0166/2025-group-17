@@ -80,9 +80,18 @@ Onion Model
 ![onion-model.png](images/onion-model.png)</br>
 
 ### Design
-
+<!-- 
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
+-->
+#### System Overview
+The design of Out follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. This structure effectively organizes game mechanics into clearly defined components that interact seamlessly, simplifying development, testing, and future maintenance.
+Encapsulation ensures data integrity and controlled access to game object states, safeguarding mechanics such as player health, movement, enemy interactions, and obstacle collisions. Abstraction simplifies interactions by exposing only essential functionalities, reducing complexity. Inheritance and polymorphism enable flexible designs, notably within enemy subclasses that each exhibit unique behaviors derived from a common parent class. Composition allows for the assembly of complex objects from simpler components, ensuring modularity and ease of incremental integration.
+#### Class Design
+The class diagram clearly outlines key classes, their primary attributes, and critical methods:
+- Player: Attributes include health, velocity, and position. Key methods: move(), shoot(), updatePosition().
+- 
+
 ![class-diagram.svg](images/class-diagram.svg)</br>
 ```mermaid
 sequenceDiagram

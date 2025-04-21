@@ -14,7 +14,7 @@ function setup() {
   }
 
   cnv = createCanvas(windowWidth, windowHeight);
-  setRoomBgImg();  
+  setRoomImg();  
   const eventBus = new EventBus();
   const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds);
   pageDrawer.setupMainMenu();
@@ -26,7 +26,6 @@ function setup() {
   player = new Player(playerX, playerY);
   room = new Room();
   
-  currentRoomIndex = 4;
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 
@@ -115,9 +114,14 @@ function keyPressed() {
   if (!gameStateManager.pageDrawer.shouldRenderMenu(player)) inputHandler.handlePlayerShooting(player);
 }
 
-function setRoomBgImg() {
+function setRoomImg() {
   rooms = rawData.rooms;
   rooms.forEach(room => {
     room.backgroundImg = loadImage(room.background);
+    if (room.obstacles) {
+      room.obstacles.forEach(obs => {
+        obs.img = loadImage(obs.image);
+      });
+    }
   });
 }

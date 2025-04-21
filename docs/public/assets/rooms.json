@@ -1,37 +1,262 @@
 {
    "rooms": [
       {
-         "id": 1,
+         "id": 0,
+         "type": 0,
          "background": "assets/background/L1_TutorialRoom.png",
          "savePoint": {
             "x": 140,
             "y": 424,
             "w": 30,
             "h": 30
-         }
-     },
-     {
+         },
+         "obstacles": [
+            {
+               "x": 672,
+               "y": 224,
+               "image": "assets/obstacles/level1/PC-1.png"
+            }
+         ]
+      },
+      {
+         "id": 1,
+         "type": 0,
+         "background": "assets/background/L1_dice1.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 602,
+               "y": 343,
+               "image": "assets/obstacles/level1/PC-1.png"
+            },
+            {
+               "x": 237,
+               "y": 183,
+               "image": "assets/obstacles/level1/PC-2.png"
+            },
+            {
+               "x": 468,
+               "y": 312,
+               "image": "assets/obstacles/level1/PC-3.png"
+            },
+            {
+               "x": 743,
+               "y": 254,
+               "image": "assets/obstacles/level1/PC-4.png"
+            },
+            {
+               "x": 358,
+               "y": 264,
+               "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ]
+      },
+      {
          "id": 2,
-         "background": "assets/background/L1_room1.png",
+         "type": 0,
+         "background": "assets/background/L1_dice2.png",
          "savePoint": {
             "x": 140,
             "y": 424,
             "w": 30,
             "h": 30
-         }
-     },
-     {
+         },
+         "obstacles": [
+            {
+               "x": 345,
+               "y": 130,
+               "image": "assets/obstacles/level1/PC-1.png"
+            },
+            {
+               "x": 253,
+               "y": 372,
+               "image": "assets/obstacles/level1/PC-2.png"
+            },
+            {
+               "x": 400,
+               "y": 291,
+               "image": "assets/obstacles/level1/PC-3.png"
+            },
+            {
+               "x": 744,
+               "y": 308,
+               "image": "assets/obstacles/level1/PC-4.png"
+            },
+            {
+               "x": 637,
+               "y": 222,
+               "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ]
+      },
+      {
          "id": 3,
-         "background": "assets/background/L1_room5.png",
+         "type": 0,
+         "background": "assets/background/L1_dice3.png",
          "savePoint": {
             "x": 140,
             "y": 424,
             "w": 30,
             "h": 30
-         }
-     },
-     {
-        "id": 4,
+         },
+         "obstacles": [
+            {
+               "x": 691,
+               "y": 359,
+               "image": "assets/obstacles/level1/PC-1.png"
+            },
+            {
+               "x": 291,
+               "y": 354,
+               "image": "assets/obstacles/level1/PC-2.png"
+            },
+            {
+               "x": 430,
+               "y": 252,
+               "image": "assets/obstacles/level1/PC-3.png"
+            },
+            {
+               "x": 523,
+               "y": 312,
+               "image": "assets/obstacles/level1/PC-4.png"
+            },
+            {
+               "x": 360,
+               "y": 191,
+               "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ]
+      },
+      {
+         "id": 4,
+         "type": 0,
+         "background": "assets/background/L1_dice4.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 713,
+               "y": 177,
+               "image": "assets/obstacles/level1/PC-1.png"
+            },
+            {
+               "x": 303,
+               "y": 211,
+               "image": "assets/obstacles/level1/PC-2.png"
+            },
+            {
+               "x": 356,
+               "y": 351,
+               "image": "assets/obstacles/level1/PC-3.png"
+            },
+            {
+               "x": 480,
+               "y": 279,
+               "image": "assets/obstacles/level1/PC-4.png"
+            },
+            {
+               "x": 624,
+               "y": 329,
+               "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ]
+      },
+      {
+         "id": 5,
+         "type": 0,
+         "background": "assets/background/L1_dice5.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 673,
+               "y": 191,
+               "image": "assets/obstacles/level1/PC-1.png"
+            },
+            {
+               "x": 445,
+               "y": 365,
+               "image": "assets/obstacles/level1/PC-2.png"
+            },
+            {
+               "x": 743,
+               "y": 325,
+               "image": "assets/obstacles/level1/PC-3.png"
+            },
+            {
+               "x": 298,
+               "y": 312,
+               "image": "assets/obstacles/level1/PC-4.png"
+            },
+            {
+               "x": 155,
+               "y": 203,
+               "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ]
+      },
+      {
+         "id": 6,
+         "type": 0,
+         "background": "assets/background/L1_dice6.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 724,
+               "y": 355,
+               "image": "assets/obstacles/level1/PC-1.png"
+            },
+            {
+               "x": 278,
+               "y": 368,
+               "image": "assets/obstacles/level1/PC-2.png"
+            },
+            {
+               "x": 801,
+               "y": 241,
+               "image": "assets/obstacles/level1/PC-3.png"
+            },
+            {
+               "x": 445,
+               "y": 175,
+               "image": "assets/obstacles/level1/PC-4.png"
+            },
+            {
+               "x": 515,
+               "y": 302,
+               "image": "assets/obstacles/level1/PC-5.png"
+            }
+         ]
+      },
+
+
+
+
+
+
+
+      
+      {
+        "id": 7,
+        "type": 1,
         "background": "assets/background/L1_BossRoom.png",
         "savePoint": {
             "x": 140,
@@ -39,9 +264,10 @@
             "w": 30,
             "h": 30
         }
-     },
-     {
-        "id": 5,
+      },
+      {
+        "id": 8,
+        "type": 2,
         "background": "assets/background/L2_BossRoom.png",
         "savePoint": {
             "x": 140,
@@ -49,9 +275,10 @@
             "w": 30,
             "h": 30
         }
-     },
-     {
-         "id": 6,
+      },
+      {
+         "id": 9,
+         "type": 3,
          "background": "assets/background/L2_room10.png",
          "savePoint": {
             "x": 140,
