@@ -385,6 +385,76 @@
             }
          ]
       },
+      {
+         "id": 7,
+         "type": 0,
+         "background": "assets/background/L2_room2.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 200,
+               "y": 120,
+               "image": "assets/obstacles/level1/pillow1.png"
+            },
+            {
+               "x": 350,
+               "y": 395,
+               "image": "assets/obstacles/level1/pillow2.png"
+            },
+            {
+               "x": 450,
+               "y": 230,
+               "image": "assets/obstacles/level1/tree.png"
+            },
+            {
+               "x": 750,
+               "y": 160,
+               "image": "assets/obstacles/level1/vencher.png"
+            },
+            {
+               "x": 550,
+               "y": 410,
+               "image": "assets/obstacles/level1/watervencher.png"
+            }
+         ],
+         "enemies":[
+            {
+               "x": 300,
+               "y": 80,
+               "image": "assets/enemies/level2/L2_enemy1.png"
+            },
+            {
+               "x": 300,
+               "y": 450,
+               "image": "assets/enemies/level2/L2_enemy2.png"
+            },
+            {
+               "x": 558,
+               "y": 200,
+               "image": "assets/enemies/level2/L2_enemy3.png"
+            },
+            {
+               "x": 600,
+               "y": 454,
+               "image": "assets/enemies/level2/L2_enemy4.png"
+            },
+            {
+               "x": 750,
+               "y": 354,
+               "image": "assets/enemies/level2/L2_enemy5.png"
+            },
+            {
+               "x": 880,
+               "y": 250,
+               "image": "assets/enemies/level2/L2_enemy6.png"
+            }
+         ]
+      },
 
 
 
@@ -394,7 +464,7 @@
 
       
       {
-        "id": 7,
+        "id": 8,
         "type": 1,
         "background": "assets/background/L1_BossRoom.png",
         "savePoint": {
@@ -405,7 +475,7 @@
         }
       },
       {
-        "id": 8,
+        "id": 9,
         "type": 2,
         "background": "assets/background/L2_BossRoom.png",
         "savePoint": {
@@ -416,7 +486,7 @@
         }
       },
       {
-         "id": 9,
+         "id": 10,
          "type": 3,
          "background": "assets/background/L2_room10.png",
          "savePoint": {
