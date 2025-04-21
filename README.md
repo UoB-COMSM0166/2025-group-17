@@ -84,7 +84,8 @@ Onion Model
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
 ![class-diagram.svg](images/class-diagram.svg)</br>
-```sequenceDiagram 
+```mermaid
+sequenceDiagram
     participant Player 
     participant InputHandler 
     participant CollisionDetector 
