@@ -1,7 +1,7 @@
 class Player {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.hp = 3;
+    this.hp = 5;
     this.maxHp = 3;
     this.speed = defaultSpeed;
     this.maxSpeed = playerMaxSpeed;
