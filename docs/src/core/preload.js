@@ -36,7 +36,7 @@ function preload() {
   rawData = loadJSON("assets/rooms.json");
 
   // Use a callback to make sure we don't access data before loaded
-  sceneData = loadJSON("assets/scene.json", preloadScenes);
+  sceneData = loadJSON("assets/scenes/scene.json", preloadScenes);
 
   // -------------------------------------------
   // 加载玩家角色四方向动画帧（每个方向5张）

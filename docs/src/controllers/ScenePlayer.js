@@ -16,7 +16,22 @@ class ScenePlayer {
   draw() {
     if (this.isSceneComplete()) return;
     const line = this.#currentScene[this.#currentIndex];
-    if (this.#images[line.image]) image(this.#images[line.image], 0, 0, widthInPixel, heightInPixel);
+    background('black');  
+    
+    // Draw the return button
+    const iconSize = 30;
+    stroke(255);
+    strokeWeight(5);
+    textSize(iconSize);
+    textAlign(CENTER, CENTER);
+    text("↵", widthInPixel - iconSize, heightInPixel - iconSize);
+    
+    if (this.#images[line.image]) {
+      // Scale the clip based on canvas height
+      const ratio = this.#images[line.image].width / this.#images[line.image].height;
+      const newWidth = heightInPixel * ratio;
+      image(this.#images[line.image], (widthInPixel - newWidth) / 2, 0, newWidth, heightInPixel);
+    }
   }
 
   isSceneComplete() {
