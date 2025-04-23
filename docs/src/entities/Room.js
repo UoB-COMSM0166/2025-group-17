@@ -9,6 +9,7 @@ class Room {
 
     this.currentRoomData = null;
     this.backgroundImg = null;
+    this.clearTime = null;
     this.size = {
       width: widthInPixel,
       height: heightInPixel
@@ -21,6 +22,7 @@ class Room {
     this.chaser = [];
     this.shooter = [];
     this.obstacles = [];
+    this.clearTime = null;
     this.currentRoomData = roomData; // Store room data
     this.generateObstacles(this.currentRoomData);
     this.generateEnemies(this.currentRoomData);
@@ -33,8 +35,6 @@ class Room {
   }
 
   update() {
-    // this.updateObstacles();
-
     // Treat three types of rooms separately
     if (this.currentRoomData.type === 1) {
       this.updateChaser();
@@ -47,8 +47,7 @@ class Room {
     } else {
       this.updateEnemies();
     }
-    this.updateDoor();
-    this.checkClearCondition();
+    this.updateAfterClear();
   }
 
   display(playerObj) {
@@ -59,6 +58,52 @@ class Room {
     const allEntities = [...this.obstacles, ...this.enemies, playerObj];
     allEntities.sort((a, b) => a.position.y - b.position.y);
     allEntities.forEach(entity => { entity.display(); });
+    if (this.currentRoomData.id === 0 && this.enemies.length === 0) {
+      const clearText = "Tutorial complete! Your HP and runtime will reset in the next room.";
+      this.displayInstruction(clearText);
+    }
+  }
+
+  displayInstruction(textContent) {
+    const fadeDuration = 400;
+    const displayDuration = 2000;
+    let elapsedTime = millis() - this.clearTime;
+    let alpha = 255;
+    
+    if (elapsedTime < fadeDuration) {
+      alpha = map(elapsedTime, 0, fadeDuration, 0, 255);
+    } 
+    
+    else if (elapsedTime < fadeDuration + displayDuration) {
+      alpha = 255;
+    } 
+    
+    else if (elapsedTime < fadeDuration * 2 + displayDuration) {
+      alpha = map(
+        elapsedTime, 
+        fadeDuration + displayDuration, 
+        fadeDuration * 2 + displayDuration, 
+        255, 0
+      );
+    }
+    else return;
+    console.log("Displaying tutorial instruction..")
+      
+    // Draw dialog box
+    fill(0, alpha / 2);
+    noStroke();
+    const boxSize = 60;
+    rect(widthInPixel / 2, heightInPixel / 3 + boxSize / 2, widthInPixel, boxSize);
+    
+    // Draw the highlight edges
+    fill(255, 255, 255, alpha / 2);
+    rect(widthInPixel / 2, heightInPixel / 3, widthInPixel, 1);
+    rect(widthInPixel / 2, heightInPixel / 3 + boxSize, widthInPixel, 1);
+    
+    fill(255, alpha);
+    textAlign(CENTER, CENTER);
+    textFont("monospace", 20);
+    text(textContent, widthInPixel / 2, heightInPixel / 3 + boxSize / 2);
   }
 
   generateObstacles(currentRoomData) {
@@ -69,7 +114,7 @@ class Room {
       this.generateTutorialObs(obsData);
       return;
     }
-    if (obstacleCount === 0) { // No obstacles in Boss level
+    if (currentRoomData.id === 0) { // No obstacles in Boss level
       return;
     }
 
@@ -97,7 +142,7 @@ class Room {
   generateEnemies(currentRoomData) {
     this.enemies = [];
     if (currentRoomData.type === 0) {
-      this.setEnemyCount(currentRoomData.id);
+      this.setEnemyCount(currentRoomData);
     }
     
     // Specify different enemy generation logic by room ID
@@ -168,10 +213,6 @@ class Room {
     this.chaser.push(new Chaser(pos2.x, pos2.y));
     this.shooter.push(new Shooter(shooterPos.x, shooterPos.y));
   }
-  
-  updateObstacles() {
-    // this.obstacles.forEach(o => o.display());
-  }
 
   updateEnemies() {
     this.enemies.forEach(e => {
@@ -210,8 +251,11 @@ class Room {
     });
   }
   
-  updateDoor() {
-    if (this.checkClearCondition()) this.door.open();
+  updateAfterClear() {
+    if (this.checkClearCondition()) {
+      this.door.open();
+      if (this.clearTime === null) this.clearTime = millis();
+    }
     else this.door.close();
     this.door.display();
   }
@@ -241,8 +285,8 @@ class Room {
     }
   }
 
-  setEnemyCount(currentRoomId) {
-    if (currentRoomId === 0) {
+  setEnemyCount(currentRoomData) {
+    if (currentRoomData.id === 0) {
       enemyCount = 1;
     } else {
       enemyCount = 4;

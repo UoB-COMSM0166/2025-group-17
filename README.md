@@ -138,7 +138,7 @@ sequenceDiagram
     Enemy->>Enemy: display()
     Room->>Obstacle: updateObstacles()
     Obstacle->>Obstacle: display()
-    Room->>Door: updateDoor()
+    Room->>Door: updateAfterClear()
     Door->>Door: open() or close()
  
     Note right of InputHandler: Room switching logic 
