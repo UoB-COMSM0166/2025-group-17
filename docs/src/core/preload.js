@@ -1,6 +1,9 @@
 let bossSpriteSheet;
 let shooterSpriteSheet;
 let enemySpriteSheet;
+let mainmenuSound;
+let L1_OfficeSound;
+let L3_PsychoSound;
 
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
@@ -61,6 +64,10 @@ function preload() {
   shooterSpriteSheet = loadImage("assets/spritesheet/shooter_Boss.png");
   enemySpriteSheet = loadImage("assets/spritesheet/enemy.png"); 
 
+  //  加载主界面和第一关的 BGM（使用 p5.sound）
+  mainmenuSound = loadSound("assets/music/bgm/MainMenu.mp3");
+  L1_OfficeSound = loadSound("assets/music/bgm/L1_Office.mp3");
+  L3_PsychoSound = loadSound("assets/music/bgm/L3_Psycho.mp3");
 }
 
 function preloadScenes() {

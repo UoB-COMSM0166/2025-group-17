@@ -181,7 +181,7 @@
         "image": "start/clip23",
         "sound": {
           "type": "bgm",
-          "name": "L1_Office"
+          "name": "Scene3_Bar"
         }
       },
       {
@@ -189,7 +189,7 @@
         "image": "start/clip24",
         "sound": {
           "type": "bgm",
-          "name": "L1_Office"
+          "name": "Scene3_Bar"
         }
       }
     ],
@@ -199,7 +199,7 @@
         "image": "end/clip1",
         "sound": {
           "type": "bgm",
-          "name": "L4_Extra"
+          "name": "Scene3_Bar"
         }
       },
       {
@@ -207,7 +207,7 @@
         "image": "end/clip2",
         "sound": {
           "type": "bgm",
-          "name": "L4_Extra"
+          "name": "Scene3_Bar"
         }
       },
       {

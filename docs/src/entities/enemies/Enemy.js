@@ -51,6 +51,9 @@ class Enemy {
     if (this.position.y < topBoundary || this.position.y > bottomBoundary - this.size.y) {
       this.velocity.y *= -1;
     }
+
+    // 每帧检查碰撞并造成伤害（替代 InputHandler 中统一处理）
+    this.checkPlayerCollisionAndDamage();
   }
 
   display() {
@@ -62,5 +65,35 @@ class Enemy {
   collide() {
     this.position.sub(this.velocity);
     this.velocity.mult(-1);
+  }
+
+  // 与玩家接触时造成伤害
+  checkPlayerCollisionAndDamage() {
+    const bounds = {
+      left: this.position.x + this.size.x * 0.25,
+      right: this.position.x + this.size.x * 0.75,
+      top: this.position.y + this.size.y * (2 / 3),
+      bottom: this.position.y + this.size.y
+    };
+  
+    const playerBounds = {
+      left: player.position.x,
+      right: player.position.x + player.size.x,
+      top: player.position.y,
+      bottom: player.position.y + player.size.y
+    };
+  
+    const collided = (
+      bounds.left < playerBounds.right &&
+      bounds.right > playerBounds.left &&
+      bounds.top < playerBounds.bottom &&
+      bounds.bottom > playerBounds.top
+    );
+  
+    if (collided && player.invincibleTimer <= 0) {
+      player.updateHp(player.hp - 1, 90); // 扣1血 + 无敌90帧
+      hurtSound.currentTime = 0;
+      hurtSound.play();
+    }
   }
 }

@@ -4,6 +4,8 @@ class PageDrawer {
   constructor(eventBus, sceneData, sceneImgs, sceneSounds) {
     this.btnIndex = 0;
     this.eventBus = eventBus;
+    this.gameStateManager = null; // 外部注入
+
     // Buttons for the main menu
     this.btnContinue = null;
     this.btnNewGame = null;
@@ -23,7 +25,10 @@ class PageDrawer {
     this.#scenePlayer = new ScenePlayer(sceneData, sceneImgs, sceneSounds);
   }
 
-  // Helper to create a button with standard positioning and behavior
+  setGameStateManager(gsm) {
+    this.gameStateManager = gsm;
+  }
+
   createMenuButton(imgPath, label, yOffset, callback, hidden = false) {
     const btnHeight = 48;
     const btnWidth = 4 * btnHeight;
@@ -35,19 +40,18 @@ class PageDrawer {
       callback();
       this.btnIndex = 0;
     });
-    btn.mouseOver(() => { 
+    btn.mouseOver(() => {
       btn.class('blink');
       this.btnIndex = null;
     });
     btn.mouseOut(() => {
       btn.removeClass('blink');
-      this.btnIndex = 0; 
+      this.btnIndex = 0;
     });
     if (hidden) btn.hide();
     return btn;
   }
 
-  // Helper to update button position in case of on window resizing
   #repositionButton(btn, yOffset) {
     if (!btn) return;
     btn.position(windowWidth / 2 - btn.width / 2, windowHeight / 2 + yOffset * btn.height / 2);
@@ -69,6 +73,7 @@ class PageDrawer {
 
   #playStartScene() {
     console.log("Load start scene..");
+    this.gameStateManager?.stopBGM?.();
     this.#scenePlayer.setScene("start");
     this.#state = "startScene";
   }
@@ -78,7 +83,6 @@ class PageDrawer {
     this.btnPause = createImg('assets/buttons/Pause.png', 'Click to pause');
     this.btnPause.size(pauseBtnSize, pauseBtnSize);
     this.btnPause.position(windowWidth / 2 + width / 2 - this.btnPause.width, windowHeight / 2 - height / 2);
-    // Make the button a circle
     this.btnPause.style('border-radius', '50%');
     this.btnPause.mousePressed(() => this.eventBus.publish('PAUSE_GAME'));
     this.btnPause.hide();
@@ -97,7 +101,7 @@ class PageDrawer {
   drawMainMenu() {
     image(startMenuImg, 0, 0, widthInPixel, heightInPixel);
     this.#repositionButton(this.btnContinue, -1.1);
-    this.#repositionButton(this.btnNewGame,  1.1);
+    this.#repositionButton(this.btnNewGame, 1.1);
     if (this.btnIndex !== null) this.mainMenuBtns[this.btnIndex].class('blink');
   }
 
@@ -118,10 +122,8 @@ class PageDrawer {
   }
 
   drawGameOverPage() {
-    console.log("Drawing game over page..")
     clear();
     background(220);
-    
     this.toggleResumeButtons();
     this.showGameOverButtons();
     this.#drawMainMsg("Game Over");
@@ -205,7 +207,6 @@ class PageDrawer {
   }
 
   updatePauseBtnPosition() {
-    // Reset the button positions to support proper resizing
     let btnPositionX = windowWidth / 2 + width / 2 - this.btnPause.width;
     let btnPositionY = windowHeight / 2 - height / 2;
     this.btnPause.position(btnPositionX, btnPositionY);
@@ -231,33 +232,35 @@ class PageDrawer {
 
   #playNextStoryLine() {
     this.#scenePlayer.next();
-    console.log(this.#scenePlayer.isSceneComplete());
     if (!this.#scenePlayer.isSceneComplete()) return;
-    
+  
     this.#scenePlayer.stopBGM();
     switch (this.#state) {
       case "startScene":
         this.#state = "inGame";
         this.btnPause.show();
-        console.log("Progress to playing..");
+        // 剧情播放完毕后：允许播放 BGM 并调用播放函数
+        this.gameStateManager.delayBGM = false;
+        this.gameStateManager.playBGMForRoom(currentRoomIndex);
+  
         break;
       case "endScene":
         this.eventBus.publish("EXIT_TO_MAIN_MENU");
         this.#state = "mainMenu";
-        console.log("Back to main menu from the story..");
         break;
     }
   }
+  
 
   #transitionToEndScene() {
     this.#state = "endScene";
     this.#scenePlayer.setScene("end");
   }
-  
+
   #returnToPrevPage(playerObj) {
     if (!keyIsDown(ESCAPE)) return;
     if (this.#state === "mainMenu" || this.#isScenePage()) return;
-  
+
     this.btnIndex = 0;
     if (isGameCompleted || this.#isGameOver(playerObj)) {
       this.eventBus.publish('EXIT_TO_MAIN_MENU');
@@ -269,18 +272,16 @@ class PageDrawer {
     }
     this.eventBus.publish('PAUSE_GAME');
   }
-  
+
   #controlBtnsByKeys(buttons, eventTypes) {
     if (keyIsDown(ENTER)) this.#pressBtnsByKeys(buttons, eventTypes);
     if (keyIsDown(DOWN_ARROW) || keyIsDown(UP_ARROW)) this.#moveBetweenBtnsByKeys(buttons);
   }
-  
+
   #pressBtnsByKeys(buttons, eventTypes) {
     if (this.btnIndex === null) return;
-    const prevBtnIndex = this.btnIndex;      
-    // Reset previous button style
+    const prevBtnIndex = this.btnIndex;
     buttons[prevBtnIndex].removeClass('blink');
-    // Reset before the game state function to make sure the correct button is highlighted
     this.btnIndex = 0;
     if (buttons[prevBtnIndex] === this.btnNewGame) this.#handleNewGame();
     this.eventBus.publish(eventTypes[prevBtnIndex]);
@@ -291,13 +292,11 @@ class PageDrawer {
     if (this.btnIndex === null) return;
     const direction = keyIsDown(DOWN_ARROW) ? 1 : -1;
     buttons[this.btnIndex].removeClass('blink');
-
-    // Highlight new button
     this.btnIndex = (this.btnIndex + direction + buttons.length) % buttons.length;
     buttons[this.btnIndex].class('blink');
   }
 
   #isGameOver(playerObj) {
-    return (this.#state !== "mainMenu") && playerObj.hp <= 0; 
+    return (this.#state !== "mainMenu") && playerObj.hp <= 0;
   }
 }
