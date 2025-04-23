@@ -28,11 +28,16 @@ class InputHandler {
     const playerHitBoundary = this.collisionDetector.isHitBoundary(tempPlayer);
 
     if (!collideWithEnemies && !collideWithObstacles && !playerHitBoundary) {
-      // 没有碰撞，更新位置
       playerObj.updatePosition();
     } else {
-      // 碰撞时强制停下
       playerObj.resetVelocity();
+
+      // Player loses health when colliding with the enemies
+      if (collideWithEnemies && playerObj.invincibleTimer <= 0) {
+        playerObj.updateHp(playerObj.hp - 1, 90);
+        hurtSound.currentTime = 0;
+        hurtSound.play();
+      }
     }
 
     this.collisionDetector.handleEnemyCollision(this.currentRoom.enemies);

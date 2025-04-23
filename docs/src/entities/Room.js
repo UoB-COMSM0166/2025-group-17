@@ -169,8 +169,16 @@ class Room {
 
   updateEnemies() {
     this.enemies.forEach(e => {
-      e.update();
-      e.display();
+      if (!this.collisionDetector.isHitBoundary(e)) e.update();
+      else {
+        // Add some randomness to prevent perfect oscillation
+        const direction = p5.Vector.mult(e.velocity.copy(), -1);
+        const randomness = p5.Vector.random2D().mult(0.2);
+        direction.add(randomness).normalize();
+        e.velocity = direction.mult(e.velocity.mag());
+        e.position.add(direction);
+      }
+        e.display();
     });
   }
 

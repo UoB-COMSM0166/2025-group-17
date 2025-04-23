@@ -1,7 +1,9 @@
 class Obstacle {
   constructor(x, y, obImage) {
     this.position = createVector(x, y);
-    this.size = createVector(heightInPixel / 12, heightInPixel / 12);
+    const obsWidth = heightInPixel / 12;
+    const obsHeight = obsWidth * (obImage.height / obImage.width);
+    this.size = createVector(obsWidth, obsHeight);
     //randomly choose an image from the loaded obstacle images
     this.image = obImage;
 

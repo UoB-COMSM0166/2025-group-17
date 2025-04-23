@@ -9,7 +9,8 @@ function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
   heartImg = loadImage('assets/icons/full_heart.png');
   damagedHeartImg = loadImage('assets/icons/empty_heart.png');
-  startMenuImg = loadImage('assets/background/menu_start.png');
+  startMenuImg = loadImage('assets/background/Menu_Start.png');
+  pauseMenuImg = loadImage('assets/background/Menu_Pause.png');
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
 

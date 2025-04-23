@@ -1,7 +1,7 @@
 class SavePoint {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.size = createVector(savePointParam.w, savePointParam.h);
+    this.size = createVector(30, 30);
     this.image = savePointImg;
     this.checkedImg = checkedSavePointImg;
     this.lastSaveTime = 0;

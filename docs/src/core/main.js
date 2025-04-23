@@ -98,11 +98,11 @@ function drawDebugCollisionBoxes() {
 
 function updateGameState() {
   gameStateManager.pageDrawer.updatePauseBtnPosition();
-  room.update();
-  inputHandler.update(player);
 
+  inputHandler.update(player);
   player.display();
   player.healByTime(timeSpent);
+
   drawUiHub(player, startTime, currentRoomIndex);
 
   checkSavePoint();

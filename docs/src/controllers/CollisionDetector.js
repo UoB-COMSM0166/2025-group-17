@@ -10,8 +10,7 @@ class CollisionDetector {
     for (let i = 0; i < enemyArr.length; i++) {
       for (let j = i + 1; j < enemyArr.length; j++) {
         if (this.detectCollision(enemyArr[i], enemyArr[j])) {
-          enemyArr[i].collide();
-          enemyArr[j].collide();
+          enemyArr[i].collide(enemyArr[j]);
         }
       }
     }
@@ -21,7 +20,7 @@ class CollisionDetector {
     enemyArr.forEach(enemy => {
       obstacleArr.forEach(obstacle => {
         if (this.detectCollision(enemy, obstacle)) {
-          enemy.collide();
+          enemy.collide(obstacle);
         }
       });
     });
@@ -72,12 +71,16 @@ class CollisionDetector {
     return this.#isOverlapping(boundsA, boundsB);
   }
 
-  // ✅ 修复区域：使用完整矩形检测，不再只检测中间 & 底部
+  // 检测中间 & 底部
   #computeCollisionArea(obj) {
     return {
-      left: obj.position.x,
-      right: obj.position.x + obj.size.x,
-      top: obj.position.y,
+      // left: obj.position.x,
+      // right: obj.position.x + obj.size.x,
+      // top: obj.position.y,
+      // bottom: obj.position.y + obj.size.y
+      left: obj.position.x + obj.size.x * 0.25,
+      right: obj.position.x + obj.size.x * 0.75,
+      top: obj.position.y + obj.size.y * (2 / 3),
       bottom: obj.position.y + obj.size.y
     };
   }
@@ -102,13 +105,20 @@ class CollisionDetector {
   }
 
   isHitBoundary(obj) {
-    let x = obj.position.x + obj.velocity.x;
-    let y = obj.position.y + obj.velocity.y;
+    const bounds = this.#computeCollisionArea(obj);
+    
+    // Compute new position after moving
+    const newLeft = bounds.left + obj.velocity.x;
+    const newRight = bounds.right + obj.velocity.x;
+    const newTop = bounds.top + obj.velocity.y;
+    const newBottom = bounds.bottom + obj.velocity.y;
+
+    // Check if it exceeds the boundary
     return (
-      x < leftBoundary ||
-      x > rightBoundary - obj.size.x ||
-      y < topBoundary ||
-      y > bottomBoundary - obj.size.y
+      newLeft < leftBoundary ||
+      newRight > rightBoundary ||
+      newTop < topBoundary ||
+      newBottom > bottomBoundary
     );
   }
 

@@ -171,4 +171,6 @@ class GameStateManager {
       this.currentBGM = null;
     }
   }
+
+  resizeBtns() { this.pageDrawer.resizeBtns(); }
 }
