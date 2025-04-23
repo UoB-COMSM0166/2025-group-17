@@ -100,7 +100,6 @@ function updateGameState() {
   gameStateManager.pageDrawer.updatePauseBtnPosition();
 
   inputHandler.update(player);
-  player.display();
   player.healByTime(timeSpent);
 
   drawUiHub(player, startTime, currentRoomIndex);

@@ -71,16 +71,12 @@ class CollisionDetector {
     return this.#isOverlapping(boundsA, boundsB);
   }
 
-  // 检测中间 & 底部
+  // 检测中间 (0.8) & 底部 (0.4)
   #computeCollisionArea(obj) {
     return {
-      // left: obj.position.x,
-      // right: obj.position.x + obj.size.x,
-      // top: obj.position.y,
-      // bottom: obj.position.y + obj.size.y
-      left: obj.position.x + obj.size.x * 0.25,
-      right: obj.position.x + obj.size.x * 0.75,
-      top: obj.position.y + obj.size.y * (2 / 3),
+      left: obj.position.x + obj.size.x * 0.1,
+      right: obj.position.x + obj.size.x * 0.9,
+      top: obj.position.y + obj.size.y * 0.6,
       bottom: obj.position.y + obj.size.y
     };
   }

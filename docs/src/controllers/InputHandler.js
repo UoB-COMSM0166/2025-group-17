@@ -9,6 +9,7 @@ class InputHandler {
 
   update(playerObj) {
     this.currentRoom.update();
+    this.currentRoom.display(playerObj);
     playerObj.updateVelocity();
 
     // 预测下一步的位置

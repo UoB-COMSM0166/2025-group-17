@@ -33,10 +33,7 @@ class Room {
   }
 
   update() {
-    // Use corresponding backgroundImg for current level
-    image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
-    this.savePoint.display();    
-    this.updateObstacles();
+    // this.updateObstacles();
 
     // Treat three types of rooms separately
     if (this.currentRoomData.type === 1) {
@@ -50,9 +47,18 @@ class Room {
     } else {
       this.updateEnemies();
     }
-
     this.updateDoor();
     this.checkClearCondition();
+  }
+
+  display(playerObj) {
+    // Use corresponding backgroundImg for current level
+    image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
+    this.savePoint.display();
+    this.door.display();
+    const allEntities = [...this.obstacles, ...this.enemies, playerObj];
+    allEntities.sort((a, b) => a.position.y - b.position.y);
+    allEntities.forEach(entity => { entity.display(); });
   }
 
   generateObstacles(currentRoomData) {
@@ -164,7 +170,7 @@ class Room {
   }
   
   updateObstacles() {
-    this.obstacles.forEach(o => o.display());
+    // this.obstacles.forEach(o => o.display());
   }
 
   updateEnemies() {
@@ -178,7 +184,7 @@ class Room {
         e.velocity = direction.mult(e.velocity.mag());
         e.position.add(direction);
       }
-        e.display();
+      // e.display();
     });
   }
 
