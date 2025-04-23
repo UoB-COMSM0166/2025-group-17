@@ -7,8 +7,10 @@ let L3_PsychoSound;
 
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
-  heartImg = loadImage('assets/icons/full_heart.png');
-  damagedHeartImg = loadImage('assets/icons/empty_heart.png');
+  heartImg = loadImage('assets/ui/full_heart.png');
+  damagedHeartImg = loadImage('assets/ui/empty_heart.png');
+  bossHpBarImg = loadImage('assets/ui/bossBar.png');
+  bossHpImg = loadImage('assets/ui/bossHp.png');
   startMenuImg = loadImage('assets/background/Menu_Start.png');
   pauseMenuImg = loadImage('assets/background/Menu_Pause.png');
   closedDoorImg = loadImage('assets/door/close-right.png');

@@ -3,11 +3,10 @@
 let lastCollisionTime = 0;
 
 let firstBtnToggled = false;
-let isBossStage = false;
 let isGameCompleted = false;
 let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLastSave;
 let inputHandler = null;
-let cnv, hudDrawer;
+let cnv;
 let rooms;
 
 let openDoorImg, closedDoorImg;
@@ -26,7 +25,6 @@ let minDistanceToSave = 50;
 
 //Player properties
 const enemySize = 20;
-const chaserSize = 30;
 const shootSize = 25;
 const smallEnemyHp = 100;
 const largeEnemyHp = 100;

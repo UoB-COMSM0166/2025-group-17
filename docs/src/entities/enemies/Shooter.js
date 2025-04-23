@@ -2,7 +2,10 @@ class Shooter {
   constructor(x, y) {
     this.position = createVector(x, y);
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
-    this.hp = 800;
+    this.maxHp = 800;
+    this.hp = this.maxHp;
+    this.isHurt = false;
+    this.hitFrame = 0;
     this.speed = 0.8;
     this.moveCooldown = 60;
     this.currentMoveCooldown = 0;
@@ -121,6 +124,7 @@ class Shooter {
     bullets.forEach((bullet, index) => {
       if (this.checkBulletCollision(bullet)) {
         this.takeDamage(bullet.damage);
+        this.isHurt = true;
         bullets.splice(index, 1);
       }
     });
@@ -200,5 +204,17 @@ class Shooter {
     strokeWeight(4);
     ellipse(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2, this.size.x * 1.5, this.size.y * 1.5);
     pop();
+  }
+
+  applyHitEffect(flashFrame) {
+    if (this.isHurt && this.hitFrame < flashFrame) {
+      const flashIntensity = this.hitFrame % 3;
+      tint(255, 100, 100, flashIntensity * 255);
+      this.hitFrame++;
+    } else {
+      this.isHurt = false;
+      this.hitFrame = 0;
+      noTint();
+    }
   }
 }

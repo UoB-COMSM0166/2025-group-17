@@ -30,7 +30,6 @@ function setup() {
   pageDrawer.setupPauseMenu();
   pageDrawer.setupGameOverPage();
 
-  hudDrawer = new HudDrawer(cnv, uiFont, heartImg, damagedHeartImg);
   player = new Player(playerX, playerY);
 
   room = new Room();

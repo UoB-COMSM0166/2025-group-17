@@ -2,7 +2,10 @@ class Chaser {
   constructor(x, y) {
     this.position = createVector(x, y);
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
-    this.hp = 800;
+    this.maxHp = 800;
+    this.hp = this.maxHp;
+    this.isHurt = false;
+    this.hitFrame = 0;
     this.speed = 1;
     this.dashSpeed = 10;
     this.chaseRange = 100;
@@ -129,6 +132,7 @@ class Chaser {
     bullets.forEach((bullet, index) => {
       if (this.checkBulletCollision(bullet)) {
         this.takeDamage(bullet.damage);
+        this.isHurt = true;
         bullets.splice(index, 1);
       }
     });
@@ -153,10 +157,21 @@ class Chaser {
   }
 
   display() {
-    if (this.hp <= 0) return;
-
+    // if (this.hp <= 0) return;
     // 播放当前动画帧
     const img = this.frames[this.currentFrame];
     image(img, this.position.x, this.position.y, this.size.x, this.size.y);
+  }
+
+  applyHitEffect(flashFrame) {
+    if (this.isHurt && this.hitFrame < flashFrame) {
+      const flashIntensity = this.hitFrame % 3;
+      tint(255, 100, 100, flashIntensity * 255);
+      this.hitFrame++;
+    } else {
+      this.isHurt = false;
+      this.hitFrame = 0;
+      noTint();
+    }
   }
 }
