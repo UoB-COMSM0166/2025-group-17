@@ -64,6 +64,7 @@ function preload() {
   bossSpriteSheet = loadImage("assets/spritesheet/Crab_Boss.png");
   shooterSpriteSheet = loadImage("assets/spritesheet/shooter_Boss.png");
   enemySpriteSheet = loadImage("assets/spritesheet/enemy.png"); 
+  hitEffectSheet = loadImage("./assets/spritesheet/bullet_Effects.png");
 
   //  加载主界面和第一关的 BGM（使用 p5.sound）
   mainmenuSound = loadSound("assets/music/bgm/MainMenu.mp3");

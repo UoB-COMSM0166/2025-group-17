@@ -77,9 +77,10 @@ class InputHandler {
   }
 
   updateBullets(playerObj) {
-    playerObj.bullets.forEach(b => {
+    playerObj.bullets.forEach((b, bIndex) => {
       b.update();
-      b.display();
+      if (b.shouldBeRemoved()) playerObj.bullets.splice(bIndex, 1);
+      else b.display();
     });
   }
 

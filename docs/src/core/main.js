@@ -63,6 +63,15 @@ function setup() {
     const frame = enemySpriteSheet.get(i * enemyFrameW, 0, enemyFrameW, enemyFrameH);
     window.enemyFrames.push(frame);
   }
+
+  // bullet 动画帧切割（10帧横向）
+  window.hitEffectFrames = [];
+  const hitEffectFrameW = hitEffectSheet.width / 10;
+  const hitEffectFrameH = hitEffectSheet.height;
+  for (let i = 0; i < 10; i++) {
+    const frame = hitEffectSheet.get(i * hitEffectFrameW, 0, hitEffectFrameW, hitEffectFrameH);
+    window.hitEffectFrames.push(frame);
+  }
 }
 
 function draw() {
