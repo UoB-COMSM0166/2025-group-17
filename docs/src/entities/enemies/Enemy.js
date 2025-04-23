@@ -1,30 +1,84 @@
 class Enemy {
-  constructor(x, y, hp) {
+  constructor(x, y, hp, enImage) {
     this.hp = hp;
     this.position = createVector(x, y);
-    this.size = createVector(
-      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.w,
-      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.h
-    );
+
+    const enemyWidth = (hp === smallEnemyHp) ? heightInPixel / 14 : heightInPixel / 12;
+    const enemyHeight = enemyWidth * (enImage.height / enImage.width);
+    this.size = createVector(enemyWidth, enemyHeight);
+    
     this.velocity = createVector(random([-1, 1]), random([-1, 1]));
-    this.image = enemyImage;
+    this.image = enImage;
+
+    // 添加动画帧相关
+    this.frames = window.enemyFrames || [enImage]; // 确保不报错
+    this.currentFrame = 0;
+    this.frameCounter = 0;
+    this.frameDelay = 10; // 控制播放速度，越大越慢
   }
 
   update() {
+    // 动画更新：每隔 frameDelay 帧切换一张图
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.currentFrame = (this.currentFrame + 1) % this.frames.length;
+    }
+
+    // 保持原有运动逻辑不变
     this.position.add(this.velocity);
-    if (this.position.x < leftBoundary || this.position.x > rightBoundary - this.size.x) {
-      this.velocity.x *= -1;
-    }
-    if (this.position.y < topBoundary || this.position.y > bottomBoundary - this.size.y) {
-      this.velocity.y *= -1;
-    }
+
+    // 每帧检查碰撞并造成伤害（替代 InputHandler 中统一处理）
+    // this.checkPlayerCollisionAndDamage();
   }
 
-  display() { image(this.image, this.position.x, this.position.y, this.size.x, this.size.y); }
-
-  collide() {
-    this.position.sub(this.velocity);
-    this.velocity.mult(-1);
+  display() {
+    // 播放当前帧
+    const img = this.frames[this.currentFrame] || this.image;
+    image(img, this.position.x, this.position.y, this.size.x, this.size.y);
   }
+
+  collide(otherObj) {
+    // Calculate direction away from collision
+    const enemyCenter = p5.Vector.sub(this.position.copy(), this.size.copy().div(2));
+    const otherObjCenter = p5.Vector.sub(otherObj.position.copy(), otherObj.size.copy().div(2))
+    const direction = p5.Vector.sub(enemyCenter, otherObjCenter).normalize();
+    
+    // Add some randomness to prevent perfect oscillation
+    const randomness = p5.Vector.random2D().mult(0.2);
+    direction.add(randomness).normalize();
+
+    this.velocity = direction.mult(this.velocity.mag());
+    this.position.add(direction);
+  }
+
+  // // 与玩家接触时造成伤害
+  // checkPlayerCollisionAndDamage() {
+  //   const bounds = {
+  //     left: this.position.x + this.size.x * 0.25,
+  //     right: this.position.x + this.size.x * 0.75,
+  //     top: this.position.y + this.size.y * (2 / 3),
+  //     bottom: this.position.y + this.size.y
+  //   };
+  
+  //   const playerBounds = {
+  //     left: player.position.x,
+  //     right: player.position.x + player.size.x,
+  //     top: player.position.y,
+  //     bottom: player.position.y + player.size.y
+  //   };
+  
+  //   const collided = (
+  //     bounds.left < playerBounds.right &&
+  //     bounds.right > playerBounds.left &&
+  //     bounds.top < playerBounds.bottom &&
+  //     bounds.bottom > playerBounds.top
+  //   );
+  
+  //   if (collided && player.invincibleTimer <= 0) {
+  //     player.updateHp(player.hp - 1, 90); // 扣1血 + 无敌90帧
+  //     hurtSound.currentTime = 0;
+  //     hurtSound.play();
+  //   }
+  // }
 }
-

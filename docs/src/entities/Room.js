@@ -17,105 +17,128 @@ class Room {
   }
 
   setup(roomData) {
-    // Load room configuration
-    this.currentRoomData = roomData;
-    // Load room configuration
-
+    this.enemies = [];
+    this.chaser = [];
+    this.shooter = [];
+    this.obstacles = [];
     this.currentRoomData = roomData; // Store room data
-    this.generateObstacles(this.currentRoomData.id);
-    this.generateEnemies(this.currentRoomData.id);
+    this.generateObstacles(this.currentRoomData);
+    this.generateEnemies(this.currentRoomData);
     this.backgroundImg = roomData.backgroundImg;
     this.door = new Door();
     this.door.close();
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
-    this.setGameTime(this.currentRoomData.id);
-
-    // 只有普通关卡生成障碍物（排除 id 4、5、6）
-  if (![4, 5, 6].includes(roomData.id)) {
-    this.generateObstacles(this.obsCount);
-  } else {
-    this.obstacles = [];
-  }
-    
-    // 按房间 ID 指定不同的生成逻辑
-  if (roomData.id === 4) {
-    this.generateChaser();
-  } else if (roomData.id === 5) {
-    this.generateShooter();
-  } else if (roomData.id === 6) {
-    this.generateFinalBossRoom(); // 2 chasers + 1 shooter
-  } else {
-    this.generateEnemies();
-  }
-
+    this.setGameTime(currentRoomIndex);
+    gameStateManager?.playBGMForRoom?.(currentRoomIndex); // 进入房间后自动播放对应 BGM
   }
 
   update() {
+    // this.updateObstacles();
+
+    // Treat three types of rooms separately
+    if (this.currentRoomData.type === 1) {
+      this.updateChaser();
+    } else if (this.currentRoomData.type === 2) {
+      this.updateShooter();
+    } else if (this.currentRoomData.type === 3) {
+      this.updateChaser();
+      this.updateShooter();
+      this.resolveBossCollision(); // Add physical barriers between monsters
+    } else {
+      this.updateEnemies();
+    }
+    this.updateDoor();
+    this.checkClearCondition();
+  }
+
+  display(playerObj) {
     // Use corresponding backgroundImg for current level
     image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
-    this.savePoint.display();    
-    this.updateObstacles();
-
-   // 分别处理三种房间
-  if (this.currentRoomData.id === 4) {
-    this.updateChaser();
-  } else if (this.currentRoomData.id === 5) {
-    this.updateShooter();
-  } else if (this.currentRoomData.id === 6) {
-    this.updateChaser();
-    this.updateShooter();
-    this.resolveBossCollision(); // ✅ 加上怪物间物理阻挡
-  } else {
-    this.updateEnemies();
+    this.savePoint.display();
+    this.door.display();
+    const allEntities = [...this.obstacles, ...this.enemies, playerObj];
+    allEntities.sort((a, b) => a.position.y - b.position.y);
+    allEntities.forEach(entity => { entity.display(); });
   }
 
-  this.updateDoor();
-  this.checkClearCondition();
-  }
-
-  generateObstacles(currentRoomId) {
-    this.setObstacleCount(currentRoomId);
+  generateObstacles(currentRoomData) {
     this.obstacles = [];
-    // TODO: obstacleCount不同关卡设为不一样的数值。根据难度或者其他条件
+    this.setObstacleCount(currentRoomData);
     if (obstacleCount === 1) {
-      this.generateTutorialObs();
+      const obsData = currentRoomData.obstacles[0];
+      this.generateTutorialObs(obsData);
       return;
     }
-    for (let i = 0; i < obstacleCount; i++) {
+    if (obstacleCount === 0) { // No obstacles in Boss level
+      return;
+    }
+
+    for(let i = 0; i < currentRoomData.obstacles.length; i++) {
       let newObstacle;
       do {
-        const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
-        const y = random(topBoundary + player.size.y, bottomBoundary - maxObstacleSize - player.size.y);
-        newObstacle = new Obstacle(x, y);
+        const obsData = currentRoomData.obstacles[i];
+      newObstacle = new Obstacle(obsData.x, obsData.y, obsData.img);
       } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
       this.obstacles.push(newObstacle);
+      
     }
+
+    // for (let i = 0; i < obstacleCount; i++) {
+    //   let newObstacle;
+    //   do {
+    //     const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
+    //     const y = random(topBoundary + player.size.y, bottomBoundary - maxObstacleSize - player.size.y);
+    //     newObstacle = new Obstacle(x, y);
+    //   } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
+    //   this.obstacles.push(newObstacle);
+    // }
   }
 
-  generateEnemies(currentRoomId) {
+  generateEnemies(currentRoomData) {
     this.enemies = [];
-    this.setEnemyCount(currentRoomId);
-    // TODO: enemyCount不同关卡设为不一样的数值。根据难度或者其他条件
-    for (let i = 0; i < enemyCount; i++) {
+    if (currentRoomData.type === 0) {
+      this.setEnemyCount(currentRoomData.id);
+    }
+    
+    // Specify different enemy generation logic by room ID
+    if (currentRoomData.type === 1) {
+      this.generateChaser();
+      return;
+    } else if (currentRoomData.type === 2) {
+      this.generateShooter();
+      return;
+    } else if (currentRoomData.type === 3) {
+      this.generateFinalBossRoom(); // 2 chasers + 1 shooter
+      return;
+    }
+    
+    for(let i = 0; i < currentRoomData.enemies.length; i++) {
       let newEnemy;
       do {
-        let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
-        let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
-        let hp = random([smallEnemyHp, largeEnemyHp]);
-        newEnemy = new Enemy(x, y, hp);
+        const enemiesData = currentRoomData.enemies[i];
+      let hp = random([smallEnemyHp, largeEnemyHp]);
+      newEnemy = new Enemy(enemiesData.x, enemiesData.y, hp, enemiesData.img);
       } while (this.collisionDetector.detectCollision(player, newEnemy));
+      
       this.enemies.push(newEnemy);
     }
+
+    // for (let i = 0; i < enemyCount; i++) {
+    //   let newEnemy;
+    //   do {
+    //     let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
+    //     let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
+    //     let hp = random([smallEnemyHp, largeEnemyHp]);
+    //     newEnemy = new Enemy(x, y, hp);
+    //   } while (this.collisionDetector.detectCollision(player, newEnemy));
+    //   this.enemies.push(newEnemy);
+    // }
   }
 
-
-  
   generateChaser() {
     this.chaser = [];
     this.chaser.push(new Chaser(400, 300));
   }
-
-
 
   generateShooter() {
     this.shooter = [];
@@ -125,20 +148,43 @@ class Room {
   generateFinalBossRoom() {
     this.chaser = [];
     this.shooter = [];
-    this.chaser.push(new Chaser(300, 250));
-    this.chaser.push(new Chaser(500, 350));
-    this.shooter.push(new Shooter(400, 400));
+  
+    const minX = widthInPixel / 2 + 50; // 右半边稍微往内
+    const maxX = widthInPixel - 100;    // 留点边距
+    const minY = 150;
+    const maxY = heightInPixel - 150;
+  
+    const randomPos = () => {
+      const x = random(minX, maxX);
+      const y = random(minY, maxY);
+      return { x, y };
+    };
+  
+    let pos1 = randomPos();
+    let pos2 = randomPos();
+    let shooterPos = randomPos();
+  
+    this.chaser.push(new Chaser(pos1.x, pos1.y));
+    this.chaser.push(new Chaser(pos2.x, pos2.y));
+    this.shooter.push(new Shooter(shooterPos.x, shooterPos.y));
   }
   
-
   updateObstacles() {
-    this.obstacles.forEach(o => o.display());
+    // this.obstacles.forEach(o => o.display());
   }
 
   updateEnemies() {
     this.enemies.forEach(e => {
-      e.update();
-      e.display();
+      if (!this.collisionDetector.isHitBoundary(e)) e.update();
+      else {
+        // Add some randomness to prevent perfect oscillation
+        const direction = p5.Vector.mult(e.velocity.copy(), -1);
+        const randomness = p5.Vector.random2D().mult(0.2);
+        direction.add(randomness).normalize();
+        e.velocity = direction.mult(e.velocity.mag());
+        e.position.add(direction);
+      }
+      // e.display();
     });
   }
 
@@ -196,35 +242,38 @@ class Room {
   }
 
   setEnemyCount(currentRoomId) {
-    if (currentRoomId === 1) {
+    if (currentRoomId === 0) {
       enemyCount = 1;
-    } else if (currentRoomId === 2) {
+    } else {
       enemyCount = 4;
     }
   }
 
-  setObstacleCount(currentRoomId) {
-    if (currentRoomId === 1) {
+  setObstacleCount(currentRoomData) {
+    if (currentRoomData.id === 0) {
       obstacleCount = 1;
-
-    } else if (currentRoomId === 2) {
+      return;
+    } 
+    if (currentRoomData.type === 0) {
       obstacleCount = 5;
+    } else {
+      obstacleCount = 0;
     }
   }
 
-  generateTutorialObs() {
+  generateTutorialObs(obsData) {
     let newObstacle;
     const x = savePointParam.x + player.size.x + widthInPixel / 4;
     const y = topBoundary + player.size.y + heightInPixel / 4;
-    newObstacle = new Obstacle(x, y);
+    newObstacle = new Obstacle(x, y, obsData.img);
     this.obstacles.push(newObstacle);
   }
 
-  setGameTime(currentRoomId) {
-    if (currentRoomId === 1) {
+  setGameTime(currentRoomIndex) {
+    if (currentRoomIndex === 0) {
       startTime = millis();
     }
-    if (currentRoomId === 2) {
+    if (currentRoomIndex === 1) {
       startTime = millis();
     }
   }

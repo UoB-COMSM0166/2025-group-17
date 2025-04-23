@@ -48,6 +48,19 @@ function loadRoom() {
   // }
 
   // Load room
-  room.setup(rooms[currentRoomIndex]);
+  if (currentRoomIndex === 1) {
+    const randomRoomId = random([1, 2, 3, 4, 5, 6]);
+    room.setup(rooms[randomRoomId]);
+  } else if (currentRoomIndex === 2) {
+    room.setup(rooms[8]);
+  }
+  else if (currentRoomIndex === 3) {
+    room.setup(rooms[7]);
+  } else if (currentRoomIndex === 4) {
+    room.setup(rooms[9]);
+  } else if (currentRoomIndex === 5) {
+    room.setup(rooms[10]);
+  }
+  
 }
 

@@ -9,81 +9,80 @@ class Chaser {
     this.isDashing = false;
     this.dashCooldown = 100;
     this.currentCooldown = 0;
-    this.dashDamageApplied = false; // 每次 dash 只造成一次伤害
-    // 新增：dash 最大持续帧数
-    this.dashDuration = 10; // 例如 30 帧
-    this.currentDashTime = 0; // 当前 dash 状态持续时间计时器
-    this.image = chaserImage; // 你需要在 preload 中加载这个图片
+    this.dashDamageApplied = false;
+    this.dashDuration = 10;
+    this.currentDashTime = 0;
+
+    // 替换为动画帧数组（来自 preload）
+    this.frames = window.bossFrames;
+    this.currentFrame = 0;
+    this.frameCounter = 0;
+
+    this.frameDelay = 12; // 控制动画播放速度：数值越大越慢（默认 12 帧换一张）例如设置为 20 就更慢，6 就更快
   }
 
   update() {
-    if (this.currentCooldown > 0) {
-      this.currentCooldown--;
+    // 动画更新：每 frameDelay 帧切换一张图
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.currentFrame = (this.currentFrame + 1) % this.frames.length;
     }
+
+    if (this.currentCooldown > 0) this.currentCooldown--;
 
     let distanceToPlayer = dist(
       this.position.x, this.position.y,
       player.position.x, player.position.y
     );
 
-
-
     if (this.isDashing) {
-      // 执行 dash 移动
       this.position.add(this.dashDirection);
-      // 计时 dash 持续时间
       this.currentDashTime++;
 
-      // 仅在 dash 状态下检测碰撞，并保证本次 dash 只扣一次血
       if (this.checkPlayerCollision() && !this.dashDamageApplied) {
         this.applyDashDamage();
       }
 
-
-  
       if (this.hitWall() || distanceToPlayer > player.size.x * 3 || this.currentDashTime >= this.dashDuration) {
         this.isDashing = false;
         this.currentCooldown = this.dashCooldown;
-        this.dashDamageApplied = false; // 重置，允许下一次 dash 扣血
-        this.currentDashTime = 0;       // 重置 dash 计时器
+        this.dashDamageApplied = false;
+        this.currentDashTime = 0;
       }
-      
-    
+
     } else {
-      // 达到设定距离并且冷却完毕则启动 dash
       if (distanceToPlayer < this.chaseRange && this.currentCooldown === 0) {
         this.startDash();
       } else {
         this.chasePlayer();
       }
     }
-    console.log(`Frame: ${frameCount}, isDashing: ${this.isDashing}, currentDashTime: ${this.currentDashTime}, distanceToPlayer: ${distanceToPlayer.toFixed(2)}, dashDamageApplied: ${this.dashDamageApplied}`);
-  // 非 dash 状态：只阻挡，不扣血
-  if (!this.isDashing && this.checkPlayerCollision()) {
-    const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(4);
-    player.position.add(pushDir);
-  
-    // ✅ 保证 player 位置在边界内
-    player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
-    player.position.y = constrain(player.position.y, topBoundary, bottomBoundary - player.size.y);
-  }
-  
 
+    // 撞到玩家但不是dash
+    if (!this.isDashing && this.checkPlayerCollision()) {
+      const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(4);
+      player.position.add(pushDir);
+      player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
+      player.position.y = constrain(player.position.y, topBoundary, bottomBoundary - player.size.y);
+    }
   }
 
   applyDashDamage() {
-    // 移除无敌检查
-    player.updateHp(player.hp - 0.5);
-    console.log('Dash damage applied at frame ' + frameCount + ', player HP: ' + player.hp);
+    player.updateHp(player.hp - 1);
     hurtSound.currentTime = 0;
     hurtSound.play();
     this.dashDamageApplied = true;
 
-    if (player.hp <= 0 && typeof pageDrawer !== 'undefined') {
-      pageDrawer.showGameOverPage();
+    const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(20);
+    player.position.add(pushDir);
+    player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
+    player.position.y = constrain(player.position.y, topBoundary, bottomBoundary - player.size.y);
+
+    if (player.hp <= 0 && typeof menuDrawer !== 'undefined') {
+      menuDrawer.showGameOverPage();
     }
   }
-
 
   chasePlayer() {
     let direction = createVector(
@@ -94,10 +93,9 @@ class Chaser {
     this.position.add(direction);
   }
 
-  
   startDash() {
     this.isDashing = true;
-    this.currentDashTime = 0;  // 重置 dash 计时器
+    this.currentDashTime = 0;
     let direction = createVector(
       player.position.x - this.position.x,
       player.position.y - this.position.y
@@ -105,10 +103,8 @@ class Chaser {
     direction.normalize().mult(this.dashSpeed);
     this.dashDirection = direction;
     this.dashDamageApplied = false;
-    // 每次 dash 一启动就扣血，而不依赖碰撞检测
-    this.applyDashDamage();
+    this.applyDashDamage(); // 初始 dash 撞击立即扣血
   }
-  
 
   hitWall() {
     return (
@@ -147,7 +143,6 @@ class Chaser {
     );
   }
 
-  // 检测玩家与 chaser 是否相交
   checkPlayerCollision() {
     return (
       this.position.x < player.position.x + player.size.x &&
@@ -159,8 +154,9 @@ class Chaser {
 
   display() {
     if (this.hp <= 0) return;
-    fill(this.isDashing ? 'red' : 'purple');
-    //rect(this.position.x, this.position.y, this.size.x, this.size.y);
-    image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
+
+    // 播放当前动画帧
+    const img = this.frames[this.currentFrame];
+    image(img, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 }

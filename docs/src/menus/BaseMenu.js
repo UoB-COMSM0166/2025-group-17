@@ -44,11 +44,11 @@ class BaseMenu {
   #resetButtonIndex() { this.#btnIndex = 0; }
 
   _drawTitle(title) {
-    fill(255);
     stroke(0);
     strokeWeight(5);
     textSize(uiTextSize);
     textAlign(CENTER, CENTER);
+    fill('#AFDDC9');
     text(title, widthInPixel / 2, heightInPixel / 3);
   }
 

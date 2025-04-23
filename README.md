@@ -80,11 +80,74 @@ Onion Model
 ![onion-model.png](images/onion-model.png)</br>
 
 ### Design
-
+<!-- 
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
+-->
+#### System Overview
+The design of Out follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. This structure effectively organizes game mechanics into clearly defined components that interact seamlessly, simplifying development, testing, and future maintenance.
+Encapsulation ensures data integrity and controlled access to game object states, safeguarding mechanics such as player health, movement, enemy interactions, and obstacle collisions. Abstraction simplifies interactions by exposing only essential functionalities, reducing complexity. Inheritance and polymorphism enable flexible designs, notably within enemy subclasses that each exhibit unique behaviors derived from a common parent class. Composition allows for the assembly of complex objects from simpler components, ensuring modularity and ease of incremental integration.
+#### Class Design
+The class diagram clearly outlines key classes, their primary attributes, and critical methods:
+- Player: Attributes include health, velocity, and position. Key methods: move(), shoot(), updatePosition().
+- 
+
 ![class-diagram.svg](images/class-diagram.svg)</br>
-![sequence-diagram.svg](images/sequence-diagram.svg)</br>
+```mermaid
+sequenceDiagram
+    participant Player 
+    participant InputHandler 
+    participant CollisionDetector 
+    participant Bullet 
+    participant Enemy 
+    participant Obstacle 
+    participant Room 
+    participant Door 
+ 
+    Note right of Player: Player movement logic 
+    Player->>InputHandler: Direction key pressed
+    InputHandler->>Player: updateVelocity()
+    Player->>Player: updatePosition()
+    Player->>CollisionDetector: Detect collision 
+    CollisionDetector-->>Player: Return collision result 
+    alt If collision occurs 
+        Player->>Player: revertPosition()
+    end 
+ 
+    Note right of Player: Player shooting logic 
+    Player->>InputHandler: Shoot button pressed
+    InputHandler->>Player: shoot(direction)
+    Player->>Bullet: new Bullet()
+    Bullet->>Bullet: update()
+    Bullet->>Bullet: display()
+ 
+    Note right of CollisionDetector: Bullet collision detection 
+    CollisionDetector->>Bullet: detectCollisionWithBullet()
+    alt If collides with enemy 
+        Bullet->>Enemy: Inflict damage 
+        Enemy-->>CollisionDetector: hp -= damage 
+        CollisionDetector->>Bullet: splice()
+    else If collides with obstacle
+        Bullet-->>CollisionDetector: Disappear 
+        CollisionDetector->>Bullet: splice()
+    end 
+ 
+    Note right of Room: Room state update 
+    Room->>Enemy: updateEnemies()
+    Enemy->>Enemy: update()
+    Enemy->>Enemy: display()
+    Room->>Obstacle: updateObstacles()
+    Obstacle->>Obstacle: display()
+    Room->>Door: updateDoor()
+    Door->>Door: open() or close()
+ 
+    Note right of InputHandler: Room switching logic 
+    InputHandler->>Room: checkClearCondition()
+    alt If all enemies are defeated 
+        InputHandler->>Room: loadRoom()
+        Room->>Room: setup(nextRoomData)
+    end
+```
 
 ### Implementation
 
@@ -93,12 +156,7 @@ Onion Model
 - Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
 
 ### Evaluation
-
-- 15% ~750 words
-
-- One qualitative evaluation (your choice) 
-
-Heuristic Evaluation
+## Qualitative Evaluation - Heuristic Evaluation
 
 | Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 |----------|----------|----------|----------|----------|----------|----------|----------|
@@ -128,10 +186,104 @@ Heuristic Evaluation
 | gg | Start Menu |  | Flexibility and efficiency of use | 1 | 3 | 1 | 1.67 |
 
 
+*Heuristic Evaluation Results*
 
-- One quantitative evaluation (of your choice) 
+We conducted two questionnaire collection activities. A total of 24 feedback from 21 students were collected, which is shown in the above table.
 
-- Description of how code was tested. 
+| **Category**                           | **Manifestation**                                                                                                                                 | **Impact**                                                                                      | **Suggested Improvement**                                                                                      |
+|----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| **Lack of Visibility of System Status** | - Players don’t know when they are attacked.  <br> - Health display is unclear. <br> - Bullets are too slow, lack timely feedback. <br> - Enemy health is invisible. | Makes it hard for players to understand game status, leading to frustration.                   | Enhance UI elements like health bars and attack indicators to improve real-time feedback.                      |
+| **Insufficient User Control and Feedback** | - Unresponsive or unintuitive key controls. <br> - Movement restrictions (e.g., stuck on collisions, can't move sideways). <br> - High difficulty, restart button hard to find. <br> - Unclear saving system. | Reduces sense of control, potentially causes players to quit.                                   | Provide clear control prompts, customizable keys, and visible retry/exit buttons.                             |
+| **Lack of Help and Documentation**     | - Tutorial is unclear or disorganized. <br> - Players don’t know how to start or win the game.                                                   | High entry barrier, poor tutorial experience.                                                  | Use visuals, step-by-step popups, and task hints to enhance guidance.                                         |
+| **Inconsistency & Aesthetic Issues**   | - Buttons are too small or not noticeable. <br> - Visual and actual collision of obstacles are inconsistent. <br> - Enemies or obstacles are too fast to react. | Reduces interface usability and predictability.                                                | Unify visual style, optimize hitboxes, and highlight interactive elements.                                     |
+| **Recognition Over Recall**            | - Players can't easily identify their character or elements. <br> - Difficult to remember how to restart or continue the game.                    | Increases cognitive load by requiring memory instead of recognition.                           | Strengthen visual cues, add icons and labels to assist recognition.                                           |
+
+
+*Usability Issues and Suggested Improvements in Game Design*
+
+The feedback of personal user experience is concluded and classified into five categories with each category has various manifestation, suggested improvement, and impact as shown in the above table.
+
+## Quatitative Evaluation - System Usability Survey (SUS)
+
+| User ID | I think I would like to use this system frequently | I found the system unnecessarily complex | I thought the system was easy to use | I think that I would need the support of a technical person to be able to use this system | I found the various functions in this system were well integrated | I thought there was too much inconsistency in this system | I would imagine that most people would learn to use this system very quickly | I found the system very cumbersome to use | I felt very confident using the system | I needed to learn a lot of things before I could get going with this system |
+|---------|-----------------------------------------------------|------------------------------------------|--------------------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------|------------------------------------------|-------------------------------------|------------------------------------------------------------------------------------|
+| User 01 | 4                                                   | 1                                        | 4                                    | 1                                                                                                | 5                                                                      | 2                                                            | 4                                                                                       | 2                                        | 5                                   | 1                                                                                  |
+| User 02 | 4                                                   | 1                                        | 4                                    | 1                                                                                                | 5                                                                      | 2                                                            | 4                                                                                       | 2                                        | 5                                   | 1                                                                                  |
+| User 03 | 5                                                   | 1                                        | 5                                    | 1                                                                                                | 3                                                                      | 1                                                            | 5                                                                                       | 3                                        | 5                                   | 5                                                                                  |
+| User 04 | 4                                                   | 3                                        | 3                                    | 3                                                                                                | 3                                                                      | 3                                                            | 3                                                                                       | 3                                        | 3                                   | 3                                                                                  |
+| User 05 | 4                                                   | 2                                        | 4                                    | 3                                                                                                | 3                                                                      | 3                                                            | 3                                                                                       | 3                                        | 3                                   | 2                                                                                  |
+| User 06 | 4                                                   | 3                                        | 4                                    | 3                                                                                                | 3                                                                      | 3                                                            | 3                                                                                       | 3                                        | 3                                   | 3                                                                                  |
+| User 07 | 5                                                   | 1                                        | 5                                    | 4                                                                                                | 5                                                                      | 1                                                            | 4                                                                                       | 3                                        | 5                                   | 2                                                                                  |
+| User 08 | 3                                                   | 3                                        | 4                                    | 3                                                                                                | 4                                                                      | 3                                                            | 2                                                                                       | 3                                        | 2                                   | 4                                                                                  |
+| User 09 | 5                                                   | 3                                        | 5                                    | 2                                                                                                | 5                                                                      | 1                                                            | 2                                                                                       | 3                                        | 5                                   | 1                                                                                  |
+| User 10| 4                                                   | 2                                        | 3                                    | 3                                                                                                | 5                                                                      | 3                                                            | 4                                                                                       | 3                                        | 4                                   | 2                                                                                  |
+| User 11| 4                                                   | 2                                        | 2                                    | 4                                                                                                | 5                                                                      | 2                                                            | 3                                                                                       | 2                                        | 2                                   | 2                                                                                  |
+
+
+*SUS Results of Easy Mode*
+
+
+
+| User ID | I think I would like to use this system frequently | I found the system unnecessarily complex | I thought the system was easy to use | I think that I would need the support of a technical person to be able to use this system | I found the various functions in this system were well integrated | I thought there was too much inconsistency in this system | I would imagine that most people would learn to use this system very quickly | I found the system very cumbersome to use | I felt very confident using the system | I needed to learn a lot of things before I could get going with this system |
+|---------|-----------------------------------------------------|------------------------------------------|--------------------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------|------------------------------------------|-------------------------------------|------------------------------------------------------------------------------------|
+| User 01 | 4 | 1 | 3 | 1 | 4 | 1 | 5 | 2 | 4 | 1 |
+| User 02 | 4 | 1 | 4 | 1 | 5 | 2 | 4 | 2 | 5 | 1 |
+| User 03 | 5 | 1 | 5 | 5 | 5 | 3 | 5 | 3 | 5 | 3 |
+| User 04 | 3 | 4 | 3 | 4 | 2 | 4 | 2 | 4 | 2 | 4 |
+| User 05 | 3 | 4 | 3 | 4 | 2 | 4 | 2 | 4 | 2 | 3 |
+| User 06 | 4 | 3 | 4 | 3 | 3 | 3 | 3 | 3 | 3 | 2 |
+| User 07 | 4 | 2 | 4 | 2 | 4 | 2 | 4 | 2 | 4 | 2 |
+| User 08 | 2 | 4 | 2 | 5 | 2 | 5 | 2 | 4 | 2 | 3 |
+| User 09 | 5 | 2 | 5 | 1 | 5 | 1 | 5 | 3 | 5 | 1 |
+| User 10 | 3 | 2 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 2 |
+| User 11 | 3 | 2 | 2 | 5 | 4 | 2 | 1 | 4 | 2 | 2 |
+
+
+*SUS Results of Hard Mode*
+
+
+| User ID | Easy Mode | Hard Mode |
+|---------|------------|------------|
+| User 01 | 87.5       | 85.0       |
+| User 02 | 92.5       | 70.0       |
+| User 03 | 80.0       | 75.0       |
+| User 04 | 60.0       | 40.0       |
+| User 05 | 65.0       | 45.0       |
+| User 06 | 70.0       | 65.0       |
+| User 07 | 87.5       | 80.0       |
+| User 08 | 55.0       | 35.0       |
+| User 09 | 80.0       | 92.5       |
+| User 10 | 67.5       | 55.0       |
+| User 11 | 60.0       | 42.5       |
+
+*SUS scores of Each User in the Easy Mode and Hard Mode*
+
+Higher SUS scores indicate better perceived usability. The Easy Mode has higher usability score than that of the Hard Mode, suggesting that users found the game more intuitive and accessible in Easy Mode. We conducted the Wilcoxon sign-ranked test on the SUS data. The results show obvious significance. For a group of 11 participants, the calculated test statistic W is 5.5, which indicates that the significance level reached 0.025, or 97.5% according to the critical values table. The result determined that there was an significant difference between the easy mode and hard mode. However, this result does not determine exactly what causes the difference between the two modes. This uncertainty about whether there is really a difference in the usablity of two modes is related to one or more items of SUS.
+
+
+| SUS Item                                                                                 | Easy | Hard |
+|-----------------------------------------------------------------------------------------------|------|------|
+| I think I would like to use this system frequently                                            | 4.2  | 3.6  |
+| I found the system unnecessarily complex                                                      | 2.0  | 2.4  |
+| I thought the system was easy to use                                                          | 3.9  | 3.3  |
+| I think that I would need the support of a technical person to be able to use this system     | 2.6  | 3.1  |
+| I found the various functions in this system were well integrated                             | 4.1  | 3.5  |
+| I thought there was too much inconsistency in this system                                     | 2.3  | 2.5  |
+| I would imagine that most people would learn to use this system very quickly                  | 3.4  | 3.3  |
+| I found the system very cumbersome to use                                                     | 2.5  | 3.1  |
+| I felt very confident using the system                                                        | 3.8  | 3.4  |
+| I needed to learn a lot of things before I could get going with this system                   | 2.4  | 2.3  |
+
+*The average score of each item on SUS of the easy mode and the hard mode*
+
+
+The average scores of the easy mode and the hard mode are 73.2 and 62.3 respectively. The latter is lower than the general usability benchmark of 68. Based on the results of the above table, we decided to improve the control methods of the player, the collision logic between classes, and the UI design of non-game interfaces to enhance the integrity of the hard mode system and make it easier for users to master and proficiently use the game system with the expectation of bringing the usability score of hard mode to the 68 benchmark.
+
+
+
+- Description of how code was tested.
+
+
 
 ### Process 
 
@@ -141,6 +293,7 @@ Heuristic Evaluation
 ### Team Collaboration and Workflow
 
 At the beginning of the project, we held collaborative discussions to define the core game states necessary for a minimum viable product and potential extended features that could be added later in the development cycle. In hindsight, our progress could have benefited from a clearer overall structure regarding functionality planning and workflow management early on. A more refined understanding of the software requirements and a better-coordinated development pipeline might have streamlined our implementation process.
+![3abed723e01ea34729cd3285e540569](https://github.com/user-attachments/assets/7143dc04-2cc4-4f22-8308-f3ab22b79faa)
 
 We maintained regular in-person meetings in the Software Engineering lab throughout the development period. These weekly sessions provided an opportunity to check progress, align tasks, and address any technical or design issues that emerged. Our communication was effective and enjoyable, significantly contributing to team morale and productivity. For day-to-day coordination, we relied heavily on a WeChat group chat. This channel allowed us to share quick updates, raise unexpected issues, and propose small changes in real-time. For more formal discussions, especially those involving critical decisions or feature planning, we used Microsoft Teams and recorded key meetings to ensure that important information could be reviewed later when needed.
 
@@ -156,9 +309,36 @@ Given the complexity of our game, which involved multiple interconnected game st
 For the core of our game development, we used **P5.js**, a JavaScript-based creative coding framework that supports dynamic rendering and a wide variety of extension libraries. Early on, we encountered some difficulties with debugging and extending functionality using P5.js, particularly since many team members were unfamiliar with it. However, through collaboration and consistent practice, we overcame these challenges and gained proficiency, which accelerated the later stages of development.
 
 Regarding visual design, team member **Shuzhou Huang** led the creation of all original artwork. Using **Aseprite**, a pixel art tool, he designed characters, backgrounds, UI components, and animations, all by hand. These assets contributed significantly to the game’s unique aesthetic and atmosphere.
+![8602f4d8022f24bd7f0d66fa19b2cb5](https://github.com/user-attachments/assets/6e4446b8-1995-403d-9443-e58f69371d35)
 
 We sourced royalty-free audio from public platforms for sound design and then processed and edited the sound effects using **Logic Pro X**. This allowed us to fine-tune the quality and timing of audio elements, enhancing the overall immersion of the game.
 ![d8e7d67450a08bffac6aacd4a66122e](https://github.com/user-attachments/assets/16c0db61-2bbc-47ef-abbd-c04069e6d9dd)
+
+###  Sustainability, Ethics and Accessibility
+#### Green Software Foundation Implementation Patterns Applied in the Project
+1. Efficient Asset Management
+   - **Pattern**: Properly Sized Images  
+   - **Specific Application**:
+     - In the project, various game elements such as player, enemies, bullets, and background images are used. By optimizing these images' resolution and size, unnecessary high-resolution images are avoided, reducing memory usage and loading time. In the `preload.js` file, many game resources (e.g., `shooterImage`, `chaserImage`, `bulletImage`) are loaded in an efficient way. 
+     - The function `adjustCanvasWithAspectRatio` in `hud.js` adjusts the canvas size based on the aspect ratio of the screen. This method adapts and resizes the game screen when the window size changes, preventing unnecessary image stretching or scaling, further reducing rendering resource waste.
+     - **Performance Impact**: This approach reduces unnecessary image loading, speeds up loading times, and minimizes memory consumption. It also reduces server load, which helps in lowering overall energy consumption【67†source】【16†source】.
+
+2. Event-Driven Architecture
+   - **Pattern**: Event-Driven and Modular Code  
+   - **Specific Application**:
+     - In `EventBus.js`, an event-driven architecture is implemented. This allows seamless transitions between different game states (e.g., from the main menu to the game, from pause to resume). For example, by publishing (`publish`) and subscribing (`subscribe`) to events, `GameStateManager.js` listens for different events such as `START_NEW_GAME`, `PAUSE_GAME`, etc., and responds accordingly. This makes the game logic more modular, reducing coupling between different modules and making the system easier to maintain and extend.
+     - **Performance Impact**: Event-driven architecture decouples different components, ensuring that resources are only loaded or updated when necessary, avoiding unnecessary computations and resource consumption. For instance, when the game is paused, only `GameStateManager` needs to update the game state, while other modules (such as enemies, player, etc.) do not perform unnecessary computations, reducing CPU load and saving energy【14†source】【69†source】.
+
+3. Performance Optimization and Caching
+   - **Pattern**: Efficient Memory Usage and Caching  
+   - **Specific Application**:
+     - In `SavePoint.js` and `GameStateManager.js`, caching mechanisms are used to store the game progress. For example, when the player approaches a save point, the game state is saved (`saveGameData`), and this data is stored in the browser's `localStorage`, preventing the game from reloading from scratch each time. This mechanism reduces unnecessary reloading and computations, improving the game's responsiveness and performance.
+     - Furthermore, in `Room.js`, enemies and obstacles are generated dynamically based on the current room data. This reduces the initialization time for each room, ensuring that game data is only loaded and computed when the player enters a room. For larger games, dynamically loading resources instead of loading everything at once significantly reduces memory consumption and improves performance.
+     - **Performance Impact**: By storing and caching game states, unnecessary data reloads are avoided, improving performance and saving bandwidth and memory. Especially in web games, caching player progress in `localStorage` reduces server load and the need for data transmission, optimizing overall energy efficiency.
+
+
+
+
 
 ### Contributions
 

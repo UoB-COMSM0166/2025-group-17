@@ -10,6 +10,7 @@ function adjustCanvasWithAspectRatio() {
   }
 
   resizeCanvas(cnvWidth, cnvHeight);
+  gameStateManager.resizeBtns();
 
   // Centre the cnv
   cnv.position((windowWidth - cnvWidth) / 2, (windowHeight - cnvHeight) / 2);
@@ -44,7 +45,7 @@ function drawCurrentLevel() {
   strokeWeight(5);
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
-  text(`Level: ${currentRoomIndex} / ${rooms.length}`, hPadding, heightInPixel - vPadding);
+  text(`Level: ${currentRoomIndex} / ${rooms.length - 5}`, hPadding, heightInPixel - vPadding);
 
 }
 
