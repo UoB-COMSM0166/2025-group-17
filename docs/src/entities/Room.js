@@ -3,12 +3,13 @@ class Room {
     this.savePoint = null;
     this.door = null;
     this.enemies = [];
-    this.chaser = [];
-    this.shooter = [];
+    this.chasers = [];
+    this.shooters = [];
     this.obstacles = [];
 
     this.currentRoomData = null;
     this.backgroundImg = null;
+    this.clearTime = null;
     this.size = {
       width: widthInPixel,
       height: heightInPixel
@@ -18,9 +19,10 @@ class Room {
 
   setup(roomData) {
     this.enemies = [];
-    this.chaser = [];
-    this.shooter = [];
+    this.chasers = [];
+    this.shooters = [];
     this.obstacles = [];
+    this.clearTime = null;
     this.currentRoomData = roomData; // Store room data
     this.generateObstacles(this.currentRoomData);
     this.generateEnemies(this.currentRoomData);
@@ -33,8 +35,6 @@ class Room {
   }
 
   update() {
-    // this.updateObstacles();
-
     // Treat three types of rooms separately
     if (this.currentRoomData.type === 1) {
       this.updateChaser();
@@ -47,8 +47,7 @@ class Room {
     } else {
       this.updateEnemies();
     }
-    this.updateDoor();
-    this.checkClearCondition();
+    this.updateAfterClear();
   }
 
   display(playerObj) {
@@ -56,9 +55,15 @@ class Room {
     image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
     this.savePoint.display();
     this.door.display();
-    const allEntities = [...this.obstacles, ...this.enemies, playerObj];
+    const allEntities = [...this.obstacles, ...this.enemies, ...this.chasers, ...this.shooters, playerObj];
     allEntities.sort((a, b) => a.position.y - b.position.y);
     allEntities.forEach(entity => { entity.display(); });
+    if (this.currentRoomData.id === 0 && this.enemies.length === 0) {
+      const clearText = "Tutorial complete! Your HP and runtime will reset in the next room.";
+      displayInstruction(clearText, this.clearTime);
+    }
+    if (this.chasers.length === 1) drawBossStatus(this.chasers[0]);
+    if (this.shooters.length === 1) drawBossStatus(this.shooters[0]);
   }
 
   generateObstacles(currentRoomData) {
@@ -69,6 +74,7 @@ class Room {
       this.generateTutorialObs(obsData);
       return;
     }
+    console.log(currentRoomData.id);
     if (obstacleCount === 0) { // No obstacles in Boss level
       return;
     }
@@ -97,7 +103,7 @@ class Room {
   generateEnemies(currentRoomData) {
     this.enemies = [];
     if (currentRoomData.type === 0) {
-      this.setEnemyCount(currentRoomData.id);
+      this.setEnemyCount(currentRoomData);
     }
     
     // Specify different enemy generation logic by room ID
@@ -122,32 +128,21 @@ class Room {
       
       this.enemies.push(newEnemy);
     }
-
-    // for (let i = 0; i < enemyCount; i++) {
-    //   let newEnemy;
-    //   do {
-    //     let x = random(savePointParam.x, widthInPixel - maxEntitySize - savePointParam.x);
-    //     let y = random(player.size.y, heightInPixel - maxEntitySize - player.size.y);
-    //     let hp = random([smallEnemyHp, largeEnemyHp]);
-    //     newEnemy = new Enemy(x, y, hp);
-    //   } while (this.collisionDetector.detectCollision(player, newEnemy));
-    //   this.enemies.push(newEnemy);
-    // }
   }
 
   generateChaser() {
-    this.chaser = [];
-    this.chaser.push(new Chaser(400, 300));
+    this.chasers = [];
+    this.chasers.push(new Chaser(400, 300));
   }
 
   generateShooter() {
-    this.shooter = [];
-    this.shooter.push(new Shooter(400, 300));
+    this.shooters = [];
+    this.shooters.push(new Shooter(400, 300));
   }
 
   generateFinalBossRoom() {
-    this.chaser = [];
-    this.shooter = [];
+    this.chasers = [];
+    this.shooters = [];
   
     const minX = widthInPixel / 2 + 50; // 右半边稍微往内
     const maxX = widthInPixel - 100;    // 留点边距
@@ -164,13 +159,9 @@ class Room {
     let pos2 = randomPos();
     let shooterPos = randomPos();
   
-    this.chaser.push(new Chaser(pos1.x, pos1.y));
-    this.chaser.push(new Chaser(pos2.x, pos2.y));
-    this.shooter.push(new Shooter(shooterPos.x, shooterPos.y));
-  }
-  
-  updateObstacles() {
-    // this.obstacles.forEach(o => o.display());
+    this.chasers.push(new Chaser(pos1.x, pos1.y));
+    this.chasers.push(new Chaser(pos2.x, pos2.y));
+    this.shooters.push(new Shooter(shooterPos.x, shooterPos.y));
   }
 
   updateEnemies() {
@@ -184,15 +175,13 @@ class Room {
         e.velocity = direction.mult(e.velocity.mag());
         e.position.add(direction);
       }
-      // e.display();
     });
   }
 
   updateChaser() {
-    this.chaser = this.chaser.filter(c => c.hp > 0);
-    this.chaser.forEach(c => {
+    this.chasers = this.chasers.filter(c => c.hp > 0);
+    this.chasers.forEach(c => {
       c.update();
-      c.display();
       c.detectBulletCollision(player.bullets);
       //if (this.collisionDetector.detectCollision(player, c)) {
        // inputHandler.decreasePlayerHp();
@@ -201,31 +190,33 @@ class Room {
   }
 
   updateShooter() {
-    this.shooter = this.shooter.filter(s => s.hp > 0);
-    this.shooter.forEach(s => {
+    this.shooters = this.shooters.filter(s => s.hp > 0);
+    this.shooters.forEach(s => {
       s.update();
-      s.display();
       s.detectBulletCollision(player.bullets);
       s.detectPlayerCollision();
     });
   }
   
-  updateDoor() {
-    if (this.checkClearCondition()) this.door.open();
+  updateAfterClear() {
+    if (this.checkClearCondition()) {
+      this.door.open();
+      if (this.clearTime === null) this.clearTime = millis();
+    }
     else this.door.close();
     this.door.display();
   }
 
   checkClearCondition() {
     const noEnemies = this.enemies.length === 0;
-    const noChaser = this.chaser.length === 0;
-    const noShooter = this.shooter.length === 0;
+    const noChaser = this.chasers.length === 0;
+    const noShooter = this.shooters.length === 0;
   
     return noEnemies && noChaser && noShooter && player.hp > 0;
   }
   
   resolveBossCollision() {
-    const bosses = [...this.chaser, ...this.shooter];
+    const bosses = [...this.chasers, ...this.shooters];
   
     for (let i = 0; i < bosses.length; i++) {
       for (let j = i + 1; j < bosses.length; j++) {
@@ -241,8 +232,8 @@ class Room {
     }
   }
 
-  setEnemyCount(currentRoomId) {
-    if (currentRoomId === 0) {
+  setEnemyCount(currentRoomData) {
+    if (currentRoomData.id === 0) {
       enemyCount = 1;
     } else {
       enemyCount = 4;

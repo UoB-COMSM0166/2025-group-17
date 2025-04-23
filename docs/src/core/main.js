@@ -30,38 +30,32 @@ function setup() {
   pageDrawer.setupPauseMenu();
   pageDrawer.setupGameOverPage();
 
-  hudDrawer = new HudDrawer(cnv, uiFont, heartImg, damagedHeartImg);
   player = new Player(playerX, playerY);
-  room = new Room();
 
+  room = new Room();
   room.setup(rooms[currentRoomIndex]);
   inputHandler = new InputHandler(room);
 
-  // Boss动画帧切割（3帧横向）
+  // Extract all animation frames
   window.bossFrames = [];
-  const frameW = bossSpriteSheet.width / 3;
-  const frameH = bossSpriteSheet.height;
-  for (let i = 0; i < 3; i++) {
-    const frame = bossSpriteSheet.get(i * frameW, 0, frameW, frameH);
-    window.bossFrames.push(frame);
-  }
+  extractFrames(bossSpriteSheet, 3, window.bossFrames);
 
-  // Shooter Boss 动画帧（3帧横向）
   window.shooterFrames = [];
-  const frameW2 = shooterSpriteSheet.width / 3;
-  const frameH2 = shooterSpriteSheet.height;
-  for (let i = 0; i < 3; i++) {
-    const frame = shooterSpriteSheet.get(i * frameW2, 0, frameW2, frameH2);
-    window.shooterFrames.push(frame);
-  }
+  extractFrames(shooterSpriteSheet, 3, window.shooterFrames);
 
-  // enemy 动画帧切割（4帧横向）
   window.enemyFrames = [];
-  const enemyFrameW = enemySpriteSheet.width / 4;
-  const enemyFrameH = enemySpriteSheet.height;
-  for (let i = 0; i < 4; i++) {
-    const frame = enemySpriteSheet.get(i * enemyFrameW, 0, enemyFrameW, enemyFrameH);
-    window.enemyFrames.push(frame);
+  extractFrames(enemySpriteSheet, 4, window.enemyFrames);
+
+  window.hitEffectFrames = [];
+  extractFrames(hitEffectSheet, 10, window.hitEffectFrames);
+}
+
+function extractFrames(spriteSheet, frameCount, targetArray) {
+  const frameW = spriteSheet.width / frameCount;
+  const frameH = spriteSheet.height;
+  
+  for (let i = 0; i < frameCount; i++) {
+    targetArray.push(spriteSheet.get(i * frameW, 0, frameW, frameH));
   }
 }
 
@@ -98,12 +92,10 @@ function drawDebugCollisionBoxes() {
 
 function updateGameState() {
   gameStateManager.pageDrawer.updatePauseBtnPosition();
-
   inputHandler.update(player);
   player.healByTime(timeSpent);
 
   drawUiHub(player, startTime, currentRoomIndex);
-
   checkSavePoint();
 }
 

@@ -29,7 +29,6 @@ class ScenePlayer {
 
   #drawTextIcon(textContent) {
     const iconSize = textWidth(textContent);
-  
     // Draw background
     noFill();
     stroke(255);

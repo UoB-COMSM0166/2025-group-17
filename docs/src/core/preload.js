@@ -7,10 +7,13 @@ let L3_PsychoSound;
 
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
-  heartImg = loadImage('assets/icons/full_heart.png');
-  damagedHeartImg = loadImage('assets/icons/empty_heart.png');
+  heartImg = loadImage('assets/ui/full_heart.png');
+  damagedHeartImg = loadImage('assets/ui/empty_heart.png');
+  bossHpBarImg = loadImage('assets/ui/bossBar.png');
+  bossHpImg = loadImage('assets/ui/bossHp.png');
   startMenuImg = loadImage('assets/background/Menu_Start.png');
   pauseMenuImg = loadImage('assets/background/Menu_Pause.png');
+  gameOverMenuImg = loadImage('assets/background/Menu_GameOver.png');
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
 
@@ -64,6 +67,7 @@ function preload() {
   bossSpriteSheet = loadImage("assets/spritesheet/Crab_Boss.png");
   shooterSpriteSheet = loadImage("assets/spritesheet/shooter_Boss.png");
   enemySpriteSheet = loadImage("assets/spritesheet/enemy.png"); 
+  hitEffectSheet = loadImage("./assets/spritesheet/bullet_Effects.png");
 
   //  加载主界面和第一关的 BGM（使用 p5.sound）
   mainmenuSound = loadSound("assets/music/bgm/MainMenu.mp3");

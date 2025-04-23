@@ -124,10 +124,9 @@ class PageDrawer {
 
   drawGameOverPage() {
     clear();
-    background(220);
+    image(gameOverMenuImg, 0, 0, widthInPixel, heightInPixel);
     this.toggleResumeButtons();
     this.showGameOverButtons();
-    this.#drawMainMsg("Game Over");
     this.#repositionButton(this.btnLoadLastSave, -1.1);
     this.#repositionButton(this.btnRestart, 1.1);
     if (this.btnIndex !== null) this.gameOverBtns[this.btnIndex].class('blink');
@@ -226,24 +225,24 @@ class PageDrawer {
   }
 
   #handleSceneProgress() {
-    if (!keyIsDown(ENTER)) return;
+    if (!keyIsDown(ENTER) && !keyIsDown(ESCAPE)) return;
     if (this.#isScenePage()) this.#playNextStoryLine();
-    else if (isGameCompleted) this.#transitionToEndScene();
+    else if (isGameCompleted && keyIsDown(ENTER)) this.#transitionToEndScene();
   }
 
   #playNextStoryLine() {
     this.#scenePlayer.next();
-    if (!this.#scenePlayer.isSceneComplete()) return;
+    if (!this.#scenePlayer.isSceneComplete() && !keyIsDown(ESCAPE)) return;
   
     this.#scenePlayer.stopBGM();
     switch (this.#state) {
       case "startScene":
         this.#state = "inGame";
+        startTime = millis();
         this.btnPause.show();
         // 剧情播放完毕后：允许播放 BGM 并调用播放函数
         this.gameStateManager.delayBGM = false;
         this.gameStateManager.playBGMForRoom(currentRoomIndex);
-  
         break;
       case "endScene":
         this.eventBus.publish("EXIT_TO_MAIN_MENU");

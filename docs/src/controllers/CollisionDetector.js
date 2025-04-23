@@ -41,7 +41,7 @@ class CollisionDetector {
             deathSound.currentTime = 0;
             deathSound.play();
           }
-          bulletArr.splice(bulletIndex, 1);
+          bulletArr[bulletIndex].markAsHit();
         }
       });
     });
@@ -52,11 +52,11 @@ class CollisionDetector {
     // the bullet vanishes.
     bulletArr.forEach((bulletObj, bulletIndex) => {
       if (this.#isBulletHitWall(bulletObj)) {
-        bulletArr.splice(bulletIndex, 1);
+        bulletArr[bulletIndex].markAsHit();
       } else if (obstacleArr.some(obstacleObj => this.detectCollisionWithBullet(bulletObj, obstacleObj))) {
         hitSound.currentTime = 0;
         hitSound.play();
-        bulletArr.splice(bulletIndex, 1);
+        bulletArr[bulletIndex].markAsHit();
       }
     });
   }

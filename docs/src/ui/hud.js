@@ -20,7 +20,6 @@ function adjustCanvasWithAspectRatio() {
 function drawUiHub() {
   drawHealthBar();
   drawCurrentLevel();
-  // drawBossStatus();
   timeSpent = millis() - startTime;
   drawTimer();
 }
@@ -46,45 +45,43 @@ function drawCurrentLevel() {
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
   text(`Level: ${currentRoomIndex} / ${rooms.length - 5}`, hPadding, heightInPixel - vPadding);
-
 }
 
 function drawBossStatus(bossObj) {
-  if (!isBossStage) return;
   const hpPercentage = bossObj.hp / bossObj.maxHp;
-  const positionX = widthInPixel / 2 - bossHpWidth / 2;
-  const bossHpWidth = 400;
-  const bossHpHeight = 30;
-  const bossHpCorner = 10;
+  const positionX = widthInPixel / 2 - bossHpBarImg.width / 2;
 
-  // Draw HP bar background
-  stroke(0);
-  strokeWeight(3);
-  fill(230, 127); // 127 makes it 50% transparent
-  rect(positionX, vPadding, bossHpWidth, bossHpHeight, bossHpCorner);
+  const vPadding = 20;
+  bossHpBarImg.loadPixels();
+  bossHpImg.loadPixels();
+  
+  const currentHpWidth = Math.floor(bossHpImg.width * hpPercentage);
 
-  // Draw HP bar
-  noStroke();
-  adjustBossStatusColor(hpPercentage);
-  const margin = 5;
-  const barWidth = (bossHpWidth - margin * 2) * hpPercentage;
-  rect(positionX + margin, vPadding + margin, barWidth, bossHpHeight - margin * 2);
+  // Create a new image with only the current HP
+  let hpPercentageImg = createImage(bossHpImg.width, bossHpImg.height);
+  hpPercentageImg.copy(
+    bossHpImg, 
+    0, 0, currentHpWidth, bossHpImg.height,
+    0, 0, currentHpWidth, bossHpImg.height
+  );
+  
+  // Compute drawing location (excluding the boss icon)
+  // TODO: Update it with the new HP bar
+  const hpDrawX = positionX + 40;
+  const hpDrawY = vPadding + 10;
 
-  // Draw percentage markers
-  for (let i of [0.25, 0.5, 0.75]) {
-    let lineX = positionX + bossHpWidth * i;
-    line(lineX, vPadding, lineX, vPadding + bossHpHeight);
-  }
-}
+  // Draw HP background
+  tint(127);
+  image(bossHpImg, hpDrawX, hpDrawY);
+  noTint();
 
-function adjustBossStatusColor(percentage) {
-  if (percentage > 0.5) {
-    fill('green');
-  } else if (percentage > 0.25) {
-    fill(255, 165, 0);
-  } else {
-    fill('red');
-  }
+  // Draw hit effects
+  const flashFrame = 21;
+  bossObj.applyHitEffect(flashFrame);
+  image(hpPercentageImg, hpDrawX, hpDrawY);
+  noTint();
+
+  image(bossHpBarImg, positionX, vPadding);
 }
 
 function drawTimer() {
@@ -98,5 +95,59 @@ function drawTimer() {
   textFont(uiFont, uiTextSize);
   textAlign(RIGHT, BOTTOM);
   text(`Time Taken:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`, widthInPixel - hPadding, heightInPixel - vPadding);
+}
+
+function displayInstruction(textContent, displayStartTime) {
+  const alpha = calculateAlpha(displayStartTime);
+  if (alpha === null) return;
+  
+  console.log("Displaying instruction..");
+  drawDialogBox(alpha);
+  drawHighlightEdges(alpha);
+  drawInstructionText(textContent, alpha);
+}
+
+function calculateAlpha(displayStartTime) {
+  const fadeDuration = 500;
+  const displayDuration = 1000;
+  let elapsedTime = millis() - displayStartTime;
+  
+  if (elapsedTime < fadeDuration) {
+    return map(elapsedTime, 0, fadeDuration, 0, 255);
+  } 
+  else if (elapsedTime < fadeDuration + displayDuration) {
+    return 255;
+  } 
+  else if (elapsedTime < fadeDuration * 2 + displayDuration) {
+    return map(
+      elapsedTime, 
+      fadeDuration + displayDuration, 
+      fadeDuration * 2 + displayDuration, 
+      255, 0
+    );
+  }
+  return null;
+}
+
+function drawDialogBox(alpha) {
+  const boxSize = 60;
+  fill(0, alpha / 2);
+  noStroke();
+  rect(widthInPixel / 2, heightInPixel / 3 + boxSize / 2, widthInPixel, boxSize);
+}
+
+function drawHighlightEdges(alpha) {
+  const boxSize = 60;
+  fill(255, 255, 255, alpha / 2);
+  rect(widthInPixel / 2, heightInPixel / 3, widthInPixel, 1);
+  rect(widthInPixel / 2, heightInPixel / 3 + boxSize, widthInPixel, 1);
+}
+
+function drawInstructionText(textContent, alpha) {
+  const boxSize = 60;
+  fill(255, alpha);
+  textAlign(CENTER, CENTER);
+  textFont("monospace", 20);
+  text(textContent, widthInPixel / 2, heightInPixel / 3 + boxSize / 2);
 }
 
