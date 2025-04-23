@@ -13,6 +13,7 @@ function preload() {
   bossHpImg = loadImage('assets/ui/bossHp.png');
   startMenuImg = loadImage('assets/background/Menu_Start.png');
   pauseMenuImg = loadImage('assets/background/Menu_Pause.png');
+  gameOverMenuImg = loadImage('assets/background/Menu_GameOver.png');
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
 

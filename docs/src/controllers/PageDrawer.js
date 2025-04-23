@@ -124,10 +124,9 @@ class PageDrawer {
 
   drawGameOverPage() {
     clear();
-    background(220);
+    image(gameOverMenuImg, 0, 0, widthInPixel, heightInPixel);
     this.toggleResumeButtons();
     this.showGameOverButtons();
-    this.#drawMainMsg("Game Over");
     this.#repositionButton(this.btnLoadLastSave, -1.1);
     this.#repositionButton(this.btnRestart, 1.1);
     if (this.btnIndex !== null) this.gameOverBtns[this.btnIndex].class('blink');
