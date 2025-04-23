@@ -4,24 +4,23 @@
     "description": "2025 COMSM0166 group 17 ## Your Game",
     "main": "index.js",
     "directories": {
-      "doc": "docs"
+        "doc": "docs"
     },
     "scripts": {
-      "test": "jest"
+        "test": "jest"
     },
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/UoB-COMSM0166/2025-group-17.git"
+        "type": "git",
+        "url": "git+https://github.com/UoB-COMSM0166/2025-group-17.git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/UoB-COMSM0166/2025-group-17/issues"
+        "url": "https://github.com/UoB-COMSM0166/2025-group-17/issues"
     },
     "homepage": "https://github.com/UoB-COMSM0166/2025-group-17#readme",
     "devDependencies": {
-      "jest": "^29.7.0"
+        "jest": "^29.7.0"
     }
-  }
-  
+}
