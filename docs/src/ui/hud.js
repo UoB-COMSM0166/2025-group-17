@@ -10,6 +10,7 @@ function adjustCanvasWithAspectRatio() {
   }
 
   resizeCanvas(cnvWidth, cnvHeight);
+  gameStateManager.resizeBtns();
 
   // Centre the cnv
   cnv.position((windowWidth - cnvWidth) / 2, (windowHeight - cnvHeight) / 2);

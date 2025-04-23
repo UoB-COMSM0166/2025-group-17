@@ -10,8 +10,7 @@ class CollisionDetector {
     for (let i = 0; i < enemyArr.length; i++) {
       for (let j = i + 1; j < enemyArr.length; j++) {
         if (this.detectCollision(enemyArr[i], enemyArr[j])) {
-          enemyArr[i].collide();
-          enemyArr[j].collide();
+          enemyArr[i].collide(enemyArr[j]);
         }
       }
     }
@@ -21,7 +20,7 @@ class CollisionDetector {
     enemyArr.forEach(enemy => {
       obstacleArr.forEach(obstacle => {
         if (this.detectCollision(enemy, obstacle)) {
-          enemy.collide();
+          enemy.collide(obstacle);
         }
       });
     });

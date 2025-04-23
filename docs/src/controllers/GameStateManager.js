@@ -80,4 +80,8 @@ class GameStateManager {
     this.pageDrawer.showStartButtons();
     this.pageDrawer.toggleGameOverButtons();
   }
+
+  resizeBtns() {
+    this.pageDrawer.resizeBtns();
+  }
 }

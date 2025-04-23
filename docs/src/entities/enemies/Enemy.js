@@ -3,8 +3,8 @@ class Enemy {
     this.hp = hp;
     this.position = createVector(x, y);
     this.size = createVector(
-      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.w,
-      hp === smallEnemyHp ? heightInPixel / 8 : largeEnemySize.h
+      (heightInPixel / 6) * enemyImage.width / enemyImage.height,
+      heightInPixel / 6
     );
     this.velocity = createVector(random([-1, 1]), random([-1, 1]));
     this.image = enemyImage; // 默认图像（兼容旧逻辑）
@@ -40,8 +40,15 @@ class Enemy {
     image(img, this.position.x, this.position.y, this.size.x, this.size.y);
   }
 
-  collide() {
-    this.position.sub(this.velocity);
-    this.velocity.mult(-1);
+  collide(otherObj) {
+    // Calculate direction away from collision
+    const direction = p5.Vector.sub(this.position, otherObj.position).normalize();
+    
+    // Add some randomness to prevent perfect oscillation
+    const randomness = p5.Vector.random2D().mult(0.1);
+    direction.add(randomness).normalize();
+
+    this.velocity = direction.mult(this.velocity.mag());
+    this.position.add(direction);
   }
 }

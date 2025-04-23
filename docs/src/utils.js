@@ -7,7 +7,7 @@ let isBossStage = false;
 let isGameCompleted = false;
 let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLastSave;
 let inputHandler = null;
-let cnv, hudDrawer, pageDrawer;
+let cnv, hudDrawer;
 let rooms;
 
 let openDoorImg, closedDoorImg;

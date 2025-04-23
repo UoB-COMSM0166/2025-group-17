@@ -74,7 +74,7 @@ class PageDrawer {
   }
 
   setupPauseMenu() {
-    let pauseBtnSize = 40;
+    let pauseBtnSize = width / 16;
     this.btnPause = createImg('assets/buttons/Pause.png', 'Click to pause');
     this.btnPause.size(pauseBtnSize, pauseBtnSize);
     this.btnPause.position(windowWidth / 2 + width / 2 - this.btnPause.width, windowHeight / 2 - height / 2);
@@ -102,9 +102,10 @@ class PageDrawer {
   }
 
   drawPauseMenu() {
-    this.#drawMainMsg("Paused");
-    this.#repositionButton(this.btnResume, -1.1);
-    this.#repositionButton(this.btnExit, 1.1);
+    image(pauseMenuImg, 0, 0, widthInPixel, heightInPixel);
+    // Reposition the buttons to the top half of the canvas
+    this.#repositionButton(this.btnResume, -6.1);
+    this.#repositionButton(this.btnExit, -3.9);
     if (this.btnIndex !== null) this.pauseMenuBtns[this.btnIndex].class('blink');
   }
 
@@ -299,5 +300,15 @@ class PageDrawer {
 
   #isGameOver(playerObj) {
     return (this.#state !== "mainMenu") && playerObj.hp <= 0; 
+  }
+
+  resizeBtns() {
+    this.btnContinue.size(width / 6, AUTO);
+    this.btnNewGame.size(width / 6, AUTO);
+    this.btnResume.size(width / 6, AUTO);
+    this.btnExit.size(width / 6, AUTO);
+    this.btnLoadLastSave.size(width / 6, AUTO);
+    this.btnRestart.size(width / 6, AUTO);
+    this.btnPause.size(width / 20, AUTO);
   }
 }
