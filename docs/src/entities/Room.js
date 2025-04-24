@@ -132,7 +132,7 @@ class Room {
 
   generateChaser() {
     this.chasers = [];
-    this.chasers.push(new Chaser(400, 300));
+    this.chasers.push(new Chaser(600, 300));
   }
 
   generateShooter() {
