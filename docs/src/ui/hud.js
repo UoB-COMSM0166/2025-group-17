@@ -44,7 +44,7 @@ function drawCurrentLevel() {
   strokeWeight(5);
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
-  text(`Level: ${currentRoomIndex} / ${rooms.length - 5}`, hPadding, heightInPixel - vPadding);
+  text(`Level: ${currentRoomIndex} / ${rooms.length - 6}`, hPadding, heightInPixel - vPadding);
 }
 
 function drawBossStatus(bossObj) {

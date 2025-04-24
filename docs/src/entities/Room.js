@@ -254,8 +254,8 @@ class Room {
 
   generateTutorialObs(obsData) {
     let newObstacle;
-    const x = savePointParam.x + player.size.x + widthInPixel / 4;
-    const y = topBoundary + player.size.y + heightInPixel / 4;
+    const x = savePointParam.x + player.size.x + widthInPixel / 3 - 40;
+    const y = topBoundary + player.size.y + heightInPixel / 3 + 100;
     newObstacle = new Obstacle(x, y, obsData.img);
     this.obstacles.push(newObstacle);
   }
