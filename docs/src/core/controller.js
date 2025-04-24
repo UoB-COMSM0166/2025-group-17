@@ -27,7 +27,7 @@ function saveGameData() {
 function loadRoom() {
   currentRoomIndex++;
 
-  if (currentRoomIndex >= rooms.length) {
+  if (currentRoomIndex === 6) {
     isGameCompleted = true;
     console.log("Game Completed!");
     return;
@@ -51,15 +51,20 @@ function loadRoom() {
   if (currentRoomIndex === 1) {
     const randomRoomId = random([1, 2, 3, 4, 5, 6]);
     room.setup(rooms[randomRoomId]);
+    currentRoomIndex = 1;
   } else if (currentRoomIndex === 2) {
     room.setup(rooms[8]);
+    currentRoomIndex = 2;
   }
   else if (currentRoomIndex === 3) {
     room.setup(rooms[7]);
+    currentRoomIndex = 3;
   } else if (currentRoomIndex === 4) {
     room.setup(rooms[9]);
+    currentRoomIndex = 4;
   } else if (currentRoomIndex === 5) {
     room.setup(rooms[10]);
+    currentRoomIndex = 5;
   }
   
 }
