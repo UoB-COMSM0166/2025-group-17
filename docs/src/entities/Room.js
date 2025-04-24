@@ -144,25 +144,19 @@ class Room {
     this.chasers = [];
     this.shooters = [];
   
-    const minX = widthInPixel / 2 + 50; // 右半边稍微往内
-    const maxX = widthInPixel - 100;    // 留点边距
-    const minY = 150;
-    const maxY = heightInPixel - 150;
+    // Shooter 和 Chaser 的 sprite 高度是 heightInPixel / 4
+    const entitySize = heightInPixel / 4;
   
-    const randomPos = () => {
-      const x = random(minX, maxX);
-      const y = random(minY, maxY);
-      return { x, y };
-    };
+    // ✅ 固定 shooter 位置（画布中央偏右）
+    const shooterX = widthInPixel * 0.6;
+    const shooterY = heightInPixel * 0.5;
+    this.shooters.push(new Shooter(shooterX, shooterY));
   
-    let pos1 = randomPos();
-    let pos2 = randomPos();
-    let shooterPos = randomPos();
-  
-    this.chasers.push(new Chaser(pos1.x, pos1.y));
-    this.chasers.push(new Chaser(pos2.x, pos2.y));
-    this.shooters.push(new Shooter(shooterPos.x, shooterPos.y));
+    // ✅ 固定 chaser 位置（右上和右下）
+    this.chasers.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
+    this.chasers.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.7));
   }
+  
 
   updateEnemies() {
     this.enemies.forEach(e => {
@@ -180,14 +174,29 @@ class Room {
 
   updateChaser() {
     this.chasers = this.chasers.filter(c => c.hp > 0);
+  
+    // 添加互相推开逻辑
+    for (let i = 0; i < this.chasers.length; i++) {
+      for (let j = i + 1; j < this.chasers.length; j++) {
+        const c1 = this.chasers[i];
+        const c2 = this.chasers[j];
+        const dist = p5.Vector.dist(c1.position, c2.position);
+  
+        if (dist < 60) { // 设置最小间距
+          const repel = p5.Vector.sub(c1.position, c2.position).normalize().mult(1.5);
+          c1.position.add(repel);
+          c2.position.sub(repel);
+        }
+      }
+    }
+  
+    // 更新 + 子弹检测
     this.chasers.forEach(c => {
       c.update();
       c.detectBulletCollision(player.bullets);
-      //if (this.collisionDetector.detectCollision(player, c)) {
-       // inputHandler.decreasePlayerHp();
-      //}
     });
   }
+  
 
   updateShooter() {
     this.shooters = this.shooters.filter(s => s.hp > 0);
