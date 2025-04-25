@@ -36,7 +36,7 @@ class GameStateManager {
     this.#inputHandler.update(player);
     player.healByTime(timeSpent);
   
-    drawUiHud(player, this.#inputHandler.getCurrentRoomId());
+    drawUiHud(player, this.#inputHandler.getCurrentRoomData());
     checkSavePoint();
     this.#isGameCompleted = this.#inputHandler.isGameCompleted();
     if (this.#isGameCompleted === true) {

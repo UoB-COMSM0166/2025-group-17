@@ -3,6 +3,8 @@
        {
           "dataId": 0,
           "currentRoomId": 0,
+          "levelId": 0,
+          "roomNo": 0,
           "type": 0,
           "background": "assets/background/L1_TutorialRoom.png",
           "savePoint": {
@@ -29,6 +31,8 @@
        {
           "dataId": 1,
           "currentRoomId": 1,
+          "levelId": 1,
+          "roomNo": 1,
           "type": 0,
           "background": "assets/background/L1_dice1.png",
           "savePoint": {
@@ -90,6 +94,8 @@
        {
           "dataId": 2,
           "currentRoomId": 1,
+          "levelId": 1,
+          "roomNo": 1,
           "type": 0,
           "background": "assets/background/L1_dice2.png",
           "savePoint": {
@@ -151,6 +157,8 @@
        {
           "dataId": 3,
           "currentRoomId": 1,
+          "levelId": 1,
+          "roomNo": 1,
           "type": 0,
           "background": "assets/background/L1_dice3.png",
           "savePoint": {
@@ -212,6 +220,8 @@
        {
           "dataId": 4,
           "currentRoomId": 1,
+          "levelId": 1,
+          "roomNo": 1,
           "type": 0,
           "background": "assets/background/L1_dice4.png",
           "savePoint": {
@@ -273,6 +283,8 @@
        {
           "dataId": 5,
           "currentRoomId": 1,
+          "levelId": 1,
+          "roomNo": 1,
           "type": 0,
           "background": "assets/background/L1_dice5.png",
           "savePoint": {
@@ -334,6 +346,8 @@
        {
           "dataId": 6,
           "currentRoomId": 1,
+          "levelId": 1,
+          "roomNo": 1,
           "type": 0,
           "background": "assets/background/L1_dice6.png",
           "savePoint": {
@@ -395,6 +409,8 @@
        {
           "dataId": 7,
           "currentRoomId": 3,
+          "levelId": 2,
+          "roomNo": 1,
           "type": 0,
           "background": "assets/background/L2_room2.png",
           "savePoint": {
@@ -466,6 +482,8 @@
        {
          "dataId": 8,
          "currentRoomId": 2,
+         "levelId": 1,
+         "roomNo": 2,
          "type": 1,
          "background": "assets/background/L1_BossRoom.png",
          "savePoint": {
@@ -478,6 +496,8 @@
        {
          "dataId": 9,
          "currentRoomId": 4,
+         "levelId": 2,
+         "roomNo": 2,
          "type": 2,
          "background": "assets/background/L2_BossRoom.png",
          "savePoint": {
@@ -490,6 +510,8 @@
        {
           "dataId": 10,
           "currentRoomId": 5,
+          "levelId": 3,
+          "roomNo": 1,
           "type": 3,
           "background": "assets/background/L3_BossRoom.png",
           "savePoint": {

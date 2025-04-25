@@ -159,6 +159,7 @@ class InputHandler {
   }
 
   getCurrentRoomId() { return this.currentRoom.getCurrentRoomId(); }
+  getCurrentRoomData() { return this.currentRoom.getCurrentRoomData(); }
 
   isGameCompleted() {
     console.log(`Current room: ${this.currentRoom.getCurrentRoomId()}`);

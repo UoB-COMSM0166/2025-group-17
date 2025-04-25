@@ -17,9 +17,9 @@ function adjustCanvasWithAspectRatio() {
   scale(cnvWidth / widthInPixel, cnvHeight / heightInPixel);
 }
 
-function drawUiHud(playerObj, currentRoomId) {
+function drawUiHud(playerObj, currentRoomData) {
   drawHealthBar(playerObj);
-  drawCurrentLevel(currentRoomId);
+  drawCurrentLevel(currentRoomData);
   timeSpent = millis() - startTime;
   drawTimer(timeSpent);
 }
@@ -38,13 +38,13 @@ function drawHealthBar(playerObj) {
   }
 }
 
-function drawCurrentLevel(currentRoomId) {
+function drawCurrentLevel(currentRoomData) {
   fill(255);
   stroke(0);
   strokeWeight(5);
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
-  text(`Level: ${currentRoomId} / ${rooms.length - 6}`, hPadding, heightInPixel - vPadding);
+  text(`Level: ${currentRoomData.levelId} - ${currentRoomData.roomNo}`, hPadding, heightInPixel - vPadding);
 }
 
 function drawBossStatus(bossObj) {
