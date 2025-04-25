@@ -99,7 +99,7 @@ function setRoomImg() {
     }
     if (room.enemies) {
       room.enemies.forEach(enes => {
-        console.log(`Loading ${enes.image} into room ${room.id}`)
+        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
         enes.img = loadImage(enes.image);
         console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
       });

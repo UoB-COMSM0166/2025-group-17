@@ -62,7 +62,7 @@ class Room {
     const allEntities = [...this.obstacles, ...this.enemies, ...this.chasers, ...this.shooters, playerObj];
     allEntities.sort((a, b) => a.position.y - b.position.y);
     allEntities.forEach(entity => { entity.display(); });
-    if (this.#currentRoomData.id === 0 && this.enemies.length === 0) {
+    if (this.#currentRoomData.currentRoomId === 0 && this.enemies.length === 0) {
       const clearText = "Tutorial complete! Your HP and runtime will reset in the next room.";
       displayInstruction(clearText, this.clearTime);
     }
@@ -78,7 +78,6 @@ class Room {
       this.generateTutorialObs(obsData);
       return;
     }
-    console.log(currentRoomData.id);
     if (obstacleCount === 0) { // No obstacles in Boss level
       return;
     }
@@ -236,7 +235,7 @@ class Room {
   }
 
   setEnemyCount(currentRoomData) {
-    if (currentRoomData.id === 0) {
+    if (currentRoomData.currentRoomId === 0) {
       enemyCount = 1;
     } else {
       enemyCount = 4;
@@ -244,7 +243,7 @@ class Room {
   }
 
   setObstacleCount(currentRoomData) {
-    if (currentRoomData.id === 0) {
+    if (currentRoomData.currentRoomId === 0) {
       obstacleCount = 1;
       return;
     } 
