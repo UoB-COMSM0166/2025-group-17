@@ -73,7 +73,6 @@ class PageDrawer {
 
   #playStartScene() {
     console.log("Load start scene..");
-    this.gameStateManager?.stopBGM?.();
     this.#scenePlayer.setScene("start");
     this.#state = "startScene";
   }
@@ -132,9 +131,9 @@ class PageDrawer {
     if (this.btnIndex !== null) this.gameOverBtns[this.btnIndex].class('blink');
   }
 
-  setInGameState() {
-    this.#state = "inGame";
-  }
+  getGameState() { return this.#state; }
+  setInGameState() { this.#state = "inGame"; }
+  setCompletedState() { this.#state = "completed"; }
 
   drawGameCompleted(totalTime) {
     clear();
@@ -194,7 +193,7 @@ class PageDrawer {
     if (this.#isScenePage()) this.#scenePlayer.draw();
     if (this.#state === "mainMenu") this.drawMainMenu();
     if (this.#state === "paused") this.drawPauseMenu();
-    if (isGameCompleted && !this.#isScenePage()) this.drawGameCompleted(timeSpent);
+    if (this.#state === "completed" && !this.#isScenePage()) this.drawGameCompleted(timeSpent); 
     if (this.#isGameOver(playerObj)) this.drawGameOverPage();
   }
 
@@ -203,7 +202,7 @@ class PageDrawer {
   }
 
   shouldRenderMenu(playerObj) {
-    return this.#state === "mainMenu" || this.#state === "paused" || isGameCompleted || this.#isGameOver(playerObj) || this.#isScenePage();
+    return this.#state === "mainMenu" || this.#state === "paused" || this.#state === "completed" || this.#isGameOver(playerObj) || this.#isScenePage();
   }
 
   updatePauseBtnPosition() {
@@ -214,7 +213,7 @@ class PageDrawer {
 
   handleBtnPressed(playerObj) {
     this.#returnToPrevPage(playerObj);
-    if (isGameCompleted || this.#isScenePage()) this.#handleSceneProgress();
+    if (this.#state === "completed" || this.#isScenePage()) this.#handleSceneProgress();
     else if (this.#state === "mainMenu") {
       this.#controlBtnsByKeys(this.mainMenuBtns, ['LOAD_GAME', 'START_NEW_GAME']);
     } else if (this.#isGameOver(playerObj)) {
@@ -227,7 +226,7 @@ class PageDrawer {
   #handleSceneProgress() {
     if (!keyIsDown(ENTER) && !keyIsDown(ESCAPE)) return;
     if (this.#isScenePage()) this.#playNextStoryLine();
-    else if (isGameCompleted && keyIsDown(ENTER)) this.#transitionToEndScene();
+    else if (this.#state === "completed" && keyIsDown(ENTER)) this.#transitionToEndScene();
   }
 
   #playNextStoryLine() {
@@ -240,9 +239,6 @@ class PageDrawer {
         this.#state = "inGame";
         startTime = millis();
         this.btnPause.show();
-        // 剧情播放完毕后：允许播放 BGM 并调用播放函数
-        this.gameStateManager.delayBGM = false;
-        this.gameStateManager.playBGMForRoom(currentRoomIndex);
         break;
       case "endScene":
         this.eventBus.publish("EXIT_TO_MAIN_MENU");
@@ -262,7 +258,7 @@ class PageDrawer {
     if (this.#state === "mainMenu" || this.#isScenePage()) return;
 
     this.btnIndex = 0;
-    if (isGameCompleted || this.#isGameOver(playerObj)) {
+    if (this.#state === "completed" || this.#isGameOver(playerObj)) {
       this.eventBus.publish('EXIT_TO_MAIN_MENU');
       return;
     }

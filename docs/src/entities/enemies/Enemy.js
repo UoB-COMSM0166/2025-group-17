@@ -3,15 +3,18 @@ class Enemy {
     this.hp = hp;
     this.position = createVector(x, y);
 
-    const enemyWidth = (hp === smallEnemyHp) ? heightInPixel / 14 : heightInPixel / 12;
-    const enemyHeight = enemyWidth * (enImage.height / enImage.width);
+    const enemyWidth = (hp === smallEnemyHp) ? heightInPixel / 16 : heightInPixel / 12;
+    const enemyHeight = Math.floor(enemyWidth * (enImage.height / enImage.width));
     this.size = createVector(enemyWidth, enemyHeight);
+    console.log(`Enemy image size ${enImage.width}, ${enImage.height}`);
+    console.log(`Enemy size ${this.size.x}, ${this.size.y}`);
     
     this.velocity = createVector(random([-1, 1]), random([-1, 1]));
     this.image = enImage;
 
     // 添加动画帧相关
     this.frames = window.enemyFrames || [enImage]; // 确保不报错
+    console.log(`Enemy sprite size ${this.frames[0].width}, ${this.frames[0].height}`);
     this.currentFrame = 0;
     this.frameCounter = 0;
     this.frameDelay = 10; // 控制播放速度，越大越慢

@@ -1,4 +1,6 @@
 class Room {
+  #currentRoomData;
+  
   constructor() {
     this.savePoint = null;
     this.door = null;
@@ -7,7 +9,7 @@ class Room {
     this.shooters = [];
     this.obstacles = [];
 
-    this.currentRoomData = null;
+    this.#currentRoomData = null;
     this.backgroundImg = null;
     this.clearTime = null;
     this.size = {
@@ -23,24 +25,26 @@ class Room {
     this.shooters = [];
     this.obstacles = [];
     this.clearTime = null;
-    this.currentRoomData = roomData; // Store room data
-    this.generateObstacles(this.currentRoomData);
-    this.generateEnemies(this.currentRoomData);
+    this.#currentRoomData = roomData; // Store room data
+    this.generateObstacles(this.#currentRoomData);
+    this.generateEnemies(this.#currentRoomData);
     this.backgroundImg = roomData.backgroundImg;
     this.door = new Door();
     this.door.close();
     this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
-    this.setGameTime(currentRoomIndex);
-    gameStateManager?.playBGMForRoom?.(currentRoomIndex); // 进入房间后自动播放对应 BGM
+    this.#setGameTime(this.#currentRoomData.currentRoomId);
   }
+
+  getRoomDataId() { return this.#currentRoomData.dataId; }
+  getCurrentRoomId() { return this.#currentRoomData.currentRoomId; }
 
   update() {
     // Treat three types of rooms separately
-    if (this.currentRoomData.type === 1) {
+    if (this.#currentRoomData.type === 1) {
       this.updateChaser();
-    } else if (this.currentRoomData.type === 2) {
+    } else if (this.#currentRoomData.type === 2) {
       this.updateShooter();
-    } else if (this.currentRoomData.type === 3) {
+    } else if (this.#currentRoomData.type === 3) {
       this.updateChaser();
       this.updateShooter();
       this.resolveBossCollision(); // Add physical barriers between monsters
@@ -58,7 +62,7 @@ class Room {
     const allEntities = [...this.obstacles, ...this.enemies, ...this.chasers, ...this.shooters, playerObj];
     allEntities.sort((a, b) => a.position.y - b.position.y);
     allEntities.forEach(entity => { entity.display(); });
-    if (this.currentRoomData.id === 0 && this.enemies.length === 0) {
+    if (this.#currentRoomData.id === 0 && this.enemies.length === 0) {
       const clearText = "Tutorial complete! Your HP and runtime will reset in the next room.";
       displayInstruction(clearText, this.clearTime);
     }
@@ -120,9 +124,11 @@ class Room {
     
     for(let i = 0; i < currentRoomData.enemies.length; i++) {
       let newEnemy;
+      let hp = random([smallEnemyHp, largeEnemyHp]);
       do {
         const enemiesData = currentRoomData.enemies[i];
-      let hp = random([smallEnemyHp, largeEnemyHp]);
+      console.log(`Generating an enemy with HP: ${hp}`);
+      console.log(`Generating an enemy with img: ${enemiesData.img.width},  ${enemiesData.img.height}`);
       newEnemy = new Enemy(enemiesData.x, enemiesData.y, hp, enemiesData.img);
       } while (this.collisionDetector.detectCollision(player, newEnemy));
       
@@ -183,9 +189,6 @@ class Room {
     this.chasers.forEach(c => {
       c.update();
       c.detectBulletCollision(player.bullets);
-      //if (this.collisionDetector.detectCollision(player, c)) {
-       // inputHandler.decreasePlayerHp();
-      //}
     });
   }
 
@@ -260,13 +263,9 @@ class Room {
     this.obstacles.push(newObstacle);
   }
 
-  setGameTime(currentRoomIndex) {
-    if (currentRoomIndex === 0) {
-      startTime = millis();
-    }
-    if (currentRoomIndex === 1) {
-      startTime = millis();
-    }
+  #setGameTime(currentRoomId) {
+    if (currentRoomId === 0) startTime = millis();
+    if (currentRoomId === 1) startTime = millis();
   }
 
 }

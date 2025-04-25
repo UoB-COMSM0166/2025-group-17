@@ -1,19 +1,22 @@
 class GameStateManager {
+  #inputHandler;
+  #isGameCompleted;
+
   // Manage which page and buttons to draw
-  constructor(eventBus, pageDrawer) {
+  constructor(eventBus, pageDrawer, inputHandler) {
     this.pageDrawer = pageDrawer;
+    this.#inputHandler = inputHandler;
     this.pauseTime = null;
+    this.#isGameCompleted = false;
 
     // 当前BGM引用 + 滤波器
     this.currentBGM = null;
     this.filter = new p5.LowPass();
 
-    this.delayBGM = false; // 控制是否延迟播放房间 BGM（用于剧情未播完时）
-
     // room index -> BGM 映射（可多个 index 共用）
     this.roomBGMs = {
       0: L1_OfficeSound,
-      1: L1_OfficeSound,
+      1: L3_PsychoSound,
       2: L1_OfficeSound,
       3: L1_OfficeSound,
       4: L3_PsychoSound,
@@ -27,10 +30,42 @@ class GameStateManager {
     eventBus.subscribe('PAUSE_GAME', () => this.pauseGame());
   }
 
+  update() {
+    this.playBGMForRoom(this.#inputHandler.getCurrentRoomId());
+    this.pageDrawer.updatePauseBtnPosition();
+    this.#inputHandler.update(player);
+    player.healByTime(timeSpent);
+  
+    drawUiHud(player, this.#inputHandler.getCurrentRoomId());
+    checkSavePoint();
+    this.#isGameCompleted = this.#inputHandler.isGameCompleted();
+    if (this.#isGameCompleted === true) {
+      this.pageDrawer.setCompletedState();
+      this.stopBGM();
+    }
+  }
+
+  handlePlayerShooting() {
+    this.pageDrawer.handleBtnPressed(player);
+    if (!this.pageDrawer.shouldRenderMenu(player)) {
+      this.#inputHandler.handlePlayerShooting(player);
+    }
+  }
+
+  shouldRenderMenu() {
+    if (this.pageDrawer.shouldRenderMenu(player)) {
+      this.pageDrawer.renderMenu(player, timeSpent);
+      return true;
+    }
+    return false;
+  }
+
   loadGameData() {
-    const savedRoomIndex = localStorage.getItem('currentRoomIndex');
-    if (savedRoomIndex) currentRoomIndex = parseInt(savedRoomIndex);
-    room.setup(rooms[currentRoomIndex]);
+    const savedRoomDataId = localStorage.getItem('currentRoomDataId');
+    if (savedRoomDataId) {
+      this.pageDrawer.setInGameState();
+      this.#setupRoom(parseInt(savedRoomDataId));
+    }
 
     const savedXData = localStorage.getItem('lastSavePointX');
     const savedYData = localStorage.getItem('lastSavePointY');
@@ -48,16 +83,12 @@ class GameStateManager {
     player.position.y = savedPosition.position.y;
     player.hp = JSON.parse(savedPlayerHp);
     startTime = millis() - JSON.parse(savedTimeSpent);
-    inputHandler.lastLoadTime = millis();
+    this.#inputHandler.lastLoadTime = millis();
     player.resetInvincibleTimer();
     console.log("Game Loaded!");
 
     this.pageDrawer.toggleStartButtons();
-    this.pageDrawer.setInGameState();
     this.pageDrawer.toggleGameOverButtons();
-
-    this.delayBGM = false; // 直接进入游戏，播放 BGM
-    this.playBGMForRoom(currentRoomIndex);
   }
 
   startNewGame() {
@@ -66,18 +97,13 @@ class GameStateManager {
     this.pageDrawer.toggleResumeButtons();
     this.pageDrawer.toggleStartButtons();
     this.pageDrawer.toggleGameOverButtons();
-
-    this.delayBGM = true; // 延迟播放，等待剧情结束时再调用 playBGMForRoom()
     this.stopBGM(); // 确保此时停止任何主菜单 BGM
   }
 
   #resetGame() {
-    isGameCompleted = false;
-    currentRoomIndex = 0;
-
     player = new Player(playerX, playerY);
-    room.setup(rooms[currentRoomIndex]); // reset to the initial room
-    inputHandler = new InputHandler(room);
+    this.#setupRoom(0); // reset to the initial room from first room in JSON data
+    this.#inputHandler = new InputHandler(room);
     console.log("Game is reset!");
   }
 
@@ -110,22 +136,18 @@ class GameStateManager {
       this.currentBGM.disconnect();
       this.currentBGM.connect(); // reconnect to master output
     }
-
-    // 恢复房间 BGM（主菜单音乐如果还在播要被切掉）
-    this.delayBGM = false;
-    this.playBGMForRoom(currentRoomIndex);
   }
 
   exitToMainMenu() {
     console.log("Exit to the main menu!");
-    isGameCompleted = false;
     this.pageDrawer.drawMainMenu();
     this.pageDrawer.showStartButtons();
     this.pageDrawer.toggleGameOverButtons();
 
-    this.delayBGM = false;
     this.playBGM(mainmenuSound); // 返回主菜单播放主界面音乐
   }
+
+  playMainmenuSound() { this.playBGM(mainmenuSound); }
 
   playBGM(sound) {
     try {
@@ -147,7 +169,9 @@ class GameStateManager {
   }
 
   playBGMForRoom(index) {
-    if (this.delayBGM) return; // 如果还在剧情，就不播放音乐
+    console.log(this.pageDrawer.getGameState());
+    const currentPageState = this.pageDrawer.getGameState();
+    if (currentPageState !== "inGame") return; // 如果还在剧情，就不播放音乐
     const nextBGM = this.roomBGMs[index];
   
     if (this.currentBGM === nextBGM && this.currentBGM?.isPlaying()) return;
@@ -163,13 +187,18 @@ class GameStateManager {
       this.currentBGM.play();
     }
   }
-  
 
   stopBGM() {
     if (this.currentBGM && this.currentBGM.isPlaying()) {
       this.currentBGM.stop();
       this.currentBGM = null;
     }
+  }
+
+  // Set up room and play BGM
+  #setupRoom(roomDataId) {
+    room.setup(rooms[roomDataId]);
+    this.playBGMForRoom(room.getCurrentRoomId());
   }
 
   resizeBtns() { this.pageDrawer.resizeBtns(); }
