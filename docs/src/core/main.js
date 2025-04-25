@@ -20,21 +20,18 @@ function setup() {
 
   const eventBus = new EventBus();
 
-  // 初始化 pageDrawer
-  const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds);
-
   //  初始化 gameStateManager，并 setPageDrawer
-  gameStateManager = new GameStateManager(eventBus, pageDrawer);
+  room = new Room();
+  let inputHandler = new InputHandler(room);
+  const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds);
+  gameStateManager = new GameStateManager(eventBus, pageDrawer, inputHandler);
   pageDrawer.setGameStateManager(gameStateManager);
   pageDrawer.setupMainMenu();
   pageDrawer.setupPauseMenu();
   pageDrawer.setupGameOverPage();
+  gameStateManager.playMainmenuSound();
 
   player = new Player(playerX, playerY);
-
-  room = new Room();
-  room.setup(rooms[currentRoomIndex]);
-  inputHandler = new InputHandler(room);
 
   // Extract all animation frames
   window.bossFrames = [];
@@ -63,10 +60,7 @@ function draw() {
   adjustCanvasWithAspectRatio();
   background(220);
   player.updateBlinking();
-  if (gameStateManager.pageDrawer.shouldRenderMenu(player)) {
-    return gameStateManager.pageDrawer.renderMenu(player, timeSpent);
-  }
-  updateGameState();
+  if (!gameStateManager.shouldRenderMenu()) gameStateManager.update();
   // drawDebugCollisionBoxes(); // 这里是用于碰撞测试
 }
 
@@ -90,24 +84,12 @@ function drawDebugCollisionBoxes() {
   }
 }
 
-function updateGameState() {
-  gameStateManager.pageDrawer.updatePauseBtnPosition();
-  inputHandler.update(player);
-  player.healByTime(timeSpent);
-
-  drawUiHub(player, startTime, currentRoomIndex);
-  checkSavePoint();
-}
-
 function keyPressed() {
-  gameStateManager.pageDrawer.handleBtnPressed(player);
-  if (!gameStateManager.pageDrawer.shouldRenderMenu(player)) {
-    inputHandler.handlePlayerShooting(player);
-  }
+  gameStateManager.handlePlayerShooting();
 }
 
 function setRoomImg() {
-  rooms = rawData.rooms;
+  rooms = rawRoomData.rooms;
   rooms.forEach(room => {
     room.backgroundImg = loadImage(room.background);
     if (room.obstacles) {
@@ -117,7 +99,9 @@ function setRoomImg() {
     }
     if (room.enemies) {
       room.enemies.forEach(enes => {
+        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
         enes.img = loadImage(enes.image);
+        console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
       });
     }
   });

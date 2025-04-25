@@ -17,34 +17,34 @@ function adjustCanvasWithAspectRatio() {
   scale(cnvWidth / widthInPixel, cnvHeight / heightInPixel);
 }
 
-function drawUiHub() {
-  drawHealthBar();
-  drawCurrentLevel();
+function drawUiHud(playerObj, currentRoomId) {
+  drawHealthBar(playerObj);
+  drawCurrentLevel(currentRoomId);
   timeSpent = millis() - startTime;
-  drawTimer();
+  drawTimer(timeSpent);
 }
 
-function drawHealthBar() {
+function drawHealthBar(playerObj) {
   const iconSize = 40;
   const iconPadding = 15;
   // Draw current HP
-  for (let h = 0; h < player.hp; h++) {
+  for (let h = 0; h < playerObj.hp; h++) {
     image(heartImg, hPadding + h * (iconSize + iconPadding), vPadding, iconSize, iconSize);
   }
 
   // Draw lost HP
-  for (let dh = 0; dh < player.maxHp - player.hp; dh++) {
-    image(damagedHeartImg, hPadding + (dh + player.hp) * (iconSize + iconPadding), vPadding, iconSize, iconSize);
+  for (let dh = 0; dh < playerObj.maxHp - playerObj.hp; dh++) {
+    image(damagedHeartImg, hPadding + (dh + playerObj.hp) * (iconSize + iconPadding), vPadding, iconSize, iconSize);
   }
 }
 
-function drawCurrentLevel() {
+function drawCurrentLevel(currentRoomId) {
   fill(255);
   stroke(0);
   strokeWeight(5);
   textFont(uiFont, uiTextSize);
   textAlign(LEFT, BOTTOM);
-  text(`Level: ${currentRoomIndex} / ${rooms.length - 6}`, hPadding, heightInPixel - vPadding);
+  text(`Level: ${currentRoomId} / ${rooms.length - 6}`, hPadding, heightInPixel - vPadding);
 }
 
 function drawBossStatus(bossObj) {
@@ -84,7 +84,7 @@ function drawBossStatus(bossObj) {
   image(bossHpBarImg, positionX, vPadding);
 }
 
-function drawTimer() {
+function drawTimer(timeSpent) {
   let totalSecs = floor(timeSpent / 1000);
   let mins = floor(totalSecs/60);
   let secs = totalSecs % 60;

@@ -1,11 +1,4 @@
-// // TODO: Merge into classes
-
-let lastCollisionTime = 0;
-
-let firstBtnToggled = false;
-let isGameCompleted = false;
-let btnPause, btnResume, btnExit, btnContinue, btnNewGame, btnRestart, btnLoadLastSave;
-let inputHandler = null;
+// TODO: Merge into classes
 let cnv;
 let rooms;
 
@@ -13,8 +6,6 @@ let openDoorImg, closedDoorImg;
 
 let startTime;
 let timeSpent = 0;
-
-let currentRoomIndex = 0;
 
 const uiTextSize = 20;
 const hPadding = 50;
@@ -26,7 +17,7 @@ let minDistanceToSave = 50;
 //Player properties
 const enemySize = 20;
 const shootSize = 25;
-const smallEnemyHp = 100;
+const smallEnemyHp = 50;
 const largeEnemyHp = 100;
 const largeEnemySize = { w: 50, h: 60 };
 const defaultAcceleration = 5.0;

@@ -1,7 +1,8 @@
 class Chaser {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.size = createVector(heightInPixel / 4, heightInPixel / 4);
+    //this.size = createVector(heightInPixel / 4, heightInPixel / 4);
+    this.size = createVector(heightInPixel / 4, (heightInPixel / 4) * 2 / 3);
     this.maxHp = 800;
     this.hp = this.maxHp;
     this.isHurt = false;

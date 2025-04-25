@@ -40,7 +40,7 @@ function preload() {
 
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
-  rawData = loadJSON("assets/rooms.json");
+  rawRoomData = loadJSON("assets/rooms.json");
 
   // Use a callback to make sure we don't access data before loaded
   sceneData = loadJSON("assets/scenes/scene.json", preloadScenes);

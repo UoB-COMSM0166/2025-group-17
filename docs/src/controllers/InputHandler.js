@@ -117,8 +117,66 @@ class InputHandler {
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
       this.lastLoadTime = millis();
-      loadRoom();
+      this.#loadRoom();
       playerObj.resetInvincibleTimer();
     }
+  }
+
+  #loadRoom() {
+    if (this.isGameCompleted()) {
+      console.log("Game Completed!");
+      return;
+    }
+    // Keep play hp (need or not)
+    // TODO: 在player类中设置resetStatus函数，在除了宝箱房外的房间内调用
+    // Reset status of player (keep HP)
+    // player.resetStatus()
+    const prevHp = player.hp;
+  
+    // 如果 nextRoomId 是 1，不继承血量
+    const nextRoomId = this.currentRoom.getCurrentRoomId() + 1;
+    if (nextRoomId === 1) {
+      player = new Player(playerX, playerY);
+    } else {
+      player = new Player(playerX, playerY);
+      player.hp = prevHp; // 继承血量
+    }
+  
+    // Load room
+    if (nextRoomId === 1) {
+      const randomRoomId = random([1, 2, 3, 4, 5, 6]);
+      room.setup(rooms[randomRoomId]);
+    } else if (nextRoomId === 2) {
+      room.setup(rooms[8]);
+    }
+    else if (nextRoomId === 3) {
+      room.setup(rooms[7]);
+    } else if (nextRoomId === 4) {
+      room.setup(rooms[9]);
+    } else if (nextRoomId === 5) {
+      room.setup(rooms[10]);
+    }
+  }
+
+  getCurrentRoomId() { return this.currentRoom.getCurrentRoomId(); }
+
+  isGameCompleted() {
+    console.log(`Current room: ${this.currentRoom.getCurrentRoomId()}`);
+    const maxCurrentRoomId = this.#getMaxCurrentRoomId(rawRoomData);
+    
+    if (this.currentRoom.getCurrentRoomId() >= maxCurrentRoomId && this.currentRoom.checkClearCondition()) {
+      return true;
+    }
+    return false;
+  }
+
+  #getMaxCurrentRoomId(roomData) {
+    let maxRoomId = -Infinity;
+    for (const room of roomData.rooms) {
+        if (room.currentRoomId > maxRoomId) {
+            maxRoomId = room.currentRoomId;
+        }
+    }
+    return maxRoomId;
   }
 }
