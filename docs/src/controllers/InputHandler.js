@@ -146,15 +146,21 @@ class InputHandler {
     if (nextRoomId === 1) {
       const randomRoomId = random([1, 2, 3, 4, 5, 6]);
       room.setup(rooms[randomRoomId]);
-    } else if (nextRoomId === 2) {
-      room.setup(rooms[8]);
+    } 
+    else if (nextRoomId === 2) {
+      room.setup(rooms[7]);
     }
     else if (nextRoomId === 3) {
-      room.setup(rooms[7]);
-    } else if (nextRoomId === 4) {
+      room.setup(rooms[8]);
+    }
+    else if (nextRoomId === 4) {
       room.setup(rooms[9]);
     } else if (nextRoomId === 5) {
       room.setup(rooms[10]);
+    } else if (nextRoomId === 6) {
+      room.setup(rooms[11]);
+    } else if (nextRoomId === 7) {
+      room.setup(rooms[12]);
     }
   }
 
