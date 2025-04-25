@@ -38,6 +38,8 @@ class Bullet {
 
   markAsHit() {
     this.isHit = true;
+    // Reset the damage to zero to omit further damage to bosses
+    this.damage = 0;
   }
 
   // Let the bullet lasts for 30 frames

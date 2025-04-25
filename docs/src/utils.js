@@ -19,14 +19,10 @@ const enemySize = 20;
 const shootSize = 25;
 const smallEnemyHp = 50;
 const largeEnemyHp = 100;
-const largeEnemySize = { w: 50, h: 60 };
 const defaultAcceleration = 5.0;
-const defaultFriction = 0.85;
 let shootCooldown = 0;
 
 let player;
-let enemyCount = 4;
-let obstacleCount = 5;
 let enemies = [], obstacles = [];
 
 //load images of obstacles, player, bullet, and enemy
@@ -36,11 +32,6 @@ let bulletImage;
 let enemyImage;
 let savePointImg;
 const doorSize = { w: 73, h: 95 };
-
-const defaultSpeed = 3;
-const defaultAtk = 50;
-const playerMaxSpeed = 15;
-const playerMaxAtk = 20;
 
 const widthInPixel = 1024;
 const heightInPixel = 576;

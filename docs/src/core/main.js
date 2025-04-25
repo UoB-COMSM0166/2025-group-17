@@ -16,16 +16,14 @@ function setup() {
   }
 
   cnv = createCanvas(windowWidth, windowHeight);
-  setRoomImg();
 
   const eventBus = new EventBus();
 
-  //  初始化 gameStateManager，并 setPageDrawer
+  // Instantiate all classes
   room = new Room();
   let inputHandler = new InputHandler(room);
   const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds);
   gameStateManager = new GameStateManager(eventBus, pageDrawer, inputHandler);
-  pageDrawer.setGameStateManager(gameStateManager);
   pageDrawer.setupMainMenu();
   pageDrawer.setupPauseMenu();
   pageDrawer.setupGameOverPage();
@@ -86,23 +84,4 @@ function drawDebugCollisionBoxes() {
 
 function keyPressed() {
   gameStateManager.handlePlayerShooting();
-}
-
-function setRoomImg() {
-  rooms = rawRoomData.rooms;
-  rooms.forEach(room => {
-    room.backgroundImg = loadImage(room.background);
-    if (room.obstacles) {
-      room.obstacles.forEach(obs => {
-        obs.img = loadImage(obs.image);
-      });
-    }
-    if (room.enemies) {
-      room.enemies.forEach(enes => {
-        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
-        enes.img = loadImage(enes.image);
-        console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
-      });
-    }
-  });
 }

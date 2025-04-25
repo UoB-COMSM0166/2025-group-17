@@ -3,13 +3,13 @@ class Player {
     this.position = createVector(x, y);
     this.maxHp = 5;
     this.hp = this.maxHp;
-    this.speed = defaultSpeed;
-    this.maxSpeed = playerMaxSpeed;
+    this.speed = 3;
+    this.maxSpeed = 15;
     this.acceleration = defaultAcceleration;
-    this.friction = defaultFriction;
+    this.friction = 0.85;
     this.velocity = createVector(0, 0);
-    this.atk = defaultAtk;
-    this.maxAtk = playerMaxAtk;
+    this.atk = 50;
+    // this.maxAtk = 100;
 
     // 判定框尺寸（红框用来检测碰撞）！！！
     this.size = createVector(36, 52);  // ← 可调整碰撞判定大小（原本是 heightInPixel / 7）

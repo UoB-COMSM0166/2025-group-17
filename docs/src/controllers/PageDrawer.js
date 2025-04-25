@@ -4,7 +4,6 @@ class PageDrawer {
   constructor(eventBus, sceneData, sceneImgs, sceneSounds) {
     this.btnIndex = 0;
     this.eventBus = eventBus;
-    this.gameStateManager = null; // 外部注入
 
     // Buttons for the main menu
     this.btnContinue = null;
@@ -23,10 +22,6 @@ class PageDrawer {
     this.gameOverBtns = [];
 
     this.#scenePlayer = new ScenePlayer(sceneData, sceneImgs, sceneSounds);
-  }
-
-  setGameStateManager(gsm) {
-    this.gameStateManager = gsm;
   }
 
   createMenuButton(imgPath, label, yOffset, callback, hidden = false) {

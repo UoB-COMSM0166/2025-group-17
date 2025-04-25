@@ -120,15 +120,25 @@ class Shooter {
     }
   }
 
-  detectBulletCollision(bullets) {
-    bullets.forEach((bullet, index) => {
-      if (this.checkBulletCollision(bullet)) {
-        this.takeDamage(bullet.damage);
-        this.isHurt = true;
-        bullets.splice(index, 1);
-      }
-    });
-  }
+  // detectBulletCollision(bullets) {
+  //   bullets.forEach((bullet, index) => {
+  //     if (this.checkBulletCollision(bullet)) {
+  //       this.takeDamage(bullet.damage);
+  //       this.isHurt = true;
+  //       bullets.splice(index, 1);
+  //     }
+  //   });
+  // }
+
+    detectBulletCollision(bulletArr) {
+      bulletArr.forEach((bulletObj, bulletIndex) => {
+        if (this.checkBulletCollision(bulletObj)) {
+          this.takeDamage(bulletObj.damage);
+          this.isHurt = true;
+          bulletArr[bulletIndex].markAsHit();
+        }
+      });
+    }
 
   checkBulletCollision(bullet) {
     return (

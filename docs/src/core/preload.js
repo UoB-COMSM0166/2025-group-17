@@ -40,10 +40,10 @@ function preload() {
 
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
-  rawRoomData = loadJSON("assets/rooms.json");
 
   // Use a callback to make sure we don't access data before loaded
   sceneData = loadJSON("assets/scenes/scene.json", preloadScenes);
+  rawRoomData = loadJSON("assets/rooms.json", setRoomImg);
 
   // -------------------------------------------
   // 加载玩家角色四方向动画帧（每个方向5张）
@@ -88,4 +88,23 @@ function preloadScenes() {
       sceneSounds[line.sound.name] = loadSound(`${folder}/${line.sound.name}.mp3`);
     }
   }
+}
+
+function setRoomImg() {
+rooms = rawRoomData.rooms;
+rooms.forEach(room => {
+  room.backgroundImg = loadImage(room.background);
+  if (room.obstacles) {
+    room.obstacles.forEach(obs => {
+      obs.img = loadImage(obs.image);
+    });
+  }
+  if (room.enemies) {
+    room.enemies.forEach(enes => {
+      console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
+      enes.img = loadImage(enes.image);
+      console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
+    });
+  }
+});
 }

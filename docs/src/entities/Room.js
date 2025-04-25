@@ -1,5 +1,7 @@
 class Room {
   #currentRoomData;
+  #obstacleCount;
+  // #enemyCount;
   
   constructor() {
     this.savePoint = null;
@@ -8,6 +10,8 @@ class Room {
     this.chasers = [];
     this.shooters = [];
     this.obstacles = [];
+    this.#obstacleCount = 0;
+    // this.#enemyCount = 0;
 
     this.#currentRoomData = null;
     this.backgroundImg = null;
@@ -73,12 +77,12 @@ class Room {
   generateObstacles(currentRoomData) {
     this.obstacles = [];
     this.setObstacleCount(currentRoomData);
-    if (obstacleCount === 1) {
+    if (this.#obstacleCount === 1) {
       const obsData = currentRoomData.obstacles[0];
       this.generateTutorialObs(obsData);
       return;
     }
-    if (obstacleCount === 0) { // No obstacles in Boss level
+    if (this.#obstacleCount === 0) { // No obstacles in Boss level
       return;
     }
 
@@ -92,7 +96,7 @@ class Room {
       
     }
 
-    // for (let i = 0; i < obstacleCount; i++) {
+    // for (let i = 0; i < this.#obstacleCount; i++) {
     //   let newObstacle;
     //   do {
     //     const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
@@ -105,9 +109,9 @@ class Room {
 
   generateEnemies(currentRoomData) {
     this.enemies = [];
-    if (currentRoomData.type === 0) {
-      this.setEnemyCount(currentRoomData);
-    }
+    // if (currentRoomData.type === 0) {
+    //   this.setEnemyCount(currentRoomData);
+    // }
     
     // Specify different enemy generation logic by room ID
     if (currentRoomData.type === 1) {
@@ -246,23 +250,23 @@ class Room {
     }
   }
 
-  setEnemyCount(currentRoomData) {
-    if (currentRoomData.currentRoomId === 0) {
-      enemyCount = 1;
-    } else {
-      enemyCount = 4;
-    }
-  }
+  // setEnemyCount(currentRoomData) {
+  //   if (currentRoomData.currentRoomId === 0) {
+  //     this.#enemyCount = 1;
+  //   } else {
+  //     this.#enemyCount = 4;
+  //   }
+  // }
 
   setObstacleCount(currentRoomData) {
     if (currentRoomData.currentRoomId === 0) {
-      obstacleCount = 1;
+      this.#obstacleCount = 1;
       return;
     } 
     if (currentRoomData.type === 0) {
-      obstacleCount = 5;
+      this.#obstacleCount = 5;
     } else {
-      obstacleCount = 0;
+      this.#obstacleCount = 0;
     }
   }
 
