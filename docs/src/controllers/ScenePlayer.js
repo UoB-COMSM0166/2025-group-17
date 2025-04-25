@@ -16,8 +16,7 @@ class ScenePlayer {
   draw() {
     if (this.isSceneComplete()) return;
     const line = this.#currentScene[this.#currentIndex];
-    background("black");  
-    this.#drawTextIcon("↵");
+    background("black");
     
     if (this.#images[line.image]) {
       // Scale the clip based on canvas height
@@ -25,23 +24,6 @@ class ScenePlayer {
       const newWidth = heightInPixel * ratio;
       image(this.#images[line.image], (widthInPixel - newWidth) / 2, 0, newWidth, heightInPixel);
     }
-  }
-
-  #drawTextIcon(textContent) {
-    const iconSize = textWidth(textContent);
-    // Draw background
-    noFill();
-    stroke(255);
-    strokeWeight(2);
-    rectMode(CENTER);
-    rect(widthInPixel - iconSize, heightInPixel - iconSize, iconSize + 10, iconSize + 5, 5);
-    
-    // Draw the text
-    fill(0);
-    strokeWeight(4);
-    textFont("monospace", 30);
-    textAlign(CENTER, CENTER);
-    text(textContent, widthInPixel - iconSize, heightInPixel - iconSize);
   }
 
   isSceneComplete() {

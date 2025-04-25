@@ -1,27 +1,10 @@
-function adjustCanvasWithAspectRatio() {
-  let cnvHeight, cnvWidth;
-  // Calculate the max size that fits while keeping 16:9 aspect ratio
-  if (windowWidth / windowHeight > 16 / 9) {
-    cnvHeight = windowHeight;
-    cnvWidth = round((16 / 9) * windowHeight);
-  } else {
-    cnvWidth = windowWidth;
-    cnvHeight = round((9 / 16) * windowWidth);
-  }
-
-  resizeCanvas(cnvWidth, cnvHeight);
-  gameStateManager.resizeBtns();
-
-  // Centre the cnv
-  cnv.position((windowWidth - cnvWidth) / 2, (windowHeight - cnvHeight) / 2);
-  scale(cnvWidth / widthInPixel, cnvHeight / heightInPixel);
-}
-
 function drawUiHud(playerObj, currentRoomId) {
+  push();
   drawHealthBar(playerObj);
   drawCurrentLevel(currentRoomId);
   timeSpent = millis() - startTime;
   drawTimer(timeSpent);
+  pop();
 }
 
 function drawHealthBar(playerObj) {
@@ -47,7 +30,21 @@ function drawCurrentLevel(currentRoomId) {
   text(`Level: ${currentRoomId} / ${rooms.length - 6}`, hPadding, heightInPixel - vPadding);
 }
 
+function drawTimer(timeSpent) {
+  let totalSecs = floor(timeSpent / 1000);
+  let mins = floor(totalSecs/60);
+  let secs = totalSecs % 60;
+
+  fill(255);
+  stroke(0);
+  strokeWeight(5);
+  textFont(uiFont, uiTextSize);
+  textAlign(RIGHT, BOTTOM);
+  text(`Time Taken:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`, widthInPixel - hPadding, heightInPixel - vPadding);
+}
+
 function drawBossStatus(bossObj) {
+  push();
   const hpPercentage = bossObj.hp / bossObj.maxHp;
   const positionX = widthInPixel / 2 - bossHpBarImg.width / 2;
 
@@ -82,22 +79,12 @@ function drawBossStatus(bossObj) {
   noTint();
 
   image(bossHpBarImg, positionX, vPadding);
-}
-
-function drawTimer(timeSpent) {
-  let totalSecs = floor(timeSpent / 1000);
-  let mins = floor(totalSecs/60);
-  let secs = totalSecs % 60;
-
-  fill(255);
-  stroke(0);
-  strokeWeight(5);
-  textFont(uiFont, uiTextSize);
-  textAlign(RIGHT, BOTTOM);
-  text(`Time Taken:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`, widthInPixel - hPadding, heightInPixel - vPadding);
+  pop();
 }
 
 function displayInstruction(textContent, displayStartTime) {
+  push();
+  rectMode(CENTER);
   const alpha = calculateAlpha(displayStartTime);
   if (alpha === null) return;
   
@@ -105,6 +92,7 @@ function displayInstruction(textContent, displayStartTime) {
   drawDialogBox(alpha);
   drawHighlightEdges(alpha);
   drawInstructionText(textContent, alpha);
+  pop();
 }
 
 function calculateAlpha(displayStartTime) {

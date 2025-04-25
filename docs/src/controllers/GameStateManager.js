@@ -1,10 +1,11 @@
 class GameStateManager {
   #inputHandler;
   #isGameCompleted;
+  #pageDrawer;
 
   // Manage which page and buttons to draw
   constructor(eventBus, pageDrawer, inputHandler) {
-    this.pageDrawer = pageDrawer;
+    this.#pageDrawer = pageDrawer;
     this.#inputHandler = inputHandler;
     this.pauseTime = null;
     this.#isGameCompleted = false;
@@ -31,8 +32,10 @@ class GameStateManager {
   }
 
   update() {
+    this.#adjustCanvasWithAspectRatio();
+    if (this.#shouldRenderMenu()) return;
     this.playBGMForRoom(this.#inputHandler.getCurrentRoomId());
-    this.pageDrawer.updatePauseBtnPosition();
+    this.#pageDrawer.updatePauseBtnPosition();
     this.#inputHandler.update(player);
     player.healByTime(timeSpent);
   
@@ -40,21 +43,21 @@ class GameStateManager {
     checkSavePoint();
     this.#isGameCompleted = this.#inputHandler.isGameCompleted();
     if (this.#isGameCompleted === true) {
-      this.pageDrawer.setCompletedState();
+      this.#pageDrawer.setCompletedState();
       this.stopBGM();
     }
   }
 
   handlePlayerShooting() {
-    this.pageDrawer.handleBtnPressed(player);
-    if (!this.pageDrawer.shouldRenderMenu(player)) {
+    this.#pageDrawer.handleBtnPressed(player);
+    if (!this.#pageDrawer.shouldRenderMenu(player)) {
       this.#inputHandler.handlePlayerShooting(player);
     }
   }
 
-  shouldRenderMenu() {
-    if (this.pageDrawer.shouldRenderMenu(player)) {
-      this.pageDrawer.renderMenu(player, timeSpent);
+  #shouldRenderMenu() {
+    if (this.#pageDrawer.shouldRenderMenu(player)) {
+      this.#pageDrawer.renderMenu(player, timeSpent);
       return true;
     }
     return false;
@@ -63,7 +66,7 @@ class GameStateManager {
   loadGameData() {
     const savedRoomDataId = localStorage.getItem('currentRoomDataId');
     if (savedRoomDataId) {
-      this.pageDrawer.setInGameState();
+      this.#pageDrawer.setInGameState();
       this.#setupRoom(parseInt(savedRoomDataId));
     }
 
@@ -87,16 +90,16 @@ class GameStateManager {
     player.resetInvincibleTimer();
     console.log("Game Loaded!");
 
-    this.pageDrawer.toggleStartButtons();
-    this.pageDrawer.toggleGameOverButtons();
+    this.#pageDrawer.toggleStartButtons();
+    this.#pageDrawer.toggleGameOverButtons();
   }
 
   startNewGame() {
     console.log("New Game Start!");
     this.#resetGame();
-    this.pageDrawer.toggleResumeButtons();
-    this.pageDrawer.toggleStartButtons();
-    this.pageDrawer.toggleGameOverButtons();
+    this.#pageDrawer.toggleResumeButtons();
+    this.#pageDrawer.toggleStartButtons();
+    this.#pageDrawer.toggleGameOverButtons();
     this.stopBGM(); // 确保此时停止任何主菜单 BGM
   }
 
@@ -112,7 +115,7 @@ class GameStateManager {
     console.log("Game pause!");
 
     if (pauseSound) pauseSound.play();
-    this.pageDrawer.showResumeButtons();
+    this.#pageDrawer.showResumeButtons();
 
     // 添加滤波器（电话音效）
     if (this.currentBGM) {
@@ -126,8 +129,8 @@ class GameStateManager {
 
   resumeGame() {
     console.log("Game resume!");
-    this.pageDrawer.toggleResumeButtons();
-    this.pageDrawer.setInGameState();
+    this.#pageDrawer.toggleResumeButtons();
+    this.#pageDrawer.setInGameState();
     startTime += millis() - this.pauseTime;
 
     // 移除滤波器
@@ -140,9 +143,9 @@ class GameStateManager {
 
   exitToMainMenu() {
     console.log("Exit to the main menu!");
-    this.pageDrawer.drawMainMenu();
-    this.pageDrawer.showStartButtons();
-    this.pageDrawer.toggleGameOverButtons();
+    this.#pageDrawer.drawMainMenu();
+    this.#pageDrawer.showStartButtons();
+    this.#pageDrawer.toggleGameOverButtons();
 
     this.playBGM(mainmenuSound); // 返回主菜单播放主界面音乐
   }
@@ -169,8 +172,8 @@ class GameStateManager {
   }
 
   playBGMForRoom(index) {
-    console.log(this.pageDrawer.getGameState());
-    const currentPageState = this.pageDrawer.getGameState();
+    console.log(this.#pageDrawer.getGameState());
+    const currentPageState = this.#pageDrawer.getGameState();
     if (currentPageState !== "inGame") return; // 如果还在剧情，就不播放音乐
     const nextBGM = this.roomBGMs[index];
   
@@ -201,5 +204,24 @@ class GameStateManager {
     this.playBGMForRoom(room.getCurrentRoomId());
   }
 
-  resizeBtns() { this.pageDrawer.resizeBtns(); }
+  #adjustCanvasWithAspectRatio() {
+    let cnvHeight, cnvWidth;
+    // Calculate the max size that fits while keeping 16:9 aspect ratio
+    if (windowWidth / windowHeight > 16 / 9) {
+      cnvHeight = windowHeight;
+      cnvWidth = round((16 / 9) * windowHeight);
+    } else {
+      cnvWidth = windowWidth;
+      cnvHeight = round((9 / 16) * windowWidth);
+    }
+  
+    resizeCanvas(cnvWidth, cnvHeight);
+    this.#resizeBtns();
+  
+    // Centre the cnv
+    cnv.position((windowWidth - cnvWidth) / 2, (windowHeight - cnvHeight) / 2);
+    scale(cnvWidth / widthInPixel, cnvHeight / heightInPixel);
+  }
+
+  #resizeBtns() { this.#pageDrawer.resizeBtns(); }
 }

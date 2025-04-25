@@ -49,6 +49,13 @@ const savePointParam = { x: leftBoundary + 60, y: bottomBoundary - 80};
 const maxObstacleSize = heightInPixel / 12;
 const maxEntitySize = heightInPixel / 8;
 
-let sceneData;
+let sceneData, helpBarData;
 let sceneImgs = {};
 let sceneSounds = {};
+
+let bossSpriteSheet;
+let shooterSpriteSheet;
+let enemySpriteSheet;
+let mainmenuSound;
+let L1_OfficeSound;
+let L3_PsychoSound;

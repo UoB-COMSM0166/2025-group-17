@@ -1,7 +1,8 @@
 class PageDrawer {
   #scenePlayer;
+  #helpBar;
   #state = "mainMenu"; // "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
-  constructor(eventBus, sceneData, sceneImgs, sceneSounds) {
+  constructor(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData) {
     this.btnIndex = 0;
     this.eventBus = eventBus;
 
@@ -22,6 +23,7 @@ class PageDrawer {
     this.gameOverBtns = [];
 
     this.#scenePlayer = new ScenePlayer(sceneData, sceneImgs, sceneSounds);
+    this.#helpBar = new HelpBar(helpBarData);
   }
 
   createMenuButton(imgPath, label, yOffset, callback, hidden = false) {
@@ -35,16 +37,30 @@ class PageDrawer {
       callback();
       this.btnIndex = 0;
     });
-    btn.mouseOver(() => {
-      btn.class('blink');
-      // this.btnIndex = null;
-    });
+    btn.mouseOver(() => { this.#handleMouseOver(btn) });
     btn.mouseOut(() => {
       btn.removeClass('blink');
       this.btnIndex = 0;
     });
     if (hidden) btn.hide();
     return btn;
+  }
+
+  #handleMouseOver(btn) {
+    let btnArray;
+    if (this.mainMenuBtns.includes(btn)) {
+      btnArray = this.mainMenuBtns;
+    } else if (this.pauseMenuBtns.includes(btn)) {
+      btnArray = this.pauseMenuBtns;
+    } else if (this.gameOverBtns.includes(btn)) {
+      btnArray = this.gameOverBtns;
+    }
+    
+    if (btnArray) {
+      btnArray[this.btnIndex].removeClass('blink');
+      this.btnIndex = btnArray.indexOf(btn);
+      btn.class('blink');
+    }
   }
 
   #repositionButton(btn, yOffset) {
@@ -108,12 +124,15 @@ class PageDrawer {
   }
 
   #drawMainMsg(title) {
+    push();
     stroke(0);
     strokeWeight(5);
     textSize(32);
     textAlign(CENTER, CENTER);
     fill('#AFDDC9');
+    textFont(uiFont, uiTextSize);
     text(title, widthInPixel / 2, heightInPixel / 3);
+    pop();
   }
 
   drawGameOverPage() {
@@ -139,10 +158,6 @@ class PageDrawer {
     const mins = floor(totalSecs / 60);
     const secs = totalSecs % 60;
     this.#drawMainMsg(`YOU WON! Took ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} seconds`);
-
-    textSize(24);
-    text(`Press ENTER to enter the epilogue`, widthInPixel / 2, 2 * heightInPixel / 3);
-    text(`Press ESC to return`, widthInPixel / 2, 5 * heightInPixel / 6);
   }
 
   showStartButtons() {
@@ -185,11 +200,15 @@ class PageDrawer {
   }
 
   renderMenu(playerObj, timeSpent) {
+    if (!this.shouldRenderMenu(playerObj)) this.#helpBar.hide();
     if (this.#isScenePage()) this.#scenePlayer.draw();
     if (this.#state === "mainMenu") this.drawMainMenu();
     if (this.#state === "paused") this.drawPauseMenu();
     if (this.#state === "completed" && !this.#isScenePage()) this.drawGameCompleted(timeSpent); 
     if (this.#isGameOver(playerObj)) this.drawGameOverPage();
+
+    if (this.#isScenePage()) this.#helpBar.update("scene");
+    else this.#helpBar.update(this.#state, this.btnIndex);
   }
 
   #isScenePage() {
@@ -285,10 +304,16 @@ class PageDrawer {
     buttons[this.btnIndex].removeClass('blink');
     this.btnIndex = (this.btnIndex + direction + buttons.length) % buttons.length;
     buttons[this.btnIndex].class('blink');
+    this.#helpBar.updateText(this.#state, this.btnIndex);
   }
 
   #isGameOver(playerObj) {
-    return (this.#state !== "mainMenu") && playerObj.hp <= 0;
+    if (this.#state !== "mainMenu" && playerObj.hp <= 0) {
+      console.log("Game over..");
+      this.#state = "gameOver";
+      return true;
+    }
+    return false;
   }
 
   resizeBtns() {

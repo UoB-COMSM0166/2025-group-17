@@ -1,10 +1,3 @@
-let bossSpriteSheet;
-let shooterSpriteSheet;
-let enemySpriteSheet;
-let mainmenuSound;
-let L1_OfficeSound;
-let L3_PsychoSound;
-
 function preload() {
   uiFont = loadFont('assets/fonts/PressStart2P.ttf');
   heartImg = loadImage('assets/ui/full_heart.png');
@@ -44,6 +37,7 @@ function preload() {
   // Use a callback to make sure we don't access data before loaded
   sceneData = loadJSON("assets/scenes/scene.json", preloadScenes);
   rawRoomData = loadJSON("assets/rooms.json", setRoomImg);
+  helpBarData = loadJSON('assets/ui/helpBarContent.json');
 
   // -------------------------------------------
   // 加载玩家角色四方向动画帧（每个方向5张）

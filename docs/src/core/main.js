@@ -22,7 +22,7 @@ function setup() {
   // Instantiate all classes
   room = new Room();
   let inputHandler = new InputHandler(room);
-  const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds);
+  const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData);
   gameStateManager = new GameStateManager(eventBus, pageDrawer, inputHandler);
   pageDrawer.setupMainMenu();
   pageDrawer.setupPauseMenu();
@@ -55,10 +55,9 @@ function extractFrames(spriteSheet, frameCount, targetArray) {
 }
 
 function draw() {
-  adjustCanvasWithAspectRatio();
   background(220);
   player.updateBlinking();
-  if (!gameStateManager.shouldRenderMenu()) gameStateManager.update();
+  gameStateManager.update();
   // drawDebugCollisionBoxes(); // 这里是用于碰撞测试
 }
 
