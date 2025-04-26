@@ -5,11 +5,11 @@ class PlayerStatusDisplayer {
   static #vPadding = 20;
   static #uiTextSize = 24;
 
-  static display(playerObj, currentRoomId, startTime, heartImg, damagedHeartImg, uiFont) {
+  static display(playerObj, currentlevelId, currentRoomNo, timeSpent, heartImg, damagedHeartImg, uiFont) {
     push();
     this.#drawHealthBar(playerObj, heartImg, damagedHeartImg);
-    this.#drawCurrentLevel(currentRoomId, uiFont);
-    this.#drawTimer(startTime, uiFont);
+    this.#drawCurrentLevel(currentlevelId, currentRoomNo, uiFont);
+    this.#drawTimer(timeSpent, uiFont);
     pop();
   }
 
@@ -37,24 +37,23 @@ class PlayerStatusDisplayer {
     }
   }
 
-  static #drawCurrentLevel(currentRoomId, uiFont) {
+  static #drawCurrentLevel(currentlevelId, currentRoomNo, uiFont) {
     fill(255);
     stroke(0);
     strokeWeight(5);
     textFont(uiFont, this.#uiTextSize);
     textAlign(LEFT, BOTTOM);
     let levelText = "";
-    if (currentRoomId === 0) levelText = "Tutorial";
-    else levelText = `Level: ${currentRoomId} / ${roomData.length - 6}`
+    if (currentRoomNo === 0) levelText = "Tutorial";
+    else levelText = `${currentlevelId} - ${currentRoomNo}`
     text(
-      levelText, 
+      `Level: ${levelText}`,
       this.#hPadding, 
       heightInPixel - this.#vPadding
     );
   }
 
-  static #drawTimer(startTime, uiFont) {
-    const timeSpent = millis() - startTime;
+  static #drawTimer(timeSpent, uiFont) {
     const totalSecs = floor(timeSpent / 1000);
     const mins = floor(totalSecs / 60);
     const secs = totalSecs % 60;

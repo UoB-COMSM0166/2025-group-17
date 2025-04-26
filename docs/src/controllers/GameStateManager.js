@@ -3,6 +3,7 @@ class GameStateManager {
   #isGameCompleted;
   #PageDrawer;
   #pauseTime;
+  #timeSpent;
 
   // Manage which page and buttons to draw
   constructor(eventBus, PageDrawer, inputHandler) {
@@ -10,6 +11,7 @@ class GameStateManager {
     this.#inputHandler = inputHandler;
     this.#pauseTime = null;
     this.#isGameCompleted = false;
+    this.#timeSpent = 0;
 
     // 当前BGM引用 + 滤波器
     this.currentBGM = null;
@@ -36,15 +38,19 @@ class GameStateManager {
 
   update() {
     this.#adjustCanvasWithAspectRatio();
+    this.#timeSpent = millis() - startTime;
     if (this.#shouldRenderMenu()) return;
 
-    const currentRoomId = this.#inputHandler.getCurrentRoomId();
+    const currentLevelId = this.#inputHandler.getCurrentLevelId();
+    const currentRoomNo = this.#inputHandler.getCurrentRoomNo();
     this.playBGMForRoom(this.#inputHandler.getCurrentRoomId());
     this.#PageDrawer.updatePauseBtnPosition();
     this.#inputHandler.update(player);
-    player.healByTime(timeSpent);
+    player.healByTime(this.#timeSpent);
 
-    PlayerStatusDisplayer.display(player, currentRoomId, startTime, heartImg, damagedHeartImg, uiFont);
+    PlayerStatusDisplayer.display(
+      player, currentLevelId, currentRoomNo, this.#timeSpent, heartImg, damagedHeartImg, uiFont
+    );
     this.#checkSavePoint();
     this.#isGameCompleted = this.#inputHandler.isGameCompleted();
     if (this.#isGameCompleted === true) {
@@ -62,7 +68,7 @@ class GameStateManager {
 
   #shouldRenderMenu() {
     if (this.#PageDrawer.shouldRenderMenu(player)) {
-      this.#PageDrawer.renderMenu(player, timeSpent);
+      this.#PageDrawer.renderMenu(player, this.#timeSpent);
       return true;
     }
     return false;
@@ -88,7 +94,7 @@ class GameStateManager {
     localStorage.setItem('lastSavePointX', JSON.stringify(room.savePoint.position.x));
     localStorage.setItem('lastSavePointY', JSON.stringify(room.savePoint.position.y));
     localStorage.setItem('playerHp', JSON.stringify(player.hp));
-    localStorage.setItem('timeSpent', JSON.stringify(timeSpent));
+    localStorage.setItem('timeSpent', JSON.stringify(this.#timeSpent));
     console.log("Game Saved!");
   }
 

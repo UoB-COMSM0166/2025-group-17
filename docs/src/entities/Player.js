@@ -1,4 +1,7 @@
 class Player {
+  #canShootAgain;
+  #shootCoolDownDuration;
+
   constructor(x = leftBoundary, y = heightInPixel / 2) {
     console.log(`player x: ${x}`);
     this.position = createVector(x, y);
@@ -10,6 +13,8 @@ class Player {
     this.friction = 0.85;
     this.velocity = createVector(0, 0);
     this.atk = 50;
+    this.#canShootAgain = true;
+    this.#shootCoolDownDuration = 600;
     // this.maxAtk = 100;
 
     // 判定框尺寸（红框用来检测碰撞）！！！
@@ -50,9 +55,13 @@ class Player {
   }
 
   shoot(direction) {
+    if (!this.#canShootAgain) return;
+
     const centerX = this.position.x + this.size.x / 2;
     const centerY = this.position.y + this.size.y / 2;
     this.bullets.push(new Bullet(centerX, centerY, direction, this.atk));
+    this.#canShootAgain = false;
+    setTimeout(() => { this.#canShootAgain = true; }, this.#shootCoolDownDuration);
     console.log("A bullet has been shot");
 
     shootSound.currentTime = 0;

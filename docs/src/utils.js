@@ -18,7 +18,6 @@ let sceneSounds = {};
 
 // TODO: Merge into classes
 let startTime;
-let timeSpent = 0;
 const widthInPixel = 1024;
 const heightInPixel = 576;
 const boundaryInPixel = { w: 80, h: 72 }
