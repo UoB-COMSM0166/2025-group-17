@@ -119,6 +119,7 @@ class CollisionDetector {
   }
 
   #isBulletHitWall(bulletObj) {
+    const boundaryInPixel = { w: 80, h: 72 };
     const wallMarginX = boundaryInPixel.w / 3;
     const wallMarginY = boundaryInPixel.h / 3;
     const { x, y } = bulletObj.position;

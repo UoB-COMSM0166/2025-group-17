@@ -1,6 +1,7 @@
 class InputHandler {
+  #currentRoom;
   constructor(roomObj, cooldownTime = 2000) {
-    this.currentRoom = roomObj;
+    this.#currentRoom = roomObj;
     this.collisionDetector = new CollisionDetector();
     this.coolDownTime = cooldownTime;
     this.lastLoadTime = millis();
@@ -8,8 +9,8 @@ class InputHandler {
   }
 
   update(playerObj) {
-    this.currentRoom.update();
-    this.currentRoom.display(playerObj);
+    this.#currentRoom.update();
+    this.#currentRoom.display(playerObj);
     playerObj.updateVelocity();
 
     // 预测下一步的位置
@@ -24,8 +25,8 @@ class InputHandler {
     };
 
     // 使用预测位置检测碰撞
-    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(tempPlayer, this.currentRoom.enemies);
-    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(tempPlayer, this.currentRoom.obstacles);
+    const collideWithEnemies = this.collisionDetector.detectPlayerCollision(tempPlayer, this.#currentRoom.enemies);
+    const collideWithObstacles = this.collisionDetector.detectPlayerCollision(tempPlayer, this.#currentRoom.obstacles);
     const playerHitBoundary = this.collisionDetector.isHitBoundary(tempPlayer);
 
     if (!collideWithEnemies && !collideWithObstacles && !playerHitBoundary) {
@@ -41,14 +42,14 @@ class InputHandler {
       }
     }
 
-    this.collisionDetector.handleEnemyCollision(this.currentRoom.enemies);
-    this.collisionDetector.handleEnemyObstacleCollision(this.currentRoom.enemies, this.currentRoom.obstacles);
+    this.collisionDetector.handleEnemyCollision(this.#currentRoom.enemies);
+    this.collisionDetector.handleEnemyObstacleCollision(this.#currentRoom.enemies, this.#currentRoom.obstacles);
 
     this.updateBullets(playerObj);
-    this.collisionDetector.detectBulletEnemyCollision(playerObj.bullets, this.currentRoom.enemies);
-    this.collisionDetector.detectBulletObstacleCollision(playerObj.bullets, this.currentRoom.obstacles);
-    this.removeEnemies(this.currentRoom.enemies);
-    this.moveToNextRoom(playerObj);
+    this.collisionDetector.detectBulletEnemyCollision(playerObj.bullets, this.#currentRoom.enemies);
+    this.collisionDetector.detectBulletObstacleCollision(playerObj.bullets, this.#currentRoom.obstacles);
+    this.removeEnemies(this.#currentRoom.enemies);
+    this.#moveToNextRoom(playerObj);
   }
 
   handlePlayerShooting(playerObj) {
@@ -61,7 +62,7 @@ class InputHandler {
     // if (shootDirection.mag() > 0) {
     //   shootDirection.normalize();
     //   if (shootCooldown <= 0) {
-    //     player.shoot(shootDirection);
+    //     playerObj.shoot(shootDirection);
     //     shootCooldown = 20; //reset cooldown (10 frames)
     //   }
     // }
@@ -106,13 +107,13 @@ class InputHandler {
     hurtSound.play();
   }
 
-  moveToNextRoom(playerObj, tolerance = playerObj.size.x) {
-    if (!this.currentRoom.checkClearCondition()) return;
+  #moveToNextRoom(playerObj, tolerance = playerObj.size.x) {
+    if (!this.#currentRoom.checkClearCondition()) return;
 
     const playerMidX = playerObj.position.x + playerObj.size.x / 2;
     const playerMidY = playerObj.position.y + playerObj.size.y / 2;
-    const doorX = this.currentRoom.door.position.x;
-    const doorY = this.currentRoom.door.position.y + this.currentRoom.door.size.y / 2;
+    const doorX = this.#currentRoom.door.position.x;
+    const doorY = this.#currentRoom.door.position.y + this.#currentRoom.door.size.y / 2;
 
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
@@ -132,47 +133,43 @@ class InputHandler {
     // Reset status of player (keep HP)
     // player.resetStatus()
     const prevHp = player.hp;
-  
-    // 如果 nextRoomId 是 1，不继承血量
-    const nextRoomId = this.currentRoom.getCurrentRoomId() + 1;
-    if (nextRoomId === 1) {
-      player = new Player(playerX, playerY);
-    } else {
-      player = new Player(playerX, playerY);
-      player.hp = prevHp; // 继承血量
-    }
+
+    const nextRoomId = this.#currentRoom.getCurrentRoomId() + 1;
+    player = new Player();
+    // Only reset player HP after the tutorial
+    if (nextRoomId !== 1) player.hp = prevHp;
   
     // Load room
     if (nextRoomId === 1) {
       const randomRoomId = random([1, 2, 3, 4, 5, 6]);
-      room.setup(rooms[randomRoomId]);
+      room.setup(roomData[randomRoomId]);
     } else if (nextRoomId === 2) {
-      room.setup(rooms[8]);
+      room.setup(roomData[8]);
     }
     else if (nextRoomId === 3) {
-      room.setup(rooms[7]);
+      room.setup(roomData[7]);
     } else if (nextRoomId === 4) {
-      room.setup(rooms[9]);
+      room.setup(roomData[9]);
     } else if (nextRoomId === 5) {
-      room.setup(rooms[10]);
+      room.setup(roomData[10]);
     }
   }
 
-  getCurrentRoomId() { return this.currentRoom.getCurrentRoomId(); }
+  getCurrentRoomId() { return this.#currentRoom.getCurrentRoomId(); }
 
   isGameCompleted() {
-    console.log(`Current room: ${this.currentRoom.getCurrentRoomId()}`);
+    console.log(`Current room: ${this.#currentRoom.getCurrentRoomId()}`);
     const maxCurrentRoomId = this.#getMaxCurrentRoomId(rawRoomData);
     
-    if (this.currentRoom.getCurrentRoomId() >= maxCurrentRoomId && this.currentRoom.checkClearCondition()) {
+    if (this.#currentRoom.getCurrentRoomId() >= maxCurrentRoomId && this.#currentRoom.checkClearCondition()) {
       return true;
     }
     return false;
   }
 
-  #getMaxCurrentRoomId(roomData) {
+  #getMaxCurrentRoomId(rawRoomData) {
     let maxRoomId = -Infinity;
-    for (const room of roomData.rooms) {
+    for (const room of rawRoomData.rooms) {
         if (room.currentRoomId > maxRoomId) {
             maxRoomId = room.currentRoomId;
         }

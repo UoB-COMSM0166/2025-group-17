@@ -1,5 +1,3 @@
-let gameStateManager;
-
 let pauseSound = new Audio("assets/music/se/Pause.mp3");
 let hitSound = new Audio("assets/music/se/Enemy_Hurt.mp3");
 let deathSound = new Audio("assets/music/se/Enemy_Death.mp3");
@@ -22,14 +20,14 @@ function setup() {
   // Instantiate all classes
   room = new Room();
   let inputHandler = new InputHandler(room);
-  const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData);
-  gameStateManager = new GameStateManager(eventBus, pageDrawer, inputHandler);
-  pageDrawer.setupMainMenu();
-  pageDrawer.setupPauseMenu();
-  pageDrawer.setupGameOverPage();
+  const PageDrawer = new MenuDrawer(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData);
+  gameStateManager = new GameStateManager(eventBus, PageDrawer, inputHandler);
+  PageDrawer.setupMainMenu();
+  PageDrawer.setupPauseMenu();
+  PageDrawer.setupGameOverPage();
   gameStateManager.playMainmenuSound();
 
-  player = new Player(playerX, playerY);
+  player = new Player();
 
   // Extract all animation frames
   window.bossFrames = [];
@@ -55,7 +53,6 @@ function extractFrames(spriteSheet, frameCount, targetArray) {
 }
 
 function draw() {
-  background(220);
   player.updateBlinking();
   gameStateManager.update();
   // drawDebugCollisionBoxes(); // 这里是用于碰撞测试

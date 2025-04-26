@@ -3,6 +3,8 @@ class HelpBar {
   #height;
   #opacity;
   #btnOpacity;
+  #iconCharSize;
+  #textSize;
   #animation;
   #stateMap;
   #currentState;
@@ -14,6 +16,8 @@ class HelpBar {
     this.#height = 50;
     this.#opacity = 180;
     this.#btnOpacity = 150;
+    this.#iconCharSize = 12; // Align the icon's padding to match other text later
+    this.#textSize = 14;
     this.#animation = { y: 0, targetY: 0, easing: 0.2, duration: 150 };
     this.#pages = []; // Will be populated from JSON
     this.#stateMap = {}; // Maps states to page indices
@@ -73,7 +77,7 @@ class HelpBar {
     if (currentPage.text_btn0 !== undefined && currentPage.text_btn1 !== undefined) {
       helpText = btnIndex === 0 ? currentPage.text_btn0 : currentPage.text_btn1;
     }
-    if (helpText) this.#drawText(helpText, padding, textY, LEFT, 14, 220);
+    if (helpText) this.#drawText(helpText, padding, textY, LEFT, 220);
     
     // Draw key buttons and descriptions
     if (currentPage.keys) this.#drawKeyButtons(textY, padding, currentPage.keys);
@@ -85,7 +89,7 @@ class HelpBar {
     keys.forEach(item => {
       currentItemX -= textWidth(item.key) * 2 + textWidth(item.action) + padding;
       const endX = this.#drawKey(item.key, currentItemX, textY);
-      this.#drawText(item.action, endX, textY, LEFT, 14, 200, " ");
+      this.#drawText(item.action, endX, textY, LEFT, 200, " ");
     });
   }
 
@@ -113,7 +117,7 @@ class HelpBar {
   }
 
   #drawSpecialCharacter(char, x, y, charWidth, padding) {
-    textFont('monospace', 14);
+    textFont('monospace', this.#textSize);
     this.#drawButtonBackground(x, y - 1.2 * charWidth, charWidth * 2.4, charWidth * 2);
     text(char, x + 0.75 * charWidth, y - padding);
     
@@ -122,7 +126,7 @@ class HelpBar {
   }
 
   #drawRegularCharacter(char, x, y) {
-    textFont('monospace', 12);
+    textFont('monospace', this.#iconCharSize);
     text(char, x, y);
     return x + textWidth(char);
   }
@@ -151,10 +155,10 @@ class HelpBar {
     rect(x, y, width, height, 4);
   }
 
-  #drawText(textContent, x, y, align = LEFT, size, color = 255, prefix = "") {
+  #drawText(textContent, x, y, align = LEFT, color = 255, prefix = "") {
     fill(color);
     noStroke();
-    textFont('monospace', size);
+    textFont('monospace', this.#textSize);
     textAlign(align, CENTER);
     text(prefix + textContent, x, y);
   }

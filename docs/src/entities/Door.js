@@ -1,6 +1,10 @@
 class Door {
-  constructor(x = rightBoundary, y = heightInPixel / 2 - doorSize.h / 2) {
+  constructor() {
+    const doorSize = { w: 73, h: 95 };
+    const x = widthInPixel - doorSize.w;
+    const y = heightInPixel / 2 - doorSize.h / 2;
     this.position = createVector(x, y);
+
     this.size = createVector(doorSize.w, doorSize.h);
     this.currentDoorImg = closedDoorImg;
 

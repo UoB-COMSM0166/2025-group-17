@@ -2,7 +2,7 @@ class Enemy {
   constructor(x, y, hp, enImage) {
     this.hp = hp;
     this.position = createVector(x, y);
-
+    const smallEnemyHp = 50;
     const enemyWidth = (hp === smallEnemyHp) ? heightInPixel / 16 : heightInPixel / 12;
     const enemyHeight = Math.floor(enemyWidth * (enImage.height / enImage.width));
     this.size = createVector(enemyWidth, enemyHeight);

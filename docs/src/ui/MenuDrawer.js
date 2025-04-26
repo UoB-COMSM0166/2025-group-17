@@ -1,4 +1,4 @@
-class PageDrawer {
+class MenuDrawer {
   #scenePlayer;
   #helpBar;
   #state = "mainMenu"; // "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
@@ -130,7 +130,7 @@ class PageDrawer {
     textSize(32);
     textAlign(CENTER, CENTER);
     fill('#AFDDC9');
-    textFont(uiFont, uiTextSize);
+    textFont(uiFont, 20);
     text(title, widthInPixel / 2, heightInPixel / 3);
     pop();
   }

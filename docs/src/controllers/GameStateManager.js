@@ -1,13 +1,14 @@
 class GameStateManager {
   #inputHandler;
   #isGameCompleted;
-  #pageDrawer;
+  #PageDrawer;
+  #pauseTime;
 
   // Manage which page and buttons to draw
-  constructor(eventBus, pageDrawer, inputHandler) {
-    this.#pageDrawer = pageDrawer;
+  constructor(eventBus, PageDrawer, inputHandler) {
+    this.#PageDrawer = PageDrawer;
     this.#inputHandler = inputHandler;
-    this.pauseTime = null;
+    this.#pauseTime = null;
     this.#isGameCompleted = false;
 
     // 当前BGM引用 + 滤波器
@@ -34,39 +35,65 @@ class GameStateManager {
   update() {
     this.#adjustCanvasWithAspectRatio();
     if (this.#shouldRenderMenu()) return;
+
+    const currentRoomId = this.#inputHandler.getCurrentRoomId();
     this.playBGMForRoom(this.#inputHandler.getCurrentRoomId());
-    this.#pageDrawer.updatePauseBtnPosition();
+    this.#PageDrawer.updatePauseBtnPosition();
     this.#inputHandler.update(player);
     player.healByTime(timeSpent);
-  
-    drawUiHud(player, this.#inputHandler.getCurrentRoomId());
-    checkSavePoint();
+
+    PlayerStatusDisplayer.display(player, currentRoomId, startTime, heartImg, damagedHeartImg, uiFont);
+    this.#checkSavePoint();
     this.#isGameCompleted = this.#inputHandler.isGameCompleted();
     if (this.#isGameCompleted === true) {
-      this.#pageDrawer.setCompletedState();
+      this.#PageDrawer.setCompletedState();
       this.stopBGM();
     }
   }
 
   handlePlayerShooting() {
-    this.#pageDrawer.handleBtnPressed(player);
-    if (!this.#pageDrawer.shouldRenderMenu(player)) {
+    this.#PageDrawer.handleBtnPressed(player);
+    if (!this.#PageDrawer.shouldRenderMenu(player)) {
       this.#inputHandler.handlePlayerShooting(player);
     }
   }
 
   #shouldRenderMenu() {
-    if (this.#pageDrawer.shouldRenderMenu(player)) {
-      this.#pageDrawer.renderMenu(player, timeSpent);
+    if (this.#PageDrawer.shouldRenderMenu(player)) {
+      this.#PageDrawer.renderMenu(player, timeSpent);
       return true;
     }
     return false;
   }
 
+  #checkSavePoint() {
+    // Save when player crosses the target position
+    const nearSavePoint = player.position.x < room.savePoint.position.x + room.savePoint.size.x &&
+    player.position.x + player.size.x > room.savePoint.position.x &&
+    player.position.y < room.savePoint.position.y + room.savePoint.size.y &&
+    player.position.y + player.size.y > room.savePoint.position.y;
+    if (!room.savePoint.isChecked && nearSavePoint) {
+      this.#saveGameData();
+      room.savePoint.checked();
+    }
+  }
+  
+  #saveGameData() {
+    if (room.savePoint.isChecked) return;
+    console.log("Can be saved again!");
+  
+    localStorage.setItem('currentRoomDataId', room.getRoomDataId());
+    localStorage.setItem('lastSavePointX', JSON.stringify(room.savePoint.position.x));
+    localStorage.setItem('lastSavePointY', JSON.stringify(room.savePoint.position.y));
+    localStorage.setItem('playerHp', JSON.stringify(player.hp));
+    localStorage.setItem('timeSpent', JSON.stringify(timeSpent));
+    console.log("Game Saved!");
+  }
+
   loadGameData() {
     const savedRoomDataId = localStorage.getItem('currentRoomDataId');
     if (savedRoomDataId) {
-      this.#pageDrawer.setInGameState();
+      this.#PageDrawer.setInGameState();
       this.#setupRoom(parseInt(savedRoomDataId));
     }
 
@@ -90,32 +117,32 @@ class GameStateManager {
     player.resetInvincibleTimer();
     console.log("Game Loaded!");
 
-    this.#pageDrawer.toggleStartButtons();
-    this.#pageDrawer.toggleGameOverButtons();
+    this.#PageDrawer.toggleStartButtons();
+    this.#PageDrawer.toggleGameOverButtons();
   }
 
   startNewGame() {
     console.log("New Game Start!");
     this.#resetGame();
-    this.#pageDrawer.toggleResumeButtons();
-    this.#pageDrawer.toggleStartButtons();
-    this.#pageDrawer.toggleGameOverButtons();
+    this.#PageDrawer.toggleResumeButtons();
+    this.#PageDrawer.toggleStartButtons();
+    this.#PageDrawer.toggleGameOverButtons();
     this.stopBGM(); // 确保此时停止任何主菜单 BGM
   }
 
   #resetGame() {
-    player = new Player(playerX, playerY);
+    player = new Player();
     this.#setupRoom(0); // reset to the initial room from first room in JSON data
     this.#inputHandler = new InputHandler(room);
     console.log("Game is reset!");
   }
 
   pauseGame() {
-    this.pauseTime = millis();
+    this.#pauseTime = millis();
     console.log("Game pause!");
 
     if (pauseSound) pauseSound.play();
-    this.#pageDrawer.showResumeButtons();
+    this.#PageDrawer.showResumeButtons();
 
     // 添加滤波器（电话音效）
     if (this.currentBGM) {
@@ -129,9 +156,9 @@ class GameStateManager {
 
   resumeGame() {
     console.log("Game resume!");
-    this.#pageDrawer.toggleResumeButtons();
-    this.#pageDrawer.setInGameState();
-    startTime += millis() - this.pauseTime;
+    this.#PageDrawer.toggleResumeButtons();
+    this.#PageDrawer.setInGameState();
+    startTime += millis() - this.#pauseTime;
 
     // 移除滤波器
     if (this.currentBGM) {
@@ -143,9 +170,9 @@ class GameStateManager {
 
   exitToMainMenu() {
     console.log("Exit to the main menu!");
-    this.#pageDrawer.drawMainMenu();
-    this.#pageDrawer.showStartButtons();
-    this.#pageDrawer.toggleGameOverButtons();
+    this.#PageDrawer.drawMainMenu();
+    this.#PageDrawer.showStartButtons();
+    this.#PageDrawer.toggleGameOverButtons();
 
     this.playBGM(mainmenuSound); // 返回主菜单播放主界面音乐
   }
@@ -172,8 +199,8 @@ class GameStateManager {
   }
 
   playBGMForRoom(index) {
-    console.log(this.#pageDrawer.getGameState());
-    const currentPageState = this.#pageDrawer.getGameState();
+    console.log(this.#PageDrawer.getGameState());
+    const currentPageState = this.#PageDrawer.getGameState();
     if (currentPageState !== "inGame") return; // 如果还在剧情，就不播放音乐
     const nextBGM = this.roomBGMs[index];
   
@@ -200,7 +227,7 @@ class GameStateManager {
 
   // Set up room and play BGM
   #setupRoom(roomDataId) {
-    room.setup(rooms[roomDataId]);
+    room.setup(roomData[roomDataId]);
     this.playBGMForRoom(room.getCurrentRoomId());
   }
 
@@ -223,5 +250,5 @@ class GameStateManager {
     scale(cnvWidth / widthInPixel, cnvHeight / heightInPixel);
   }
 
-  #resizeBtns() { this.#pageDrawer.resizeBtns(); }
+  #resizeBtns() { this.#PageDrawer.resizeBtns(); }
 }

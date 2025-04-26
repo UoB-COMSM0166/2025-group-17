@@ -85,20 +85,20 @@ function preloadScenes() {
 }
 
 function setRoomImg() {
-rooms = rawRoomData.rooms;
-rooms.forEach(room => {
-  room.backgroundImg = loadImage(room.background);
-  if (room.obstacles) {
-    room.obstacles.forEach(obs => {
-      obs.img = loadImage(obs.image);
-    });
-  }
-  if (room.enemies) {
-    room.enemies.forEach(enes => {
-      console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
-      enes.img = loadImage(enes.image);
-      console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
-    });
-  }
-});
+  roomData = rawRoomData.rooms;
+  roomData.forEach(room => {
+    room.backgroundImg = loadImage(room.background);
+    if (room.obstacles) {
+      room.obstacles.forEach(obs => {
+        obs.img = loadImage(obs.image);
+      });
+    }
+    if (room.enemies) {
+      room.enemies.forEach(enes => {
+        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
+        enes.img = loadImage(enes.image);
+        console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
+      });
+    }
+  });
 }

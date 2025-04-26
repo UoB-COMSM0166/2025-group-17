@@ -1,11 +1,12 @@
 class Player {
-  constructor(x, y) {
+  constructor(x = leftBoundary, y = heightInPixel / 2) {
+    console.log(`player x: ${x}`);
     this.position = createVector(x, y);
     this.maxHp = 5;
     this.hp = this.maxHp;
     this.speed = 3;
     this.maxSpeed = 15;
-    this.acceleration = defaultAcceleration;
+    this.acceleration = 5.0;
     this.friction = 0.85;
     this.velocity = createVector(0, 0);
     this.atk = 50;

@@ -23,19 +23,19 @@ class Room {
     this.collisionDetector = new CollisionDetector();
   }
 
-  setup(roomData) {
+  setup(data) {
     this.enemies = [];
     this.chasers = [];
     this.shooters = [];
     this.obstacles = [];
     this.clearTime = null;
-    this.#currentRoomData = roomData; // Store room data
-    this.generateObstacles(this.#currentRoomData);
-    this.generateEnemies(this.#currentRoomData);
-    this.backgroundImg = roomData.backgroundImg;
+    this.#currentRoomData = data; // Store room data
+    this.backgroundImg = data.backgroundImg;
     this.door = new Door();
     this.door.close();
-    this.savePoint = new SavePoint(roomData.savePoint.x, roomData.savePoint.y);
+    this.savePoint = new SavePoint(data.savePoint.x, data.savePoint.y);
+    this.generateObstacles(this.#currentRoomData);
+    this.generateEnemies(this.#currentRoomData);
     this.#setGameTime(this.#currentRoomData.currentRoomId);
   }
 
@@ -68,10 +68,10 @@ class Room {
     allEntities.forEach(entity => { entity.display(); });
     if (this.#currentRoomData.currentRoomId === 0 && this.enemies.length === 0) {
       const clearText = "Tutorial complete! Your HP and runtime will reset in the next room.";
-      displayInstruction(clearText, this.clearTime);
+      InstructionDisplayer.display(clearText, this.clearTime);
     }
-    if (this.chasers.length === 1) drawBossStatus(this.chasers[0]);
-    if (this.shooters.length === 1) drawBossStatus(this.shooters[0]);
+    if (this.chasers.length === 1) BossStatusDisplayer.display(this.chasers[0], bossHpBarImg, bossHpImg);
+    if (this.shooters.length === 1) BossStatusDisplayer.display(this.shooters[0], bossHpBarImg, bossHpImg);
   }
 
   generateObstacles(currentRoomData) {
@@ -98,8 +98,9 @@ class Room {
 
     // for (let i = 0; i < this.#obstacleCount; i++) {
     //   let newObstacle;
+    //   const maxObstacleSize = heightInPixel / 12;
     //   do {
-    //     const x = random(savePointParam.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
+    //     const x = random(this.savePoint.position.x + player.size.x, rightBoundary - maxObstacleSize - player.size.x);
     //     const y = random(topBoundary + player.size.y, bottomBoundary - maxObstacleSize - player.size.y);
     //     newObstacle = new Obstacle(x, y);
     //   } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
@@ -127,6 +128,8 @@ class Room {
     
     for(let i = 0; i < currentRoomData.enemies.length; i++) {
       let newEnemy;
+      const smallEnemyHp = 50;
+      const largeEnemyHp = 100;
       let hp = random([smallEnemyHp, largeEnemyHp]);
       do {
         const enemiesData = currentRoomData.enemies[i];
@@ -272,7 +275,7 @@ class Room {
 
   generateTutorialObs(obsData) {
     let newObstacle;
-    const x = savePointParam.x + player.size.x + widthInPixel / 3 - 40;
+    const x = this.savePoint.position.x + player.size.x + widthInPixel / 3 - 40;
     const y = topBoundary + player.size.y + heightInPixel / 3 + 100;
     newObstacle = new Obstacle(x, y, obsData.img);
     this.obstacles.push(newObstacle);
