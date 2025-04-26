@@ -80,7 +80,7 @@ Onion Model
 ![onion-model.png](images/onion-model.png)</br>
 
 Use-case Diagram
-![Usecase-diagram.png](images/Usecase-diagram.png)</br>
+![Case-diagram.png](images/Case-diagram.png)</br>
 ### Design
 <!-- 
 - 15% ~750 words 
