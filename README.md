@@ -79,6 +79,7 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 Onion Model
 ![onion-model.png](images/onion-model.png)</br>
 
+![Use-case diagram.png](images/Use-case diagram.png)</br>
 ### Design
 <!-- 
 - 15% ~750 words 
