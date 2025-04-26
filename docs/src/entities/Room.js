@@ -41,6 +41,8 @@ class Room {
 
   getRoomDataId() { return this.#currentRoomData.dataId; }
   getCurrentRoomId() { return this.#currentRoomData.currentRoomId; }
+  getCurrentLevelId() { return this.#currentRoomData.levelId; }
+  getCurrentRoomData() { return this.#currentRoomData; }
 
   update() {
     // Treat three types of rooms separately

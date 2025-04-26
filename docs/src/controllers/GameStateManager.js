@@ -18,11 +18,13 @@ class GameStateManager {
     // room index -> BGM 映射（可多个 index 共用）
     this.roomBGMs = {
       0: L1_OfficeSound,
-      1: L3_PsychoSound,
+      1: L1_OfficeSound,
       2: L1_OfficeSound,
       3: L1_OfficeSound,
-      4: L3_PsychoSound,
-      5: L3_PsychoSound,
+      4: L2_CasinoSound,
+      5: L2_CasinoSound,
+      6: L2_CasinoSound,
+      7: L3_PsychoSound,
     };
 
     eventBus.subscribe('LOAD_GAME', () => this.loadGameData());

@@ -66,6 +66,7 @@ function preload() {
   //  加载主界面和第一关的 BGM（使用 p5.sound）
   mainmenuSound = loadSound("assets/music/bgm/MainMenu.mp3");
   L1_OfficeSound = loadSound("assets/music/bgm/L1_Office.mp3");
+  L2_CasinoSound = loadSound("assets/music/bgm/L2_Casino.mp3");
   L3_PsychoSound = loadSound("assets/music/bgm/L3_Psycho.mp3");
 }
 

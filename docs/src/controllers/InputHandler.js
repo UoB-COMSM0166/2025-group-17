@@ -143,19 +143,26 @@ class InputHandler {
     if (nextRoomId === 1) {
       const randomRoomId = random([1, 2, 3, 4, 5, 6]);
       room.setup(roomData[randomRoomId]);
-    } else if (nextRoomId === 2) {
-      room.setup(roomData[8]);
+    } 
+    else if (nextRoomId === 2) {
+      room.setup(roomData[7]);
     }
     else if (nextRoomId === 3) {
-      room.setup(roomData[7]);
-    } else if (nextRoomId === 4) {
+      room.setup(roomData[8]);
+    }
+    else if (nextRoomId === 4) {
       room.setup(roomData[9]);
     } else if (nextRoomId === 5) {
       room.setup(roomData[10]);
+    } else if (nextRoomId === 6) {
+      room.setup(roomData[11]);
+    } else if (nextRoomId === 7) {
+      room.setup(roomData[12]);
     }
   }
 
   getCurrentRoomId() { return this.#currentRoom.getCurrentRoomId(); }
+  getCurrentRoomData() { return this.#currentRoom.getCurrentRoomData(); }
 
   isGameCompleted() {
     console.log(`Current room: ${this.#currentRoom.getCurrentRoomId()}`);
