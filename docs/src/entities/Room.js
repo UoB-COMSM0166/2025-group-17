@@ -240,7 +240,7 @@ class Room {
   }
   
   resolveBossCollision() {
-    const bosses = [...this.chasers, ...this.shooters];
+    const bosses = [...this.chaser, ...this.shooter];
   
     for (let i = 0; i < bosses.length; i++) {
       for (let j = i + 1; j < bosses.length; j++) {
