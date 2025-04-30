@@ -7,8 +7,8 @@ class Room {
     this.savePoint = null;
     this.door = null;
     this.enemies = [];
-    this.chasers = [];
-    this.shooters = [];
+    this.chaser = [];
+    this.shooter = [];
     this.obstacles = [];
     this.#obstacleCount = 0;
     // this.#enemyCount = 0;
@@ -25,8 +25,8 @@ class Room {
 
   setup(data) {
     this.enemies = [];
-    this.chasers = [];
-    this.shooters = [];
+    this.chaser = [];
+    this.shooter = [];
     this.obstacles = [];
     this.clearTime = null;
     this.#currentRoomData = data; // Store room data
@@ -66,15 +66,15 @@ class Room {
     image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
     this.savePoint.display();
     this.door.display();
-    const allEntities = [...this.obstacles, ...this.enemies, ...this.chasers, ...this.shooters, playerObj];
+    const allEntities = [...this.obstacles, ...this.enemies, ...this.chaser, ...this.shooter, playerObj];
     allEntities.sort((a, b) => a.position.y - b.position.y);
     allEntities.forEach(entity => { entity.display(); });
     if (this.#currentRoomData.currentRoomId === 0 && this.enemies.length === 0) {
       const clearText = "Tutorial complete! Your HP and runtime will reset in the next room.";
       InstructionDisplayer.display(clearText, this.clearTime);
     }
-    if (this.chasers.length === 1) BossStatusDisplayer.display(this.chasers[0], bossHpBarImg, bossHpImg);
-    if (this.shooters.length === 1) BossStatusDisplayer.display(this.shooters[0], bossHpBarImg, bossHpImg);
+    if (this.chaser.length === 1) BossStatusDisplayer.display(this.chaser[0], bossHpBarImg, bossHpImg);
+    if (this.shooter.length === 1) BossStatusDisplayer.display(this.shooter[0], bossHpBarImg, bossHpImg);
   }
 
   generateObstacles(currentRoomData) {
@@ -146,18 +146,18 @@ class Room {
   }
 
   generateChaser() {
-    this.chasers = [];
-    this.chasers.push(new Chaser(600, 300));
+    this.chaser = [];
+    this.chaser.push(new Chaser(600, 300));
   }
 
   generateShooter() {
-    this.shooters = [];
-    this.shooters.push(new Shooter(400, 300));
+    this.shooter = [];
+    this.shooter.push(new Shooter(400, 300));
   }
 
   generateFinalBossRoom() {
-    this.chasers = [];
-    this.shooters = [];
+    this.chaser = [];
+    this.shooter = [];
   
     // Shooter 和 Chaser 的 sprite 高度是 heightInPixel / 4
     const entitySize = heightInPixel / 4;
@@ -165,11 +165,11 @@ class Room {
     // ✅ 固定 shooter 位置（画布中央偏右）
     const shooterX = widthInPixel * 0.6;
     const shooterY = heightInPixel * 0.5;
-    this.shooters.push(new Shooter(shooterX, shooterY));
+    this.shooter.push(new Shooter(shooterX, shooterY));
   
     // ✅ 固定 chaser 位置（右上和右下）
-    this.chasers.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
-    this.chasers.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.7));
+    this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
+    this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.7));
   }
   
 
@@ -188,13 +188,13 @@ class Room {
   }
 
   updateChaser() {
-    this.chasers = this.chasers.filter(c => c.hp > 0);
+    this.chaser = this.chaser.filter(c => c.hp > 0);
   
     // 添加互相推开逻辑
-    for (let i = 0; i < this.chasers.length; i++) {
-      for (let j = i + 1; j < this.chasers.length; j++) {
-        const c1 = this.chasers[i];
-        const c2 = this.chasers[j];
+    for (let i = 0; i < this.chaser.length; i++) {
+      for (let j = i + 1; j < this.chaser.length; j++) {
+        const c1 = this.chaser[i];
+        const c2 = this.chaser[j];
         const dist = p5.Vector.dist(c1.position, c2.position);
   
         if (dist < 60) { // 设置最小间距
@@ -206,7 +206,7 @@ class Room {
     }
   
     // 更新 + 子弹检测
-    this.chasers.forEach(c => {
+    this.chaser.forEach(c => {
       c.update();
       c.detectBulletCollision(player.bullets);
     });
@@ -214,8 +214,8 @@ class Room {
   
 
   updateShooter() {
-    this.shooters = this.shooters.filter(s => s.hp > 0);
-    this.shooters.forEach(s => {
+    this.shooter = this.shooter.filter(s => s.hp > 0);
+    this.shooter.forEach(s => {
       s.update();
       s.detectBulletCollision(player.bullets);
       s.detectPlayerCollision();
@@ -233,8 +233,8 @@ class Room {
 
   checkClearCondition() {
     const noEnemies = this.enemies.length === 0;
-    const noChaser = this.chasers.length === 0;
-    const noShooter = this.shooters.length === 0;
+    const noChaser = this.chaser.length === 0;
+    const noShooter = this.shooter.length === 0;
   
     return noEnemies && noChaser && noShooter && player.hp > 0;
   }
