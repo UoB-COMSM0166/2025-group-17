@@ -1,8 +1,11 @@
+//const collisionDetector = new CollisionDetector();
+
 class Chaser {
   constructor(x, y) {
     this.position = createVector(x, y);
-    //this.size = createVector(heightInPixel / 4, heightInPixel / 4);
-    this.size = createVector(heightInPixel / 4, (heightInPixel / 4) * 2 / 3);
+    this.size = createVector(heightInPixel / 4, heightInPixel / 4);
+    this.collisionDetector = new CollisionDetector();
+    //this.size = createVector(heightInPixel / 4, (heightInPixel / 4) * 2 / 3);
     this.maxHp = 800;
     this.hp = this.maxHp;
     this.isHurt = false;
@@ -44,7 +47,7 @@ class Chaser {
       this.position.add(this.dashDirection);
       this.currentDashTime++;
 
-      if (this.checkPlayerCollision() && !this.dashDamageApplied) {
+      if (this.collisionDetector.detectCollision(this, player) && !this.dashDamageApplied) {
         this.applyDashDamage();
       }
 
@@ -64,7 +67,7 @@ class Chaser {
     }
 
     // 撞到玩家但不是dash
-    if (!this.isDashing && this.checkPlayerCollision()) {
+    if (!this.isDashing && this.collisionDetector.detectCollision(this, player)) {
       const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(4);
       player.position.add(pushDir);
       player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
@@ -148,14 +151,14 @@ class Chaser {
     );
   }
 
-  checkPlayerCollision() {
-    return (
-      this.position.x < player.position.x + player.size.x &&
-      this.position.x + this.size.x > player.position.x &&
-      this.position.y < player.position.y + player.size.y &&
-      this.position.y + this.size.y > player.position.y
-    );
-  }
+  //checkPlayerCollision() {
+  //  return (
+  //    this.position.x < player.position.x + player.size.x &&
+  //    this.position.x + this.size.x > player.position.x &&
+  //    this.position.y < player.position.y + player.size.y &&
+  //    this.position.y + this.size.y > player.position.y
+  //  );
+  //}
 
   display() {
     // if (this.hp <= 0) return;
@@ -176,3 +179,4 @@ class Chaser {
     }
   }
 }
+window.Chaser = Chaser;
