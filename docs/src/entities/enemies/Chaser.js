@@ -11,8 +11,8 @@ class Chaser {
     this.isHurt = false;
     this.hitFrame = 0;
     this.speed = 1;
-    this.dashSpeed = 10;
-    this.chaseRange = 100;
+    this.dashSpeed = 20;
+    this.chaseRange = 150;
     this.isDashing = false;
     this.dashCooldown = 100;
     this.currentCooldown = 0;
@@ -38,20 +38,34 @@ class Chaser {
 
     if (this.currentCooldown > 0) this.currentCooldown--;
 
-    let distanceToPlayer = dist(
-      this.position.x, this.position.y,
-      player.position.x, player.position.y
-    );
+   // let distanceToPlayer = dist(
+      //this.position.x, this.position.y,
+      //player.position.x, player.position.y
+   //);
+    const chCenter = p5.Vector.add(this.position, this.size.copy().mult(0.5));
+    const plCenter = p5.Vector.add(player.position, player.size.copy().mult(0.5));
+    const distanceToPlayer = p5.Vector.dist(chCenter, plCenter);
+    
 
     if (this.isDashing) {
       this.position.add(this.dashDirection);
       this.currentDashTime++;
 
-      if (this.collisionDetector.detectCollision(this, player) && !this.dashDamageApplied) {
+      //const rSum = max(this.size.x, this.size.y)/2 + max(player.size.x, player.size.y)/2;
+      //const centerDistSq = p5.Vector.sub(chCenter, plCenter).magSq();
+      const chCenter = p5.Vector.add(this.position, this.size.copy().mult(0.5));
+      const plCenter = p5.Vector.add(player.position,  player.size.copy().mult(0.5));
+      const rSum          = max(this.size.x, this.size.y)/2 + max(player.size.x, player.size.y)/2;
+      const centerDistSq  = p5.Vector.sub(chCenter, plCenter).magSq();
+      
+      const collided = centerDistSq < rSum * rSum;
+      
+      //if (this.collisionDetector.detectCollision(this, player) && !this.dashDamageApplied) {
+      if (collided && !this.dashDamageApplied) {
         this.applyDashDamage();
       }
 
-      if (this.hitWall() || distanceToPlayer > player.size.x * 3 || this.currentDashTime >= this.dashDuration) {
+      if (this.hitWall() || this.currentDashTime >= this.dashDuration) {
         this.isDashing = false;
         this.currentCooldown = this.dashCooldown;
         this.dashDamageApplied = false;
@@ -81,7 +95,7 @@ class Chaser {
     hurtSound.play();
     this.dashDamageApplied = true;
 
-    const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(20);
+    const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(160);
     player.position.add(pushDir);
     player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
     player.position.y = constrain(player.position.y, topBoundary, bottomBoundary - player.size.y);
@@ -110,7 +124,7 @@ class Chaser {
     direction.normalize().mult(this.dashSpeed);
     this.dashDirection = direction;
     this.dashDamageApplied = false;
-    this.applyDashDamage(); // 初始 dash 撞击立即扣血
+    //this.applyDashDamage(); // 初始 dash 撞击立即扣血
   }
 
   hitWall() {
