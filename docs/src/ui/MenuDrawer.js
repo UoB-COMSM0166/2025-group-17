@@ -2,6 +2,8 @@ class MenuDrawer {
   #scenePlayer;
   #helpBar;
   #state = "mainMenu"; // "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
+  #gameClearTime;
+  
   constructor(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData) {
     this.btnIndex = 0;
     this.eventBus = eventBus;
@@ -34,8 +36,10 @@ class MenuDrawer {
     btn.size(btnWidth, btnHeight);
     btn.position(windowWidth / 2 - btn.width / 2, windowHeight / 2 + yOffset * btn.height / 2);
     btn.mouseClicked(() => {
-      callback();
+      if (this.btnIndex === null) return;
+      btn.removeClass('blink');
       this.btnIndex = 0;
+      callback();
     });
     btn.mouseOver(() => { this.#handleMouseOver(btn) });
     btn.mouseOut(() => {
@@ -104,8 +108,13 @@ class MenuDrawer {
 
   setupGameOverPage() {
     this.btnLoadLastSave = this.createMenuButton('assets/buttons/LastSave.png', 'Last Save', -1.1, () => this.eventBus.publish('LOAD_GAME'), true);
-    this.btnRestart = this.createMenuButton('assets/buttons/Restart.png', 'Restart', 1.1, () => this.eventBus.publish('START_NEW_GAME'), true);
+    this.btnRestart = this.createMenuButton('assets/buttons/Restart.png', 'Restart', 1.1, () => this.#handleRestart(), true);
     this.gameOverBtns.push(this.btnLoadLastSave, this.btnRestart);
+  }
+
+  #handleRestart() {
+    this.eventBus.publish('START_NEW_GAME');
+    this.#state = "inGame";
   }
 
   drawMainMenu() {
@@ -294,7 +303,8 @@ class MenuDrawer {
     buttons[prevBtnIndex].removeClass('blink');
     this.btnIndex = 0;
     if (buttons[prevBtnIndex] === this.btnNewGame) this.#handleNewGame();
-    this.eventBus.publish(eventTypes[prevBtnIndex]);
+    else if (buttons[prevBtnIndex] === this.btnRestart) this.#handleRestart();
+    else this.eventBus.publish(eventTypes[prevBtnIndex]);
     if (buttons[prevBtnIndex] === this.btnNewGame) this.btnPause.hide();
   }
 

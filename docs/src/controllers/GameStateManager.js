@@ -38,7 +38,7 @@ class GameStateManager {
 
   update() {
     this.#adjustCanvasWithAspectRatio();
-    this.#timeSpent = millis() - startTime;
+    if (!this.#isGameCompleted) this.#timeSpent = millis() - startTime;
     if (this.#shouldRenderMenu()) return;
 
     const currentLevelId = this.#inputHandler.getCurrentLevelId();

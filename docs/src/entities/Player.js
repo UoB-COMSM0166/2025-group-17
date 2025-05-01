@@ -14,7 +14,7 @@ class Player {
     this.velocity = createVector(0, 0);
     this.atk = 50;
     this.#canShootAgain = true;
-    this.#shootCoolDownDuration = 600;
+    this.#shootCoolDownDuration = 10;
     // this.maxAtk = 100;
 
     // 判定框尺寸（红框用来检测碰撞）！！！

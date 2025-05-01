@@ -73,7 +73,9 @@ class Room {
       const clearText = "Tutorial complete! Your HP and runtime will reset in the next room.";
       InstructionDisplayer.display(clearText, this.clearTime);
     }
-    if (this.chaser.length === 1) BossStatusDisplayer.display(this.chaser[0], bossHpBarImg, bossHpImg);
+    if (this.getCurrentLevelId() === 1 && this.getCurrentRoomNo() === 3) {
+      if (this.chaser.length === 1) BossStatusDisplayer.display(this.chaser[0], bossHpBarImg, bossHpImg);
+    }
     if (this.shooter.length === 1) BossStatusDisplayer.display(this.shooter[0], bossHpBarImg, bossHpImg);
   }
 
@@ -113,9 +115,6 @@ class Room {
 
   generateEnemies(currentRoomData) {
     this.enemies = [];
-    // if (currentRoomData.type === 0) {
-    //   this.setEnemyCount(currentRoomData);
-    // }
     
     // Specify different enemy generation logic by room ID
     if (currentRoomData.type === 1) {
@@ -262,14 +261,6 @@ class Room {
       }
     }
   }
-
-  // setEnemyCount(currentRoomData) {
-  //   if (currentRoomData.currentRoomId === 0) {
-  //     this.#enemyCount = 1;
-  //   } else {
-  //     this.#enemyCount = 4;
-  //   }
-  // }
 
   setObstacleCount(currentRoomData) {
     if (currentRoomData.currentRoomId === 0) {

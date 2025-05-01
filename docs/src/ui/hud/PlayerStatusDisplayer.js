@@ -44,7 +44,7 @@ class PlayerStatusDisplayer {
     textFont(uiFont, this.#uiTextSize);
     textAlign(LEFT, BOTTOM);
     let levelText = "";
-    if (currentRoomNo === 0) levelText = "Tutorial";
+    if (currentlevelId === 0 && currentRoomNo === 0) levelText = "Tutorial";
     else levelText = `${currentlevelId} - ${currentRoomNo}`
     text(
       `Level: ${levelText}`,
