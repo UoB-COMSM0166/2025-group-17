@@ -150,10 +150,16 @@ class Room {
     this.chaser.push(new Chaser(600, 300));
   }
 
-  generateShooter() {
+  //generateShooter() {
+  //  this.shooter = [];
+  //  this.shooter.push(new Shooter(400, 300));
+  //}
+  
+  generateShooter() {          // type = 2 的普通 shooter 关
     this.shooter = [];
-    this.shooter.push(new Shooter(400, 300));
+    this.shooter.push(new ShooterFourDir(400, 300));
   }
+
 
   generateFinalBossRoom() {
     this.chaser = [];
@@ -165,7 +171,8 @@ class Room {
     // ✅ 固定 shooter 位置（画布中央偏右）
     const shooterX = widthInPixel * 0.6;
     const shooterY = heightInPixel * 0.5;
-    this.shooter.push(new Shooter(shooterX, shooterY));
+    ///this.shooter.push(new Shooter(shooterX, shooterY));
+    this.shooter.push(new ShooterEightDir(shooterX, shooterY));
   
     // ✅ 固定 chaser 位置（右上和右下）
     this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
