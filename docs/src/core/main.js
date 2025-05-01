@@ -5,6 +5,7 @@ let shootSound = new Audio("assets/music/se/Player_Shoot.mp3");
 let hurtSound = new Audio("assets/music/se/Player_Hurt.mp3");
 let deathSound2 = new Audio("assets/music/se/Player_Death.mp3");
 let openDoorSound = new Audio("assets/music/se/Door_Open.mp3");
+let shooterFireSound  = new Audio("assets/music/se/Player_Shoot.mp3");
 
 function setup() {
   // 防止 bossSpriteSheet 未加载时报错

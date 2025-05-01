@@ -142,6 +142,8 @@ class Shooter {
   detectPlayerCollision() {
     this.bullets = this.bullets.filter(bullet => {
       if (this.checkPlayerCollision(bullet)) {
+        hitSound.currentTime = 0;
+        hitSound.play();
         player.updateHp(player.hp - bullet.damage, 90);
         return false;
       }
@@ -161,7 +163,7 @@ class Shooter {
   checkPlayerCollisionDirect() {
     const p = player;
     const s = this;
-
+    
     const collided =
       p.position.x < s.position.x + s.size.x &&
       p.position.x + p.size.x > s.position.x &&
@@ -178,6 +180,8 @@ class Shooter {
       p.position.y = constrain(p.position.y, topBoundary, bottomBoundary - p.size.y);
 
       if (player.invincibleTimer <= 0) {
+        hurtSound.currentTime = 0;
+        hurtSound.play();
         player.updateHp(player.hp - 1, 90);
       }
     }
@@ -224,6 +228,9 @@ class Shooter {
 // 四方向发射子弹的 Shooter
 class ShooterFourDir extends Shooter {
   shoot() {
+    shooterFireSound.currentTime = 0;
+    shooterFireSound.play();
+
     // 只要上下左右四个方向
     const directions = [
       createVector(1, 0),
@@ -257,6 +264,8 @@ class ShooterEightDir extends Shooter {
   // 不重写 shoot() 也可以直接继承父类的八方向逻辑
   // 如果你想在这里写得更清晰，也可以复制父类 shoot() 的内容：
   shoot() {
+    shooterFireSound.currentTime = 0;
+    shooterFireSound.play();
     super.shoot();
   }
 }
