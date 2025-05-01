@@ -218,3 +218,49 @@ class Shooter {
     }
   }
 }
+
+// 在 Shooter.js 文件末尾添加：
+
+// 四方向发射子弹的 Shooter
+class ShooterFourDir extends Shooter {
+  shoot() {
+    // 只要上下左右四个方向
+    const directions = [
+      createVector(1, 0),
+      createVector(-1, 0),
+      createVector(0, 1),
+      createVector(0, -1)
+    ];
+    const bulletsPerDirection = 5;
+    const spacing = 40;
+
+    directions.forEach(dir => {
+      dir.normalize();
+      for (let i = 0; i < bulletsPerDirection; i++) {
+        const offset = p5.Vector.mult(dir, i * spacing);
+        const bullet = new ShooterBullet(
+          this.position.x + this.size.x / 2 + offset.x,
+          this.position.y + this.size.y / 2 + offset.y,
+          dir.copy(),
+          1,
+          3
+        );
+        this.bullets.push(bullet);
+      }
+    });
+  }
+}
+
+// 八方向发射子弹的 Shooter（可选，若想显式区分）
+class ShooterEightDir extends Shooter {
+  // 不重写 shoot() 也可以直接继承父类的八方向逻辑
+  // 如果你想在这里写得更清晰，也可以复制父类 shoot() 的内容：
+  shoot() {
+    super.shoot();
+  }
+}
+
+// 把类挂到全局，Room.js 才能 new 出来
+//window.ShooterFourDir  = ShooterFourDir;
+//window.ShooterEightDir = ShooterEightDir;
+
