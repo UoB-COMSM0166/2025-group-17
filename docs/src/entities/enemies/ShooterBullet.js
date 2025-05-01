@@ -1,12 +1,11 @@
 class ShooterBullet {
-    constructor(x, y, direction, dmg = 1, speed = 5, size = 20) {
+    constructor(x, y, direction, dmg = 1, speed = 5, size = 20, bulletImg) {
       this.position = createVector(x, y);
       this.direction = direction.copy().normalize();
       this.damage = dmg;
       this.speed = speed;
-      this.size = createVector(size, size);
-      //this.image = bulletImage; // 你可以换成 shooterBulletImage
-      this.image = shooterBulletImage; // 你可以换成 shooterBulletImage
+      this.size = createVector(size, size * (enImage.height / enImage.width));
+      this.image = bulletImg;
       this.angle = 0;
     }
   
@@ -19,10 +18,6 @@ class ShooterBullet {
       push();
       translate(this.position.x, this.position.y);
       rotate(this.angle);
-      //if (!this.image) {
-      //  console.log("ShooterBullet image not loaded!");
-      //  return;
-      //}
       image(this.image, 0, 0, this.size.x, this.size.y);
       pop();
     }    

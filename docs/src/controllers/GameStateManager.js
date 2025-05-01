@@ -149,7 +149,7 @@ class GameStateManager {
     this.#pauseTime = millis();
     console.log("Game pause!");
 
-    if (pauseSound) pauseSound.play();
+    if (btnSound) btnSound.play();
     this.#PageDrawer.showResumeButtons();
 
     // 添加滤波器（电话音效）

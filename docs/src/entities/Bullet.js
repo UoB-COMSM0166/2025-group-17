@@ -36,14 +36,15 @@ class Bullet {
     pop();
   }
 
-  markAsHit() {
+  markAsHit(playSound=true) {
+    if (this.isHit === true) return;
     this.isHit = true;
-    // Reset the damage to zero to omit further damage to bosses
+    
+    // Omit further damage and hit sound
+    if(playSound) hitSound.play();
     this.damage = 0;
   }
 
   // Let the bullet lasts for 30 frames
-  shouldBeRemoved() {
-    return this.hitFrame >= 30;
-  }
+  shouldBeRemoved() { return this.hitFrame >= 30; }
 }

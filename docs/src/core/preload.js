@@ -30,7 +30,7 @@ function preload() {
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
   shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
-  fourDirBulletImage = loadImage("assets/pills/Pill1.png");
+  fourDirBulletImg = loadImage("assets/pills/Pill1.png");
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
 
@@ -68,6 +68,16 @@ function preload() {
   L1_OfficeSound = loadSound("assets/music/bgm/L1_Office.mp3");
   L2_CasinoSound = loadSound("assets/music/bgm/L2_Casino.mp3");
   L3_PsychoSound = loadSound("assets/music/bgm/L3_Psycho.mp3");
+
+  // Load sound effects
+  btnSound = loadSound("assets/music/se/Btn_Pressed.mp3");
+  hitSound = loadSound("assets/music/se/Enemy_Hurt.mp3");
+  playerDeathSound = loadSound("assets/music/se/Player_Death.mp3");
+  enemyDeathSound = loadSound("assets/music/se/Enemy_Death.mp3");
+  bossDeathSound = loadSound("assets/music/se/Boss_Death.mp3");
+  shootSound = loadSound("assets/music/se/Player_Shoot.mp3");
+  hurtSound = loadSound("assets/music/se/Player_Hurt.mp3");
+  openDoorSound = loadSound("assets/music/se/Door_Open.mp3");
 }
 
 function preloadScenes() {

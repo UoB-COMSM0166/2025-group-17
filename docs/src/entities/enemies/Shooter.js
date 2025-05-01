@@ -1,4 +1,7 @@
 class Shooter {
+  #shakeIntensity;
+  #isDead;
+
   constructor(x, y) {
     this.position = createVector(x, y);
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
@@ -15,6 +18,8 @@ class Shooter {
     this.bullets = [];
     this.warningTime = 0;
     this.warningDuration = 60;
+    this.#shakeIntensity = 0;
+    this.#isDead = false;
 
     // Shooter Boss 动画相关
     this.frames = window.shooterFrames;
@@ -94,7 +99,8 @@ class Shooter {
           this.position.y + this.size.y / 2 + offset.y,
           dir.copy(),
           1,
-          3
+          3,
+          ShooterBulletImage
         );
         this.bullets.push(bullet);
       }
@@ -112,12 +118,22 @@ class Shooter {
 
   takeDamage(damage) {
     this.hp = max(0, this.hp - damage);
-    hitSound.currentTime = 0;
-    hitSound.play();
-    if (this.hp === 0) {
-      deathSound.currentTime = 0;
-      deathSound.play();
+    if (this.hp <= 0) this.#markAsDead();
+  }
+
+  #markAsDead() {
+    if (this.#isDead) return;
+    this.#isDead = true;
+    this.#shakeIntensity = 30;
+  }
+
+  // Remove boss after the animation
+  shouldBeRemoved() {
+    if (this.#isDead && this.#shakeIntensity <= 0) {
+      // bossDeathSound.play();
+      return true;
     }
+    return false;
   }
 
   detectBulletCollision(bulletArr) {
@@ -125,7 +141,7 @@ class Shooter {
       if (this.checkBulletCollision(bulletObj)) {
         this.takeDamage(bulletObj.damage);
         this.isHurt = true;
-        bulletArr[bulletIndex].markAsHit();
+        bulletArr[bulletIndex].markAsHit(!this.#isDead);
       }
     });
   }
@@ -142,7 +158,7 @@ class Shooter {
   detectPlayerCollision() {
     this.bullets = this.bullets.filter(bullet => {
       if (this.checkPlayerCollision(bullet)) {
-        player.updateHp(player.hp - bullet.damage, 90);
+        player.updateHp(-bullet.damage, 90);
         return false;
       }
       return true;
@@ -177,9 +193,7 @@ class Shooter {
       p.position.x = constrain(p.position.x, leftBoundary, rightBoundary - p.size.x);
       p.position.y = constrain(p.position.y, topBoundary, bottomBoundary - p.size.y);
 
-      if (player.invincibleTimer <= 0) {
-        player.updateHp(player.hp - 1, 90);
-      }
+      player.updateHp(-1, 90);
     }
   }
 
@@ -195,6 +209,35 @@ class Shooter {
     if (this.warningTime > 0) {
       this.displayWarningEffect();
     }
+  }
+
+  display() {
+    // 播放当前动画帧
+    const img = this.frames[this.currentFrame];
+    if (this.#isDead) {
+      this.#displayDeadBoss(img);
+      return;
+    }
+
+    image(img, this.position.x, this.position.y, this.size.x, this.size.y);
+    this.bullets.forEach(bullet => bullet.display());
+    if (this.warningTime > 0) {
+      this.displayWarningEffect();
+    }
+  }
+
+  #displayDeadBoss(img) {
+    // Compute random shaking displacement
+    let shakeX = random(-this.#shakeIntensity, this.#shakeIntensity);
+    let shakeY = random(-this.#shakeIntensity, this.#shakeIntensity);
+    
+    // Draw the enemy with shaking effects
+    if (this.#shakeIntensity % 5 >= 2) {
+      image(img, this.position.x + shakeX, this.position.y + shakeY, this.size.x, this.size.y);
+    }
+
+    // Decrease intensity
+    this.#shakeIntensity -= 0.4;
   }
 
   displayWarningEffect() {
@@ -243,9 +286,9 @@ class ShooterFourDir extends Shooter {
           this.position.y + this.size.y / 2 + offset.y,
           dir.copy(),
           1,
-          3
+          3,
+          fourDirBulletImg
         );
-        bullet.image = fourDirBulletImage;
         this.bullets.push(bullet);
       }
     });
@@ -260,8 +303,3 @@ class ShooterEightDir extends Shooter {
     super.shoot();
   }
 }
-
-// 把类挂到全局，Room.js 才能 new 出来
-//window.ShooterFourDir  = ShooterFourDir;
-//window.ShooterEightDir = ShooterEightDir;
-

@@ -1,8 +1,7 @@
 class MenuDrawer {
   #scenePlayer;
   #helpBar;
-  #state = "mainMenu"; // "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
-  #gameClearTime;
+  #state = "policy"; // "policy", "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
   
   constructor(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData) {
     this.btnIndex = 0;
@@ -26,6 +25,8 @@ class MenuDrawer {
 
     this.#scenePlayer = new ScenePlayer(sceneData, sceneImgs, sceneSounds);
     this.#helpBar = new HelpBar(helpBarData);
+    // Let the policy disclain last for 4 seconds
+    setTimeout(() => { this.#state = "mainMenu" }, 4000);
   }
 
   createMenuButton(imgPath, label, yOffset, callback, hidden = false) {
@@ -37,6 +38,7 @@ class MenuDrawer {
     btn.position(windowWidth / 2 - btn.width / 2, windowHeight / 2 + yOffset * btn.height / 2);
     btn.mouseClicked(() => {
       if (this.btnIndex === null) return;
+      if (btnSound) btnSound.play();
       btn.removeClass('blink');
       this.btnIndex = 0;
       callback();
@@ -119,6 +121,7 @@ class MenuDrawer {
 
   drawMainMenu() {
     image(startMenuImg, 0, 0, widthInPixel, heightInPixel);
+    this.showStartButtons();
     this.#repositionButton(this.btnContinue, -1.1);
     this.#repositionButton(this.btnNewGame, 1.1);
     if (this.btnIndex !== null) this.mainMenuBtns[this.btnIndex].class('blink');
@@ -209,6 +212,12 @@ class MenuDrawer {
   }
 
   renderMenu(playerObj, timeSpent) {
+    if (this.#state === "policy") {
+      this.btnContinue.hide();
+      this.btnNewGame.hide();
+      PolicyDisplayer.display();
+      return;
+    }
     if (!this.shouldRenderMenu(playerObj)) this.#helpBar.hide();
     if (this.#isScenePage()) this.#scenePlayer.draw();
     if (this.#state === "mainMenu") this.drawMainMenu();
@@ -225,7 +234,7 @@ class MenuDrawer {
   }
 
   shouldRenderMenu(playerObj) {
-    return this.#state === "mainMenu" || this.#state === "paused" || this.#state === "completed" || this.#isGameOver(playerObj) || this.#isScenePage();
+    return this.#state === "mainMenu" || this.#state === "paused" || this.#state === "completed" || this.#isGameOver(playerObj) || this.#isScenePage() || this.#state === "policy";
   }
 
   updatePauseBtnPosition() {
@@ -293,7 +302,10 @@ class MenuDrawer {
   }
 
   #controlBtnsByKeys(buttons, eventTypes) {
-    if (keyIsDown(ENTER)) this.#pressBtnsByKeys(buttons, eventTypes);
+    if (keyIsDown(ENTER)) {
+      if (btnSound) btnSound.play();
+      this.#pressBtnsByKeys(buttons, eventTypes);
+    }
     if (keyIsDown(DOWN_ARROW) || keyIsDown(UP_ARROW)) this.#moveBetweenBtnsByKeys(buttons);
   }
 
