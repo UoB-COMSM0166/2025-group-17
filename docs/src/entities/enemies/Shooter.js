@@ -245,6 +245,7 @@ class ShooterFourDir extends Shooter {
           1,
           3
         );
+        bullet.image = fourDirBulletImage;
         this.bullets.push(bullet);
       }
     });

@@ -30,7 +30,7 @@ function preload() {
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
   shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
-
+  fourDirBulletImage = loadImage("assets/pills/Pill1.png");
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
 
