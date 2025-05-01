@@ -395,13 +395,13 @@ File: `tests/time.test.js`
 These tests guarantee that players receive meaningful feedback about how long it took to finish the game, adding an important competitive and motivational layer.
 
 4. Summary and Reflections
-Coverage: Through both black-box and white-box testing, we covered major user interactions, game logic integrity, and data tracking. Our combination of test types enabled us to verify the system both externally and internally.
-Efficiency: Agile collaboration, pair programming, and code reviews through GitHub ensured continuous quality improvement. Testing was not a final step, but a continuous part of the development cycle.
-Lessons Learned:
-Pair testing helps catch issues early.
-Writing unit tests made our codebase more modular and maintainable.
-Regular playtesting helped refine the user experience iteratively.
-Future Plans:
+·Coverage: Through both black-box and white-box testing, we covered major user interactions, game logic integrity, and data tracking. Our combination of test types enabled us to verify the system both externally and internally.
+·Efficiency: Agile collaboration, pair programming, and code reviews through GitHub ensured continuous quality improvement. Testing was not a final step, but a continuous part of the development cycle.
+### Lessons Learned:
+·Pair testing helps catch issues early.
+·Writing unit tests made our codebase more modular and maintainable.
+·Regular playtesting helped refine the user experience iteratively.
+### Future Plans:
 Expand unit testing to include item interactions and enemy AI.
 Add automated stress and load testing.
 Explore accessibility testing for inclusive gameplay.
