@@ -375,7 +375,36 @@ This report documents the testing approach, tools, techniques, and outcomes for 
    This testing aproach simulated how players would use the game, helping us catch the logic errors and improve usability without needing to understand internal code.
 
 3.White-Box Testing
-We used Jest to create unit tests for validating internal logic of important modules such as `Player`, CollisionDetector, and time tracking functionality.
+We used Jest to create unit tests for validating internal logic of important modules such as `Player`, `CollisionDetector`, and time tracking functionality.
+3.1 layer Class Tests
+File: `tests/layer.test.js`
+·HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
+·Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
+·HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
+·Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
+3.2 Collision Detection Tests
+File: `tests/collisionDetector.test.js`
+·Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
+·Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
+These tests indirectly verify internal logic like `isBulletHitWall() `and correct management of game objects.
+3.3 Time Tracking Tests
+File: `tests/time.test.js`
+·Start Time Accuracy: Verifies correct timestamp capture when the game starts.
+·Elapsed Time: Confirms that time is accurately computed during gameplay.
+·End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
+These tests guarantee that players receive meaningful feedback about how long it took to finish the game, adding an important competitive and motivational layer.
+
+4. Summary and Reflections
+Coverage: Through both black-box and white-box testing, we covered major user interactions, game logic integrity, and data tracking. Our combination of test types enabled us to verify the system both externally and internally.
+Efficiency: Agile collaboration, pair programming, and code reviews through GitHub ensured continuous quality improvement. Testing was not a final step, but a continuous part of the development cycle.
+Lessons Learned:
+Pair testing helps catch issues early.
+Writing unit tests made our codebase more modular and maintainable.
+Regular playtesting helped refine the user experience iteratively.
+Future Plans:
+Expand unit testing to include item interactions and enemy AI.
+Add automated stress and load testing.
+Explore accessibility testing for inclusive gameplay.
 
 ### Conclusion
 
