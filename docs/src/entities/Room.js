@@ -343,7 +343,7 @@ class Room {
   generateTutorialObs(obsData) {
     let newObstacle;
     const x = this.savePoint.position.x + player.size.x + widthInPixel / 3 - 40;
-    const y = topBoundary + player.size.y + heightInPixel / 3 + 100;
+    const y = topBoundary + player.size.y + heightInPixel / 3 + 70;
     newObstacle = new Obstacle(x, y, obsData.img);
     this.obstacles.push(newObstacle);
   }

@@ -88,7 +88,7 @@ class InputHandler {
     // Load room
     if (nextRoomId === 1) {
       const randomRoomId = random([1, 2, 3, 4, 5, 6]);
-      room.setup(roomData[randomRoomId]);
+      room.setup(roomData[1]);
     } 
     else if (nextRoomId === 2) {
       room.setup(roomData[7]);
