@@ -17,7 +17,7 @@
             {
                "x": 772,
                "y": 424,
-               "image": "assets/obstacles/level1/PC-1.png"
+               "image": "assets/obstacles/level1/L1_obs1.png"
             }
          ],
          "enemies": [
@@ -45,27 +45,27 @@
             {
                "x": 378,
                "y": 260,
-               "image": "assets/obstacles/level1/PC-1.png"
+               "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
                "x": 488,
                "y": 152,
-               "image": "assets/obstacles/level1/PC-2.png"
+               "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
                "x": 288,
                "y": 398,
-               "image": "assets/obstacles/level1/PC-3.png"
+               "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
                "x": 488,
                "y": 346,
-               "image": "assets/obstacles/level1/PC-4.png"
+               "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
                "x": 688,
                "y": 398,
-               "image": "assets/obstacles/level1/PC-5.png"
+               "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
@@ -108,27 +108,27 @@
             {
                "x": 488,
                "y": 122,
-               "image": "assets/obstacles/level1/PC-1.png"
+               "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
                "x": 598,
                "y": 192,
-               "image": "assets/obstacles/level1/PC-2.png"
+               "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
                "x": 488,
                "y": 262,
-               "image": "assets/obstacles/level1/PC-3.png"
+               "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
                "x": 378,
                "y": 332,
-               "image": "assets/obstacles/level1/PC-4.png"
+               "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
                "x": 488,
                "y": 402,
-               "image": "assets/obstacles/level1/PC-5.png"
+               "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
@@ -171,27 +171,27 @@
             {
                "x": 408,
                "y": 122,
-               "image": "assets/obstacles/level1/PC-1.png"
+               "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
                "x": 598,
                "y": 192,
-               "image": "assets/obstacles/level1/PC-2.png"
+               "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
                "x": 458,
                "y": 262,
-               "image": "assets/obstacles/level1/PC-3.png"
+               "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
                "x": 598,
                "y": 332,
-               "image": "assets/obstacles/level1/PC-4.png"
+               "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
                "x": 408,
                "y": 402,
-               "image": "assets/obstacles/level1/PC-5.png"
+               "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
@@ -234,27 +234,27 @@
             {
                "x": 328,
                "y": 114,
-               "image": "assets/obstacles/level1/PC-1.png"
+               "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
                "x": 328,
                "y": 244,
-               "image": "assets/obstacles/level1/PC-2.png"
+               "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
                "x": 658,
                "y": 424,
-               "image": "assets/obstacles/level1/PC-3.png"
+               "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
                "x": 658,
                "y": 114,
-               "image": "assets/obstacles/level1/PC-4.png"
+               "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
                "x": 658,
                "y": 244,
-               "image": "assets/obstacles/level1/PC-5.png"
+               "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
@@ -297,27 +297,27 @@
             {
                "x": 378,
                "y": 122,
-               "image": "assets/obstacles/level1/PC-1.png"
+               "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
                "x": 378,
                "y": 442,
-               "image": "assets/obstacles/level1/PC-2.png"
+               "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
                "x": 378,
                "y": 262,
-               "image": "assets/obstacles/level1/PC-3.png"
+               "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
                "x": 598,
                "y": 332,
-               "image": "assets/obstacles/level1/PC-4.png"
+               "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
                "x": 598,
                "y": 122,
-               "image": "assets/obstacles/level1/PC-5.png"
+               "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
@@ -360,27 +360,27 @@
             {
                "x": 328,
                "y": 114,
-               "image": "assets/obstacles/level1/PC-1.png"
+               "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
                "x": 328,
                "y": 244,
-               "image": "assets/obstacles/level1/PC-2.png"
+               "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
                "x": 658,
                "y": 424,
-               "image": "assets/obstacles/level1/PC-3.png"
+               "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
                "x": 328,
                "y": 424,
-               "image": "assets/obstacles/level1/PC-4.png"
+               "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
                "x": 658,
                "y": 244,
-               "image": "assets/obstacles/level1/PC-5.png"
+               "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
@@ -474,27 +474,27 @@
             {
                "x": 200,
                "y": 120,
-               "image": "assets/obstacles/level1/pillow1.png"
+               "image": "assets/obstacles/level2/L2_obs9.png"
             },
             {
                "x": 350,
                "y": 395,
-               "image": "assets/obstacles/level1/pillow2.png"
+               "image": "assets/obstacles/level2/L2_obs10.png"
             },
             {
                "x": 450,
                "y": 230,
-               "image": "assets/obstacles/level1/tree.png"
+               "image": "assets/obstacles/level2/L2_obs1.png"
             },
             {
                "x": 750,
                "y": 160,
-               "image": "assets/obstacles/level1/vencher.png"
+               "image": "assets/obstacles/level2/L2_obs1.png"
             },
             {
                "x": 550,
                "y": 387,
-               "image": "assets/obstacles/level1/watervencher.png"
+               "image": "assets/obstacles/level2/L2_obs2.png"
             }
          ],
          "enemies": [

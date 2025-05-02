@@ -1,6 +1,7 @@
-//const collisionDetector = new CollisionDetector();
-
 class Chaser {
+  #shakeIntensity;
+  #isDead;
+
   constructor(x, y) {
     this.position = createVector(x, y);
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
@@ -19,6 +20,8 @@ class Chaser {
     this.dashDamageApplied = false;
     this.dashDuration = 10;
     this.currentDashTime = 0;
+    this.#shakeIntensity = 0;
+    this.#isDead = false;
 
     // 替换为动画帧数组（来自 preload）
     this.frames = window.bossFrames;
@@ -90,19 +93,14 @@ class Chaser {
   }
 
   applyDashDamage() {
-    player.updateHp(player.hp - 1);
-    hurtSound.currentTime = 0;
-    hurtSound.play();
+    if (this.#isDead) return;
+    player.updateHp(-1);
     this.dashDamageApplied = true;
 
     const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(160);
     player.position.add(pushDir);
     player.position.x = constrain(player.position.x, leftBoundary, rightBoundary - player.size.x);
     player.position.y = constrain(player.position.y, topBoundary, bottomBoundary - player.size.y);
-
-    if (player.hp <= 0 && typeof menuDrawer !== 'undefined') {
-      menuDrawer.showGameOverPage();
-    }
   }
 
   chasePlayer() {
@@ -138,12 +136,22 @@ class Chaser {
 
   takeDamage(damage) {
     this.hp = max(0, this.hp - damage);
-    hitSound.currentTime = 0;
-    hitSound.play();
-    if (this.hp === 0) {
-      deathSound.currentTime = 0;
-      deathSound.play();
+    if (this.hp <= 0) this.#markAsDead();
+  }
+
+  #markAsDead() {
+    if (this.#isDead) return;
+    this.#isDead = true;
+    this.#shakeIntensity = 30;
+  }
+
+  // Remove boss after the animation
+  shouldBeRemoved() {
+    if (this.#isDead && this.#shakeIntensity <= 0) {
+      // bossDeathSound.play();
+      return true;
     }
+    return false;
   }
 
   detectBulletCollision(bulletArr) {
@@ -151,7 +159,7 @@ class Chaser {
       if (this.checkBulletCollision(bulletObj)) {
         this.takeDamage(bulletObj.damage);
         this.isHurt = true;
-        bulletArr[bulletIndex].markAsHit();
+        bulletArr[bulletIndex].markAsHit(!this.#isDead);
       }
     });
   }
@@ -165,20 +173,25 @@ class Chaser {
     );
   }
 
-  //checkPlayerCollision() {
-  //  return (
-  //    this.position.x < player.position.x + player.size.x &&
-  //    this.position.x + this.size.x > player.position.x &&
-  //    this.position.y < player.position.y + player.size.y &&
-  //    this.position.y + this.size.y > player.position.y
-  //  );
-  //}
-
   display() {
-    // if (this.hp <= 0) return;
     // 播放当前动画帧
     const img = this.frames[this.currentFrame];
-    image(img, this.position.x, this.position.y, this.size.x, this.size.y);
+    if (this.#isDead) this.#displayDeadBoss(img);
+    else image(img, this.position.x, this.position.y, this.size.x, this.size.y);
+  }
+
+  #displayDeadBoss(img) {
+    // Compute random shaking displacement
+    let shakeX = random(-this.#shakeIntensity, this.#shakeIntensity);
+    let shakeY = random(-this.#shakeIntensity, this.#shakeIntensity);
+    
+    // Draw the enemy with shaking effects
+    if (this.#shakeIntensity % 5 >= 2) {
+      image(img, this.position.x + shakeX, this.position.y + shakeY, this.size.x, this.size.y);
+    }
+
+    // Decrease intensity
+    this.#shakeIntensity -= 0.5;
   }
 
   applyHitEffect(flashFrame) {
@@ -193,4 +206,3 @@ class Chaser {
     }
   }
 }
-window.Chaser = Chaser;

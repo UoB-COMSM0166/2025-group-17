@@ -1,15 +1,13 @@
 class InputHandler {
   #currentRoom;
-  constructor(roomObj, cooldownTime = 2000) {
+  constructor(roomObj) {
     this.#currentRoom = roomObj;
     this.collisionDetector = new CollisionDetector();
-    this.coolDownTime = cooldownTime;
-    this.lastLoadTime = millis();
     this.lastCollisionTime = millis();
   }
 
   update(playerObj) {
-    this.#currentRoom.update();
+    this.#currentRoom.update(playerObj);
     this.#currentRoom.display(playerObj);
     playerObj.updateVelocity();
 
@@ -35,20 +33,12 @@ class InputHandler {
       playerObj.resetVelocity();
 
       // Player loses health when colliding with the enemies
-      if (collideWithEnemies && playerObj.invincibleTimer <= 0) {
-        playerObj.updateHp(playerObj.hp - 1, 90);
-        hurtSound.currentTime = 0;
-        hurtSound.play();
-      }
+      if (collideWithEnemies) playerObj.updateHp(-1, 90);
     }
 
-    this.collisionDetector.handleEnemyCollision(this.#currentRoom.enemies);
-    this.collisionDetector.handleEnemyObstacleCollision(this.#currentRoom.enemies, this.#currentRoom.obstacles);
-
+    this.collisionDetector.handleEnemyCollision(this.#currentRoom.enemies, this.#currentRoom.obstacles);
     this.updateBullets(playerObj);
-    this.collisionDetector.detectBulletEnemyCollision(playerObj.bullets, this.#currentRoom.enemies);
-    this.collisionDetector.detectBulletObstacleCollision(playerObj.bullets, this.#currentRoom.obstacles);
-    this.removeEnemies(this.#currentRoom.enemies);
+    this.collisionDetector.detectBulletCollision(playerObj.bullets, this.#currentRoom.enemies, this.#currentRoom.obstacles);
     this.#moveToNextRoom(playerObj);
   }
 
@@ -68,28 +58,6 @@ class InputHandler {
     });
   }
 
-  removeEnemies(enemyArray) {
-    enemyArray.forEach((enemyObj, enemyIndex) => {
-      if (enemyObj.hp <= 0) {
-        enemyArray.splice(enemyIndex, 1);
-      }
-    });
-  }
-
-  decreasePlayerHp(playerObj) {
-    // The player will not receive any damage 2 seconds after loading or entering the new room.
-    if (millis() - this.lastLoadTime < this.coolDownTime) return;
-
-    // The player will not receive any damage 2 seconds after the collision.
-    if (millis() - this.lastCollisionTime < this.coolDownTime) return;
-    playerObj.updateBlinking(); // The player will blink for 2 seconds after being hit.
-    playerObj.decreaseHp();
-    this.lastCollisionTime = millis();
-
-    hurtSound.currentTime = 0;
-    hurtSound.play();
-  }
-
   #moveToNextRoom(playerObj, tolerance = playerObj.size.x) {
     if (!this.#currentRoom.checkClearCondition()) return;
 
@@ -100,9 +68,8 @@ class InputHandler {
 
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
-      this.lastLoadTime = millis();
       this.#loadRoom();
-      playerObj.resetInvincibleTimer();
+      player.resetInvincibleTimer();
     }
   }
 
@@ -111,10 +78,6 @@ class InputHandler {
       console.log("Game Completed!");
       return;
     }
-    // Keep play hp (need or not)
-    // TODO: 在player类中设置resetStatus函数，在除了宝箱房外的房间内调用
-    // Reset status of player (keep HP)
-    // player.resetStatus()
     const prevHp = player.hp;
 
     const nextRoomId = this.#currentRoom.getCurrentRoomId() + 1;

@@ -38,7 +38,7 @@ class GameStateManager {
 
   update() {
     this.#adjustCanvasWithAspectRatio();
-    this.#timeSpent = millis() - startTime;
+    if (!this.#isGameCompleted) this.#timeSpent = millis() - startTime;
     if (this.#shouldRenderMenu()) return;
 
     const currentLevelId = this.#inputHandler.getCurrentLevelId();
@@ -46,7 +46,7 @@ class GameStateManager {
     this.playBGMForRoom(this.#inputHandler.getCurrentRoomId());
     this.#PageDrawer.updatePauseBtnPosition();
     this.#inputHandler.update(player);
-    player.healByTime(this.#timeSpent);
+    console.log(player);
 
     PlayerStatusDisplayer.display(
       player, currentLevelId, currentRoomNo, this.#timeSpent, heartImg, damagedHeartImg, uiFont
@@ -121,7 +121,6 @@ class GameStateManager {
     player.position.y = savedPosition.position.y;
     player.hp = JSON.parse(savedPlayerHp);
     startTime = millis() - JSON.parse(savedTimeSpent);
-    this.#inputHandler.lastLoadTime = millis();
     player.resetInvincibleTimer();
     console.log("Game Loaded!");
 
@@ -149,7 +148,7 @@ class GameStateManager {
     this.#pauseTime = millis();
     console.log("Game pause!");
 
-    if (pauseSound) pauseSound.play();
+    if (btnSound) btnSound.play();
     this.#PageDrawer.showResumeButtons();
 
     // 添加滤波器（电话音效）

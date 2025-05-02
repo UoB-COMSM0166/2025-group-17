@@ -1,21 +1,26 @@
 class Player {
   #canShootAgain;
   #shootCoolDownDuration;
+  #atk;
+  #maxAtk;
+  #bulletSize;
+  #maxBulletSize;
 
   constructor(x = leftBoundary, y = heightInPixel / 2) {
-    console.log(`player x: ${x}`);
     this.position = createVector(x, y);
-    this.maxHp = 5;
+    this.maxHp = 3;
     this.hp = this.maxHp;
     this.speed = 3;
     this.maxSpeed = 15;
     this.acceleration = 5.0;
     this.friction = 0.85;
     this.velocity = createVector(0, 0);
-    this.atk = 50;
+    this.#atk = 50;
+    this.#maxAtk = 100;
+    this.#bulletSize = 20;
+    this.#maxBulletSize = 40;
     this.#canShootAgain = true;
-    this.#shootCoolDownDuration = 600;
-    // this.maxAtk = 100;
+    this.#shootCoolDownDuration = 300;
 
     // 判定框尺寸（红框用来检测碰撞）！！！
     this.size = createVector(36, 52);  // ← 可调整碰撞判定大小（原本是 heightInPixel / 7）
@@ -40,32 +45,33 @@ class Player {
     this.frameDelay = 6;                       // 每几帧切换一次动画
   }
 
-  updateHp(newHp, invincibleDuration = 60) {
+  updateHp(valueToAdd, invincibleDuration = 60) {
     if (this.invincibleTimer > 0) return;
+    const newHp = this.hp + valueToAdd;
+    if (newHp < this.hp) hurtSound.play();
 
-    this.hp = newHp;
+    this.hp = max(0, min(newHp, this.maxHp));
     console.log("Player hp updated to", this.hp);
 
-    if (this.hp <= 0) {
-      deathSound.currentTime = 0;
-      deathSound.play();
-    }
-
-    this.resetInvincibleTimer(invincibleDuration); // 用参数设定无敌时间
+    if (this.hp <= 0) playerDeathSound.play();
+    this.resetInvincibleTimer(invincibleDuration);
   }
 
   shoot(direction) {
     if (!this.#canShootAgain) return;
-
     const centerX = this.position.x + this.size.x / 2;
     const centerY = this.position.y + this.size.y / 2;
-    this.bullets.push(new Bullet(centerX, centerY, direction, this.atk));
+    this.bullets.push(new Bullet(centerX, centerY, direction, this.#atk, this.#bulletSize));
     this.#canShootAgain = false;
     setTimeout(() => { this.#canShootAgain = true; }, this.#shootCoolDownDuration);
     console.log("A bullet has been shot");
-
-    shootSound.currentTime = 0;
     shootSound.play();
+  }
+
+  powerUp() {
+    this.#atk = min(this.#atk * 1.2, this.#maxAtk);
+    this.#bulletSize = min(this.#bulletSize * 1.2, this.#maxBulletSize);
+    console.log("Power Up activated!");
   }
 
   updateBlinking() {
@@ -143,28 +149,6 @@ class Player {
   revertPosition() {
     this.position.x -= this.velocity.x;
     this.position.y -= this.velocity.y;
-  }
-
-  decreaseHp() {
-    console.log('Player took damage!');
-    if (this.hp > 0 && this.invincibleTimer === 0) {
-      this.hp = max(0, this.hp - 1);
-      this.resetInvincibleTimer();
-    }
-    if (this.hp === 0) {
-      deathSound.currentTime = 0;
-      deathSound.play();
-    }
-  }
-
-  increaseHp() { this.hp = min(3, this.hp + 1); }
-
-  healByTime(currentTime) {
-    if (this.lastHealTime === null) this.lastHealTime = currentTime;
-    if (this.hp !== 1 || (currentTime - this.lastHealTime) < 300000) return;
-    console.log('Heal after 5 minutes...')
-    this.increaseHp();
-    this.lastHealTime = currentTime;
   }
 
   resetInvincibleTimer(duration = 60) {
