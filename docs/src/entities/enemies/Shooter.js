@@ -18,6 +18,7 @@ class Shooter {
     this.bullets = [];
     this.warningTime = 0;
     this.warningDuration = 60;
+    this.warningSoundOn = false;          // 新做法：标记“正在连续播放”
     this.#shakeIntensity = 0;
     this.#isDead = false;
 
@@ -54,9 +55,21 @@ class Shooter {
 
     if (this.currentShootCooldown <= this.warningDuration) {
       this.warningTime = this.warningDuration;
+      // 新：整段时间内循环播放
+      if (!this.warningSoundOn && shooterWarningSound) {
+        shooterWarningSound.setLoop(true); // 也可以直接 shooterWarningSound.loop();
+        shooterWarningSound.play();        // 从头开始并循环
+        this.warningSoundOn = true;
+      }
     }
 
     if (this.currentShootCooldown <= 0) {
+         // 退出 warning，立刻停声
+     if (this.warningSoundOn && shooterWarningSound) {
+         shooterWarningSound.stop();   // stop() 会自动把播放头归零
+         this.warningSoundOn = false;
+     }
+
       this.warningTime = 60;
       this.shoot();
       this.currentShootCooldown = this.shootCooldown;
@@ -282,7 +295,7 @@ class Shooter {
 // 四方向发射子弹的 Shooter
 class ShooterFourDir extends Shooter {
   shoot() {
-    shooterFireSound.play();
+    //shooterFireSound.play();
 
     // 只要上下左右四个方向
     const directions = [
@@ -317,7 +330,7 @@ class ShooterEightDir extends Shooter {
   // 不重写 shoot() 也可以直接继承父类的八方向逻辑
   // 如果你想在这里写得更清晰，也可以复制父类 shoot() 的内容：
   shoot() {
-    shooterFireSound.play();
+    //shooterFireSound.play();
     super.shoot();
   }
 }
