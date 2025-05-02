@@ -2,7 +2,7 @@ class Enemy {
   constructor(x, y, hp, enImage) {
     this.hp = hp;
     this.position = createVector(x, y);
-
+    const smallEnemyHp = 50;
     const enemyWidth = (hp === smallEnemyHp) ? heightInPixel / 16 : heightInPixel / 12;
     const enemyHeight = Math.floor(enemyWidth * (enImage.height / enImage.width));
     this.size = createVector(enemyWidth, enemyHeight);
@@ -54,34 +54,4 @@ class Enemy {
     this.velocity = direction.mult(this.velocity.mag());
     this.position.add(direction);
   }
-
-  // // 与玩家接触时造成伤害
-  // checkPlayerCollisionAndDamage() {
-  //   const bounds = {
-  //     left: this.position.x + this.size.x * 0.25,
-  //     right: this.position.x + this.size.x * 0.75,
-  //     top: this.position.y + this.size.y * (2 / 3),
-  //     bottom: this.position.y + this.size.y
-  //   };
-  
-  //   const playerBounds = {
-  //     left: player.position.x,
-  //     right: player.position.x + player.size.x,
-  //     top: player.position.y,
-  //     bottom: player.position.y + player.size.y
-  //   };
-  
-  //   const collided = (
-  //     bounds.left < playerBounds.right &&
-  //     bounds.right > playerBounds.left &&
-  //     bounds.top < playerBounds.bottom &&
-  //     bounds.bottom > playerBounds.top
-  //   );
-  
-  //   if (collided && player.invincibleTimer <= 0) {
-  //     player.updateHp(player.hp - 1, 90); // 扣1血 + 无敌90帧
-  //     hurtSound.currentTime = 0;
-  //     hurtSound.play();
-  //   }
-  // }
 }

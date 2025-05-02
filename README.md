@@ -53,8 +53,6 @@ https://youtu.be/wU7b8NAj1_g?si=eox95n0rkYJhKN4H
 | Out | The Binding of Isaac | <ul><li> Players aim to reach the end of each level to complete the game </li><br><li> Random items/events will give players unique abilities </li><br><li> Save point enables players to reload the save data when they died </li></ul> | <ol><li> Careful design for collision detection to replicate the experience of the original game. </li><br><li> Make sure each level is unique and has a reasonable difficulty curve </li></ol> |
 | Majhontro | Balatro | <ul><li> Players aim to score higher points by different combinations of the current tiles </li><br><li> Boss levels introduce restrictions on card playing or drawing </li><br><li> Random tile generation ensures the game replayability </li></ul> | <ol><li> Replace suit logic with a Mahjong tile </li><br><li> Design tile combination and rules for bonus points </li></ol> |
 
-<!-- TODO: Onion Model Diagram -->
-<!-- TODO: Use case diagram -->
 
 <!-- Reflection on requirement engineering -->
 During the workshop in Week 4, we explored the process of requirement engineering by identifying various stakeholders and determining their expectations. To estimate the user value of our game, we utilized the onion model to hierarchically consider stakeholders and gather potential requirements beyond our team's initial scope. Outlining the epics and user stories helps us break them into smaller, manageable tasks, specifying what the team should build in each sprint cycle. This approach ensures clear and measurable requirements, detailing the time and effort required from the development team. By assigning smaller tasks to each team member, we minimize the impact of adjustments, keeping our team agile and adaptable. We also consider the diverse needs of different users, which allows each team member to focus on independent and achievable goals, thereby reducing the risk associated with complex objectives. The acceptance criteria are crucial for identifying deliverable outcomes and prioritizing solutions that work for most people. Furthermore, communicating requirements within the team enhances our ability to gather feedback among the team members and reflect on changes before modifying the actual code. With the help of it, we can be more flexible to the demands that change frequently, which fits the spirit of agile development.
@@ -79,6 +77,8 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 Onion Model
 ![onion-model.png](images/onion-model.png)</br>
 
+Use-case Diagram
+![Case-diagram.png](images/Case-diagram.png)</br>
 ### Design
 <!-- 
 - 15% ~750 words 

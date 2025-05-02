@@ -5,6 +5,7 @@ class ScenePlayer {
   #currentScene;
   #currentIndex = 0;
   #currentBGM = null;
+  #noiseIntensity = 0.1;
 
   constructor(data, images, sounds) {
     this.#data = data;
@@ -16,32 +17,27 @@ class ScenePlayer {
   draw() {
     if (this.isSceneComplete()) return;
     const line = this.#currentScene[this.#currentIndex];
-    background("black");  
-    this.#drawTextIcon("↵");
     
-    if (this.#images[line.image]) {
-      // Scale the clip based on canvas height
-      const ratio = this.#images[line.image].width / this.#images[line.image].height;
-      const newWidth = heightInPixel * ratio;
-      image(this.#images[line.image], (widthInPixel - newWidth) / 2, 0, newWidth, heightInPixel);
+    if (this.#images[line.image]) {  
+      push();
+
+      image(this.#images[line.image], 0, 0, widthInPixel, heightInPixel);
+      this.#applyNoiseEffect();
+
+      pop();
     }
   }
 
-  #drawTextIcon(textContent) {
-    const iconSize = textWidth(textContent);
-    // Draw background
-    noFill();
-    stroke(255);
-    strokeWeight(2);
-    rectMode(CENTER);
-    rect(widthInPixel - iconSize, heightInPixel - iconSize, iconSize + 10, iconSize + 5, 5);
-    
-    // Draw the text
-    fill(0);
-    strokeWeight(4);
-    textFont("monospace", 30);
-    textAlign(CENTER, CENTER);
-    text(textContent, widthInPixel - iconSize, heightInPixel - iconSize);
+  #applyNoiseEffect() {
+    loadPixels();
+    for (let i = 0; i < pixels.length; i += 4) {
+      const noiseVal = random(-255 * this.#noiseIntensity, 255 * this.#noiseIntensity);
+      
+      pixels[i]   = constrain(pixels[i] + noiseVal, 0, 255);   // R
+      pixels[i+1] = constrain(pixels[i+1] + noiseVal, 0, 255); // G
+      pixels[i+2] = constrain(pixels[i+2] + noiseVal, 0, 255); // B
+    }
+    updatePixels();
   }
 
   isSceneComplete() {

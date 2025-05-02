@@ -1,0 +1,47 @@
+{
+  "pages": [
+    { 
+      "state": "mainMenu",
+      "text_btn0": "Continue from your last save.",
+      "text_btn1": "Start and enjoy the story!",
+      "keys": [
+        { "key": "↑↓", "action": "Navigate" },
+        { "key": "↵", "action": "Confirm" }
+      ]
+    },
+    {
+      "state": "paused",
+      "text_btn0": "Back to playing.",
+      "text_btn1": "Back to the start menu.",
+      "keys": [
+        { "key": "ESC", "action": "Go Back" },
+        { "key": "↑↓", "action": "Navigate" },
+        { "key": "↵", "action": "Confirm" }
+      ]
+    },
+    {
+      "state": "gameOver",
+      "text_btn0": "Jump back to your last save!",
+      "text_btn1": "Play the game from the beginning.",
+      "keys": [
+        { "key": "ESC", "action": "Go Back" },
+        { "key": "↑↓", "action": "Navigate" },
+        { "key": "↵", "action": "Confirm" }
+      ]
+    },
+    { 
+      "state": "scene",
+      "keys": [
+        { "key": "ESC", "action": "Skip Dialogues" },
+        { "key": "↵", "action": "Next Dialogue" }
+      ]
+    },
+    { 
+      "state": "completed",
+      "keys": [
+        { "key": "ESC", "action": "Back to start menu" },
+        { "key": "↵", "action": "Go to Epilogue" }
+      ]
+    }
+  ]
+}

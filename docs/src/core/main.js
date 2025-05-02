@@ -1,13 +1,3 @@
-let gameStateManager;
-
-let pauseSound = new Audio("assets/music/se/Pause.mp3");
-let hitSound = new Audio("assets/music/se/Enemy_Hurt.mp3");
-let deathSound = new Audio("assets/music/se/Enemy_Death.mp3");
-let shootSound = new Audio("assets/music/se/Player_Shoot.mp3");
-let hurtSound = new Audio("assets/music/se/Player_Hurt.mp3");
-let deathSound2 = new Audio("assets/music/se/Player_Death.mp3");
-let openDoorSound = new Audio("assets/music/se/Door_Open.mp3");
-
 function setup() {
   // 防止 bossSpriteSheet 未加载时报错
   if (!bossSpriteSheet) {
@@ -16,22 +6,20 @@ function setup() {
   }
 
   cnv = createCanvas(windowWidth, windowHeight);
-  setRoomImg();
 
   const eventBus = new EventBus();
 
-  //  初始化 gameStateManager，并 setPageDrawer
+  // Instantiate all classes
   room = new Room();
   let inputHandler = new InputHandler(room);
-  const pageDrawer = new PageDrawer(eventBus, sceneData, sceneImgs, sceneSounds);
-  gameStateManager = new GameStateManager(eventBus, pageDrawer, inputHandler);
-  pageDrawer.setGameStateManager(gameStateManager);
-  pageDrawer.setupMainMenu();
-  pageDrawer.setupPauseMenu();
-  pageDrawer.setupGameOverPage();
+  const PageDrawer = new MenuDrawer(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData);
+  gameStateManager = new GameStateManager(eventBus, PageDrawer, inputHandler);
+  PageDrawer.setupMainMenu();
+  PageDrawer.setupPauseMenu();
+  PageDrawer.setupGameOverPage();
   gameStateManager.playMainmenuSound();
 
-  player = new Player(playerX, playerY);
+  player = new Player();
 
   // Extract all animation frames
   window.bossFrames = [];
@@ -57,10 +45,8 @@ function extractFrames(spriteSheet, frameCount, targetArray) {
 }
 
 function draw() {
-  adjustCanvasWithAspectRatio();
-  background(220);
   player.updateBlinking();
-  if (!gameStateManager.shouldRenderMenu()) gameStateManager.update();
+  gameStateManager.update();
   // drawDebugCollisionBoxes(); // 这里是用于碰撞测试
 }
 
@@ -86,23 +72,4 @@ function drawDebugCollisionBoxes() {
 
 function keyPressed() {
   gameStateManager.handlePlayerShooting();
-}
-
-function setRoomImg() {
-  rooms = rawRoomData.rooms;
-  rooms.forEach(room => {
-    room.backgroundImg = loadImage(room.background);
-    if (room.obstacles) {
-      room.obstacles.forEach(obs => {
-        obs.img = loadImage(obs.image);
-      });
-    }
-    if (room.enemies) {
-      room.enemies.forEach(enes => {
-        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
-        enes.img = loadImage(enes.image);
-        console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
-      });
-    }
-  });
 }

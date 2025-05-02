@@ -1,10 +1,11 @@
-class PageDrawer {
+class MenuDrawer {
   #scenePlayer;
-  #state = "mainMenu"; // "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
-  constructor(eventBus, sceneData, sceneImgs, sceneSounds) {
+  #helpBar;
+  #state = "policy"; // "policy", "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
+  
+  constructor(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData) {
     this.btnIndex = 0;
     this.eventBus = eventBus;
-    this.gameStateManager = null; // 外部注入
 
     // Buttons for the main menu
     this.btnContinue = null;
@@ -23,10 +24,9 @@ class PageDrawer {
     this.gameOverBtns = [];
 
     this.#scenePlayer = new ScenePlayer(sceneData, sceneImgs, sceneSounds);
-  }
-
-  setGameStateManager(gsm) {
-    this.gameStateManager = gsm;
+    this.#helpBar = new HelpBar(helpBarData);
+    // Let the policy disclain last for 2.5 seconds
+    setTimeout(() => { this.#state = "mainMenu" }, 2500);
   }
 
   createMenuButton(imgPath, label, yOffset, callback, hidden = false) {
@@ -37,19 +37,36 @@ class PageDrawer {
     btn.size(btnWidth, btnHeight);
     btn.position(windowWidth / 2 - btn.width / 2, windowHeight / 2 + yOffset * btn.height / 2);
     btn.mouseClicked(() => {
-      callback();
+      if (this.btnIndex === null) return;
+      if (btnSound) btnSound.play();
+      btn.removeClass('blink');
       this.btnIndex = 0;
+      callback();
     });
-    btn.mouseOver(() => {
-      btn.class('blink');
-      // this.btnIndex = null;
-    });
+    btn.mouseOver(() => { this.#handleMouseOver(btn) });
     btn.mouseOut(() => {
       btn.removeClass('blink');
       this.btnIndex = 0;
     });
     if (hidden) btn.hide();
     return btn;
+  }
+
+  #handleMouseOver(btn) {
+    let btnArray;
+    if (this.mainMenuBtns.includes(btn)) {
+      btnArray = this.mainMenuBtns;
+    } else if (this.pauseMenuBtns.includes(btn)) {
+      btnArray = this.pauseMenuBtns;
+    } else if (this.gameOverBtns.includes(btn)) {
+      btnArray = this.gameOverBtns;
+    }
+    
+    if (btnArray) {
+      btnArray[this.btnIndex].removeClass('blink');
+      this.btnIndex = btnArray.indexOf(btn);
+      btn.class('blink');
+    }
   }
 
   #repositionButton(btn, yOffset) {
@@ -93,12 +110,18 @@ class PageDrawer {
 
   setupGameOverPage() {
     this.btnLoadLastSave = this.createMenuButton('assets/buttons/LastSave.png', 'Last Save', -1.1, () => this.eventBus.publish('LOAD_GAME'), true);
-    this.btnRestart = this.createMenuButton('assets/buttons/Restart.png', 'Restart', 1.1, () => this.eventBus.publish('START_NEW_GAME'), true);
+    this.btnRestart = this.createMenuButton('assets/buttons/Restart.png', 'Restart', 1.1, () => this.#handleRestart(), true);
     this.gameOverBtns.push(this.btnLoadLastSave, this.btnRestart);
+  }
+
+  #handleRestart() {
+    this.eventBus.publish('START_NEW_GAME');
+    this.#state = "inGame";
   }
 
   drawMainMenu() {
     image(startMenuImg, 0, 0, widthInPixel, heightInPixel);
+    this.showStartButtons();
     this.#repositionButton(this.btnContinue, -1.1);
     this.#repositionButton(this.btnNewGame, 1.1);
     if (this.btnIndex !== null) this.mainMenuBtns[this.btnIndex].class('blink');
@@ -113,12 +136,15 @@ class PageDrawer {
   }
 
   #drawMainMsg(title) {
+    push();
     stroke(0);
     strokeWeight(5);
     textSize(32);
     textAlign(CENTER, CENTER);
     fill('#AFDDC9');
+    textFont(uiFont, 20);
     text(title, widthInPixel / 2, heightInPixel / 3);
+    pop();
   }
 
   drawGameOverPage() {
@@ -138,16 +164,12 @@ class PageDrawer {
   drawGameCompleted(totalTime) {
     clear();
     this.btnPause.hide();
-    background(220);
+    image(gameCompletedMenuImg, 0, 0, widthInPixel, heightInPixel);
 
     const totalSecs = floor(totalTime / 1000);
     const mins = floor(totalSecs / 60);
     const secs = totalSecs % 60;
     this.#drawMainMsg(`YOU WON! Took ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} seconds`);
-
-    textSize(24);
-    text(`Press ENTER to enter the epilogue`, widthInPixel / 2, 2 * heightInPixel / 3);
-    text(`Press ESC to return`, widthInPixel / 2, 5 * heightInPixel / 6);
   }
 
   showStartButtons() {
@@ -190,11 +212,21 @@ class PageDrawer {
   }
 
   renderMenu(playerObj, timeSpent) {
+    if (this.#state === "policy") {
+      this.btnContinue.hide();
+      this.btnNewGame.hide();
+      PolicyDisplayer.display();
+      return;
+    }
+    if (!this.shouldRenderMenu(playerObj)) this.#helpBar.hide();
     if (this.#isScenePage()) this.#scenePlayer.draw();
     if (this.#state === "mainMenu") this.drawMainMenu();
     if (this.#state === "paused") this.drawPauseMenu();
     if (this.#state === "completed" && !this.#isScenePage()) this.drawGameCompleted(timeSpent); 
     if (this.#isGameOver(playerObj)) this.drawGameOverPage();
+
+    if (this.#isScenePage()) this.#helpBar.update("scene");
+    else this.#helpBar.update(this.#state, this.btnIndex);
   }
 
   #isScenePage() {
@@ -202,7 +234,7 @@ class PageDrawer {
   }
 
   shouldRenderMenu(playerObj) {
-    return this.#state === "mainMenu" || this.#state === "paused" || this.#state === "completed" || this.#isGameOver(playerObj) || this.#isScenePage();
+    return this.#state === "mainMenu" || this.#state === "paused" || this.#state === "completed" || this.#isGameOver(playerObj) || this.#isScenePage() || this.#state === "policy";
   }
 
   updatePauseBtnPosition() {
@@ -270,7 +302,10 @@ class PageDrawer {
   }
 
   #controlBtnsByKeys(buttons, eventTypes) {
-    if (keyIsDown(ENTER)) this.#pressBtnsByKeys(buttons, eventTypes);
+    if (keyIsDown(ENTER)) {
+      if (btnSound) btnSound.play();
+      this.#pressBtnsByKeys(buttons, eventTypes);
+    }
     if (keyIsDown(DOWN_ARROW) || keyIsDown(UP_ARROW)) this.#moveBetweenBtnsByKeys(buttons);
   }
 
@@ -280,7 +315,8 @@ class PageDrawer {
     buttons[prevBtnIndex].removeClass('blink');
     this.btnIndex = 0;
     if (buttons[prevBtnIndex] === this.btnNewGame) this.#handleNewGame();
-    this.eventBus.publish(eventTypes[prevBtnIndex]);
+    else if (buttons[prevBtnIndex] === this.btnRestart) this.#handleRestart();
+    else this.eventBus.publish(eventTypes[prevBtnIndex]);
     if (buttons[prevBtnIndex] === this.btnNewGame) this.btnPause.hide();
   }
 
@@ -290,10 +326,16 @@ class PageDrawer {
     buttons[this.btnIndex].removeClass('blink');
     this.btnIndex = (this.btnIndex + direction + buttons.length) % buttons.length;
     buttons[this.btnIndex].class('blink');
+    this.#helpBar.updateText(this.#state, this.btnIndex);
   }
 
   #isGameOver(playerObj) {
-    return (this.#state !== "mainMenu") && playerObj.hp <= 0;
+    if (this.#state !== "mainMenu" && playerObj.hp <= 0) {
+      console.log("Game over..");
+      this.#state = "gameOver";
+      return true;
+    }
+    return false;
   }
 
   resizeBtns() {

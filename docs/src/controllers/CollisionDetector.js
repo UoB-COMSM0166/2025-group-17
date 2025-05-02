@@ -6,7 +6,7 @@ class CollisionDetector {
     return objArr.some(obj => this.detectCollision(playerObj, obj));
   }
 
-  handleEnemyCollision(enemyArr) {
+  handleEnemyCollision(enemyArr, obstacleArr) {
     for (let i = 0; i < enemyArr.length; i++) {
       for (let j = i + 1; j < enemyArr.length; j++) {
         if (this.detectCollision(enemyArr[i], enemyArr[j])) {
@@ -14,15 +14,29 @@ class CollisionDetector {
         }
       }
     }
+    this.#handleEnemyObstacleCollision(enemyArr, obstacleArr);
   }
 
-  handleEnemyObstacleCollision(enemyArr, obstacleArr) {
+  #handleEnemyObstacleCollision(enemyArr, obstacleArr) {
     enemyArr.forEach(enemy => {
       obstacleArr.forEach(obstacle => {
         if (this.detectCollision(enemy, obstacle)) {
           enemy.collide(obstacle);
         }
       });
+    });
+  }
+
+  detectBulletCollision(bulletArr, enemyArr, obstacleArr) {
+    // Check the collision between bullets, enemies, walls and obstacles. If there is a collision, 
+    // the bullet vanishes.
+    this.detectBulletEnemyCollision(bulletArr, enemyArr);
+    bulletArr.forEach((bulletObj, bulletIndex) => {
+      if (this.#isBulletHitWall(bulletObj)) {
+        bulletArr[bulletIndex].markAsHit();
+      } else if (obstacleArr.some(obstacleObj => this.detectCollisionWithBullet(bulletObj, obstacleObj))) {
+        bulletArr[bulletIndex].markAsHit();
+      }
     });
   }
 
@@ -33,31 +47,9 @@ class CollisionDetector {
       bulletArr.forEach((bulletObj, bulletIndex) => {
         if (this.detectCollisionWithBullet(bulletObj, enemyObj)) {
           enemyArr[enemyIndex].hp = max(0, enemyObj.hp - bulletObj.damage);
-
-          hitSound.currentTime = 0;
-          hitSound.play();
-
-          if (enemyArr[enemyIndex].hp === 0) {
-            deathSound.currentTime = 0;
-            deathSound.play();
-          }
           bulletArr[bulletIndex].markAsHit();
         }
       });
-    });
-  }
-
-  detectBulletObstacleCollision(bulletArr, obstacleArr) {
-    // Check the collision between bullets, walls and obstacles. If there is a collision, 
-    // the bullet vanishes.
-    bulletArr.forEach((bulletObj, bulletIndex) => {
-      if (this.#isBulletHitWall(bulletObj)) {
-        bulletArr[bulletIndex].markAsHit();
-      } else if (obstacleArr.some(obstacleObj => this.detectCollisionWithBullet(bulletObj, obstacleObj))) {
-        hitSound.currentTime = 0;
-        hitSound.play();
-        bulletArr[bulletIndex].markAsHit();
-      }
     });
   }
 
@@ -119,6 +111,7 @@ class CollisionDetector {
   }
 
   #isBulletHitWall(bulletObj) {
+    const boundaryInPixel = { w: 80, h: 72 };
     const wallMarginX = boundaryInPixel.w / 3;
     const wallMarginY = boundaryInPixel.h / 3;
     const { x, y } = bulletObj.position;
