@@ -1,40 +1,43 @@
 class Item {
-  static #ITEM_IMAGES = {
-    health: healthItemImg,
-    powerup: powerUpItemImg,
-    photo: photoItemImg,
+  #ITEM_IMAGES = {
+    "health": healthItemImg,
+    "powerup": powerUpItemImg,
+    "photo": photoItemImg,
   };
 
-  static #EFFECT_MAP = {
-    health: playerObj => playerObj.updateHp(1),
-    powerup: playerObj => playerObj.powerUp(),
-    photo: () => {},
+  #EFFECT_MAP = {
+    "health": playerObj => playerObj.updateHp(1),
+    "powerup": playerObj => playerObj.powerUp(),
+    "photo": () => {},
   };
 
-  #pos;
+  position;
   #vel;
   #type;
   #gravity;
   #bounce;
   #image;
-  #size;
+  size;
   #groundY;
 
   constructor(x, y, bossBtm, type) {
-    this.#pos = createVector(x, y);
+    this.position = createVector(x, y);
     this.#vel = createVector(0, 3);
     this.#type = type;
     this.#gravity = 0.2;
-    this.#bounce = 0.6;
-    this.#image = Item.#ITEM_IMAGES[this.#type];
-    this.#size = createVector(15, 15 * (this.#image.height / this.#image.width));
-    this.#groundY = bossBtm - this.#size.y;
+    this.#bounce = 0.4;
+    this.#image = this.#ITEM_IMAGES[this.#type];
+    console.log(this.#image);
+    const itemWidth = heightInPixel / 12;
+    const itemHeight = itemWidth * (this.#image.height / this.#image.width);
+    this.size = createVector(itemWidth, itemHeight);
+    this.#groundY = bossBtm - this.size.y;
   }
 
   update() {
     this.#applyGravity();
     this.#handleGroundCollision();
-    this.#pos.add(this.#vel);
+    this.position.add(this.#vel);
   }
 
   #applyGravity() {
@@ -42,8 +45,8 @@ class Item {
   }
 
   #handleGroundCollision() {
-    if (this.#pos.y > this.#groundY) {
-      this.#pos.y = this.#groundY;
+    if (this.position.y > this.#groundY) {
+      this.position.y = this.#groundY;
       this.#vel.y *= -this.#bounce;
       
       if (Math.abs(this.#vel.y) < 0.5) this.#vel.y = 0;
@@ -52,16 +55,15 @@ class Item {
 
   display() {
     image(this.#image, 
-          this.#pos.x, this.#pos.y, 
-          this.#size.x, this.#size.y);
+          this.position.x, this.position.y, 
+          this.size.x, this.size.y);
   }
 
   applyEffect(playerObj) {
-    Item.#EFFECT_MAP[this.#type]?.(playerObj);
+    this.#EFFECT_MAP[this.#type]?.(playerObj);
   }
-
-  get left() { return this.#pos.x; }
-  get right() { return this.#pos.x + this.#size.x; }
-  get top() { return this.#pos.y; }
-  get bottom() { return this.#pos.y + this.#size.y; }
+  
+  getType() {
+    return this.#type;
+  }
 }

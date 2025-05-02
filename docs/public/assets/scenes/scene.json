@@ -191,6 +191,14 @@
           "type": "bgm",
           "name": "Scene3_Bar"
         }
+      },
+      {
+        "label": "start_clip25",
+        "image": "start/clip25",
+        "sound": {
+          "type": "bgm",
+          "name": "Scene3_Bar"
+        }
       }
     ],
     "end": [

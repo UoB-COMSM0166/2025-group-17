@@ -25,8 +25,8 @@ class MenuDrawer {
 
     this.#scenePlayer = new ScenePlayer(sceneData, sceneImgs, sceneSounds);
     this.#helpBar = new HelpBar(helpBarData);
-    // Let the policy disclain last for 4 seconds
-    setTimeout(() => { this.#state = "mainMenu" }, 4000);
+    // Let the policy disclain last for 2.5 seconds
+    setTimeout(() => { this.#state = "mainMenu" }, 2500);
   }
 
   createMenuButton(imgPath, label, yOffset, callback, hidden = false) {
@@ -164,7 +164,7 @@ class MenuDrawer {
   drawGameCompleted(totalTime) {
     clear();
     this.btnPause.hide();
-    background(220);
+    image(gameCompletedMenuImg, 0, 0, widthInPixel, heightInPixel);
 
     const totalSecs = floor(totalTime / 1000);
     const mins = floor(totalSecs / 60);

@@ -93,6 +93,7 @@ class Chaser {
   }
 
   applyDashDamage() {
+    if (this.#isDead) return;
     player.updateHp(-1);
     this.dashDamageApplied = true;
 

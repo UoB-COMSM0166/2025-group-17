@@ -100,7 +100,7 @@ class Shooter {
           dir.copy(),
           1,
           3,
-          ShooterBulletImage
+          BossBulletImgL3
         );
         this.bullets.push(bullet);
       }
@@ -156,6 +156,7 @@ class Shooter {
   }
 
   detectPlayerCollision() {
+    if (this.#isDead) return;
     this.bullets = this.bullets.filter(bullet => {
       if (this.checkPlayerCollision(bullet)) {
         player.updateHp(-bullet.damage, 90);
@@ -260,6 +261,14 @@ class Shooter {
       noTint();
     }
   }
+
+  getPosition() {
+    return this.position.copy();
+  }
+
+  getSize() {
+    return this.size.copy();
+  }
 }
 
 // 在 Shooter.js 文件末尾添加：
@@ -287,7 +296,7 @@ class ShooterFourDir extends Shooter {
           dir.copy(),
           1,
           3,
-          fourDirBulletImg
+          BossBulletImgL2
         );
         this.bullets.push(bullet);
       }

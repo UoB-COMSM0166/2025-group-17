@@ -1,15 +1,13 @@
 class InputHandler {
   #currentRoom;
-  constructor(roomObj, cooldownTime = 2000) {
+  constructor(roomObj) {
     this.#currentRoom = roomObj;
     this.collisionDetector = new CollisionDetector();
-    this.coolDownTime = cooldownTime;
-    this.lastLoadTime = millis();
     this.lastCollisionTime = millis();
   }
 
   update(playerObj) {
-    this.#currentRoom.update();
+    this.#currentRoom.update(playerObj);
     this.#currentRoom.display(playerObj);
     playerObj.updateVelocity();
 
@@ -70,9 +68,8 @@ class InputHandler {
 
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
-      this.lastLoadTime = millis();
       this.#loadRoom();
-      playerObj.resetInvincibleTimer();
+      player.resetInvincibleTimer();
     }
   }
 

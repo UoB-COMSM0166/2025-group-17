@@ -6,20 +6,10 @@ function preload() {
   bossHpImg = loadImage('assets/ui/bossHp.png');
   startMenuImg = loadImage('assets/background/Menu_Start.png');
   pauseMenuImg = loadImage('assets/background/Menu_Pause.png');
+  gameCompletedMenuImg = loadImage('assets/background/Menu_GameCompleted.png');
   gameOverMenuImg = loadImage('assets/background/Menu_GameOver.png');
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
-
-  //load obstacles images
-  //obstacleImages.push(loadImage('assets/obstacles/level1/pillow1.png'));
-  //obstacleImages.push(loadImage('assets/obstacles/level1/pillow2.png'));
-  obstacleImages.push(loadImage('assets/obstacles/level1/PC-1.png'));
-  obstacleImages.push(loadImage('assets/obstacles/level1/PC-2.png'));
-  obstacleImages.push(loadImage('assets/obstacles/level1/PC-3.png'));
-  obstacleImages.push(loadImage('assets/obstacles/level1/PC-4.png'));
-  obstacleImages.push(loadImage('assets/obstacles/level1/PC-5.png'));
-  ///obstacleImages.push(loadImage('assets/obstacles/level1/desk.png'));
-  //obstacleImages.push(loadImage('assets/obstacles/level1/chair.png'));
 
   //load player image
   playerImage = loadImage('assets/character/Character.png');
@@ -29,10 +19,15 @@ function preload() {
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
-  shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
-  fourDirBulletImg = loadImage("assets/pills/Pill1.png");
+  BossBulletImgL2 = loadImage("assets/enemies/level2/L2_BossBullet.png");
+  BossBulletImgL3 = loadImage('assets/enemies/level3/L3_BossBullet.png'); // 路径按你实际来
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
+
+  // Load item images
+    healthItemImg = loadImage('assets/items/item_health.png');
+    powerUpItemImg = loadImage('assets/items/item_powerUp.png');
+    photoItemImg = loadImage('assets/items/item_photo.png');
 
   // Use a callback to make sure we don't access data before loaded
   sceneData = loadJSON("assets/scenes/scene.json", preloadScenes);
@@ -78,6 +73,7 @@ function preload() {
   shootSound = loadSound("assets/music/se/Player_Shoot.mp3");
   hurtSound = loadSound("assets/music/se/Player_Hurt.mp3");
   openDoorSound = loadSound("assets/music/se/Door_Open.mp3");
+  itemPickSound = loadSound("assets/music/se/Item_Picked.mp3");
 }
 
 function preloadScenes() {

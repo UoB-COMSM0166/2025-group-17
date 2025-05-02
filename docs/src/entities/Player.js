@@ -1,21 +1,26 @@
 class Player {
   #canShootAgain;
   #shootCoolDownDuration;
+  #atk;
+  #maxAtk;
+  #bulletSize;
+  #maxBulletSize;
 
   constructor(x = leftBoundary, y = heightInPixel / 2) {
-    console.log(`player x: ${x}`);
     this.position = createVector(x, y);
-    this.maxHp = 5;
+    this.maxHp = 3;
     this.hp = this.maxHp;
     this.speed = 3;
     this.maxSpeed = 15;
     this.acceleration = 5.0;
     this.friction = 0.85;
     this.velocity = createVector(0, 0);
-    this.atk = 50;
+    this.#atk = 50;
+    this.#maxAtk = 100;
+    this.#bulletSize = 20;
+    this.#maxBulletSize = 40;
     this.#canShootAgain = true;
-    this.#shootCoolDownDuration = 10;
-    // this.maxAtk = 100;
+    this.#shootCoolDownDuration = 300;
 
     // 判定框尺寸（红框用来检测碰撞）！！！
     this.size = createVector(36, 52);  // ← 可调整碰撞判定大小（原本是 heightInPixel / 7）
@@ -56,11 +61,17 @@ class Player {
     if (!this.#canShootAgain) return;
     const centerX = this.position.x + this.size.x / 2;
     const centerY = this.position.y + this.size.y / 2;
-    this.bullets.push(new Bullet(centerX, centerY, direction, this.atk));
+    this.bullets.push(new Bullet(centerX, centerY, direction, this.#atk, this.#bulletSize));
     this.#canShootAgain = false;
     setTimeout(() => { this.#canShootAgain = true; }, this.#shootCoolDownDuration);
     console.log("A bullet has been shot");
     shootSound.play();
+  }
+
+  powerUp() {
+    this.#atk = min(this.#atk * 1.2, this.#maxAtk);
+    this.#bulletSize = min(this.#bulletSize * 1.2, this.#maxBulletSize);
+    console.log("Power Up activated!");
   }
 
   updateBlinking() {
@@ -138,14 +149,6 @@ class Player {
   revertPosition() {
     this.position.x -= this.velocity.x;
     this.position.y -= this.velocity.y;
-  }
-
-  healByTime(currentTime) {
-    if (this.lastHealTime === null) this.lastHealTime = currentTime;
-    if (this.hp !== 1 || (currentTime - this.lastHealTime) < 300000) return;
-    console.log('Heal after 5 minutes...')
-    this.hp = min(3, this.hp + 1);
-    this.lastHealTime = currentTime;
   }
 
   resetInvincibleTimer(duration = 60) {

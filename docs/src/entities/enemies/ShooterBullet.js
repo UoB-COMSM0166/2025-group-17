@@ -1,11 +1,14 @@
 class ShooterBullet {
-    constructor(x, y, direction, dmg = 1, speed = 5, size = 20, bulletImg) {
+    constructor(x, y, direction, dmg = 1, speed = 5, bulletImg) {
       this.position = createVector(x, y);
       this.direction = direction.copy().normalize();
       this.damage = dmg;
       this.speed = speed;
-      this.size = createVector(size, size * (enImage.height / enImage.width));
       this.image = bulletImg;
+      const bulletWidth = 30;
+      // const bulletHeight = bulletWidth * (bulletImg.height / bulletImg.width);
+      const bulletHeight = bulletWidth;
+      this.size = createVector(bulletWidth, bulletHeight);
       this.angle = 0;
     }
   

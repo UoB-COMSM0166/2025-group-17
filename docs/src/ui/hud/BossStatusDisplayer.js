@@ -1,7 +1,7 @@
 class BossStatusDisplayer {
   static #vPadding = 20;
-  static #hpBarOffsetX = 40; // x Offset of HP relative to HP bar
-  static #hpBarOffsetY = 10; // y Offset of HP relative to HP bar
+  static #hpBarOffsetX = 22.5; // x Offset of HP relative to HP bar
+  static #hpBarOffsetY = 27.5; // y Offset of HP relative to HP bar
 
   static display(bossObj, bossHpBarImg, bossHpImg) {
     push();
@@ -29,7 +29,7 @@ class BossStatusDisplayer {
 
   static #createHpPercentageImage(bossObj, bossHpImg) {
     const hpPercentage = bossObj.hp / bossObj.maxHp;
-    const currentHpWidth = Math.floor(bossHpImg.width * hpPercentage);
+    const currentHpWidth = bossHpImg.width * hpPercentage;
     
     let hpPercentageImg = createImage(bossHpImg.width, bossHpImg.height);
     hpPercentageImg.copy(

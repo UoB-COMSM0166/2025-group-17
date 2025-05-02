@@ -3,7 +3,7 @@ class Room {
   #obstacleCount;
   #startTime;
   #clearTime;
-  // #enemyCount;
+  #items;
   
   constructor() {
     this.savePoint = null;
@@ -12,8 +12,8 @@ class Room {
     this.chaser = [];
     this.shooter = [];
     this.obstacles = [];
+    this.#items = [];
     this.#obstacleCount = 0;
-    // this.#enemyCount = 0;
 
     this.#currentRoomData = null;
     this.backgroundImg = null;
@@ -31,6 +31,7 @@ class Room {
     this.chaser = [];
     this.shooter = [];
     this.obstacles = [];
+    this.#items = [];
     this.#startTime = millis();
     this.#clearTime = null;
     this.#currentRoomData = data; // Store room data
@@ -49,7 +50,7 @@ class Room {
   getCurrentRoomNo() { return this.#currentRoomData.roomNo; }
   // getCurrentRoomData() { return this.#currentRoomData; }
 
-  update() {
+  update(playerObj) {
     // Treat three types of rooms separately
     if (this.#currentRoomData.type === 1) {
       this.updateChaser();
@@ -63,6 +64,34 @@ class Room {
       this.updateEnemies();
     }
     this.updateAfterClear();
+    this.#handleItemBulletsCollision(playerObj.bullets, this.#items);
+    this.#handleItemPicking(playerObj);
+    if (this.#items.length !== 0) this.#items.forEach(i => i.update());
+  }
+
+  #handleItemPicking(playerObj) {
+    const collidedItems = this.#items.filter(item => 
+      this.collisionDetector.detectCollision(playerObj, item)
+    );
+    if (collidedItems.length > 0) {
+      collidedItems.forEach(item => {
+        item.applyEffect(playerObj);
+        itemPickSound.play();
+      });
+  
+      // Remove collided item
+      this.#items = this.#items.filter(
+        roomItem => !collidedItems.includes(roomItem)
+      );
+    }
+  }
+
+  #handleItemBulletsCollision(bulletArr, itemArr) {
+    bulletArr.forEach((bulletObj, bulletIndex) => {
+      if (itemArr.some(itemObj => this.collisionDetector.detectCollisionWithBullet(bulletObj, itemObj))) {
+        bulletArr[bulletIndex].markAsHit();
+      }
+    });
   }
 
   display(playerObj) {
@@ -75,6 +104,7 @@ class Room {
     allEntities.forEach(entity => { entity.display(); });
     this.#displayInstructions();
     this.#displayBossStatus();
+    if (this.#items.length !== 0) this.#items.forEach(i => i.display());
   }
 
   #displayInstructions() {
@@ -237,7 +267,30 @@ class Room {
       s.detectBulletCollision(player.bullets);
       s.detectPlayerCollision();
     });
-    this.shooter = this.shooter.filter(s => !s.shouldBeRemoved());
+    this.shooter = this.shooter.filter(s => this.#shouldDropItemAndRemove(s));
+  }
+
+  #shouldDropItemAndRemove(bossObj) {
+    if (bossObj.shouldBeRemoved()) {
+      const pos = bossObj.getPosition();
+      const size = bossObj.getSize(); 
+      // Compute the middle position
+      const itemX = pos.x + size.x / 2;
+      const itemY = pos.y + size.y / 2;
+      const bossBtm = pos.y + size.y;
+      // Drop the item
+      this.#dropItemFromBossType(bossObj, itemX, itemY, bossBtm);
+      return false;
+    }
+    return true;
+  }
+
+  #dropItemFromBossType(bossObj, itemX, itemY, bossBtm) {
+    if (bossObj instanceof ShooterFourDir) {
+      this.#items.push(new Item(itemX, itemY, bossBtm, "health"));
+    } else if (bossObj instanceof ShooterEightDir) {
+      this.#items.push(new Item(itemX, itemY, bossBtm, "photo"));
+    }
   }
   
   updateAfterClear() {
@@ -253,9 +306,9 @@ class Room {
     const noEnemies = this.enemies.length === 0;
     const noChaser = this.chaser.length === 0;
     const noShooter = this.shooter.length === 0;
-    // const photoInRoom
+    const photoInRoom = this.#items.some(i => i.getType() === "photo");
   
-    return noEnemies && noChaser && noShooter && player.hp > 0;
+    return noEnemies && noChaser && noShooter && !photoInRoom && player.hp > 0;
   }
   
   resolveBossCollision() {
