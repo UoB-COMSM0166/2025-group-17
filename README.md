@@ -75,7 +75,7 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 **Note**: The potential stakeholders are marked as **bolded** above.
 
 Onion Model
-![Model.png](images/Model.png)</br>
+![Modell.png](images/Modell.png)</br>
 
 Use-case Diagram
 ![Case-diagram.png](images/Case-diagram.png)</br>
