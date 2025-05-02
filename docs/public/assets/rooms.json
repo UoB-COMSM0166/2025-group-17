@@ -16,7 +16,7 @@
          "obstacles": [
             {
                "x": 772,
-               "y": 424,
+               "y": 370,
                "image": "assets/obstacles/level1/L1_obs1.png"
             }
          ],
@@ -43,30 +43,45 @@
          },
          "obstacles": [
             {
-               "x": 378,
-               "y": 260,
+               "x": 388,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
                "x": 488,
-               "y": 152,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
-               "x": 288,
-               "y": 398,
+               "x": 488,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
                "x": 488,
-               "y": 346,
+               "y": 258,
                "image": "assets/obstacles/level1/L1_obs4.png"
+            },
+            {
+               "x": 488,
+               "y": 328,
+               "image": "assets/obstacles/level1/L1_obs5.png"
+            },
+            {
+               "x": 288,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs6.png"
+            },
+            {
+               "x": 488,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs7.png"
             },
             {
                "x": 688,
                "y": 398,
-               "image": "assets/obstacles/level1/L1_obs5.png"
-            }
+               "image": "assets/obstacles/level1/L1_obs8.png"
+            }            
          ],
          "enemies": [
             {
@@ -80,7 +95,7 @@
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 534,
+               "x": 234,
                "y": 107,
                "image": "assets/enemies/level1/CCTV.png"
             },
@@ -106,40 +121,70 @@
          },
          "obstacles": [
             {
+               "x": 288,
+               "y": 118,
+               "image": "assets/obstacles/level1/L1_obs9.png"
+            },
+            {
                "x": 488,
-               "y": 122,
+               "y": 118,
+               "image": "assets/obstacles/level1/L1_obs10.png"
+            },
+            {
+               "x": 688,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
-               "x": 598,
-               "y": 192,
+               "x": 688,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
-               "x": 488,
-               "y": 262,
+               "x": 688,
+               "y": 258,
                "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
-               "x": 378,
-               "y": 332,
+               "x": 488,
+               "y": 258,
                "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
+               "x": 288,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs5.png"
+            },
+            {
+               "x": 288,
+               "y": 328,
+               "image": "assets/obstacles/level1/L1_obs6.png"
+            },
+            {
+               "x": 688,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs7.png"
+            },
+            {
                "x": 488,
-               "y": 402,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs8.png"
+            },
+            {
+               "x": 288,
+               "y": 398,
                "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
             {
                "x": 378,
-               "y": 122,
+               "y": 293,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 298,
-               "y": 328,
+               "x": 268,
+               "y": 168,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
@@ -169,34 +214,64 @@
          },
          "obstacles": [
             {
-               "x": 408,
-               "y": 122,
+               "x": 288,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
-               "x": 598,
-               "y": 192,
+               "x": 488,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
-               "x": 458,
-               "y": 262,
+               "x": 688,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
-               "x": 598,
-               "y": 332,
+               "x": 688,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
-               "x": 408,
-               "y": 402,
+               "x": 688,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs5.png"
+            },
+            {
+               "x": 488,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs6.png"
+            },
+            {
+               "x": 288,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs7.png"
+            },
+            {
+               "x": 688,
+               "y": 328,
+               "image": "assets/obstacles/level1/L1_obs8.png"
+            },
+            {
+               "x": 688,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs9.png"
+            },
+            {
+               "x": 488,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs10.png"
+            },
+            {
+               "x": 288,
+               "y": 398,
                "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
          "enemies": [
             {
-               "x": 435,
+               "x": 388,
                "y": 169,
                "image": "assets/enemies/level1/CCTV.png"
             },
@@ -206,13 +281,13 @@
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 288,
-               "y": 163,
+               "x": 508,
+               "y": 318,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
                "x": 765,
-               "y": 292,
+               "y": 328,
                "image": "assets/enemies/level1/CCTV.png"
             }
          ]
@@ -232,29 +307,49 @@
          },
          "obstacles": [
             {
-               "x": 328,
-               "y": 114,
+               "x": 288,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
-               "x": 328,
-               "y": 244,
+               "x": 288,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
-               "x": 658,
-               "y": 424,
+               "x": 688,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
-               "x": 658,
-               "y": 114,
+               "x": 688,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
-               "x": 658,
-               "y": 244,
+               "x": 688,
+               "y": 258,
                "image": "assets/obstacles/level1/L1_obs5.png"
+            },
+            {
+               "x": 488,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs6.png"
+            },
+            {
+               "x": 288,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs7.png"
+            },
+            {
+               "x": 688,
+               "y": 328,
+               "image": "assets/obstacles/level1/L1_obs8.png"
+            },
+            {
+               "x": 688,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs9.png"
             }
          ],
          "enemies": [
@@ -264,13 +359,13 @@
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 153,
+               "x": 253,
                "y": 372,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 232,
-               "y": 266,
+               "x": 418,
+               "y": 368,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
@@ -295,28 +390,58 @@
          },
          "obstacles": [
             {
-               "x": 378,
-               "y": 122,
+               "x": 288,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
-               "x": 378,
-               "y": 442,
+               "x": 488,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
-               "x": 378,
-               "y": 262,
+               "x": 688,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
-               "x": 598,
-               "y": 332,
+               "x": 288,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
-               "x": 598,
-               "y": 122,
+               "x": 288,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs5.png"
+            },
+            {
+               "x": 488,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs6.png"
+            },
+            {
+               "x": 688,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs7.png"
+            },
+            {
+               "x": 688,
+               "y": 328,
+               "image": "assets/obstacles/level1/L1_obs8.png"
+            },
+            {
+               "x": 288,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs9.png"
+            },
+            {
+               "x": 488,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs1.png"
+            },
+            {
+               "x": 688,
+               "y": 398,
                "image": "assets/obstacles/level1/L1_obs5.png"
             }
          ],
@@ -327,12 +452,12 @@
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 598,
+               "x": 358,
                "y": 362,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 333,
+               "x": 303,
                "y": 192,
                "image": "assets/enemies/level1/CCTV.png"
             },
@@ -358,29 +483,64 @@
          },
          "obstacles": [
             {
-               "x": 328,
-               "y": 114,
+               "x": 288,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs1.png"
             },
             {
-               "x": 328,
-               "y": 244,
+               "x": 488,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs2.png"
             },
             {
-               "x": 658,
-               "y": 424,
+               "x": 688,
+               "y": 118,
                "image": "assets/obstacles/level1/L1_obs3.png"
             },
             {
-               "x": 328,
-               "y": 424,
+               "x": 288,
+               "y": 188,
                "image": "assets/obstacles/level1/L1_obs4.png"
             },
             {
-               "x": 658,
-               "y": 244,
+               "x": 688,
+               "y": 258,
                "image": "assets/obstacles/level1/L1_obs5.png"
+            },
+            {
+               "x": 488,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs6.png"
+            },
+            {
+               "x": 288,
+               "y": 258,
+               "image": "assets/obstacles/level1/L1_obs7.png"
+            },
+            {
+               "x": 288,
+               "y": 328,
+               "image": "assets/obstacles/level1/L1_obs8.png"
+            },
+            {
+               "x": 688,
+               "y": 328,
+               "image": "assets/obstacles/level1/L1_obs9.png"
+            },
+            {
+               "x": 688,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs10.png"
+            },
+            {
+               "x": 488,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs5.png"
+            },
+            {
+               "x": 288,
+               "y": 398,
+               "image": "assets/obstacles/level1/L1_obs7.png"
             }
          ],
          "enemies": [
@@ -390,18 +550,18 @@
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 430,
+               "x": 400,
                "y": 330,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
-               "x": 278,
+               "x": 378,
                "y": 307,
                "image": "assets/enemies/level1/CCTV.png"
             },
             {
                "x": 236,
-               "y": 154,
+               "y": 144,
                "image": "assets/enemies/level1/CCTV.png"
             }
          ]
@@ -457,13 +617,14 @@
             "h": 30
          }
       },
+
       {
          "dataId": 9,
          "currentRoomId": 4,
          "levelId": 2,
          "roomNo": 1,
          "type": 0,
-         "background": "assets/background/L2_room2.png",
+         "background": "assets/background/L2_S_spade.png",
          "savePoint": {
             "x": 140,
             "y": 424,
@@ -472,29 +633,54 @@
          },
          "obstacles": [
             {
-               "x": 200,
-               "y": 120,
+               "x": 388,
+               "y": 118,
+               "image": "assets/obstacles/level2/L2_obs1.png"
+            },
+            {
+               "x": 288,
+               "y": 188,
+               "image": "assets/obstacles/level2/L2_obs2.png"
+            },
+            {
+               "x": 188,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs3.png"
+            },
+            {
+               "x": 288,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs4.png"
+            },
+            {
+               "x": 388,
+               "y": 398,
+               "image": "assets/obstacles/level2/L2_obs5.png"
+            },
+            {
+               "x": 588,
+               "y": 398,
+               "image": "assets/obstacles/level2/L2_obs6.png"
+            },
+            {
+               "x": 688,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs7.png"
+            },
+            {
+               "x": 788,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs8.png"
+            },
+            {
+               "x": 688,
+               "y": 188,
                "image": "assets/obstacles/level2/L2_obs9.png"
             },
             {
-               "x": 350,
-               "y": 395,
+               "x": 588,
+               "y": 118,
                "image": "assets/obstacles/level2/L2_obs10.png"
-            },
-            {
-               "x": 450,
-               "y": 230,
-               "image": "assets/obstacles/level2/L2_obs1.png"
-            },
-            {
-               "x": 750,
-               "y": 160,
-               "image": "assets/obstacles/level2/L2_obs1.png"
-            },
-            {
-               "x": 550,
-               "y": 387,
-               "image": "assets/obstacles/level2/L2_obs2.png"
             }
          ],
          "enemies": [
@@ -532,6 +718,325 @@
       },
       {
          "dataId": 10,
+         "currentRoomId": 4,
+         "levelId": 2,
+         "roomNo": 1,
+         "type": 0,
+         "background": "assets/background/L2_S_club.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 288,
+               "y": 188,
+               "image": "assets/obstacles/level2/L2_obs1.png"
+            },
+            {
+               "x": 288,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs2.png"
+            },
+            {
+               "x": 288,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs3.png"
+            },
+            {
+               "x": 688,
+               "y": 188,
+               "image": "assets/obstacles/level2/L2_obs4.png"
+            },
+            {
+               "x": 688,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs5.png"
+            },
+            {
+               "x": 688,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs6.png"
+            }
+         ],
+         "enemies": [
+            {
+               "x": 300,
+               "y": 80,
+               "image": "assets/enemies/level2/L2_enemy1.png"
+            },
+            {
+               "x": 300,
+               "y": 250,
+               "image": "assets/enemies/level2/L2_enemy2.png"
+            },
+            {
+               "x": 558,
+               "y": 278,
+               "image": "assets/enemies/level2/L2_enemy3.png"
+            },
+            {
+               "x": 600,
+               "y": 154,
+               "image": "assets/enemies/level2/L2_enemy4.png"
+            },
+            {
+               "x": 724,
+               "y": 254,
+               "image": "assets/enemies/level2/L2_enemy5.png"
+            },
+            {
+               "x": 780,
+               "y": 378,
+               "image": "assets/enemies/level2/L2_enemy6.png"
+            }
+         ]
+      },
+      {
+         "dataId": 11,
+         "currentRoomId": 4,
+         "levelId": 2,
+         "roomNo": 1,
+         "type": 0,
+         "background": "assets/background/L2_S_heart.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 128,
+               "y": 118,
+               "image": "assets/obstacles/level2/L2_obs1.png"
+            },
+            {
+               "x": 228,
+               "y": 118,
+               "image": "assets/obstacles/level2/L2_obs2.png"
+            },
+            {
+               "x": 328,
+               "y": 118,
+               "image": "assets/obstacles/level2/L2_obs3.png"
+            },
+            {
+               "x": 428,
+               "y": 118,
+               "image": "assets/obstacles/level2/L2_obs4.png"
+            },
+            {
+               "x": 528,
+               "y": 118,
+               "image": "assets/obstacles/level2/L2_obs5.png"
+            },
+            {
+               "x": 628,
+               "y": 188,
+               "image": "assets/obstacles/level2/L2_obs6.png"
+            },
+            {
+               "x": 528,
+               "y": 188,
+               "image": "assets/obstacles/level2/L2_obs7.png"
+            },
+            {
+               "x": 428,
+               "y": 188,
+               "image": "assets/obstacles/level2/L2_obs8.png"
+            },
+            {
+               "x": 328,
+               "y": 188,
+               "image": "assets/obstacles/level2/L2_obs9.png"
+            },
+            {
+               "x": 328,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs10.png"
+            },
+            {
+               "x": 328,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs9.png"
+            },
+            {
+               "x": 428,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs8.png"
+            },
+            {
+               "x": 528,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs7.png"
+            },
+            {
+               "x": 628,
+               "y": 328,
+               "image": "assets/obstacles/level2/L2_obs6.png"
+            },
+            {
+               "x": 628,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs5.png"
+            },
+            {
+               "x": 428,
+               "y": 398,
+               "image": "assets/obstacles/level2/L2_obs4.png"
+            },
+            {
+               "x": 528,
+               "y": 398,
+               "image": "assets/obstacles/level2/L2_obs3.png"
+            },
+            {
+               "x": 628,
+               "y": 398,
+               "image": "assets/obstacles/level2/L2_obs2.png"
+            },
+            {
+               "x": 728,
+               "y": 398,
+               "image": "assets/obstacles/level2/L2_obs1.png"
+            },
+            {
+               "x": 828,
+               "y": 398,
+               "image": "assets/obstacles/level2/L2_obs4.png"
+            }
+         ],
+         "enemies": [
+            {
+               "x": 300,
+               "y": 200,
+               "image": "assets/enemies/level2/L2_enemy1.png"
+            },
+            {
+               "x": 200,
+               "y": 300,
+               "image": "assets/enemies/level2/L2_enemy2.png"
+            },
+            {
+               "x": 420,
+               "y": 230,
+               "image": "assets/enemies/level2/L2_enemy3.png"
+            },
+            {
+               "x": 600,
+               "y": 300,
+               "image": "assets/enemies/level2/L2_enemy4.png"
+            },
+            {
+               "x": 724,
+               "y": 254,
+               "image": "assets/enemies/level2/L2_enemy5.png"
+            },
+            {
+               "x": 780,
+               "y": 378,
+               "image": "assets/enemies/level2/L2_enemy6.png"
+            }
+         ]
+      },
+      {
+         "dataId": 12,
+         "currentRoomId": 4,
+         "levelId": 2,
+         "roomNo": 1,
+         "type": 0,
+         "background": "assets/background/L2_S_diamond.png",
+         "savePoint": {
+            "x": 140,
+            "y": 424,
+            "w": 30,
+            "h": 30
+         },
+         "obstacles": [
+            {
+               "x": 388,
+               "y": 153,
+               "image": "assets/obstacles/level2/L2_obs1.png"
+            },
+            {
+               "x": 288,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs2.png"
+            },
+            {
+               "x": 388,
+               "y": 363,
+               "image": "assets/obstacles/level2/L2_obs3.png"
+            },
+            {
+               "x": 488,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs4.png"
+            },
+            {
+               "x": 588,
+               "y": 153,
+               "image": "assets/obstacles/level2/L2_obs5.png"
+            },
+            {
+               "x": 688,
+               "y": 258,
+               "image": "assets/obstacles/level2/L2_obs6.png"
+            },
+            {
+               "x": 588,
+               "y": 363,
+               "image": "assets/obstacles/level2/L2_obs7.png"
+            }
+         ],
+         "enemies": [
+            {
+               "x": 300,
+               "y": 80,
+               "image": "assets/enemies/level2/L2_enemy1.png"
+            },
+            {
+               "x": 300,
+               "y": 250,
+               "image": "assets/enemies/level2/L2_enemy2.png"
+            },
+            {
+               "x": 558,
+               "y": 278,
+               "image": "assets/enemies/level2/L2_enemy3.png"
+            },
+            {
+               "x": 600,
+               "y": 154,
+               "image": "assets/enemies/level2/L2_enemy4.png"
+            },
+            {
+               "x": 724,
+               "y": 254,
+               "image": "assets/enemies/level2/L2_enemy5.png"
+            },
+            {
+               "x": 780,
+               "y": 378,
+               "image": "assets/enemies/level2/L2_enemy6.png"
+            }
+         ]
+      },
+
+
+
+
+
+
+
+
+
+
+      {
+         "dataId": 13,
          "currentRoomId": 5,
          "levelId": 2,
          "roomNo": 2,
@@ -579,7 +1084,7 @@
          ]
       },
       {
-         "dataId": 11,
+         "dataId": 14,
          "currentRoomId": 6,
          "levelId": 2,
          "roomNo": 3,
@@ -593,7 +1098,7 @@
          }
       },
       {
-         "dataId": 12,
+         "dataId": 15,
          "currentRoomId": 7,
          "levelId": 3,
          "roomNo": 1,
