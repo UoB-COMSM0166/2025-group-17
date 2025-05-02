@@ -118,7 +118,7 @@ class Room {
     }
     if (this.getCurrentLevelId() === 2 && this.getCurrentRoomNo() === 1) {
       const suitMap = { 1: '♠', 2: '♣', 3: '♥', 4: '♦' };
-      const suitSymbol = suitMap[this.getRoomDataId() - 6] || '?';
+      const suitSymbol = suitMap[this.getRoomDataId() - 8] || '?';
       const randomText = `Card dealt...Suit ${suitSymbol} guides your way.`;
       InstructionDisplayer.display(randomText, this.#startTime);
     }
