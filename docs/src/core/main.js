@@ -71,5 +71,5 @@ function drawDebugCollisionBoxes() {
 }
 
 function keyPressed() {
-  gameStateManager.handlePlayerShooting();
+  if (gameStateManager) gameStateManager.handlePlayerShooting();
 }

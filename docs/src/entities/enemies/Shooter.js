@@ -276,7 +276,6 @@ class Shooter {
 // 四方向发射子弹的 Shooter
 class ShooterFourDir extends Shooter {
   shoot() {
-    shooterFireSound.currentTime = 0;
     shooterFireSound.play();
 
     // 只要上下左右四个方向
@@ -312,7 +311,6 @@ class ShooterEightDir extends Shooter {
   // 不重写 shoot() 也可以直接继承父类的八方向逻辑
   // 如果你想在这里写得更清晰，也可以复制父类 shoot() 的内容：
   shoot() {
-    shooterFireSound.currentTime = 0;
     shooterFireSound.play();
     super.shoot();
   }

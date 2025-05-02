@@ -33,6 +33,7 @@ class Chaser {
 
   update() {
     // 动画更新：每 frameDelay 帧切换一张图
+    if (this.#isDead) return;
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
