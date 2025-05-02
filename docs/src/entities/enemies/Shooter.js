@@ -125,6 +125,12 @@ class Shooter {
     if (this.#isDead) return;
     this.#isDead = true;
     this.#shakeIntensity = 30;
+
+    // ★ 播放死亡音效
+    if (bossDeathSound) {
+      bossDeathSound.currentTime = 0;  // 从头播
+      bossDeathSound.play();
+      }
   }
 
   // Remove boss after the animation

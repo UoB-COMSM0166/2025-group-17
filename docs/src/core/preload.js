@@ -75,6 +75,7 @@ function preload() {
   openDoorSound = loadSound("assets/music/se/Door_Open.mp3");
   itemPickSound = loadSound("assets/music/se/Item_Picked.mp3");
   shooterFireSound  = loadSound("assets/music/se/Player_Shoot.mp3");
+  bossDeathSound  = loadSound('assets/music/se/Boss_Death.mp3');
 }
 
 function preloadScenes() {
