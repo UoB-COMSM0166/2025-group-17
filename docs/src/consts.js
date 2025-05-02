@@ -33,4 +33,4 @@ let enemySpriteSheet;
 
 // Load Sound
 let mainmenuSound, L1_OfficeSound, L2_CasinoSound, L3_PsychoSound;
-let btnSound, hitSound, playerDeathSound, enemyDeathSound, bossDeathSound, shootSound, hurtSound, openDoorSound, itemPickSound;
+let btnSound, hitSound, playerDeathSound, enemyDeathSound, bossDeathSound, shootSound, hurtSound, openDoorSound, itemPickSound, shooterFireSound;
