@@ -2,9 +2,10 @@ class Shooter {
   #shakeIntensity;
   #isDead;
 
-  constructor(x, y) {
+  constructor(x, y, collisionDetector) {
     this.position = createVector(x, y);
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
+    this.collisionDetector = collisionDetector; 
     this.maxHp = 800;
     this.hp = this.maxHp;
     this.isHurt = false;
@@ -82,8 +83,18 @@ class Shooter {
     }
 
     this.bullets.forEach(bullet => bullet.update());
-    this.detectPlayerCollision();
-    this.bullets = this.bullets.filter(bullet => !this.isBulletOutOfBounds(bullet));
+
+    this.collisionDetector.detectBulletCollision(
+      this.bullets,          // 子弹数组
+      [player],              // 把 player 当作“敌人”处理
+      []             // 障碍物数组（假设你在外部定义了）
+    );
+    //this.detectPlayerCollision();
+    //this.bullets = this.bullets.filter(bullet => !this.isBulletOutOfBounds(bullet));
+    
+
+    this.bullets = this.bullets.filter(b => !b.isHit);
+
     this.checkPlayerCollisionDirect();
   }
 
@@ -124,14 +135,14 @@ class Shooter {
     });
   }
 
-  isBulletOutOfBounds(bullet) {
-    return (
-      bullet.position.x < leftBoundary ||
-      bullet.position.x > rightBoundary ||
-      bullet.position.y < topBoundary ||
-      bullet.position.y > bottomBoundary
-    );
-  }
+  //isBulletOutOfBounds(bullet) {
+  //  return (
+  //    bullet.position.x < leftBoundary ||
+  //    bullet.position.x > rightBoundary ||
+  //    bullet.position.y < topBoundary ||
+  //    bullet.position.y > bottomBoundary
+  //  );
+  //}
 
   takeDamage(damage) {
     this.hp = max(0, this.hp - damage);
@@ -185,25 +196,36 @@ class Shooter {
     );
   }
 
-  detectPlayerCollision() {
-    if (this.#isDead) return;
-    this.bullets = this.bullets.filter(bullet => {
-      if (this.checkPlayerCollision(bullet)) {
-        player.updateHp(-bullet.damage, 90);
-        return false;
-      }
-      return true;
-    });
-  }
+  //detectPlayerCollision() {
+  //  if (this.#isDead) return;
+  //  this.bullets = this.bullets.filter(bullet => {
+  //    if (this.checkPlayerCollision(bullet)) {
+  //      player.updateHp(-bullet.damage, 90);
+  //      return false;
+  //    }
+  //    return true;
+  //  });
+  //}
 
-  checkPlayerCollision(bullet) {
-    return (
-      bullet.position.x < player.position.x + player.size.x &&
-      bullet.position.x + bullet.size.x > player.position.x &&
-      bullet.position.y < player.position.y + player.size.y &&
-      bullet.position.y + bullet.size.y > player.position.y
-    );
-  }
+  //detectPlayerCollision() {
+  //  if (this.#isDead) return;
+  //  this.bullets = this.bullets.filter(bullet => {
+  //    if (collisionDetector.detectCollisionWithBullet(bullet, player)) {
+  //      player.updateHp(-bullet.damage, 90);
+  //      return false;
+  //    }
+ //     return true;
+ //   });
+  //}
+
+  //checkPlayerCollision(bullet) {
+  //  return (
+  //    bullet.position.x < player.position.x + player.size.x &&
+  //    bullet.position.x + bullet.size.x > player.position.x &&
+  //    bullet.position.y < player.position.y + player.size.y &&
+  //    bullet.position.y + bullet.size.y > player.position.y
+  //  );
+  //}
 
   checkPlayerCollisionDirect() {
     const p = player;
@@ -305,6 +327,9 @@ class Shooter {
 
 // 四方向发射子弹的 Shooter
 class ShooterFourDir extends Shooter {
+  constructor(x, y, collisionDetector) {
+    super(x, y, collisionDetector);
+  }
   shoot() {
     //shooterFireSound.play();
 
@@ -338,6 +363,10 @@ class ShooterFourDir extends Shooter {
 
 // 八方向发射子弹的 Shooter（可选，若想显式区分）
 class ShooterEightDir extends Shooter {
+  constructor(x, y, collisionDetector) {
+    super(x, y, collisionDetector); // ✅ 传递给 Shooter 父类
+  }
+
   // 不重写 shoot() 也可以直接继承父类的八方向逻辑
   // 如果你想在这里写得更清晰，也可以复制父类 shoot() 的内容：
   shoot() {
