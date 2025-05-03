@@ -23,7 +23,7 @@ function setup() {
   PageDrawer.setupMainMenu();
   PageDrawer.setupPauseMenu();
   PageDrawer.setupGameOverPage();
-  gameStateManager.playMainmenuSound();
+  setTimeout(() => gameStateManager.playMainmenuSound(), 2500); // Play BGM after policy page
 
   player = new Player();
 

@@ -6,8 +6,8 @@ class Enemy {
 
     // 敌人尺寸根据 HP 判断
     const isSmall = (hp === smallEnemyHp);
-    const enemyWidth = isSmall ? heightInPixel / 16 : heightInPixel / 12;
-    const enemyHeight = Math.floor(enemyWidth * (enImage.height / enImage.width));
+    const enemyHeight = isSmall ? heightInPixel / 8 : heightInPixel / 6;
+    const enemyWidth = Math.floor(enemyHeight * (enImage.width / enImage.height));
     this.size = createVector(enemyWidth, enemyHeight);
     console.log(`Enemy image size ${enImage.width}, ${enImage.height}`);
     console.log(`Enemy size ${this.size.x}, ${this.size.y}`);

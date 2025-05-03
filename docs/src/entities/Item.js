@@ -28,8 +28,8 @@ class Item {
     this.#bounce = 0.4;
     this.#image = this.#ITEM_IMAGES[this.#type];
     console.log(this.#image);
-    const itemWidth = heightInPixel / 12;
-    const itemHeight = itemWidth * (this.#image.height / this.#image.width);
+    const itemHeight = heightInPixel / 24;
+    const itemWidth = itemHeight * (this.#image.width / this.#image.height);
     this.size = createVector(itemWidth, itemHeight);
     this.#groundY = bossBtm - this.size.y;
   }

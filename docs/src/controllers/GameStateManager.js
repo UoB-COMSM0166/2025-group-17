@@ -46,7 +46,6 @@ class GameStateManager {
     this.playBGMForRoom(this.#inputHandler.getCurrentRoomId());
     this.#PageDrawer.updatePauseBtnPosition();
     this.#inputHandler.update(player);
-    console.log(player);
 
     PlayerStatusDisplayer.display(
       player, currentLevelId, currentRoomNo, this.#timeSpent, heartImg, damagedHeartImg, uiFont

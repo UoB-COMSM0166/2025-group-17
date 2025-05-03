@@ -117,7 +117,6 @@ class InputHandler {
   getCurrentRoomNo() { return this.#currentRoom.getCurrentRoomNo(); }
 
   isGameCompleted() {
-    console.log(`Current room: ${this.#currentRoom.getCurrentRoomId()}`);
     const maxCurrentRoomId = this.#getMaxCurrentRoomId(rawRoomData);
     
     if (this.#currentRoom.getCurrentRoomId() >= maxCurrentRoomId && this.#currentRoom.checkClearCondition()) {
