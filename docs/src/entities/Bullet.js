@@ -9,7 +9,7 @@ class Bullet {
 
     this.initialAngle = random(TWO_PI); //赋予子弹随机初始角度
     this.spin = 0; //旋转增量
-    this.rotationSpeed = random([-1, 1]) * random(0.05, 0.5)  // 每帧旋转 0.5 ~ 1 弧度
+    this.rotationSpeed = random([-1, 1]) * random(0.01, 0.08)  // 每帧旋转 0.5 ~ 1 弧度
 
     this.isHit = false;
     this.hitFrame = 0;
