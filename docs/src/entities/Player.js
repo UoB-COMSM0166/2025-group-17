@@ -73,7 +73,7 @@ class Player {
     if (!this.#canShootAgain) return;
     const centerX = this.position.x + this.size.x / 2;
     const centerY = this.position.y + this.size.y / 2;
-    const bulletImg = (this.#atk <= 50) ? bulletImage : powerUpBulletImage;
+    const bulletImg = (this.#atk <= this.#baseAtk) ? bulletImage : powerUpBulletImage;
     this.bullets.push(new Bullet(centerX, centerY, direction, this.#atk, bulletImg, this.#bulletSize));
     this.#canShootAgain = false;
     setTimeout(() => { this.#canShootAgain = true; }, this.#shootCoolDownDuration);

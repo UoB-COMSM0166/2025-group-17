@@ -113,6 +113,7 @@ class GameStateManager {
       return this.startNewGame();
     }
 
+    player = new Player();
     const savedPositionX = JSON.parse(savedXData);
     const savedPositionY = JSON.parse(savedYData);
     const savedPosition = new SavePoint(savedPositionX, savedPositionY);
