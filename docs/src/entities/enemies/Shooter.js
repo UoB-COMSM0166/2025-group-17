@@ -18,7 +18,7 @@ class Shooter {
     this.bullets = [];
     this.warningTime = 0;
     this.warningDuration = 60;
-    this.warningSoundOn = false;          // 新做法：标记“正在连续播放”
+    this.shooterSoundOn = false;          // 新做法：标记“正在连续播放”
     this.#shakeIntensity = 0;
     this.#isDead = false;
 
@@ -30,7 +30,11 @@ class Shooter {
   }
 
   update() {
-    if (this.hp <= 0) return;
+    //if (this.hp <= 0) return;
+    if (this.hp <= 0) {
+      this.#markAsDead(); // 确保触发死亡处理逻辑（包括 stop 音效）
+      return;
+    }
 
     // 动画切换逻辑
     this.frameCounter++;
@@ -56,18 +60,18 @@ class Shooter {
     if (this.currentShootCooldown <= this.warningDuration) {
       this.warningTime = this.warningDuration;
       // 新：整段时间内循环播放
-      if (!this.warningSoundOn && shooterWarningSound) {
-        shooterWarningSound.setLoop(true); // 也可以直接 shooterWarningSound.loop();
-        shooterWarningSound.play();        // 从头开始并循环
-        this.warningSoundOn = true;
+      if (!this.shooterSoundOn && shooterSound && !this.#isDead) {
+        shooterSound.playMode("untilDone"); 
+        shooterSound.play();        // 从头开始并循环
+        this.shooterSoundOn = true;
       }
     }
 
     if (this.currentShootCooldown <= 0) {
-         // 退出 warning，立刻停声
-     if (this.warningSoundOn && shooterWarningSound) {
-         shooterWarningSound.stop();   // stop() 会自动把播放头归零
-         this.warningSoundOn = false;
+         
+     if (this.shooterSoundOn && shooterSound) {
+         //shooterSound.stop();   // stop() 会自动把播放头归零
+         this.shooterSoundOn = false;
      }
 
       this.warningTime = 60;
@@ -138,6 +142,13 @@ class Shooter {
     if (this.#isDead) return;
     this.#isDead = true;
     this.#shakeIntensity = 30;
+
+
+    // ★ 停止音效
+    if (shooterSound && shooterSound.isPlaying()) {
+      shooterSound.stop();
+       }
+
 
     // ★ 播放死亡音效
     if (bossDeathSound) {
