@@ -7,11 +7,17 @@ function setup() {
 
   cnv = createCanvas(windowWidth, windowHeight);
 
+  window.fadeMgr = new FadeManager(0.05);
+
+  fadeMgr = window.fadeMgr;
+
   const eventBus = new EventBus();
 
   // Instantiate all classes
   room = new Room();
   let inputHandler = new InputHandler(room);
+  inputHandler.fadeMgr = fadeMgr;
+
   const PageDrawer = new MenuDrawer(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData);
   gameStateManager = new GameStateManager(eventBus, PageDrawer, inputHandler);
   PageDrawer.setupMainMenu();
@@ -48,6 +54,8 @@ function draw() {
   player.updateBlinking();
   gameStateManager.update();
   // drawDebugCollisionBoxes(); // 这里是用于碰撞测试
+  fadeMgr.update();
+  fadeMgr.draw();
 }
 
 function drawDebugCollisionBoxes() {
@@ -71,5 +79,6 @@ function drawDebugCollisionBoxes() {
 }
 
 function keyPressed() {
+  if(fadeMgr.isActive()) return;
   if (gameStateManager) gameStateManager.handlePlayerShooting();
 }

@@ -1,0 +1,142 @@
+@startuml
+
+' 核心控制系统
+class GameStateManager {
+  -currentBGM
+  -roomBGMs
+  +update()
+  +handlePlayerShooting()
+  +playBGM()
+}
+
+class EventBus {
+  -events
+  +subscribe()
+  +publish()
+}
+
+class InputHandler {
+  -currentRoom
+  +update()
+  +handlePlayerShooting()
+}
+
+class CollisionDetector {
+  +detectPlayerCollision()
+  +handleEnemyCollision()
+  +detectBulletCollision()
+}
+
+' 游戏实体
+class Player {
+  -hp
+  -bullets
+  -animations
+  +shoot()
+  +updateVelocity()
+  +updateHp()
+}
+
+class Enemy {
+  <<abstract>>
+  #hp
+  #position
+  #size
+  +update()
+  +display()
+}
+
+class Chaser {
+  -dash logic
+  +update()
+}
+
+class Shooter {
+  -bullets
+  +shoot()
+}
+
+class Bullet {
+  <<abstract>>
+  #position
+  #damage
+  +update()
+  +display()
+}
+
+class ShooterBullet {
+  +Special rotation effect
+}
+
+class Room {
+  -enemies
+  -obstacles
+  -items
+  +setup()
+  +update()
+  +display()
+}
+
+class Door {
+  +open()
+  +close()
+}
+
+class SavePoint {
+  +checked()
+}
+
+' UI系统
+class MenuDrawer {
+  -scenePlayer
+  -helpBar
+  +drawMainMenu()
+  +drawPauseMenu()
+}
+
+class HelpBar {
+  +update()
+  +draw()
+}
+
+class PlayerStatusDisplayer {
+  +display()
+}
+
+class BossStatusDisplayer {
+  +display()
+}
+
+' 特殊组件
+class ScenePlayer {
+  +draw()
+  +next()
+}
+
+' 关系定义
+GameStateManager "1" *-- "1" EventBus
+GameStateManager "1" *-- "1" InputHandler
+GameStateManager "1" *-- "1" MenuDrawer
+
+InputHandler "1" *-- "1" CollisionDetector
+InputHandler "1" *-- "1" Room
+
+Room "1" *-- "many" Enemy
+Room "1" *-- "many" Obstacle
+Room "1" *-- "many" Item
+Room "1" *-- "1" Door
+Room "1" *-- "1" SavePoint
+
+Enemy <|-- Chaser
+Enemy <|-- Shooter
+Shooter <|-- ShooterFourDir
+Shooter <|-- ShooterEightDir
+
+Bullet <|-- ShooterBullet
+
+Player "1" *-- "many" Bullet
+
+MenuDrawer "1" *-- "1" ScenePlayer
+MenuDrawer "1" *-- "1" HelpBar
+
+@enduml
