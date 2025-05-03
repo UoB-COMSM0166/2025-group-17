@@ -44,8 +44,10 @@ class Player {
   setHp(newHp) { this.hp = newHp; }
   
   // Reset transient room state while preserving progression stats
-  resetRoomState(newHp, x = leftBoundary, y = heightInPixel / 2) {
+  resetRoomState(newHp, atk = this.#atk, bulletSize = this.#bulletSize, x = leftBoundary, y = heightInPixel / 2) {
     this.hp = newHp;
+    this.#atk = atk;
+    this.#bulletSize = bulletSize;
     this.position = createVector(x, y);
     this.velocity = createVector(0, 0);
     this.invincibleTimer = 60; // Player becomes invincible when entering a room

@@ -93,6 +93,8 @@ class GameStateManager {
     localStorage.setItem('lastSavePointX', JSON.stringify(room.savePoint.position.x));
     localStorage.setItem('lastSavePointY', JSON.stringify(room.savePoint.position.y));
     localStorage.setItem('playerHp', JSON.stringify(player.getHp()));
+    localStorage.setItem('playerAtk', JSON.stringify(player.getAtk()));
+    localStorage.setItem('playerBulletSize', JSON.stringify(player.getBulletSize()));
     localStorage.setItem('timeSpent', JSON.stringify(this.#timeSpent));
     console.log("Game Saved!");
   }
@@ -106,22 +108,19 @@ class GameStateManager {
 
     const savedXData = localStorage.getItem('lastSavePointX');
     const savedYData = localStorage.getItem('lastSavePointY');
-    const savedPlayerHp = localStorage.getItem('playerHp');
+    const savedHp = localStorage.getItem('playerHp');
+    const savedAtk = localStorage.getItem('playerAtk');
+    const savedBulletSize = localStorage.getItem('playerBulletSize');
     const savedTimeSpent = localStorage.getItem('timeSpent');
-    if (!savedXData || !savedYData || !savedPlayerHp || !savedTimeSpent) {
+    if (!savedXData || !savedYData || !savedHp || !savedAtk || !savedBulletSize || !savedTimeSpent) {
       console.log("Parts of save data missing; starting from scratch...");
       return this.startNewGame();
     }
 
-    player = new Player();
     const savedPositionX = JSON.parse(savedXData);
     const savedPositionY = JSON.parse(savedYData);
-    const savedPosition = new SavePoint(savedPositionX, savedPositionY);
-    player.position.x = savedPosition.position.x;
-    player.position.y = savedPosition.position.y;
-    player.setHp(JSON.parse(savedPlayerHp));
+    player.resetRoomState(JSON.parse(savedHp), JSON.parse(savedAtk), JSON.parse(savedBulletSize), savedPositionX, savedPositionY);
     startTime = millis() - JSON.parse(savedTimeSpent);
-    player.resetInvincibleTimer();
     console.log("Game Loaded!");
 
     this.#PageDrawer.toggleStartButtons();
