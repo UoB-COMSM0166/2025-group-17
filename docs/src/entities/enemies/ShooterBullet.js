@@ -5,6 +5,7 @@ class ShooterBullet {
             this.damage = dmg;
             this.speed = speed;
             this.image = bulletImg;
+            this.isHit = false;
             const bulletWidth = 30;
             // const bulletHeight = bulletWidth * (bulletImg.height / bulletImg.width);
             const bulletHeight = bulletWidth;
@@ -12,6 +13,10 @@ class ShooterBullet {
             this.angle = 0;
       }
 
+      markAsHit() {
+            this.isHit = true;
+          }
+          
       update() {
             this.position.add(p5.Vector.mult(this.direction, this.speed));
             this.angle += 0.1;

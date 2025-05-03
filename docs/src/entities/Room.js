@@ -224,7 +224,8 @@ class Room {
       window.shooterFrames = window.shooterFramesDefault;
     }
 
-    this.shooter.push(new ShooterFourDir(400, 300));
+    //this.shooter.push(new ShooterFourDir(400, 300));
+    this.shooter.push(new ShooterFourDir(400, 300, this.collisionDetector));
   }
 
   generateFinalBossRoom() {
@@ -241,7 +242,9 @@ class Room {
     const shooterX = widthInPixel * 0.6;
     const shooterY = heightInPixel * 0.5;
     ///this.shooter.push(new Shooter(shooterX, shooterY));
-    this.shooter.push(new ShooterEightDir(shooterX, shooterY));
+    //this.shooter.push(new ShooterEightDir(shooterX, shooterY));
+    this.shooter.push(new ShooterEightDir(shooterX, shooterY, this.collisionDetector));
+
 
     // ✅ 固定 chaser 位置（右上和右下）
     this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
@@ -294,7 +297,7 @@ class Room {
     this.shooter.forEach(s => {
       s.update();
       s.detectBulletCollision(player.bullets);
-      s.detectPlayerCollision();
+      //s.detectPlayerCollision();
     });
     this.shooter = this.shooter.filter(s => this.#shouldDropItemAndRemove(s));
   }

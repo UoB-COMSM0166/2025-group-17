@@ -46,7 +46,13 @@ class CollisionDetector {
     enemyArr.forEach((enemyObj, enemyIndex) => {
       bulletArr.forEach((bulletObj, bulletIndex) => {
         if (this.detectCollisionWithBullet(bulletObj, enemyObj)) {
-          enemyArr[enemyIndex].hp = max(0, enemyObj.hp - bulletObj.damage);
+          // ✅ 特殊处理 player
+          if (enemyObj === player) {
+           player.updateHp(-bulletObj.damage, 90);
+          } else {
+          enemyObj.hp = max(0, enemyObj.hp - bulletObj.damage);
+          }
+          //enemyArr[enemyIndex].hp = max(0, enemyObj.hp - bulletObj.damage);
           bulletArr[bulletIndex].markAsHit();
         }
       });
@@ -125,3 +131,4 @@ class CollisionDetector {
     );
   }
 }
+window.CollisionDetector = CollisionDetector;
