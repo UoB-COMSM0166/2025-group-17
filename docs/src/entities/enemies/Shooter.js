@@ -23,7 +23,7 @@ class Shooter {
     this.#isDead = false;
 
     // Shooter Boss 动画相关
-    this.frames = window.shooterFrames;
+    this.frames = window.shooterFrames || window.shooterFramesDefault;
     this.currentFrame = 0;
     this.frameCounter = 0;
     this.frameDelay = 10; // 随意设置轮播速度

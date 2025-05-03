@@ -156,8 +156,8 @@ class Room {
 
   generateEnemies(currentRoomData) {
     this.enemies = [];
-    
-    // Specify different enemy generation logic by room ID
+  
+    // 类型为 1、2、3 的特殊房间走专用生成逻辑
     if (currentRoomData.type === 1) {
       this.generateChaser();
       return;
@@ -165,50 +165,76 @@ class Room {
       this.generateShooter();
       return;
     } else if (currentRoomData.type === 3) {
-      this.generateFinalBossRoom(); // 2 chasers + 1 shooter
+      this.generateFinalBossRoom();
       return;
     }
-    
-    for(let i = 0; i < currentRoomData.enemies.length; i++) {
+  
+    // 普通敌人房间
+    const levelId = this.getCurrentLevelId(); // 0, 1, 2...
+    const levelKey = `level${levelId}`;
+  
+    for (let i = 0; i < currentRoomData.enemies.length; i++) {
       let newEnemy;
       const smallEnemyHp = 50;
       const largeEnemyHp = 150;
-      let hp = random([smallEnemyHp, largeEnemyHp]);
+      const hp = random([smallEnemyHp, largeEnemyHp]);
+      const enemiesData = currentRoomData.enemies[i];
+  
+      const sizeKey = (hp === smallEnemyHp) ? 'small' : 'large';
+      const frames = window.enemyAnimations?.[levelKey]?.[sizeKey] || [];
+  
       do {
-        const enemiesData = currentRoomData.enemies[i];
-      console.log(`Generating an enemy with HP: ${hp}`);
-      console.log(`Generating an enemy with img: ${enemiesData.img.width},  ${enemiesData.img.height}`);
-      newEnemy = new Enemy(enemiesData.x, enemiesData.y, hp, enemiesData.img);
+        newEnemy = new Enemy(enemiesData.x, enemiesData.y, hp, enemiesData.img, levelId);
       } while (this.collisionDetector.detectCollision(player, newEnemy));
-      
+  
       this.enemies.push(newEnemy);
     }
-  }
+  }  
 
   generateChaser() {
     this.chaser = [];
+  
+    const isLevel3 = this.getCurrentLevelId && this.getCurrentLevelId() === 3;
+  
+    if (isLevel3) {
+      window.chaserFrames = window.chaserFramesL3;
+    } else {
+      window.chaserFrames = window.chaserFramesDefault;
+    }
+  
     this.chaser.push(new Chaser(600, 300));
-  }
+  }  
 
   //generateShooter() {
   //  this.shooter = [];
   //  this.shooter.push(new Shooter(400, 300));
   //}
-  
-  generateShooter() {          // type = 2 的普通 shooter 关
-    this.shooter = [];
-    this.shooter.push(new ShooterFourDir(400, 300));
-  }
 
+    generateShooter() {   // type = 2 的普通 shooter 关
+      this.shooter = [];
+    
+      const isLevel3 = this.getCurrentLevelId && this.getCurrentLevelId() === 3;
+    
+      if (isLevel3) {
+        window.shooterFrames = window.shooterFramesL3;
+      } else {
+        window.shooterFrames = window.shooterFramesDefault;
+      }
+    
+      this.shooter.push(new ShooterFourDir(400, 300));
+    }
 
   generateFinalBossRoom() {
     this.chaser = [];
     this.shooter = [];
   
+    window.chaserFrames = window.chaserFramesL3;
+    window.shooterFrames = window.shooterFramesL3;
+    
     // Shooter 和 Chaser 的 sprite 高度是 heightInPixel / 4
     const entitySize = heightInPixel / 4;
   
-    // ✅ 固定 shooter 位置（画布中央偏右）
+    // 固定 shooter 位置（画布中央偏右）
     const shooterX = widthInPixel * 0.6;
     const shooterY = heightInPixel * 0.5;
     ///this.shooter.push(new Shooter(shooterX, shooterY));
