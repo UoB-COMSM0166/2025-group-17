@@ -2,6 +2,7 @@ let cnv;
 
 let gameStateManager;
 let player;
+let fadeMgr;
 
 // load images of player, bullet, and enemy
 let playerImage;

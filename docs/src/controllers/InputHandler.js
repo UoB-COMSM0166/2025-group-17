@@ -4,6 +4,8 @@ class InputHandler {
     this.#currentRoom = roomObj;
     this.collisionDetector = new CollisionDetector();
     this.lastCollisionTime = millis();
+    // if (!this.fadeMgr) this.fadeMgr = window.fadeMgr;
+    this.fadeMgr = window.fadeMgr;
   }
 
   update(playerObj) {
@@ -68,7 +70,8 @@ class InputHandler {
 
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
-      this.#loadRoom();
+      //this.#loadRoom();
+      this.fadeMgr.start(() => this.#loadRoom());
       player.resetInvincibleTimer();
     }
   }
