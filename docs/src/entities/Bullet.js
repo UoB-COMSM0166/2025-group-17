@@ -85,7 +85,7 @@ class Bullet {
 
 
     // Advance to next hit animation frame each 3 frame
-    if (this.isHit) image(this.frames[Math.floor(this.hitFrame / 3)], 0, 0, 1.2 * this.size.x, 1.2 * this.size.y);
+    if (this.isHit) image(this.frames[Math.floor(this.hitFrame / 3)], 0, 0, 2.5 * this.size.x, 2.5 * this.size.y);
     else image(this.image, 0, 0, this.size.x, this.size.y);
     pop();
   }
