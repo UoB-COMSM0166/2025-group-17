@@ -32,7 +32,7 @@ function preload() {
   enemyImage = loadImage('assets/enemies/level1/CCTV.png'); //只会瞎走的敌人
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); //螃蟹
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); //the boss
-  pigImage = loadImage('assets/enemies/level1/pig_6&10.png'); //猪猪，索敌+朝着主角射击
+  pigImage = loadImage('assets/enemies/level1/Pig.png'); //猪猪，索敌+朝着主角射击
 
 
   //Boss子弹
@@ -167,10 +167,17 @@ function setRoomImg() {
     }
     if (room.enemies) {
       room.enemies.forEach(enes => {
-        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
+        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`);
         enes.img = loadImage(enes.image);
-        console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
+        console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`);
       });
+    }
+    if (room.pigEnemies) {
+      room.pigEnemies.forEach(pigEnes => {
+        console.log(`Loading ${pigEnes.image} into room ${room.currentRoomId}`);
+        pigEnes.img = loadImage(pigEnes.image);
+        console.log(`pigEnemy image size ${pigEnes.img.width}, ${pigEnes.img.height}`);
+      })
     }
   });
 }

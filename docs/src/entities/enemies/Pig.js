@@ -1,13 +1,17 @@
 class Pig {
     #isDead;
 
-    constructor(x, y) {
+    constructor(x, y, pigImg) {
+        this.image = pigImg;
+
         this.position = createVector(x, y);
         this.size = createVector(heightInPixel / 4, heightInPixel / 4);
         this.hp = 400;
         this.isHurt = false;
         this.hitFrame = 0;
-        this.speed = 1.2;
+        //this.speed = 1.2;
+        // ❕速度需要以 velocity命名，否则碰撞检测isHitBoundary找不到变量
+        this.velocity = createVector(random([-1.2, 1.2]), random([-1.2, 1.2]));
 
         this.minDistance = 150; // 距离小于这个值就停止靠近
         this.shootCoolDown = 90; // 射击冷却帧数（约1.5秒）
@@ -15,6 +19,7 @@ class Pig {
         this.bullets = [];
         this.#isDead = false;
 
+        /*
         //精灵图设置：(创新)
         this.sprite = new Sprite(x, y, 50, 50); //物理碰撞盒子
         this.sprite.rotationLock = true; //锁定旋转
@@ -27,6 +32,7 @@ class Pig {
             walk: { row: 0, frames: 4 } //行数，帧数
         });
         this.sprite.changeAni("idle"); //设置动画
+        */
     }
 
     update() {
@@ -183,6 +189,10 @@ class Pig {
     }
 
     display() {
+        // ❕模仿Enemy里的显示逻辑，先显示静态图，可能不对
+        image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
+
+
         if (!this.alive) return;
         this.bullets.forEach(b => b.display());
 

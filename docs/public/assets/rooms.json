@@ -26,7 +26,8 @@
                "y": 305,
                "image": "assets/enemies/level1/L1_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 1,
@@ -93,16 +94,18 @@
                "x": 808,
                "y": 308,
                "image": "assets/enemies/level1/L1_enemy1.png"
-            },
+            }            
+         ],
+         "pigEnemies": [
             {
                "x": 234,
                "y": 107,
-               "image": "assets/enemies/level1/L1_enemy1.png"
+               "image": "assets/enemies/level1/Pig.png"
             },
             {
                "x": 786,
                "y": 357,
-               "image": "assets/enemies/level1/L1_enemy1.png"
+               "image": "assets/enemies/level1/Pig.png"
             }
          ]
       },
@@ -197,7 +200,8 @@
                "y": 294,
                "image": "assets/enemies/level1/L1_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 3,
@@ -290,7 +294,8 @@
                "y": 328,
                "image": "assets/enemies/level1/L1_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 4,
@@ -373,7 +378,8 @@
                "y": 235,
                "image": "assets/enemies/level1/L1_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 5,
@@ -466,7 +472,8 @@
                "y": 262,
                "image": "assets/enemies/level1/L1_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 6,
@@ -564,7 +571,8 @@
                "y": 144,
                "image": "assets/enemies/level1/L1_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 7,
@@ -601,7 +609,8 @@
                "y": 257,
                "image": "assets/enemies/level1/L1_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 8,
@@ -714,7 +723,8 @@
                "y": 378,
                "image": "assets/enemies/level2/L2_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 10,
@@ -792,7 +802,8 @@
                "y": 378,
                "image": "assets/enemies/level2/L2_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 11,
@@ -940,7 +951,8 @@
                "y": 378,
                "image": "assets/enemies/level2/L2_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 12,
@@ -1023,7 +1035,8 @@
                "y": 378,
                "image": "assets/enemies/level2/L2_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
 
 
@@ -1081,7 +1094,8 @@
                "y": 378,
                "image": "assets/enemies/level2/L2_enemy1.png"
             }
-         ]
+         ],
+         "pigEnemies": []
       },
       {
          "dataId": 14,

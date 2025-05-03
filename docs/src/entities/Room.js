@@ -11,7 +11,7 @@ class Room {
     this.enemies = [];
     this.chaser = [];
     this.shooter = [];
-    this.pigEnemy = []; // TODO: Add pig enemy
+    this.pigEnemies = []; // TODO: Add pig enemy
     this.obstacles = [];
     this.#items = [];
     this.#obstacleCount = 0;
@@ -32,7 +32,7 @@ class Room {
     this.chaser = [];
     this.shooter = [];
     //TODO：建立猪猪敌人
-    this.pigEnemy = [];
+    this.pigEnemies = [];
     this.obstacles = [];
     this.#items = [];
     this.#startTime = millis();
@@ -55,16 +55,17 @@ class Room {
 
   update(playerObj) {
     // Treat three types of rooms separately
-    if (this.#currentRoomData.type === 1) {
+    if (this.#currentRoomData.type === 1) { // Chaser房(第一关Boss房)类型 === 1
       this.updateChaser();
-    } else if (this.#currentRoomData.type === 2) {
+    } else if (this.#currentRoomData.type === 2) { // Shooter房(第二关Boss房)类型 === 2
       this.updateShooter();
-    } else if (this.#currentRoomData.type === 3) {
+    } else if (this.#currentRoomData.type === 3) { // 第三关Boss房类型 === 3
       this.updateChaser();
       this.updateShooter();
       this.resolveBossCollision(); // Add physical barriers between monsters
-    } else {
+    } else if(this.#currentRoomData.type === 0){ // 所有小怪房类型 === 0
       this.updateEnemies();
+      this.updatePigEnemies(); // TODO: 加上pig的update方法
     }
     this.updateAfterClear();
     this.#handleItemBulletsCollision(playerObj.bullets, this.#items);
@@ -102,7 +103,8 @@ class Room {
     image(this.backgroundImg, 0, 0, this.size.width, this.size.height);
     this.savePoint.display();
     this.door.display();
-    const allEntities = [...this.obstacles, ...this.enemies, ...this.chaser, ...this.shooter, playerObj];
+    // 加上PigEnemies
+    const allEntities = [...this.obstacles, ...this.pigEnemies, ...this.enemies, ...this.chaser, ...this.shooter, playerObj];
     allEntities.sort((a, b) => a.position.y - b.position.y);
     allEntities.forEach(entity => { entity.display(); });
     this.#displayInstructions();
@@ -192,6 +194,26 @@ class Room {
 
       this.enemies.push(newEnemy);
     }
+
+    if(currentRoomData.pigEnemies.length === 0) return;
+    // 生成两个PigEnemies
+    for (let i = 0; i < currentRoomData.pigEnemies.length; i++) {
+      let newEnemy;
+      const smallEnemyHp = 50;
+      const largeEnemyHp = 150;
+      const hp = random([smallEnemyHp, largeEnemyHp]);
+      const pigEnemiesData = currentRoomData.pigEnemies[i];
+
+      const sizeKey = (hp === smallEnemyHp) ? 'small' : 'large';
+      const frames = window.enemyAnimations?.[levelKey]?.[sizeKey] || [];
+
+      do {
+        newEnemy = new Pig(pigEnemiesData.x, pigEnemiesData.y, pigEnemiesData.img);
+      } while (this.collisionDetector.detectCollision(player, newEnemy));
+
+      this.pigEnemies.push(newEnemy);
+    }
+
   }
 
   generateChaser() {
@@ -266,6 +288,23 @@ class Room {
       }
     });
     this.enemies = this.enemies.filter(e => e.hp > 0);
+  }
+
+  updatePigEnemies() {
+    this.pigEnemies.forEach(e => {
+      if (e.hp <= 0) enemyDeathSound.play();
+      else if (!this.collisionDetector.isHitBoundary(e)) e.update();
+      else {
+        // Add some randomness to prevent perfect oscillation
+        const direction = p5.Vector.mult(e.velocity.copy(), -1);
+        const randomness = p5.Vector.random2D().mult(0.2);
+        direction.add(randomness).normalize();
+        e.velocity = direction.mult(e.velocity.mag());
+        e.position.add(direction);
+      }
+    });
+    this.pigEnemies = this.pigEnemies.filter(e => e.hp > 0);
+
   }
 
   updateChaser() {
