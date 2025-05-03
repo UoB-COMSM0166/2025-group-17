@@ -75,7 +75,7 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 **Note**: The potential stakeholders are marked as **bolded** above.
 
 Onion Model
-![onion-model.png](images/onion-model.png)</br>
+![Modell.png](images/Modell.png)</br>
 
 Use-case Diagram
 ![Case-diagram.png](images/Case-diagram.png)</br>
@@ -352,6 +352,59 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 | Zhexing Yang  | Sound design & story script     |           X            |
 
 ---
+
+### Testing
+1. Overview
+This report documents the testing approach, tools, techniques, and outcomes for our game project. The testing covers both black-box (functional/user perspective) and white-box (code-level/unit testing) techniques to ensure a comprehensive quality assurance process. The goal was to ensure that the game delivers correct functionality, user-friendly experience, and stable performance.
+2.Black-Box Testing
+2.1 Team process
+   Agile Development: We adopted the Agile methodology, working in weekly sprints. This allowed us to continuously evaluate progress, adapt based on testing feedback, and incorporate incremental enhancements. Agile proved especially helpful due to our limited prior experience in game development. We prioritized building a Minimum Viable Product (MVP) and iteratively added new features.
+   Pair Programming: Pair programming was used extensively to avoid bugs and ensure clean, understandable code. This technique enabled collaborative problem solving and faster testing cycles. For example, in player attack logic, one member implemented the function while the other tested it in real-time and provided feedback.
+   Frequent Meetings: Meetings were conducted every Monday to discuss completed work, resolve blockers, and reassign tasks. We estimated complexity using Planning Poker, ensuring balanced workloads and realistic sprint goals.
+   Tools Used:
+      **Github** was used for version control, branch management, and bug tracking.
+      **Notion** supported real-time note-taking during meetings and goals tracking.
+      **Kanban Board** organized our tasks into "To Do," "In Progress," and "Done."
+      **Tencent Meeting** and **Wechat** supported continuous communication and problem resolution.
+2.2 Testing Focus
+   Our black-box testing included:
+   **Gameplay Mechanics**: Verifying that attack, movement, collision, and level transitions work smoothly.
+   **UI/UX Testing**: Ensuring layout clarity and button responsiveness.
+   **Scenario-Based Playtesting**: Simulating real user journeys from start to end.
+   **Bug Logging**: Reporting discovered bugs through GitHub issues for developer review.
+   This testing aproach simulated how players would use the game, helping us catch the logic errors and improve usability without needing to understand internal code.
+
+3.White-Box Testing
+We used Jest to create unit tests for validating internal logic of important modules such as `Player`, `CollisionDetector`, and time tracking functionality.
+3.1 layer Class Tests
+File: `tests/layer.test.js`
+·HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
+·Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
+·HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
+·Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
+3.2 Collision Detection Tests
+File: `tests/collisionDetector.test.js`
+·Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
+·Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
+These tests indirectly verify internal logic like `isBulletHitWall() `and correct management of game objects.
+3.3 Time Tracking Tests
+File: `tests/time.test.js`
+·Start Time Accuracy: Verifies correct timestamp capture when the game starts.
+·Elapsed Time: Confirms that time is accurately computed during gameplay.
+·End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
+These tests guarantee that players receive meaningful feedback about how long it took to finish the game, adding an important competitive and motivational layer.
+
+4. Summary and Reflections
+·Coverage: Through both black-box and white-box testing, we covered major user interactions, game logic integrity, and data tracking. Our combination of test types enabled us to verify the system both externally and internally.
+·Efficiency: Agile collaboration, pair programming, and code reviews through GitHub ensured continuous quality improvement. Testing was not a final step, but a continuous part of the development cycle.
+### Lessons Learned:
+·Pair testing helps catch issues early.
+·Writing unit tests made our codebase more modular and maintainable.
+·Regular playtesting helped refine the user experience iteratively.
+### Future Plans:
+Expand unit testing to include item interactions and enemy AI.
+Add automated stress and load testing.
+Explore accessibility testing for inclusive gameplay.
 
 ### Conclusion
 

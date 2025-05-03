@@ -63,14 +63,18 @@ describe('CollisionDetector Functionality Tests', () => {
     expect(bullets.length).toBe(0); 
   });
 
-  test('detectBulletObstacleCollision - bullet hits obstacle and disappears', () => {
+  test('detectBulletCollision - bullet hits obstacle and disappears', () => {
     const bullet = createMockObj(200, 200);
     const bullets = [bullet];
+
+    const enemy = createMockObj(100, 100);
+    enemy.hp = 20;
+    const enemies = [enemy];
 
     const obstacle = createMockObj(200, 200);
     const obstacles = [obstacle];
 
-    detector.detectBulletObstacleCollision(bullets, obstacles);
+    detector.detectBulletCollision(bullets, enemies, obstacles);
     expect(bullets.length).toBe(0); // 子弹被删掉
   });
 

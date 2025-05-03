@@ -1,9 +1,12 @@
 class Enemy {
-  constructor(x, y, hp, enImage) {
+  constructor(x, y, hp, enImage, levelId) {
     this.hp = hp;
     this.position = createVector(x, y);
     const smallEnemyHp = 50;
-    const enemyWidth = (hp === smallEnemyHp) ? heightInPixel / 16 : heightInPixel / 12;
+
+    // 敌人尺寸根据 HP 判断
+    const isSmall = (hp === smallEnemyHp);
+    const enemyWidth = isSmall ? heightInPixel / 16 : heightInPixel / 12;
     const enemyHeight = Math.floor(enemyWidth * (enImage.height / enImage.width));
     this.size = createVector(enemyWidth, enemyHeight);
     console.log(`Enemy image size ${enImage.width}, ${enImage.height}`);
@@ -12,9 +15,12 @@ class Enemy {
     this.velocity = createVector(random([-1, 1]), random([-1, 1]));
     this.image = enImage;
 
-    // 添加动画帧相关
-    this.frames = window.enemyFrames || [enImage]; // 确保不报错
+    // 添加动画帧相关，根据 level 和尺寸选择帧组
+    const levelKey = `level${levelId}`;
+    const sizeKey = isSmall ? 'small' : 'large';
+    this.frames = window.enemyAnimations?.[levelKey]?.[sizeKey] || [enImage]; // fallback 到单图
     console.log(`Enemy sprite size ${this.frames[0].width}, ${this.frames[0].height}`);
+    
     this.currentFrame = 0;
     this.frameCounter = 0;
     this.frameDelay = 10; // 控制播放速度，越大越慢
@@ -44,7 +50,7 @@ class Enemy {
   collide(otherObj) {
     // Calculate direction away from collision
     const enemyCenter = p5.Vector.sub(this.position.copy(), this.size.copy().div(2));
-    const otherObjCenter = p5.Vector.sub(otherObj.position.copy(), otherObj.size.copy().div(2))
+    const otherObjCenter = p5.Vector.sub(otherObj.position.copy(), otherObj.size.copy().div(2));
     const direction = p5.Vector.sub(enemyCenter, otherObjCenter).normalize();
     
     // Add some randomness to prevent perfect oscillation
@@ -54,34 +60,4 @@ class Enemy {
     this.velocity = direction.mult(this.velocity.mag());
     this.position.add(direction);
   }
-
-  // // 与玩家接触时造成伤害
-  // checkPlayerCollisionAndDamage() {
-  //   const bounds = {
-  //     left: this.position.x + this.size.x * 0.25,
-  //     right: this.position.x + this.size.x * 0.75,
-  //     top: this.position.y + this.size.y * (2 / 3),
-  //     bottom: this.position.y + this.size.y
-  //   };
-  
-  //   const playerBounds = {
-  //     left: player.position.x,
-  //     right: player.position.x + player.size.x,
-  //     top: player.position.y,
-  //     bottom: player.position.y + player.size.y
-  //   };
-  
-  //   const collided = (
-  //     bounds.left < playerBounds.right &&
-  //     bounds.right > playerBounds.left &&
-  //     bounds.top < playerBounds.bottom &&
-  //     bounds.bottom > playerBounds.top
-  //   );
-  
-  //   if (collided && player.invincibleTimer <= 0) {
-  //     player.updateHp(player.hp - 1, 90); // 扣1血 + 无敌90帧
-  //     hurtSound.currentTime = 0;
-  //     hurtSound.play();
-  //   }
-  // }
 }

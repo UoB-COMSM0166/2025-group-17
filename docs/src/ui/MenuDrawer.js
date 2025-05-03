@@ -1,7 +1,8 @@
 class MenuDrawer {
   #scenePlayer;
   #helpBar;
-  #state = "mainMenu"; // "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
+  #state = "policy"; // "policy", "startScene", "endScene", "inGame", "mainMenu", "paused", "completed"
+  
   constructor(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData) {
     this.btnIndex = 0;
     this.eventBus = eventBus;
@@ -24,6 +25,8 @@ class MenuDrawer {
 
     this.#scenePlayer = new ScenePlayer(sceneData, sceneImgs, sceneSounds);
     this.#helpBar = new HelpBar(helpBarData);
+    // Let the policy disclain last for 2.5 seconds
+    setTimeout(() => { this.#state = "mainMenu" }, 2500);
   }
 
   createMenuButton(imgPath, label, yOffset, callback, hidden = false) {
@@ -34,8 +37,11 @@ class MenuDrawer {
     btn.size(btnWidth, btnHeight);
     btn.position(windowWidth / 2 - btn.width / 2, windowHeight / 2 + yOffset * btn.height / 2);
     btn.mouseClicked(() => {
-      callback();
+      if (this.btnIndex === null) return;
+      if (btnSound) btnSound.play();
+      btn.removeClass('blink');
       this.btnIndex = 0;
+      callback();
     });
     btn.mouseOver(() => { this.#handleMouseOver(btn) });
     btn.mouseOut(() => {
@@ -104,12 +110,18 @@ class MenuDrawer {
 
   setupGameOverPage() {
     this.btnLoadLastSave = this.createMenuButton('assets/buttons/LastSave.png', 'Last Save', -1.1, () => this.eventBus.publish('LOAD_GAME'), true);
-    this.btnRestart = this.createMenuButton('assets/buttons/Restart.png', 'Restart', 1.1, () => this.eventBus.publish('START_NEW_GAME'), true);
+    this.btnRestart = this.createMenuButton('assets/buttons/Restart.png', 'Restart', 1.1, () => this.#handleRestart(), true);
     this.gameOverBtns.push(this.btnLoadLastSave, this.btnRestart);
+  }
+
+  #handleRestart() {
+    this.eventBus.publish('START_NEW_GAME');
+    this.#state = "inGame";
   }
 
   drawMainMenu() {
     image(startMenuImg, 0, 0, widthInPixel, heightInPixel);
+    this.showStartButtons();
     this.#repositionButton(this.btnContinue, -1.1);
     this.#repositionButton(this.btnNewGame, 1.1);
     if (this.btnIndex !== null) this.mainMenuBtns[this.btnIndex].class('blink');
@@ -152,7 +164,7 @@ class MenuDrawer {
   drawGameCompleted(totalTime) {
     clear();
     this.btnPause.hide();
-    background(220);
+    image(gameCompletedMenuImg, 0, 0, widthInPixel, heightInPixel);
 
     const totalSecs = floor(totalTime / 1000);
     const mins = floor(totalSecs / 60);
@@ -200,6 +212,12 @@ class MenuDrawer {
   }
 
   renderMenu(playerObj, timeSpent) {
+    if (this.#state === "policy") {
+      this.btnContinue.hide();
+      this.btnNewGame.hide();
+      PolicyDisplayer.display();
+      return;
+    }
     if (!this.shouldRenderMenu(playerObj)) this.#helpBar.hide();
     if (this.#isScenePage()) this.#scenePlayer.draw();
     if (this.#state === "mainMenu") this.drawMainMenu();
@@ -216,7 +234,7 @@ class MenuDrawer {
   }
 
   shouldRenderMenu(playerObj) {
-    return this.#state === "mainMenu" || this.#state === "paused" || this.#state === "completed" || this.#isGameOver(playerObj) || this.#isScenePage();
+    return this.#state === "mainMenu" || this.#state === "paused" || this.#state === "completed" || this.#isGameOver(playerObj) || this.#isScenePage() || this.#state === "policy";
   }
 
   updatePauseBtnPosition() {
@@ -284,7 +302,10 @@ class MenuDrawer {
   }
 
   #controlBtnsByKeys(buttons, eventTypes) {
-    if (keyIsDown(ENTER)) this.#pressBtnsByKeys(buttons, eventTypes);
+    if (keyIsDown(ENTER)) {
+      if (btnSound) btnSound.play();
+      this.#pressBtnsByKeys(buttons, eventTypes);
+    }
     if (keyIsDown(DOWN_ARROW) || keyIsDown(UP_ARROW)) this.#moveBetweenBtnsByKeys(buttons);
   }
 
@@ -294,7 +315,8 @@ class MenuDrawer {
     buttons[prevBtnIndex].removeClass('blink');
     this.btnIndex = 0;
     if (buttons[prevBtnIndex] === this.btnNewGame) this.#handleNewGame();
-    this.eventBus.publish(eventTypes[prevBtnIndex]);
+    else if (buttons[prevBtnIndex] === this.btnRestart) this.#handleRestart();
+    else this.eventBus.publish(eventTypes[prevBtnIndex]);
     if (buttons[prevBtnIndex] === this.btnNewGame) this.btnPause.hide();
   }
 

@@ -1,11 +1,3 @@
-let pauseSound = new Audio("assets/music/se/Pause.mp3");
-let hitSound = new Audio("assets/music/se/Enemy_Hurt.mp3");
-let deathSound = new Audio("assets/music/se/Enemy_Death.mp3");
-let shootSound = new Audio("assets/music/se/Player_Shoot.mp3");
-let hurtSound = new Audio("assets/music/se/Player_Hurt.mp3");
-let deathSound2 = new Audio("assets/music/se/Player_Death.mp3");
-let openDoorSound = new Audio("assets/music/se/Door_Open.mp3");
-
 function setup() {
   // 防止 bossSpriteSheet 未加载时报错
   if (!bossSpriteSheet) {
@@ -79,5 +71,5 @@ function drawDebugCollisionBoxes() {
 }
 
 function keyPressed() {
-  gameStateManager.handlePlayerShooting();
+  if (gameStateManager) gameStateManager.handlePlayerShooting();
 }
