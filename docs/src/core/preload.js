@@ -29,7 +29,7 @@ function preload() {
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
-  shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
+  shooterBulletImage = loadImage('assets/spritesheet/TheBossBullet.png');
 
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
@@ -60,7 +60,7 @@ function preload() {
   // 加载 Boss 精灵图（整张），等 setup 同步切帧
   bossSpriteSheet = loadImage("assets/spritesheet/Crab_Boss.png");
   shooterSpriteSheet = loadImage("assets/spritesheet/shooter_Boss.png");
-  enemySpriteSheet = loadImage("assets/spritesheet/enemy.png"); 
+  enemySpriteSheet = loadImage("assets/spritesheet/enemy.png");
   hitEffectSheet = loadImage("./assets/spritesheet/bullet_Effects.png");
 
   //  加载主界面和第一关的 BGM（使用 p5.sound）
