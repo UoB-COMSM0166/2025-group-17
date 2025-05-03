@@ -22,13 +22,10 @@ class Chaser {
     this.currentDashTime = 0;
     this.#shakeIntensity = 0;
     this.#isDead = false;
-
-    // 替换为动画帧数组（来自 preload）
-    this.frames = window.bossFrames;
+    this.frames = window.chaserFrames || []; 
     this.currentFrame = 0;
     this.frameCounter = 0;
-
-    this.frameDelay = 12; // 控制动画播放速度：数值越大越慢（默认 12 帧换一张）例如设置为 20 就更慢，6 就更快
+    this.frameDelay = 12;
   }
 
   update() {

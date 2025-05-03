@@ -47,23 +47,70 @@ function preload() {
 
   ['up', 'down', 'left', 'right'].forEach(direction => {
     for (let i = 0; i < 5; i++) {
-      const path = `assets/spritesheet/${direction}${i}.png`;
+      const path = `assets/spritesheet/Player/${direction}${i}.png`;
       window.playerAnimations[direction].push(loadImage(path));
     }
   });
 
+  //enemy animation 
+  window.enemyAnimations = {
+    level0: { small: [], large: [] }, 
+    level1: { small: [], large: [] },
+    level2: { small: [], large: [] },
+  };
+
+  // L1 enemy ani（4）
+  for (let i = 0; i < 4; i++) {
+    const s1 = loadImage(`assets/spritesheet/Enemy/L1/Enemy_L1_S${i}.png`);
+    const l1 = loadImage(`assets/spritesheet/Enemy/L1/Enemy_L1_L${i}.png`);
+  
+    window.enemyAnimations.level0.small.push(s1); 
+    window.enemyAnimations.level0.large.push(l1);
+  
+    window.enemyAnimations.level1.small.push(s1);
+    window.enemyAnimations.level1.large.push(l1);
+  }
+  
+  // L2 - 3
+  for (let i = 0; i < 3; i++) {
+    window.enemyAnimations.level2.small.push(loadImage(`assets/spritesheet/Enemy/L2/Enemy_L2_S${i}.png`));
+    window.enemyAnimations.level2.large.push(loadImage(`assets/spritesheet/Enemy/L2/Enemy_L2_L${i}.png`));
+  }
+
   // 加载 Boss 精灵图（整张），等 setup 同步切帧
-  bossSpriteSheet = loadImage("assets/spritesheet/Crab_Boss.png");
-  shooterSpriteSheet = loadImage("assets/spritesheet/shooter_Boss.png");
+  bossSpriteSheet = loadImage("assets/spritesheet/Chaser/Crab_Boss.png");
+  shooterSpriteSheet = loadImage("assets/spritesheet/Shooter/shooter_Boss.png");
   enemySpriteSheet = loadImage("assets/spritesheet/enemy.png"); 
   hitEffectSheet = loadImage("./assets/spritesheet/bullet_Effects.png");
+  // 额外添加 Level 3 的 boss 动画帧
+  window.shooterFramesDefault = [];
+  for (let i = 0; i < 3; i++) {
+  window.shooterFramesDefault.push(loadImage(`assets/spritesheet/Shooter/Shooter_L1_${i}.png`));
+}
+  window.chaserFramesDefault = [];
+  for (let i = 0; i < 3; i++) {
+  window.chaserFramesDefault.push(loadImage(`assets/spritesheet/Chaser/Chaser_L1_${i}.png`));
+}
+  window.chaserFramesL3 = [];
+  for (let i = 0; i < 3; i++) {
+  window.chaserFramesL3.push(loadImage(`assets/spritesheet/Chaser/Chaser_L3_${i}.png`));
+}
+  window.shooterFramesL3 = [];
+  for (let i = 0; i < 4; i++) {
+  window.shooterFramesL3.push(
+    loadImage(`assets/spritesheet/Shooter/Shooter_L3_${i}.png`)
+  );
+}
 
+
+  
   //  加载主界面和第一关的 BGM（使用 p5.sound）
   mainmenuSound = loadSound("assets/music/bgm/MainMenu.mp3");
   L1_OfficeSound = loadSound("assets/music/bgm/L1_Office.mp3");
   L2_CasinoSound = loadSound("assets/music/bgm/L2_Casino.mp3");
   L3_PsychoSound = loadSound("assets/music/bgm/L3_Psycho.mp3");
 
+  
   // Load sound effects
   btnSound = loadSound("assets/music/se/Btn_Pressed.mp3");
   hitSound = loadSound("assets/music/se/Enemy_Hurt.mp3");
