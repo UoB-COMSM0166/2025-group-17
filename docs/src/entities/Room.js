@@ -11,6 +11,7 @@ class Room {
     this.enemies = [];
     this.chaser = [];
     this.shooter = [];
+    this.pigEnemy = []; // TODO: Add pig enemy
     this.obstacles = [];
     this.#items = [];
     this.#obstacleCount = 0;
@@ -31,6 +32,7 @@ class Room {
     this.chaser = [];
     this.shooter = [];
     //TODO：建立猪猪敌人
+    this.pigEnemy = [];
     this.obstacles = [];
     this.#items = [];
     this.#startTime = millis();
