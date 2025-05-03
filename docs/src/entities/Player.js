@@ -1,26 +1,20 @@
 class Player {
-  #canShootAgain;
-  #shootCoolDownDuration;
-  #atk;
-  #maxAtk;
-  #bulletSize;
-  #maxBulletSize;
+  #maxHp = 3;
+  #baseAtk = 50;
+  #atk = 50;
+  #maxAtk = 100;
+  #maxSpeed = 4;
+  #acceleration = 3.0;
+  #friction = 0.85;
+  #bulletSize = 20;
+  #maxBulletSize = 40;
+  #canShootAgain = true;
+  #shootCoolDownDuration = 300;
 
   constructor(x = leftBoundary, y = heightInPixel / 2) {
     this.position = createVector(x, y);
-    this.maxHp = 3;
-    this.hp = this.maxHp;
-    this.speed = 2;
-    this.maxSpeed = 4;
-    this.acceleration = 3.0;
-    this.friction = 0.85;
+    this.hp = this.#maxHp;
     this.velocity = createVector(0, 0);
-    this.#atk = 50;
-    this.#maxAtk = 100;
-    this.#bulletSize = 20;
-    this.#maxBulletSize = 40;
-    this.#canShootAgain = true;
-    this.#shootCoolDownDuration = 300;
 
     // 判定框尺寸（红框用来检测碰撞）！！！
     this.size = createVector(36, 52);  // ← 可调整碰撞判定大小（原本是 heightInPixel / 7）
@@ -35,8 +29,6 @@ class Player {
     this.bullets = [];
 
     this.image = playerImage; // 初始静态图像
-    this.lastHealTime = null;
-
     // 动画相关初始化
     this.animations = window.playerAnimations; // 从 preload.js 获取动画帧
     this.direction = 'down';                   // 初始朝向
@@ -45,12 +37,32 @@ class Player {
     this.frameDelay = 6;                       // 每几帧切换一次动画
   }
 
+  getAtk() { return this.#atk; }
+  getBulletSize() { return this.#bulletSize; }
+  getHp() { return this.hp; }
+  getMaxHp() { return this.#maxHp; }
+  setHp(newHp) { this.hp = newHp; }
+  
+  // Reset transient room state while preserving progression stats
+  resetRoomState(newHp, x = leftBoundary, y = heightInPixel / 2) {
+    this.hp = newHp;
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.invincibleTimer = 60; // Player becomes invincible when entering a room
+    this.#canShootAgain = true;
+    
+    this.direction = 'down';
+    this.currentFrame = 0;
+    this.frameCounter = 0;
+    this.frameDelay = 6; 
+  }
+
   updateHp(valueToAdd, invincibleDuration = 60) {
     if (this.invincibleTimer > 0) return;
     const newHp = this.hp + valueToAdd;
     if (newHp < this.hp) hurtSound.play();
 
-    this.hp = max(0, min(newHp, this.maxHp));
+    this.hp = max(0, min(newHp, this.#maxHp));
     console.log("Player hp updated to", this.hp);
 
     if (this.hp <= 0) playerDeathSound.play();
@@ -61,7 +73,8 @@ class Player {
     if (!this.#canShootAgain) return;
     const centerX = this.position.x + this.size.x / 2;
     const centerY = this.position.y + this.size.y / 2;
-    this.bullets.push(new Bullet(centerX, centerY, direction, this.#atk, this.#bulletSize));
+    const bulletImg = (this.#atk <= 50) ? bulletImage : powerUpBulletImage;
+    this.bullets.push(new Bullet(centerX, centerY, direction, this.#atk, bulletImg, this.#bulletSize));
     this.#canShootAgain = false;
     setTimeout(() => { this.#canShootAgain = true; }, this.#shootCoolDownDuration);
     console.log("A bullet has been shot");
@@ -69,9 +82,10 @@ class Player {
   }
 
   powerUp() {
-    this.#atk = min(this.#atk * 1.2, this.#maxAtk);
-    this.#bulletSize = min(this.#bulletSize * 1.2, this.#maxBulletSize);
-    console.log("Power Up activated!");
+    const upRatio = 1.25;
+    this.#atk = min(this.#atk * upRatio, this.#maxAtk);
+    this.#bulletSize = min(this.#bulletSize * upRatio, this.#maxBulletSize);
+    console.log(`Power Up activated! ATK: ${this.#atk}, Bullet size: ${this.#bulletSize}`);
   }
 
   updateBlinking() {
@@ -110,12 +124,12 @@ class Player {
     if (input.mag() > 0) {
       input.normalize();
       // ✅ 改为加速度推动速度，模拟惯性
-      let accelerationVector = p5.Vector.mult(input, this.acceleration * 0.1);
+      let accelerationVector = p5.Vector.mult(input, this.#acceleration * 0.1);
       this.velocity.add(accelerationVector);
 
       // ✅ 限制最大速度
-      if (this.velocity.mag() > this.maxSpeed) {
-        this.velocity.setMag(this.maxSpeed);
+      if (this.velocity.mag() > this.#maxSpeed) {
+        this.velocity.setMag(this.#maxSpeed);
       }
       // ✅ 方向判定用于动画（优先水平）
       if (abs(input.x) > abs(input.y)) {
@@ -145,7 +159,7 @@ class Player {
   }
 
   applyFriction() {
-    this.velocity.mult(this.friction);
+    this.velocity.mult(this.#friction);
 
     // ✅ 若速度足够小则强制归零（避免一直滑）
     if (this.velocity.mag() < 0.1) {

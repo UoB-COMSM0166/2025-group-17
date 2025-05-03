@@ -72,7 +72,7 @@ class InputHandler {
       console.log("Move to the next room!");
       //this.#loadRoom();
       this.fadeMgr.start(() => this.#loadRoom());
-      player.resetInvincibleTimer();
+      // player.resetInvincibleTimer();
     }
   }
 
@@ -81,12 +81,11 @@ class InputHandler {
       console.log("Game Completed!");
       return;
     }
-    const prevHp = player.hp;
-
     const nextRoomId = this.#currentRoom.getCurrentRoomId() + 1;
-    player = new Player();
+
     // Only reset player HP after the tutorial
-    if (nextRoomId !== 1) player.hp = prevHp;
+    const newHp = (nextRoomId === 1) ? 3 : player.getHp();
+    player.resetRoomState(newHp);
   
     // Load room
     if (nextRoomId === 1) {

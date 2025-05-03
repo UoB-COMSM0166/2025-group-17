@@ -15,6 +15,7 @@ function preload() {
   playerImage = loadImage('assets/character/Character.png');
   //load bullet image
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
+  powerUpBulletImage = loadImage('assets/character/bullets/UpperBullet.png');
   //load enemy image
   enemyImage = loadImage('assets/enemies/level1/CCTV.png');
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来

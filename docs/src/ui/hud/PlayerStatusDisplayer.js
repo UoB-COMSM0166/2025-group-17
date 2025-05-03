@@ -15,7 +15,7 @@ class PlayerStatusDisplayer {
 
   static #drawHealthBar(playerObj, heartImg, damagedHeartImg) {
     // Draw current HP
-    for (let h = 0; h < playerObj.hp; h++) {
+    for (let h = 0; h < playerObj.getHp(); h++) {
       image(
         heartImg, 
         this.#hPadding + h * (this.#iconSize + this.#iconPadding), 
@@ -26,10 +26,10 @@ class PlayerStatusDisplayer {
     }
 
     // Draw lost HP
-    for (let dh = 0; dh < playerObj.maxHp - playerObj.hp; dh++) {
+    for (let dh = 0; dh < playerObj.getMaxHp() - playerObj.getHp(); dh++) {
       image(
         damagedHeartImg, 
-        this.#hPadding + (dh + playerObj.hp) * (this.#iconSize + this.#iconPadding), 
+        this.#hPadding + (dh + playerObj.getHp()) * (this.#iconSize + this.#iconPadding), 
         this.#vPadding, 
         this.#iconSize, 
         this.#iconSize

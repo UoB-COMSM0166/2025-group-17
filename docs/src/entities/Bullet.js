@@ -1,11 +1,11 @@
 class Bullet {
-  constructor(x, y, direction, dmg, s = 20) {
+  constructor(x, y, direction, dmg, img = bulletImage, s = 20) {
     this.position = createVector(x, y);
     this.size = createVector(s, s);
     this.speed = 4;
     this.direction = direction; // Use a vector direction instead of a letter
     this.damage = dmg;
-    this.image = bulletImage;
+    this.image = img;
 
     this.initialAngle = random(TWO_PI); //赋予子弹随机初始角度
     this.spin = 0; //旋转增量

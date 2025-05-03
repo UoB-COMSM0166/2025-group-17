@@ -330,7 +330,7 @@ class MenuDrawer {
   }
 
   #isGameOver(playerObj) {
-    if (this.#state !== "mainMenu" && playerObj.hp <= 0) {
+    if (this.#state !== "mainMenu" && playerObj.getHp() <= 0) {
       console.log("Game over..");
       this.#state = "gameOver";
       return true;

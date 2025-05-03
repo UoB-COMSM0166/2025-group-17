@@ -6,7 +6,7 @@ let fadeMgr;
 
 // load images of player, bullet, and enemy
 let playerImage;
-let bulletImage;
+let bulletImage, powerUpBulletImage;
 let enemyImage;
 let savePointImg;
 let openDoorImg, closedDoorImg;

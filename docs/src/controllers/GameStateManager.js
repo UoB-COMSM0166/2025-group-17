@@ -92,7 +92,7 @@ class GameStateManager {
     localStorage.setItem('currentRoomDataId', room.getRoomDataId());
     localStorage.setItem('lastSavePointX', JSON.stringify(room.savePoint.position.x));
     localStorage.setItem('lastSavePointY', JSON.stringify(room.savePoint.position.y));
-    localStorage.setItem('playerHp', JSON.stringify(player.hp));
+    localStorage.setItem('playerHp', JSON.stringify(player.getHp()));
     localStorage.setItem('timeSpent', JSON.stringify(this.#timeSpent));
     console.log("Game Saved!");
   }
@@ -118,7 +118,7 @@ class GameStateManager {
     const savedPosition = new SavePoint(savedPositionX, savedPositionY);
     player.position.x = savedPosition.position.x;
     player.position.y = savedPosition.position.y;
-    player.hp = JSON.parse(savedPlayerHp);
+    player.setHp(JSON.parse(savedPlayerHp));
     startTime = millis() - JSON.parse(savedTimeSpent);
     player.resetInvincibleTimer();
     console.log("Game Loaded!");

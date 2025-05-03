@@ -313,7 +313,8 @@ class Room {
 
   #dropItemFromBossType(bossObj, itemX, itemY, bossBtm) {
     if (bossObj instanceof ShooterFourDir) {
-      this.#items.push(new Item(itemX, itemY, bossBtm, "health"));
+      const itemType = Math.random() < 0.5 ? "health" : "powerup";
+      this.#items.push(new Item(itemX, itemY, bossBtm, itemType));
     } else if (bossObj instanceof ShooterEightDir) {
       this.#items.push(new Item(itemX, itemY, bossBtm, "photo"));
     }
@@ -334,7 +335,7 @@ class Room {
     const noShooter = this.shooter.length === 0;
     const photoInRoom = this.#items.some(i => i.getType() === "photo");
   
-    return noEnemies && noChaser && noShooter && !photoInRoom && player.hp > 0;
+    return noEnemies && noChaser && noShooter && !photoInRoom && player.getHp() > 0;
   }
   
   resolveBossCollision() {
