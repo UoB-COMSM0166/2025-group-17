@@ -19,23 +19,7 @@ function preload() {
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
 
-<<<<<<< HEAD
-  //load player image
-  playerImage = loadImage('assets/character/Character.png');
-  //load bullet image
-  bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
-  powerUpBulletImage = loadImage('assets/character/bullets/UpperBullet.png');
-  //load enemy image
-  enemyImage = loadImage('assets/enemies/level1/CCTV.png');
-  chaserImage = loadImage('assets/enemies/level1/Crab.png'); // 路径按你实际来
-  shooterImage = loadImage('assets/enemies/level1/The Boss.png'); // 路径按你实际来
-  shooterBulletImage = loadImage('assets/character/bullets/UpperBullet.png'); // 路径按你实际来
-
-  BossBulletImgL2 = loadImage("assets/enemies/level2/L2_BossBullet.png");
-  BossBulletImgL3 = loadImage('assets/enemies/level3/L3_BossBullet.png'); // 路径按你实际来
-=======
   //检查点
->>>>>>> 9020fb7593d42f22a88884de7608db917200b1f7
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
 

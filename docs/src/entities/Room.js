@@ -337,13 +337,8 @@ class Room {
     const noChaser = this.chaser.length === 0;
     const noShooter = this.shooter.length === 0;
     const photoInRoom = this.#items.some(i => i.getType() === "photo");
-<<<<<<< HEAD
-  
-    return noEnemies && noChaser && noShooter && !photoInRoom && player.getHp() > 0;
-=======
 
     return noEnemies && noChaser && noShooter && !photoInRoom && player.hp > 0;
->>>>>>> 9020fb7593d42f22a88884de7608db917200b1f7
   }
 
   resolveBossCollision() {

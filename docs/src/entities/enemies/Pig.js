@@ -1,17 +1,4 @@
 class Pig {
-<<<<<<< HEAD
-    constructor(x, y) {
-        this.hp = 200;
-        this.speed = 1.2;
-        this.alive = true;
-
-        //追踪与射击控制
-        this.minDistance = 150; // 距离小于这个值就停止靠近
-        this.shootCoolDown = 90; // 射击冷却帧数（约1.5秒）
-        this.shootTimer = 0;
-
-        //精灵图设置：
-=======
     #isDead;
 
     constructor(x, y) {
@@ -29,7 +16,6 @@ class Pig {
         this.#isDead = false;
 
         //精灵图设置：(创新)
->>>>>>> 9020fb7593d42f22a88884de7608db917200b1f7
         this.sprite = new Sprite(x, y, 50, 50); //物理碰撞盒子
         this.sprite.rotationLock = true; //锁定旋转
         this.sprite.scale = 1;
@@ -44,14 +30,6 @@ class Pig {
     }
 
     update() {
-<<<<<<< HEAD
-        if (!this.alive) return;
-
-        const pigPos = createVector(this.sprite.x, this.sprite.y);
-
-    }
-}
-=======
         if (this.hp <= 0) return;
 
         const pigCenter = this.sprite.position.copy();
@@ -227,4 +205,3 @@ class Pig {
         pop();
     }
 }
->>>>>>> 9020fb7593d42f22a88884de7608db917200b1f7
