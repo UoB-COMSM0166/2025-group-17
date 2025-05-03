@@ -8,7 +8,7 @@ class Player {
     this.maxHp = 5;
     this.hp = this.maxHp;
     this.speed = 3;
-    this.maxSpeed = 15;
+    this.maxSpeed = 5;
     this.acceleration = 5.0;
     this.friction = 0.85;
     this.velocity = createVector(0, 0);
@@ -103,20 +103,31 @@ class Player {
     // ✅ 立即响应速度，无 lerp（避免滑动穿墙）
     if (input.mag() > 0) {
       input.normalize();
-      this.velocity = p5.Vector.mult(input, this.speed);
+
+      // ✅ 改为加速度推动速度，模拟惯性
+      let accelerationVector = p5.Vector.mult(input, this.acceleration * 0.1);
+      this.velocity.add(accelerationVector);
+
+      // ✅ 限制最大速度
+      if (this.velocity.mag() > this.maxSpeed) {
+        this.velocity.setMag(this.maxSpeed);
+      }
+
+      // 方向判定用于动画（优先水平）
+      if (abs(input.x) > abs(input.y)) {
+        this.direction = input.x > 0 ? 'right' : 'left';
+      } else if (input.y !== 0) {
+        this.direction = input.y > 0 ? 'down' : 'up';
+      }
     } else {
-      this.velocity.set(0, 0);
+      // ✅ 没有输入时应用摩擦力
+      this.applyFriction();
     }
 
-    // 方向判定用于动画（优先水平）
-    if (abs(input.x) > abs(input.y)) {
-      this.direction = input.x > 0 ? 'right' : 'left';
-    } else if (input.y !== 0) {
-      this.direction = input.y > 0 ? 'down' : 'up';
-    }
+
 
     // 动画帧切换逻辑
-    if (this.velocity.mag() > 0.1) {
+    if (this.velocity.mag() > 0.5) {
       this.frameCounter++;
       if (this.frameCounter >= this.frameDelay) {
         this.frameCounter = 0;
@@ -128,6 +139,15 @@ class Player {
 
     // 更新当前图像为对应方向动画帧
     this.image = this.animations[this.direction][this.currentFrame];
+  }
+
+  applyFriction() {
+    this.velocity.mult(this.friction);
+
+    // ✅ 若速度足够小则强制归零（避免一直滑）
+    if (this.velocity.mag() < 0.1) {
+      this.velocity.set(0, 0);
+    }
   }
 
   resetVelocity() {
