@@ -2,29 +2,174 @@
 
 ' 核心控制系统
 class GameStateManager {
-  -currentBGM
-  -roomBGMs
-  +update()
-  +handlePlayerShooting()
-  +playBGM()
+  -inputHandler: InputHandler
+  -PageDrawer: MenuDrawer
+  -eventBus: EventBus
+  -isGameCompleted: boolean
+  -pauseTime: number
+  -timeSpent: number
+  -currentBGM: p5.SoundFile
+  -filter: p5.LowPass
+  -roomBGMs: { [key: number]: p5.SoundFile }
+
+  +GameStateManager(eventBus: EventBus, PageDrawer: MenuDrawer, inputHandler: InputHandler) <<constructor>>
+  +update(): void
+  +handlePlayerShooting(): void
+  -shouldRenderMenu(): boolean
+  -checkSavePoint():void
+  -saveGameData(): void
+  +loadGameData(): void
+  +startNewGame(): void
+  -resetGame(): void
+  +pauseGame(): void
+  +resumeGame(): void
+  +exitToMainMenu(): void
+  +playMainmenuSound(): void
+  +playBGM(sound: p5.SoundFile): void
+  +playBGMForRoom(index: number): void
+  +stopBGM(): void
+  -setupRoom(roomDataId: number): void
+  -adjustCanvasWithAspectRatio(): void
+  -resizeBtns(): void
 }
 
 class EventBus {
-  -events
-  +subscribe()
-  +publish()
+  -events: Object
+
+  +EventBus() <<constructor>>
+  +subscribe(event: string, callback: Function): void
+  +publish(event: string, data: any): void
+}
+
+class MenuDrawer {
+   -scenePlayer: ScenePlayer
+   -helpBar: HelpBar
+   -state: string
+   -btnIndex: number
+   -eventBus: EventBus
+   -btnContinue: p5.Element
+   -btnNewGame: p5.Element
+   -mainMenuBtns: p5.Element[]
+   -btnPause: p5.Element
+   -btnResume: p5.Element
+   -btnExit: p5.Element
+   -pauseMenuBtns: p5.Element[]
+   -btnLoadLastSave: p5.Element
+   -btnRestart: p5.Element
+   -gameOverBtns: p5.Element[]
+
+   +MenuDrawer(eventBus: EventBus, sceneData: Object, sceneImgs: { [key: string]: p5.Image }, sceneSounds: { [key: string]: p5.SoundFile }, helpBarData: Object) <<constructor>>
+   -createMenuButton(imgPath: string, label: string, yOffset: number, callback: Function, hidden: boolean): p5.Element
+   -handleMouseOver(btn: p5.Element): void
+   -repositionButton(btn: p5.Element, yOffset: number): void
+   +setupMainMenu(): void
+   -handleNewGame(): void
+   -playStartScene(): void
+   +setupPauseMenu(): void
+   +setupGameOverPage(): void
+   -handleRestart(): void
+   +drawMainMenu(): void
+   +drawPauseMenu(): void
+   -drawMainMsg(title: string): void
+   +drawGameOverPage(): void
+   +getGameState(): string
+   +setInGameState(): void
+   +setCompletedState(): void
+   +drawGameCompleted(totalTime: number): void
+   +showStartButtons(): void
+   +toggleStartButtons(): void
+   +showResumeButtons(): void
+   +toggleResumeButtons(): void
+   +showGameOverButtons(): void
+   +toggleGameOverButtons(): void
+   +renderMenu(playerObj: Player, timeSpent: number): void
+   -isScenePage(): string
+   -shouldRenderMenu(playerObj: Player): string
+   +updatePauseBtnPosition(): void
+   +handleBtnPressed(playerObj: Player)
+   -handleSceneProgress(): void
+   -playNextStoryLine(): void
+   -transitionToEndScene(): void
+   -returnToPrevPage(playerObj: Player): void
+   -controlBtnsByKeys(buttons: p5.Element[], eventTypes: string[]): void
+   -pressBtnsByKeys(buttons: p5.Element[], eventTypes: string[]): void
+   -moveBetweenBtnsByKeys(buttons: p5.Element[]): void
+   -isGameOver(playerObj: Player): boolean
+   +resizeBtns(): void
 }
 
 class InputHandler {
-  -currentRoom
-  +update()
-  +handlePlayerShooting()
+  -currentRoom: Room
+  -collisionDetector: CollisionDetector
+  -lastCollisionTime: number
+  -fadeMgr: FadeManager
+
+  +InputHandler(roomObj: Room) <<constructor>>
+  +update(playerObj: Player): void
+  +handlePlayerShooting(playerObj: Player): void
+  +updateBullets(playerObj: Player): void
+  -moveToNextRoom(playerObj: Player, tolerance: number): void
+  -loadRoom(): void
+  +getCurrentRoomId(): number
+  +getCurrentLevelId(): number
+  +getCurrentRoomNo(): number
+  +isGameCompleted(): boolean
+  -getMaxCurrentRoomId(rawRoomData: Object): number
+}
+
+class ScenePlayer {
+  -data: Object
+  -images: { [key: string]: p5.Image }
+  -sounds: { [key: string]: p5.SoundFile }
+  -currentScene: Array<SceneLine>
+  -currentIndex: number
+  -currentBGM: p5.SoundFile | null
+  -noiseIntensity: number
+
+  +ScenePlayer(data: Object, images: { [key: string]: p5.Image }, sounds: { [key: string]: p5.SoundFile }) <<constructor>>
+  +draw(): void
+  -applyNoiseEffect(): void
+  +isSceneComplete(): boolean
+  +next(): void
+  -playSound(): void
+  +stopBGM(): void
+  +setScene(sceneName: string): void
+}
+
+class HelpBar {
+  -visible: boolean
+  -height: number
+  -opacity: number
+  -btnOpacity: number
+  -iconCharSize: number
+  -textSize: number
+  -animation: {y: number, targetY: number, easing: number, duration: number}
+  -stateMap: { [key: string]: number } 
+  -currentState: string
+  -currentBtnIdx: number
+  -pages: Array<HelpBarPage>
+
+  +HelpBar(jsonData: Object) <<constructor>>
+  +update(currentState: string, currentBtnIdx: number): void
+  +updateText(currentState: string, currentBtnIdx: number): void
+  -updateAnimation(): void
+  -draw(currentState: string, btnIndex: number): void
+  -drawKeyButtons(textY: number, padding: number, keys: Array<KeyItem>): void
+  -drawKey(keyString: string, x: number, y: number): number
+  -drawSpecialCharacter(char: string, x: number, y: number, charWidth: number, padding: number): number
+  -drawRegularCharacter(char: string, x: number, y: number): number
+  -containsRegularCharacters(keyString: string): boolean
+  -rawTextBackground(startX: number, y: number, currentX: number, charWidth: number, padding: number): number
+  -drawButtonBackground(x: number, y: number, width: number, height: number): void
+  -drawText(textContent: string, x: number, y: number, align: string, color: number, prefix: string): void
 }
 
 class CollisionDetector {
-  +detectPlayerCollision()
-  +handleEnemyCollision()
-  +detectBulletCollision()
+  
+}
+
+class FadeManager {
+
 }
 
 ' 游戏实体
@@ -82,22 +227,19 @@ class Door {
   +close()
 }
 
+class Item {
+
+}
+
+class Obstacle {
+
+}
+
 class SavePoint {
   +checked()
 }
 
 ' UI系统
-class MenuDrawer {
-  -scenePlayer
-  -helpBar
-  +drawMainMenu()
-  +drawPauseMenu()
-}
-
-class HelpBar {
-  +update()
-  +draw()
-}
 
 class PlayerStatusDisplayer {
   +display()
@@ -107,19 +249,28 @@ class BossStatusDisplayer {
   +display()
 }
 
-' 特殊组件
-class ScenePlayer {
-  +draw()
-  +next()
+class InstructionDisplayer {
+
 }
 
+class PolicyDisplayer {
+  
+}
+
+
+
 ' 关系定义
-GameStateManager "1" *-- "1" EventBus
-GameStateManager "1" *-- "1" InputHandler
-GameStateManager "1" *-- "1" MenuDrawer
+GameStateManager "1" o-- "1" EventBus
+GameStateManager "1" o-- "1" InputHandler
+GameStateManager "1" o-- "1" MenuDrawer
+
+MenuDrawer "1" *-- "1" ScenePlayer
+MenuDrawer "1" *-- "1" HelpBar
+MenuDrawer "1" o-- "1" EventBus
 
 InputHandler "1" *-- "1" CollisionDetector
-InputHandler "1" *-- "1" Room
+InputHandler "1" o-- "1" Room
+InputHandler "1" o-- "1" FadeManager
 
 Room "1" *-- "many" Enemy
 Room "1" *-- "many" Obstacle
