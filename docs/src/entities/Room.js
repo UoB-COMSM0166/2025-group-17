@@ -4,13 +4,14 @@ class Room {
   #startTime;
   #clearTime;
   #items;
-  
+
   constructor() {
     this.savePoint = null;
     this.door = null;
     this.enemies = [];
     this.chaser = [];
     this.shooter = [];
+    this.pigEnemy = []; // TODO: Add pig enemy
     this.obstacles = [];
     this.#items = [];
     this.#obstacleCount = 0;
@@ -30,6 +31,8 @@ class Room {
     this.enemies = [];
     this.chaser = [];
     this.shooter = [];
+    //TODO：建立猪猪敌人
+    this.pigEnemy = [];
     this.obstacles = [];
     this.#items = [];
     this.#startTime = millis();
@@ -70,7 +73,7 @@ class Room {
   }
 
   #handleItemPicking(playerObj) {
-    const collidedItems = this.#items.filter(item => 
+    const collidedItems = this.#items.filter(item =>
       this.collisionDetector.detectCollision(playerObj, item)
     );
     if (collidedItems.length > 0) {
@@ -78,7 +81,7 @@ class Room {
         item.applyEffect(playerObj);
         itemPickSound.play();
       });
-  
+
       // Remove collided item
       this.#items = this.#items.filter(
         roomItem => !collidedItems.includes(roomItem)
@@ -143,20 +146,20 @@ class Room {
       return;
     }
 
-    for(let i = 0; i < currentRoomData.obstacles.length; i++) {
+    for (let i = 0; i < currentRoomData.obstacles.length; i++) {
       let newObstacle;
       do {
         const obsData = currentRoomData.obstacles[i];
-      newObstacle = new Obstacle(obsData.x, obsData.y, obsData.img);
+        newObstacle = new Obstacle(obsData.x, obsData.y, obsData.img);
       } while (this.obstacles.some(obstacle => this.collisionDetector.detectCollision(newObstacle, obstacle)));
       this.obstacles.push(newObstacle);
-      
+
     }
   }
 
   generateEnemies(currentRoomData) {
     this.enemies = [];
-  
+
     // 类型为 1、2、3 的特殊房间走专用生成逻辑
     if (currentRoomData.type === 1) {
       this.generateChaser();
@@ -168,83 +171,83 @@ class Room {
       this.generateFinalBossRoom();
       return;
     }
-  
+
     // 普通敌人房间
     const levelId = this.getCurrentLevelId(); // 0, 1, 2...
     const levelKey = `level${levelId}`;
-  
+
     for (let i = 0; i < currentRoomData.enemies.length; i++) {
       let newEnemy;
       const smallEnemyHp = 50;
       const largeEnemyHp = 150;
       const hp = random([smallEnemyHp, largeEnemyHp]);
       const enemiesData = currentRoomData.enemies[i];
-  
+
       const sizeKey = (hp === smallEnemyHp) ? 'small' : 'large';
       const frames = window.enemyAnimations?.[levelKey]?.[sizeKey] || [];
-  
+
       do {
         newEnemy = new Enemy(enemiesData.x, enemiesData.y, hp, enemiesData.img, levelId);
       } while (this.collisionDetector.detectCollision(player, newEnemy));
-  
+
       this.enemies.push(newEnemy);
     }
-  }  
+  }
 
   generateChaser() {
     this.chaser = [];
-  
+
     const isLevel3 = this.getCurrentLevelId && this.getCurrentLevelId() === 3;
-  
+
     if (isLevel3) {
       window.chaserFrames = window.chaserFramesL3;
     } else {
       window.chaserFrames = window.chaserFramesDefault;
     }
-  
+
     this.chaser.push(new Chaser(600, 300));
-  }  
+  }
 
   //generateShooter() {
   //  this.shooter = [];
   //  this.shooter.push(new Shooter(400, 300));
   //}
 
-    generateShooter() {   // type = 2 的普通 shooter 关
-      this.shooter = [];
-    
-      const isLevel3 = this.getCurrentLevelId && this.getCurrentLevelId() === 3;
-    
-      if (isLevel3) {
-        window.shooterFrames = window.shooterFramesL3;
-      } else {
-        window.shooterFrames = window.shooterFramesDefault;
-      }
-    
-      this.shooter.push(new ShooterFourDir(400, 300));
+  generateShooter() {   // type = 2 的普通 shooter 关
+    this.shooter = [];
+
+    const isLevel3 = this.getCurrentLevelId && this.getCurrentLevelId() === 3;
+
+    if (isLevel3) {
+      window.shooterFrames = window.shooterFramesL3;
+    } else {
+      window.shooterFrames = window.shooterFramesDefault;
     }
+
+    this.shooter.push(new ShooterFourDir(400, 300));
+  }
 
   generateFinalBossRoom() {
     this.chaser = [];
     this.shooter = [];
-  
+
     window.chaserFrames = window.chaserFramesL3;
     window.shooterFrames = window.shooterFramesL3;
-    
+
     // Shooter 和 Chaser 的 sprite 高度是 heightInPixel / 4
     const entitySize = heightInPixel / 4;
-  
+
     // 固定 shooter 位置（画布中央偏右）
     const shooterX = widthInPixel * 0.6;
     const shooterY = heightInPixel * 0.5;
     ///this.shooter.push(new Shooter(shooterX, shooterY));
     this.shooter.push(new ShooterEightDir(shooterX, shooterY));
-  
+
     // ✅ 固定 chaser 位置（右上和右下）
     this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
     this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.7));
   }
-  
+
 
   updateEnemies() {
     this.enemies.forEach(e => {
@@ -269,7 +272,7 @@ class Room {
         const c1 = this.chaser[i];
         const c2 = this.chaser[j];
         const dist = p5.Vector.dist(c1.position, c2.position);
-  
+
         if (dist < 60) { // 设置最小间距
           const repel = p5.Vector.sub(c1.position, c2.position).normalize().mult(1.5);
           c1.position.add(repel);
@@ -277,7 +280,7 @@ class Room {
         }
       }
     }
-  
+
     // 更新 + 子弹检测
     this.chaser.forEach(c => {
       c.update();
@@ -285,7 +288,7 @@ class Room {
     });
     this.chaser = this.chaser.filter(c => !c.shouldBeRemoved());
   }
-  
+
 
   updateShooter() {
     this.shooter.forEach(s => {
@@ -299,7 +302,7 @@ class Room {
   #shouldDropItemAndRemove(bossObj) {
     if (bossObj.shouldBeRemoved()) {
       const pos = bossObj.getPosition();
-      const size = bossObj.getSize(); 
+      const size = bossObj.getSize();
       // Compute the middle position
       const itemX = pos.x + size.x / 2;
       const itemY = pos.y + size.y / 2;
@@ -319,7 +322,7 @@ class Room {
       this.#items.push(new Item(itemX, itemY, bossBtm, "photo"));
     }
   }
-  
+
   updateAfterClear() {
     if (this.checkClearCondition()) {
       this.door.open();
@@ -334,18 +337,23 @@ class Room {
     const noChaser = this.chaser.length === 0;
     const noShooter = this.shooter.length === 0;
     const photoInRoom = this.#items.some(i => i.getType() === "photo");
+<<<<<<< HEAD
   
     return noEnemies && noChaser && noShooter && !photoInRoom && player.getHp() > 0;
+=======
+
+    return noEnemies && noChaser && noShooter && !photoInRoom && player.hp > 0;
+>>>>>>> 9020fb7593d42f22a88884de7608db917200b1f7
   }
-  
+
   resolveBossCollision() {
     const bosses = [...this.chaser, ...this.shooter];
-  
+
     for (let i = 0; i < bosses.length; i++) {
       for (let j = i + 1; j < bosses.length; j++) {
         const b1 = bosses[i];
         const b2 = bosses[j];
-  
+
         if (this.collisionDetector.detectCollision(b1, b2)) {
           const push = p5.Vector.sub(b1.position, b2.position).normalize().mult(2);
           b1.position.add(push);
@@ -359,7 +367,7 @@ class Room {
     if (currentRoomData.currentRoomId === 0) {
       this.#obstacleCount = 1;
       return;
-    } 
+    }
     if (currentRoomData.type === 0) {
       this.#obstacleCount = 5;
     } else {
