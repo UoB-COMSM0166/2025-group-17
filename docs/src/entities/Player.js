@@ -50,6 +50,7 @@ class Player {
     this.velocity = createVector(0, 0);
     this.invincibleTimer = 60; // Player becomes invincible when entering a room
     this.#canShootAgain = true;
+    this.bullets = [];
     
     this.direction = 'down';
     this.currentFrame = 0;

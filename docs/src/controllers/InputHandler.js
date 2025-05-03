@@ -70,9 +70,7 @@ class InputHandler {
 
     if (dist(playerMidX, playerMidY, doorX, doorY) < tolerance) {
       console.log("Move to the next room!");
-      //this.#loadRoom();
       this.fadeMgr.start(() => this.#loadRoom());
-      // player.resetInvincibleTimer();
     }
   }
 
