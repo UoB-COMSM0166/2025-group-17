@@ -13,15 +13,21 @@ class Pig {
         // ❕速度需要以 velocity命名，否则碰撞检测isHitBoundary找不到变量
         this.velocity = createVector(random([-1.2, 1.2]), random([-1.2, 1.2]));
 
+
         this.minDistance = 150; // 距离小于这个值就停止靠近
         this.shootCoolDown = 90; // 射击冷却帧数（约1.5秒）
         this.shootTimer = 0;
         this.bullets = [];
+        this.obstacles = [];
         this.#isDead = false;
 
-        /*
+        // 兼容 CollisionDetector
+        this.getPosition = () => this.position;
+        this.getSize = () => this.size;
+
+
         //精灵图设置：(创新)
-        this.sprite = new Sprite(x, y, 50, 50); //物理碰撞盒子
+        this.sprite = new Sprite(x, y, this.size.x, this.size.y); //物理碰撞盒子
         this.sprite.rotationLock = true; //锁定旋转
         this.sprite.scale = 1;
         this.sprite.spriteSheet = pigImage; //精灵图加载
@@ -32,22 +38,26 @@ class Pig {
             walk: { row: 0, frames: 4 } //行数，帧数
         });
         this.sprite.changeAni("idle"); //设置动画
-        */
+
     }
 
     update() {
         if (this.hp <= 0) return;
 
+        // ✅ 同步位置与尺寸用于碰撞检测
+        this.size = createVector(this.sprite.w, this.sprite.h);
+        this.position = this.sprite.position.copy();
+
         const pigCenter = this.sprite.position.copy();
         const playCenter = p5.Vector.add(player.position, player.size.copy().mult(0.5));
         const direction = p5.Vector.sub(playCenter, pigCenter);
-        const distanceToPlayer = direction.mag(); // 计算与玩家的距离
+        const distanceToPlayer = direction.mag();
 
         //判断距离，决定是否接近
         if (distanceToPlayer > this.minDistance) {
             direction.normalize(); // 归一化方向向量
-            this.sprite.vel.x = direction.x * this.speed; //设置速度
-            this.sprite.vel.y = direction.y * this.speed;
+            this.sprite.vel.x = direction.x * 1.2;
+            this.sprite.vel.y = direction.y * 1.2;
             this.sprite.changeAni("walk"); //切换动画
         } else {
             this.sprite.vel.set(0, 0); //停止移动
@@ -62,14 +72,16 @@ class Pig {
             this.shootTimer--; //减少冷却时间
         }
 
-        // 子弹更新 + 撞墙清除
+        // ✅ 更新子弹 + 清理已被击中或越界的子弹
         this.bullets.forEach(b => b.update());
-        this.detectPlayerCollision();
         this.bullets = this.bullets.filter(b => !this.isBulletOutOfBounds(b));
+
+        this.detectPlayerCollision();
         this.checkPlayerCollisionDirect();
-        // 碰撞检测,障碍物
         this.detectObstacleCollision();
 
+        // 同步碰撞体坐标
+        this.position = this.sprite.position.copy();
     }
 
     shootAt(targetPos) {
@@ -147,17 +159,17 @@ class Pig {
 
     checkPlayerCollisionDirect() {
         const p = player;
-        const s = this;
+        const s = this.sprite;
 
         const collided =
-            p.position.x < s.position.x + s.size.x &&
+            p.position.x < s.position.x + s.collider.width &&
             p.position.x + p.size.x > s.position.x &&
-            p.position.y < s.position.y + s.size.y &&
+            p.position.y < s.position.y + s.collider.height &&
             p.position.y + p.size.y > s.position.y;
 
         if (collided) {
             const pushDir = p5.Vector.sub(p.position.copy().add(p.size.x / 2, p.size.y / 2),
-                s.position.copy().add(s.size.x / 2, s.size.y / 2))
+                s.position.copy().add(s.collider.width / 2, s.collider.height / 2))
                 .normalize().mult(5);
 
             p.position.add(pushDir);
@@ -190,10 +202,10 @@ class Pig {
 
     display() {
         // ❕模仿Enemy里的显示逻辑，先显示静态图，可能不对
-        image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
+        //image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
 
 
-        if (!this.alive) return;
+        if (this.#isDead) return;
         this.bullets.forEach(b => b.display());
 
         // 显示狙击线（冷却剩余 < 20 帧时才显示）
@@ -207,11 +219,24 @@ class Pig {
         const dir = p5.Vector.sub(targetCenter, this.sprite.position).normalize();
         const offset = dir.copy().mult(25); // 起点前移一点点
         const start = this.sprite.position.copy().add(offset);
+        const end = p5.Vector.add(start, dir.copy().mult(100)); // ❗必须添加这行定义 end
 
         push();
         strokeWeight(2);
         stroke(255, 0, 0, map(this.shootTimer, 0, 20, 255, 0)); // 越接近射击越暗
         line(start.x, start.y, end.x, end.y);
         pop();
+    }
+
+    // ✅ 增加 collide 方法：用于 handleEnemyCollision 调用
+    collide(otherObj) {
+        const selfCenter = this.sprite.position.copy();
+        const otherCenter = otherObj.position.copy();
+        const direction = p5.Vector.sub(selfCenter, otherCenter).normalize();
+        const randomness = p5.Vector.random2D().mult(0.2);
+        direction.add(randomness).normalize();
+
+        this.sprite.vel = direction.mult(this.velocity.mag());
+        this.sprite.position.add(direction);
     }
 }

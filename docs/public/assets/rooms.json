@@ -82,7 +82,7 @@
                "x": 688,
                "y": 398,
                "image": "assets/obstacles/level1/L1_obs8.png"
-            }            
+            }
          ],
          "enemies": [
             {
@@ -94,18 +94,18 @@
                "x": 808,
                "y": 308,
                "image": "assets/enemies/level1/L1_enemy1.png"
-            }            
+            }
          ],
          "pigEnemies": [
             {
                "x": 234,
                "y": 107,
-               "image": "assets/enemies/level1/Pig.png"
+               "image": "assets/enemies/level1/Pig_Img.png"
             },
             {
                "x": 786,
                "y": 357,
-               "image": "assets/enemies/level1/Pig.png"
+               "image": "assets/enemies/level1/Pig_Img.png"
             }
          ]
       },
@@ -626,7 +626,6 @@
             "h": 30
          }
       },
-
       {
          "dataId": 9,
          "currentRoomId": 4,
@@ -1038,16 +1037,6 @@
          ],
          "pigEnemies": []
       },
-
-
-
-
-
-
-
-
-
-
       {
          "dataId": 13,
          "currentRoomId": 5,
@@ -1061,8 +1050,7 @@
             "w": 30,
             "h": 30
          },
-         "obstacles": [
-         ],
+         "obstacles": [],
          "enemies": [
             {
                "x": 300,

@@ -13,6 +13,8 @@ let openDoorImg, closedDoorImg;
 let BossBulletImgL2, BossBulletImgL3;
 let healthItemImg, powerUpItemImg, photoItemImg;
 
+let pigImage;
+
 // Load JSON files
 let sceneData, helpBarData, rawRoomData, roomData;
 let sceneImgs = {};

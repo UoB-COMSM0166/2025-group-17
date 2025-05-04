@@ -32,7 +32,7 @@ function preload() {
   enemyImage = loadImage('assets/enemies/level1/CCTV.png'); //只会瞎走的敌人
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); //螃蟹
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); //the boss
-  pigImage = loadImage('assets/enemies/level1/Pig.png'); //猪猪，索敌+朝着主角射击
+  pigImage = loadImage('assets/enemies/level1/pig_6&10.png'); //猪猪，索敌+朝着主角射击
 
 
   //Boss子弹
