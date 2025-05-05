@@ -306,14 +306,14 @@ The average scores of the easy mode and the hard mode are 73.2 and 62.3 respecti
 This report documents the testing approach, tools, techniques, and outcomes for our game project. The testing covers both black-box (functional/user perspective) and white-box (code-level/unit testing) techniques to ensure a comprehensive quality assurance process. The goal was to ensure that the game delivers correct functionality, user-friendly experience, and stable performance.
 ###### 5.4.2 Black-Box Testing
 - *1) Team process*
- Agile Development: We adopted the Agile methodology, working in weekly sprints. This allowed us to continuously evaluate progress, adapt based on testing feedback, and incorporate incremental enhancements. Agile proved especially helpful due to our limited prior experience in game development. We prioritized building a Minimum Viable Product (MVP) and iteratively added new features.
-   Pair Programming: Pair programming was used extensively to avoid bugs and ensure clean, understandable code. This technique enabled collaborative problem solving and faster testing cycles. For example, in player attack logic, one member implemented the function while the other tested it in real-time and provided feedback.
-   Frequent Meetings: Meetings were conducted every Monday to discuss completed work, resolve blockers, and reassign tasks. We estimated complexity using Planning Poker, ensuring balanced workloads and realistic sprint goals.
-   Tools Used:
-      **Github** was used for version control, branch management, and bug tracking.
-      **Notion** supported real-time note-taking during meetings and goals tracking.
-      **Kanban Board** organized our tasks into "To Do," "In Progress," and "Done."
-      **Tencent Meeting** and **Wechat** supported continuous communication and problem resolution.
+  Agile Development: We adopted the Agile methodology, working in weekly sprints. This allowed us to continuously evaluate progress, adapt based on testing feedback, and incorporate incremental enhancements. Agile proved especially helpful due to our limited prior experience in game development. We prioritized building a Minimum Viable Product (MVP) and iteratively added new features.
+  Pair Programming: Pair programming was used extensively to avoid bugs and ensure clean, understandable code. This technique enabled collaborative problem solving and faster testing cycles. For example, in player attack logic, one member implemented the function while the other tested it in real-time and provided feedback.
+  Frequent Meetings: Meetings were conducted every Monday to discuss completed work, resolve blockers, and reassign tasks. We estimated complexity using Planning Poker, ensuring balanced workloads and realistic sprint goals.
+  Tools Used:
+  **Github** was used for version control, branch management, and bug tracking.
+  **Notion** supported real-time note-taking during meetings and goals tracking.
+  **Kanban Board** organized our tasks into "To Do," "In Progress," and "Done."
+  **Tencent Meeting** and **Wechat** supported continuous communication and problem resolution.
 - *2) Testing Focus* 
    Our black-box testing included:
    **Gameplay Mechanics**: Verifying that attack, movement, collision, and level transitions work smoothly.
