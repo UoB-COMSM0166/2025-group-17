@@ -279,6 +279,27 @@ Higher SUS scores indicate better perceived usability. The Easy Mode has higher 
 
 The average scores of the easy mode and the hard mode are 73.2 and 62.3 respectively. The latter is lower than the general usability benchmark of 68. Based on the results of the above table, we decided to improve the control methods of the player, the collision logic between classes, and the UI design of non-game interfaces to enhance the integrity of the hard mode system and make it easier for users to master and proficiently use the game system with the expectation of bringing the usability score of hard mode to the 68 benchmark.
 
+#### Improvements of the final version
+##### Enhancing System State Visibility
+- Add clear attack indicators when the player is hit (e.g., shaking the player image, damage flash), and optimize real-time feedback for health bar/heart icons.
+- Display dynamic health values for both enemies and players, providing immediate visual effects when bullets hit and enemies take damage.
+
+###### Improving User Control and Feedback
+- Add clear buttons for restart, exit, and continue on the interface.
+- Optimize collision detection to avoid getting stuck against walls or being unable to move sideways, and clearly indicate the save and restart processes.
+
+###### Enhancing Help and Guidance
+- Set up tutorial levels before the game starts, and add task prompts or concise graphical/text tutorials to help new players quickly grasp game objectives and controls.
+- Provide a skippable quick guide mode to lower the learning barrier for experienced players.
+
+###### Unifying Interface Style and Aesthetics
+- Standardize UI visual elements (buttons, fonts, colors), highlight interactive areas, and optimize the visual/collision detection of obstacles for consistency.
+- Control the movement speed of enemies and items (e.g. boss bullets) to ensure players have sufficient reaction time.
+
+###### Strengthening "Recognition Over Recall"
+- Add key operation buttons and system operation instructions on non-game pages (e.g., pause interface) to reduce players' memory burden.
+- Use consistent and intuitive visual symbols for important interactions (e.g., save points, teleporters) to help players quickly recognize and make selections.
+
 
 
 - Description of how code was tested.
