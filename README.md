@@ -28,7 +28,7 @@ https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000
 
 ## Project Report
 
-### Introduction
+### 1. Introduction
 
 
 Our game *Out* is inspired by *The Binding of Isaac*, a well-known 2D action-adventure and RPG platformer created by Edmund McMillen. Like the original, players move through a series of thoughtfully designed levels and enemies, using projectile-based combat to fight monsters in different dungeon settings, gaining points and gradually uncovering the story.
@@ -37,7 +37,7 @@ But *Out* adds several unique features that set it apart. On top of the familiar
 
 Artistically, the game features original hand-drawn visuals that help tell the story more immersively. In the end, we hope *Out* can be more than just a fun game—it’s also meant to be a space for reflection, where players might see parts of their own experiences echoed in the journey.
 
-### Requirements 
+### 2. Requirements 
 
 <!-- - 15% ~750 words
 - Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop? -->
@@ -79,15 +79,15 @@ Onion Model
 
 Use-case Diagram
 ![Case-diagram.png](images/Case-diagram.png)</br>
-### Design
+### 3. Design
 <!-- 
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
 -->
-#### System Overview
+#### 3.1 System Overview
 The design of Out follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. This structure effectively organizes game mechanics into clearly defined components that interact seamlessly, simplifying development, testing, and future maintenance.
 Encapsulation ensures data integrity and controlled access to game object states, safeguarding mechanics such as player health, movement, enemy interactions, and obstacle collisions. Abstraction simplifies interactions by exposing only essential functionalities, reducing complexity. Inheritance and polymorphism enable flexible designs, notably within enemy subclasses that each exhibit unique behaviors derived from a common parent class. Composition allows for the assembly of complex objects from simpler components, ensuring modularity and ease of incremental integration.
-#### Class Design
+#### 3.2 Class Design
 The class diagram clearly outlines key classes, their primary attributes, and critical methods:
 - Player: Attributes include health, velocity, and position. Key methods: move(), shoot(), updatePosition().
 - 
@@ -149,14 +149,14 @@ sequenceDiagram
     end
 ```
 
-### Implementation
+### 4. Implementation
 
 - 15% ~750 words
 
 - Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
 
-### Evaluation
-#### Qualitative Evaluation - Heuristic Evaluation
+### 5. Evaluation
+#### 5.1 Qualitative Evaluation - Heuristic Evaluation
 
 | Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 |----------|----------|----------|----------|----------|----------|----------|----------|
@@ -203,7 +203,7 @@ We conducted two questionnaire collection activities. A total of 24 feedback fro
 
 The feedback of personal user experience is concluded and classified into five categories with each category has various manifestation, suggested improvement, and impact as shown in the above table.
 
-#### Quatitative Evaluation - System Usability Survey (SUS)
+#### 5.2 Quatitative Evaluation - System Usability Survey (SUS)
 
 | User ID | I think I would like to use this system frequently | I found the system unnecessarily complex | I thought the system was easy to use | I think that I would need the support of a technical person to be able to use this system | I found the various functions in this system were well integrated | I thought there was too much inconsistency in this system | I would imagine that most people would learn to use this system very quickly | I found the system very cumbersome to use | I felt very confident using the system | I needed to learn a lot of things before I could get going with this system |
 |---------|-----------------------------------------------------|------------------------------------------|--------------------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------|------------------------------------------|-------------------------------------|------------------------------------------------------------------------------------|
@@ -279,7 +279,7 @@ Higher SUS scores indicate better perceived usability. The Easy Mode has higher 
 
 The average scores of the easy mode and the hard mode are 73.2 and 62.3 respectively. The latter is lower than the general usability benchmark of 68. Based on the results of the above table, we decided to improve the control methods of the player, the collision logic between classes, and the UI design of non-game interfaces to enhance the integrity of the hard mode system and make it easier for users to master and proficiently use the game system with the expectation of bringing the usability score of hard mode to the 68 benchmark.
 
-#### Improvements of the final version
+#### 5.3 Improvements of the final version
 ##### Enhancing System State Visibility
 - Add clear attack indicators when the player is hit (e.g., shaking the player image, damage flash), and optimize real-time feedback for health bar/heart icons.
 - Display dynamic health values for both enemies and players, providing immediate visual effects when bullets hit and enemies take damage.
@@ -301,24 +301,66 @@ The average scores of the easy mode and the hard mode are 73.2 and 62.3 respecti
 - Use consistent and intuitive visual symbols for important interactions (e.g., save points, teleporters) to help players quickly recognize and make selections.
 
 
+#### 5.4 Testing
+5.4.1 Overview
+This report documents the testing approach, tools, techniques, and outcomes for our game project. The testing covers both black-box (functional/user perspective) and white-box (code-level/unit testing) techniques to ensure a comprehensive quality assurance process. The goal was to ensure that the game delivers correct functionality, user-friendly experience, and stable performance.
+5.4.2 Black-Box Testing
+5.4.2.1 Team process
+ Agile Development: We adopted the Agile methodology, working in weekly sprints. This allowed us to continuously evaluate progress, adapt based on testing feedback, and incorporate incremental enhancements. Agile proved especially helpful due to our limited prior experience in game development. We prioritized building a Minimum Viable Product (MVP) and iteratively added new features.
+   Pair Programming: Pair programming was used extensively to avoid bugs and ensure clean, understandable code. This technique enabled collaborative problem solving and faster testing cycles. For example, in player attack logic, one member implemented the function while the other tested it in real-time and provided feedback.
+   Frequent Meetings: Meetings were conducted every Monday to discuss completed work, resolve blockers, and reassign tasks. We estimated complexity using Planning Poker, ensuring balanced workloads and realistic sprint goals.
+   Tools Used:
+      **Github** was used for version control, branch management, and bug tracking.
+      **Notion** supported real-time note-taking during meetings and goals tracking.
+      **Kanban Board** organized our tasks into "To Do," "In Progress," and "Done."
+      **Tencent Meeting** and **Wechat** supported continuous communication and problem resolution.
+5.4.2.2 Testing Focus
+   Our black-box testing included:
+   **Gameplay Mechanics**: Verifying that attack, movement, collision, and level transitions work smoothly.
+   **UI/UX Testing**: Ensuring layout clarity and button responsiveness.
+   **Scenario-Based Playtesting**: Simulating real user journeys from start to end.
+   **Bug Logging**: Reporting discovered bugs through GitHub issues for developer review.
+   This testing aproach simulated how players would use the game, helping us catch the logic errors and improve usability without needing to understand internal code.
 
-- Description of how code was tested.
+5.4.3 White-Box Testing
+We used Jest to create unit tests for validating internal logic of important modules such as `Player`, `CollisionDetector`, and time tracking functionality.
+5.4.3.1 layer Class Tests
+File: `tests/layer.test.js`
+·HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
+·Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
+·HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
+·Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
+5.4.3.2 Collision Detection Tests
+File: `tests/collisionDetector.test.js`
+·Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
+·Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
+These tests indirectly verify internal logic like `isBulletHitWall() `and correct management of game objects.
+5.4.3.3 Time Tracking Tests
+File: `tests/time.test.js`
+·Start Time Accuracy: Verifies correct timestamp capture when the game starts.
+·Elapsed Time: Confirms that time is accurately computed during gameplay.
+·End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
+These tests guarantee that players receive meaningful feedback about how long it took to finish the game, adding an important competitive and motivational layer.
+
+5.4.4 Summary and Reflections
+·Coverage: Through both black-box and white-box testing, we covered major user interactions, game logic integrity, and data tracking. Our combination of test types enabled us to verify the system both externally and internally.
+·Efficiency: Agile collaboration, pair programming, and code reviews through GitHub ensured continuous quality improvement. Testing was not a final step, but a continuous part of the development cycle.
 
 
 
-### Process 
+### 6. Process 
 
 
 ---
 
-### Team Collaboration and Workflow
+#### 6.1 Team Collaboration and Workflow
 
 At the beginning of the project, we held collaborative discussions to define the core game states necessary for a minimum viable product and potential extended features that could be added later in the development cycle. In hindsight, our progress could have benefited from a clearer overall structure regarding functionality planning and workflow management early on. A more refined understanding of the software requirements and a better-coordinated development pipeline might have streamlined our implementation process.
 ![3abed723e01ea34729cd3285e540569](https://github.com/user-attachments/assets/7143dc04-2cc4-4f22-8308-f3ab22b79faa)
 
 We maintained regular in-person meetings in the Software Engineering lab throughout the development period. These weekly sessions provided an opportunity to check progress, align tasks, and address any technical or design issues that emerged. Our communication was effective and enjoyable, significantly contributing to team morale and productivity. For day-to-day coordination, we relied heavily on a WeChat group chat. This channel allowed us to share quick updates, raise unexpected issues, and propose small changes in real-time. For more formal discussions, especially those involving critical decisions or feature planning, we used Microsoft Teams and recorded key meetings to ensure that important information could be reviewed later when needed.
 
-### Tools and Technologies
+#### 6.2 Tools and Technologies
 
 **Project Management Tools:**  
 We used GitHub for version control and collaborative coding. Each team member worked on individual feature branches—for example, a dedicated branch was created solely for the menu state. The main branch was always kept stable to ensure that we always had a functioning build available. GitHub’s protection features, including pull requests, allowed us to thoroughly review and test each other’s contributions before merging. This improved code quality helped prevent merge conflicts and maintained consistency in implementing features.
@@ -335,8 +377,8 @@ Regarding visual design, team member **Shuzhou Huang** led the creation of all o
 We sourced royalty-free audio from public platforms for sound design and then processed and edited the sound effects using **Logic Pro X**. This allowed us to fine-tune the quality and timing of audio elements, enhancing the overall immersion of the game.
 ![d8e7d67450a08bffac6aacd4a66122e](https://github.com/user-attachments/assets/16c0db61-2bbc-47ef-abbd-c04069e6d9dd)
 
-###  Sustainability, Ethics and Accessibility
-#### Green Software Foundation Implementation Patterns Applied in the Project
+###  7. Sustainability, Ethics and Accessibility
+####  Green Software Foundation Implementation Patterns Applied in the Project
 
 ##### Deprecate GIFs for animated content
 - We removed all legacy `.gif` animations and replaced them with finely tuned PNG sprite sequences, loading each frame via `loadImage` and driving playback with a `frameIndex` loop.  
@@ -354,7 +396,7 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 
 
 
-### Contributions
+### 8. Contributions
 
 | Name          | Role / Responsibility           | Contributions          |
 |---------------|---------------------------------|------------------------|
@@ -367,50 +409,7 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 
 ---
 
-### Testing
-1. Overview
-This report documents the testing approach, tools, techniques, and outcomes for our game project. The testing covers both black-box (functional/user perspective) and white-box (code-level/unit testing) techniques to ensure a comprehensive quality assurance process. The goal was to ensure that the game delivers correct functionality, user-friendly experience, and stable performance.
-2.Black-Box Testing
-2.1 Team process
-   Agile Development: We adopted the Agile methodology, working in weekly sprints. This allowed us to continuously evaluate progress, adapt based on testing feedback, and incorporate incremental enhancements. Agile proved especially helpful due to our limited prior experience in game development. We prioritized building a Minimum Viable Product (MVP) and iteratively added new features.
-   Pair Programming: Pair programming was used extensively to avoid bugs and ensure clean, understandable code. This technique enabled collaborative problem solving and faster testing cycles. For example, in player attack logic, one member implemented the function while the other tested it in real-time and provided feedback.
-   Frequent Meetings: Meetings were conducted every Monday to discuss completed work, resolve blockers, and reassign tasks. We estimated complexity using Planning Poker, ensuring balanced workloads and realistic sprint goals.
-   Tools Used:
-      **Github** was used for version control, branch management, and bug tracking.
-      **Notion** supported real-time note-taking during meetings and goals tracking.
-      **Kanban Board** organized our tasks into "To Do," "In Progress," and "Done."
-      **Tencent Meeting** and **Wechat** supported continuous communication and problem resolution.
-2.2 Testing Focus
-   Our black-box testing included:
-   **Gameplay Mechanics**: Verifying that attack, movement, collision, and level transitions work smoothly.
-   **UI/UX Testing**: Ensuring layout clarity and button responsiveness.
-   **Scenario-Based Playtesting**: Simulating real user journeys from start to end.
-   **Bug Logging**: Reporting discovered bugs through GitHub issues for developer review.
-   This testing aproach simulated how players would use the game, helping us catch the logic errors and improve usability without needing to understand internal code.
 
-3.White-Box Testing
-We used Jest to create unit tests for validating internal logic of important modules such as `Player`, `CollisionDetector`, and time tracking functionality.
-3.1 layer Class Tests
-File: `tests/layer.test.js`
-·HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
-·Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
-·HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
-·Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
-3.2 Collision Detection Tests
-File: `tests/collisionDetector.test.js`
-·Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
-·Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
-These tests indirectly verify internal logic like `isBulletHitWall() `and correct management of game objects.
-3.3 Time Tracking Tests
-File: `tests/time.test.js`
-·Start Time Accuracy: Verifies correct timestamp capture when the game starts.
-·Elapsed Time: Confirms that time is accurately computed during gameplay.
-·End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
-These tests guarantee that players receive meaningful feedback about how long it took to finish the game, adding an important competitive and motivational layer.
-
-4. Summary and Reflections
-·Coverage: Through both black-box and white-box testing, we covered major user interactions, game logic integrity, and data tracking. Our combination of test types enabled us to verify the system both externally and internally.
-·Efficiency: Agile collaboration, pair programming, and code reviews through GitHub ensured continuous quality improvement. Testing was not a final step, but a continuous part of the development cycle.
 ### Lessons Learned:
 ·Pair testing helps catch issues early.
 ·Writing unit tests made our codebase more modular and maintainable.
@@ -420,7 +419,7 @@ Expand unit testing to include item interactions and enemy AI.
 Add automated stress and load testing.
 Explore accessibility testing for inclusive gameplay.
 
-### Conclusion
+### 9. Conclusion
 
 - 10% ~500 words
 
