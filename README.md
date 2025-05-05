@@ -315,19 +315,18 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 ![d8e7d67450a08bffac6aacd4a66122e](https://github.com/user-attachments/assets/16c0db61-2bbc-47ef-abbd-c04069e6d9dd)
 
 ###  Sustainability, Ethics and Accessibility
-# Green Software Foundation Implementation Patterns Applied in the Project
+## Green Software Foundation Implementation Patterns Applied in the Project
 
-## Deprecate GIFs for animated content
-We removed all legacy `.gif` animations and replaced them with finely tuned PNG sprite sequences, loading each frame via `loadImage` and driving playback with a `frameIndex` loop.  
-This change gives us precise control over frame rate and leverages modern PNG compression tools (animation assets grew from X MB to Y MB, ≈Z% change).
+# Deprecate GIFs for animated content
+- We removed all legacy `.gif` animations and replaced them with finely tuned PNG sprite sequences, loading each frame via `loadImage` and driving playback with a `frameIndex` loop.  
+- This change gives us precise control over frame rate and leverages modern PNG compression tools (animation assets grew from X MB to Y MB, ≈Z% change).
 
-## Remove unused CSS definitions
-We audited our stylesheet with browser Coverage and regex-based searches, stripped out every unused selector, and now only ship the base layout rules and the `.blink` keyframe animation.  
-This slimmed `style.css` from x down to y, a 65.4% reduction in bytes.
+# Remove unused CSS definitions
+- We audited our stylesheet with browser Coverage and regex-based searches, stripped out every unused selector, and now only ship the base layout rules and the `.blink` keyframe animation.  
 
-## Optimize image size
-We applied automated image compression (using imagemin with MozJPEG/PNGQuant) and resized high-resolution assets to match in-game display size, reducing the total image footprint from X to Y.  
-This optimization cuts bandwidth by Z%, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
+# Optimize image size
+- We applied automated image compression (using imagemin with MozJPEG/PNGQuant) and resized high-resolution assets to match in-game display size, reducing the total image footprint from X to Y.  
+- This optimization cuts bandwidth by Z%, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
 
 
 
