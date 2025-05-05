@@ -156,7 +156,7 @@ sequenceDiagram
 - Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
 
 ### Evaluation
-## Qualitative Evaluation - Heuristic Evaluation
+#### Qualitative Evaluation - Heuristic Evaluation
 
 | Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 |----------|----------|----------|----------|----------|----------|----------|----------|
@@ -203,7 +203,7 @@ We conducted two questionnaire collection activities. A total of 24 feedback fro
 
 The feedback of personal user experience is concluded and classified into five categories with each category has various manifestation, suggested improvement, and impact as shown in the above table.
 
-## Quatitative Evaluation - System Usability Survey (SUS)
+#### Quatitative Evaluation - System Usability Survey (SUS)
 
 | User ID | I think I would like to use this system frequently | I found the system unnecessarily complex | I thought the system was easy to use | I think that I would need the support of a technical person to be able to use this system | I found the various functions in this system were well integrated | I thought there was too much inconsistency in this system | I would imagine that most people would learn to use this system very quickly | I found the system very cumbersome to use | I felt very confident using the system | I needed to learn a lot of things before I could get going with this system |
 |---------|-----------------------------------------------------|------------------------------------------|--------------------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------|------------------------------------------|-------------------------------------|------------------------------------------------------------------------------------|
