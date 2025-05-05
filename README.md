@@ -350,9 +350,6 @@ These tests guarantee that players receive meaningful feedback about how long it
 
 ### 6. Process 
 
-
----
-
 #### 6.1 Team Collaboration and Workflow
 
 At the beginning of the project, we held collaborative discussions to define the core game states necessary for a minimum viable product and potential extended features that could be added later in the development cycle. In hindsight, our progress could have benefited from a clearer overall structure regarding functionality planning and workflow management early on. A more refined understanding of the software requirements and a better-coordinated development pipeline might have streamlined our implementation process.
