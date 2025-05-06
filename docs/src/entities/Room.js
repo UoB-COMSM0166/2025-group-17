@@ -11,7 +11,7 @@ class Room {
     this.enemies = [];
     this.chaser = [];
     this.shooter = [];
-    this.pigEnemy = []; // TODO: Add pig enemy
+    this.pigEnemy = []; // Add pig enemy
     this.obstacles = [];
     this.#items = [];
     this.#obstacleCount = 0;
@@ -31,7 +31,7 @@ class Room {
     this.enemies = [];
     this.chaser = [];
     this.shooter = [];
-    //TODO：建立猪猪敌人
+    //Build PIG enemy
     this.pigEnemy = [];
     this.obstacles = [];
     this.#items = [];
@@ -160,7 +160,7 @@ class Room {
   generateEnemies(currentRoomData) {
     this.enemies = [];
 
-    // 类型为 1、2、3 的特殊房间走专用生成逻辑
+    // Special rooms of types 1, 2, and 3 follow dedicated generation logic
     if (currentRoomData.type === 1) {
       this.generateChaser();
       return;
@@ -172,7 +172,7 @@ class Room {
       return;
     }
 
-    // 普通敌人房间
+    // Ordinary Enemy Room
     const levelId = this.getCurrentLevelId(); // 0, 1, 2...
     const levelKey = `level${levelId}`;
 
@@ -213,7 +213,7 @@ class Room {
   //  this.shooter.push(new Shooter(400, 300));
   //}
 
-  generateShooter() {   // type = 2 的普通 shooter 关
+  generateShooter() {   // type = 2  ordinary shooter room
     this.shooter = [];
 
     const isLevel3 = this.getCurrentLevelId && this.getCurrentLevelId() === 3;
@@ -235,10 +235,10 @@ class Room {
     window.chaserFrames = window.chaserFramesL3;
     window.shooterFrames = window.shooterFramesL3;
 
-    // Shooter 和 Chaser 的 sprite 高度是 heightInPixel / 4
+    // sprite heughts of Shooter and Chaser is heightInPixel / 4
     const entitySize = heightInPixel / 4;
 
-    // 固定 shooter 位置（画布中央偏右）
+    // Fix the shooter position (slightly to the right of the center of the canvas)
     const shooterX = widthInPixel * 0.6;
     const shooterY = heightInPixel * 0.5;
     ///this.shooter.push(new Shooter(shooterX, shooterY));
@@ -246,7 +246,7 @@ class Room {
     this.shooter.push(new ShooterEightDir(shooterX, shooterY, this.collisionDetector));
 
 
-    // ✅ 固定 chaser 位置（右上和右下）
+    // Fix the chaser position (upper right and lower right)
     this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
     this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.7));
   }
@@ -269,14 +269,14 @@ class Room {
   }
 
   updateChaser() {
-    // 添加互相推开逻辑
+    // Add the logic of mutual push
     for (let i = 0; i < this.chaser.length; i++) {
       for (let j = i + 1; j < this.chaser.length; j++) {
         const c1 = this.chaser[i];
         const c2 = this.chaser[j];
         const dist = p5.Vector.dist(c1.position, c2.position);
 
-        if (dist < 60) { // 设置最小间距
+        if (dist < 60) { // Set the minimum spacing
           const repel = p5.Vector.sub(c1.position, c2.position).normalize().mult(1.5);
           c1.position.add(repel);
           c2.position.sub(repel);
@@ -284,7 +284,7 @@ class Room {
       }
     }
 
-    // 更新 + 子弹检测
+    // Update + Bullet detection
     this.chaser.forEach(c => {
       c.update();
       c.detectBulletCollision(player.bullets);

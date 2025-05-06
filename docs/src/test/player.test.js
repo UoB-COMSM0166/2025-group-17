@@ -35,9 +35,8 @@ global.defaultAtk = 5;
 global.heightInPixel = 600;
 global.playerImage = 'mockImage';
 
-// 引入 Player 类
-const Player = require('../entities/Player');  // 请根据你实际路径调整
-
+//Introduce the Player class
+const Player = require('../entities/Player'); 
 describe('Player Class Functionality', () => {
   let player;
 

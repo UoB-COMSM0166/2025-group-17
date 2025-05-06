@@ -75,11 +75,11 @@ describe('CollisionDetector Functionality Tests', () => {
     const obstacles = [obstacle];
 
     detector.detectBulletCollision(bullets, enemies, obstacles);
-    expect(bullets.length).toBe(0); // 子弹被删掉
+    expect(bullets.length).toBe(0); // The bullet was deleted
   });
 
   test('isBulletHitWall - bullet outside boundary returns true', () => {
-    const bullet = createMockObj(-100, -100); // 超出边界
+    const bullet = createMockObj(-100, -100); //beyond border
     const result = detector.isBulletHitWall(bullet);
     expect(result).toBe(true);
   });

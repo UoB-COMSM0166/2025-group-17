@@ -1,5 +1,5 @@
 class Player {
-  //角色属性
+  //Character Attributes
   #maxHp = 3;
   #baseAtk = 50;
   #atk = 50;
@@ -14,30 +14,30 @@ class Player {
 
   constructor(x = leftBoundary, y = heightInPixel / 2) {
     this.hp = this.#maxHp;
-    this.position = createVector(x, y); //初始位置
-    this.velocity = createVector(0, 0); //初始速度
+    this.position = createVector(x, y); //initial position
+    this.velocity = createVector(0, 0); //initial velocity
 
 
-    //------------伤害判定和图像显示分开------------
-    // 判定框尺寸（红框用来检测碰撞）！！！
-    this.size = createVector(36, 52);  // ← 可调整碰撞判定大小（原本是 heightInPixel / 7）
-    //  图像显示尺寸（不会影响判定框）！！！
-    this.displaySize = createVector(72, 72); // ← 建议大于判定框，让图像不被裁剪
+    //------------Damage determination and image display are separated------------
+    // Determination box size (The red box is used to detect collisions)
+    this.size = createVector(36, 52);  // Adjustable collision determination size (originally heightInPixel / 7)
+    //  Image display size (will not affect the determination box)
+    this.displaySize = createVector(72, 72); // It is recommended to exceed the judgment box to prevent the image from being cropped
     //--------------------------------------------
 
 
-    this.invincibleTimer = 0;   // 剩余无敌帧数
-    this.blinkCounter = 0;      // 用于无敌闪烁效果
-    this.bullets = []; //子弹管理数组
+    this.invincibleTimer = 0;   // Remaining unbeatable frames
+    this.blinkCounter = 0;      // Used for the invincible flashing effect
+    this.bullets = []; //Bullet management array
 
 
-    this.image = playerImage; // 初始静态图像
-    // -------------角色动画控制模块--------------
-    this.animations = window.playerAnimations; // 从 preload.js 获取动画帧
-    this.direction = 'down';                   // 初始朝向
-    this.currentFrame = 0;                     // 当前帧索引
-    this.frameCounter = 0;                     // 动画播放计数器
-    this.frameDelay = 6;                       // 每几帧切换一次动画
+    this.image = playerImage; // Initial static image
+    // -------------Character animation control module--------------
+    this.animations = window.playerAnimations; // Get the animation frame from preload.js
+    this.direction = 'down';                   // Initial orientation
+    this.currentFrame = 0;                     // Current frame index
+    this.frameCounter = 0;                     // Animation playback counter
+    this.frameDelay = 6;                       // Switch the animation every few frames
     // ------------------------------------------
   }
 
@@ -47,7 +47,7 @@ class Player {
   getMaxHp() { return this.#maxHp; }
   setHp(newHp) { this.hp = newHp; }
 
-  // 重置房间状态，确保玩家在新房间中位置和状态能够被继承
+  // Reset the room status to ensure that the player's position and status in the new room can be inherited
   resetRoomState(newHp, atk = this.#atk, bulletSize = this.#bulletSize, x = leftBoundary, y = heightInPixel / 2) {
     this.hp = newHp;
     this.#atk = atk;
@@ -58,7 +58,7 @@ class Player {
     this.#canShootAgain = true;
     this.bullets = [];
 
-    this.direction = 'down'; //idle状态
+    this.direction = 'down'; //idle status
     this.currentFrame = 0;
     this.frameCounter = 0;
     this.frameDelay = 6;
@@ -106,7 +106,7 @@ class Player {
     // When invincible, skip drawing for half the blink cycle.
     if (this.invincibleTimer > 0 && this.blinkCounter < 5) return;
 
-    // ✅ 偏移显示图像，使图像居中对齐碰撞框
+    // Offset the display image to center and align the collision box
     const offsetX = (this.size.x - this.displaySize.x) / 2;
     const offsetY = (this.size.y - this.displaySize.y) / 2;
 
@@ -127,30 +127,30 @@ class Player {
     if (keyIsDown(UP_ARROW)) input.y = -1;
     if (keyIsDown(DOWN_ARROW)) input.y = 1;
 
-    // ✅ 立即响应速度，无 lerp（避免滑动穿墙）
+    // Immediate response speed, no lerp (to avoid sliding through walls)
     if (input.mag() > 0) {
       input.normalize();
-      // ✅ 改为加速度推动速度，模拟惯性
+      // Change the acceleration to drive the velocity and simulate inertia
       let accelerationVector = p5.Vector.mult(input, this.#acceleration * 0.1);
       this.velocity.add(accelerationVector);
 
-      // ✅ 限制最大速度
+      // Limit the maximum speed
       if (this.velocity.mag() > this.#maxSpeed) {
         this.velocity.setMag(this.#maxSpeed);
       }
-      // ✅ 方向判定用于动画（优先水平）
+      // Direction determination is used for animation (priority level)
       if (abs(input.x) > abs(input.y)) {
         this.direction = input.x > 0 ? 'right' : 'left';
       } else if (input.y !== 0) {
         this.direction = input.y > 0 ? 'down' : 'up';
       }
     } else {
-      // ✅ 没有输入时应用摩擦力
+      // Apply friction when there is no input
       this.applyFriction();
     }
 
 
-    // 动画帧切换逻辑
+    // Animation frame switching logic
     if (this.velocity.mag() > 0.5) {
       this.frameCounter++;
       if (this.frameCounter >= this.frameDelay) {
@@ -161,14 +161,14 @@ class Player {
       this.currentFrame = 0;
     }
 
-    // 更新当前图像为对应方向动画帧
+    // Update the current image to the corresponding direction animation frame
     this.image = this.animations[this.direction][this.currentFrame];
   }
 
   applyFriction() {
     this.velocity.mult(this.#friction);
 
-    // ✅ 若速度足够小则强制归零（避免一直滑）
+    // If the speed is small enough, force it to zero (to avoid continuous sliding)
     if (this.velocity.mag() < 0.1) {
       this.velocity.set(0, 0);
     }
