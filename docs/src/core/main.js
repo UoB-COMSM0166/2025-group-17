@@ -5,28 +5,31 @@ function setup() {
     return;
   }
 
+  //画布建立
   cnv = createCanvas(windowWidth, windowHeight);
 
+  //转场管理
   window.fadeMgr = new FadeManager(0.05);
-
   fadeMgr = window.fadeMgr;
 
-  const eventBus = new EventBus();
-
-  // Instantiate all classes
+  //初始化房间
   room = new Room();
   let inputHandler = new InputHandler(room);
   inputHandler.fadeMgr = fadeMgr;
 
+  const eventBus = new EventBus();
+  //页面管理器
   const PageDrawer = new MenuDrawer(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData);
   gameStateManager = new GameStateManager(eventBus, PageDrawer, inputHandler);
   PageDrawer.setupMainMenu();
   PageDrawer.setupPauseMenu();
   PageDrawer.setupGameOverPage();
-  setTimeout(() => gameStateManager.playMainmenuSound(), 2500); // Play BGM after policy page
+  setTimeout(() => gameStateManager.playMainmenuSound(), 2500); // 设置阻塞，在privacy的2.5秒后播放音效
 
+  //初始化角色
   player = new Player();
 
+  //----------------精灵图提取------------------
   // Extract all animation frames
   window.bossFrames = [];
   extractFrames(bossSpriteSheet, 3, window.bossFrames);
@@ -39,12 +42,14 @@ function setup() {
 
   window.hitEffectFrames = [];
   extractFrames(hitEffectSheet, 10, window.hitEffectFrames);
+  //-------------------------------------------
 }
 
+//辅助函数，用于提取精灵图动画帧
 function extractFrames(spriteSheet, frameCount, targetArray) {
   const frameW = spriteSheet.width / frameCount;
   const frameH = spriteSheet.height;
-  
+
   for (let i = 0; i < frameCount; i++) {
     targetArray.push(spriteSheet.get(i * frameW, 0, frameW, frameH));
   }
@@ -79,6 +84,6 @@ function drawDebugCollisionBoxes() {
 }
 
 function keyPressed() {
-  if(fadeMgr.isActive()) return;
+  if (fadeMgr.isActive()) return;
   if (gameStateManager) gameStateManager.handlePlayerShooting();
 }
