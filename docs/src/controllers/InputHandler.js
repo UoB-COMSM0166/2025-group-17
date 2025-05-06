@@ -13,18 +13,18 @@ class InputHandler {
     this.#currentRoom.display(playerObj);
     playerObj.updateVelocity();
 
-    // 预测下一步的位置
+    // Predict the next position
     const nextX = playerObj.position.x + playerObj.velocity.x;
     const nextY = playerObj.position.y + playerObj.velocity.y;
 
-    // 构造临时对象用于碰撞判断（必须包含 velocity 否则报错）
+    // Construct a temporary object for collision determination (it must include velocity; otherwise, an error will be reported)
     const tempPlayer = {
       position: createVector(nextX, nextY),
       size: playerObj.size,
       velocity: playerObj.velocity
     };
 
-    // 使用预测位置检测碰撞
+    // Detect collisions using predicted positions
     const collideWithEnemies = this.collisionDetector.detectPlayerCollision(tempPlayer, this.#currentRoom.enemies);
     const collideWithObstacles = this.collisionDetector.detectPlayerCollision(tempPlayer, this.#currentRoom.obstacles);
     const playerHitBoundary = this.collisionDetector.isHitBoundary(tempPlayer);

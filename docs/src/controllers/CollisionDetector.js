@@ -2,7 +2,7 @@ class CollisionDetector {
   detectPlayerCollision(playerObj, objArr) {
     // Check the collision between the player and other objects. If there is a collision, 
     // the player bounces back.
-    // TODO: Update it once the attack method of the boss has been implemented.
+    // Update it once the attack method of the boss has been implemented.
     return objArr.some(obj => this.detectCollision(playerObj, obj));
   }
 
@@ -46,7 +46,7 @@ class CollisionDetector {
     enemyArr.forEach((enemyObj, enemyIndex) => {
       bulletArr.forEach((bulletObj, bulletIndex) => {
         if (this.detectCollisionWithBullet(bulletObj, enemyObj)) {
-          // ✅ 特殊处理 player
+          // Special treatment for player
           if (enemyObj === player) {
            player.updateHp(-bulletObj.damage, 90);
           } else {
@@ -69,7 +69,7 @@ class CollisionDetector {
     return this.#isOverlapping(boundsA, boundsB);
   }
 
-  // 检测中间 (0.8) & 底部 (0.4)
+  // 检测中间 (0.8) & 底部 (0.4)  collision detection
   #computeCollisionArea(obj) {
     return {
       left: obj.position.x + obj.size.x * 0.1,

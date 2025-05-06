@@ -1,14 +1,14 @@
 class FadeManager {
    constructor(fadeSpeed) {
-      this.alpha = 0;          // 当前遮罩透明度（0～1）
-      this.speed = fadeSpeed;  // 每帧变化量
+      this.alpha = 0;          // Current mask transparency（0～1）
+      this.speed = fadeSpeed;  // The variation per frame
       this.state = 'idle';     // 'idle' | 'fadingOut' | 'fadingIn'
-      this._onMid = null;      // 完全淡出后调用的回调
+      this._onMid = null;      // The callback called after completely fading out
    }
 
    /**
-   * 外部调用，开始一次淡出→回调→淡入
-   * @param {Function} callback - 完全淡出时执行的切房间回调
+   * External call, start a fade out → callback → fade in
+   * @param {Function} callback - The room-cutting callback performed when completely fading out
    */
    start(callback) {
       if (this.state !== 'idle') return;
@@ -16,7 +16,7 @@ class FadeManager {
       this.state = 'fadingOut';
    }
 
-   /** 每帧更新状态和 alpha */
+   /** Update the status and alpha per frame */
    update() {
       if (this.state === 'fadingOut') {
          this.alpha = min(1, this.alpha + this.speed);
@@ -35,7 +35,7 @@ class FadeManager {
       }
    }
 
-   /** draw() 里调用，绘制全屏黑色遮罩 */
+   /** It is called in draw() to draw a full-screen black mask */
    draw() {
       if (this.state === 'idle') return;
       push();
@@ -45,7 +45,7 @@ class FadeManager {
       pop();
    }
 
-   /** 是否在做过渡 */
+   /** transition */
    isActive() {
       return this.state !== 'idle';
    }
