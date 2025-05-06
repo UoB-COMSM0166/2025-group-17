@@ -2,7 +2,7 @@ class Shooter {
   #shakeIntensity;
   #isDead;
 
-  constructor(x, y, collisionDetector) {
+  constructor(x, y, collisionDetector, speed, shootCooldown) {
     this.position = createVector(x, y);
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
     this.collisionDetector = collisionDetector; 
@@ -10,11 +10,11 @@ class Shooter {
     this.hp = this.maxHp;
     this.isHurt = false;
     this.hitFrame = 0;
-    this.speed = 0.8;
+    this.speed = speed;
     this.moveCooldown = 60;
     this.currentMoveCooldown = 0;
     this.direction = p5.Vector.random2D().mult(this.speed);
-    this.shootCooldown = 280;
+    this.shootCooldown = shootCooldown;
     this.currentShootCooldown = this.shootCooldown;
     this.bullets = [];
     this.warningTime = 0;
@@ -251,21 +251,6 @@ class Shooter {
   }
 
   display() {
-    if (this.hp <= 0) return;
-
-    
-    const img = this.frames[this.currentFrame];
-    image(img, this.position.x, this.position.y, this.size.x, this.size.y);
-
-    this.bullets.forEach(bullet => bullet.display());
-
-    if (this.warningTime > 0) {
-      this.displayWarningEffect();
-    }
-  }
-
-  display() {
-    
     const img = this.frames[this.currentFrame];
     if (this.#isDead) {
       this.#displayDeadBoss(img);
@@ -274,9 +259,6 @@ class Shooter {
 
     image(img, this.position.x, this.position.y, this.size.x, this.size.y);
     this.bullets.forEach(bullet => bullet.display());
-    if (this.warningTime > 0) {
-      this.displayWarningEffect();
-    }
   }
 
   #displayDeadBoss(img) {
@@ -291,15 +273,6 @@ class Shooter {
 
     // Decrease intensity
     this.#shakeIntensity -= 0.4;
-  }
-
-  displayWarningEffect() {
-    push();
-    noFill();
-    stroke(255, 255, 0);
-    strokeWeight(4);
-    ellipse(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2, this.size.x * 1.5, this.size.y * 1.5);
-    pop();
   }
 
   applyHitEffect(flashFrame) {
@@ -327,8 +300,8 @@ class Shooter {
 
 // A Shooter that fires bullets in four directions
 class ShooterFourDir extends Shooter {
-  constructor(x, y, collisionDetector) {
-    super(x, y, collisionDetector);
+  constructor(x, y, collisionDetector, speed, shootCooldown) {
+    super(x, y, collisionDetector, speed, shootCooldown);
   }
   shoot() {
     //shooterFireSound.play();
@@ -363,8 +336,8 @@ class ShooterFourDir extends Shooter {
 
 // A Shooter that fires bullets in eight directions
 class ShooterEightDir extends Shooter {
-  constructor(x, y, collisionDetector) {
-    super(x, y, collisionDetector); // Pass it to the parent class of Shooter
+  constructor(x, y, collisionDetector, speed, shootCooldown) {
+    super(x, y, collisionDetector, speed, shootCooldown); // Pass it to the parent class of Shooter
   }
 
   

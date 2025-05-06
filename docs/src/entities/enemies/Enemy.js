@@ -12,7 +12,7 @@ class Enemy {
     console.log(`Enemy image size ${enImage.width}, ${enImage.height}`);
     console.log(`Enemy size ${this.size.x}, ${this.size.y}`);
     
-    this.velocity = createVector(random([-1, 1]), random([-1, 1]));
+    this.velocity = createVector(random([-2, 2]), random([-2, 2]));
     this.image = enImage;
 
     // Add animation frame-related content and select frame groups based on level and size

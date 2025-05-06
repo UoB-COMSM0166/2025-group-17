@@ -205,13 +205,8 @@ class Room {
       window.chaserFrames = window.chaserFramesDefault;
     }
 
-    this.chaser.push(new Chaser(600, 300));
+    this.chaser.push(new Chaser(600, 300, 2.5));
   }
-
-  //generateShooter() {
-  //  this.shooter = [];
-  //  this.shooter.push(new Shooter(400, 300));
-  //}
 
   generateShooter() {   // type = 2  ordinary shooter room
     this.shooter = [];
@@ -224,8 +219,7 @@ class Room {
       window.shooterFrames = window.shooterFramesDefault;
     }
 
-    //this.shooter.push(new ShooterFourDir(400, 300));
-    this.shooter.push(new ShooterFourDir(400, 300, this.collisionDetector));
+    this.shooter.push(new ShooterFourDir(400, 300, this.collisionDetector, 1.2, 180));
   }
 
   generateFinalBossRoom() {
@@ -241,14 +235,12 @@ class Room {
     // Fix the shooter position (slightly to the right of the center of the canvas)
     const shooterX = widthInPixel * 0.6;
     const shooterY = heightInPixel * 0.5;
-    ///this.shooter.push(new Shooter(shooterX, shooterY));
-    //this.shooter.push(new ShooterEightDir(shooterX, shooterY));
-    this.shooter.push(new ShooterEightDir(shooterX, shooterY, this.collisionDetector));
+    this.shooter.push(new ShooterEightDir(shooterX, shooterY, this.collisionDetector, 1.2, 240));
 
 
     // Fix the chaser position (upper right and lower right)
-    this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3));
-    this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.7));
+    this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.3, 1.5));
+    this.chaser.push(new Chaser(widthInPixel * 0.75, heightInPixel * 0.7, 1.5));
   }
 
 

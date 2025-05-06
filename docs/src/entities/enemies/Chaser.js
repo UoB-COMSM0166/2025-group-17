@@ -2,7 +2,7 @@ class Chaser {
   #shakeIntensity;
   #isDead;
 
-  constructor(x, y) {
+  constructor(x, y, speed) {
     this.position = createVector(x, y);
     this.size = createVector(heightInPixel / 4, heightInPixel / 4);
     this.collisionDetector = new CollisionDetector();
@@ -11,7 +11,7 @@ class Chaser {
     this.hp = this.maxHp;
     this.isHurt = false;
     this.hitFrame = 0;
-    this.speed = 1;
+    this.speed = speed;
     this.dashSpeed = 20;
     this.chaseRange = 150;
     this.isDashing = false;
