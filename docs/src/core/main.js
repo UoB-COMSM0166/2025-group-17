@@ -1,30 +1,30 @@
 function setup() {
-  // 防止 bossSpriteSheet 未加载时报错
+  // Prevent errors when the bossSpriteSheet is not loaded
   if (!bossSpriteSheet) {
     console.warn(" bossSpriteSheet not loaded yet!");
     return;
   }
 
-  //画布建立
+  //Canvas establishment
   cnv = createCanvas(windowWidth, windowHeight);
 
-  //转场管理
+  //Transfer management
   window.fadeMgr = new FadeManager(0.05);
   fadeMgr = window.fadeMgr;
 
-  //初始化房间
+  //Initialize the room
   room = new Room();
   let inputHandler = new InputHandler(room);
-  inputHandler.fadeMgr = fadeMgr; //处理转场
+  inputHandler.fadeMgr = fadeMgr; //Handle the transfer
 
   const eventBus = new EventBus();
-  //页面管理器
+  //Page Manager
   const PageDrawer = new MenuDrawer(eventBus, sceneData, sceneImgs, sceneSounds, helpBarData);
   gameStateManager = new GameStateManager(eventBus, PageDrawer, inputHandler);
   PageDrawer.setupMainMenu();
   PageDrawer.setupPauseMenu();
   PageDrawer.setupGameOverPage();
-  setTimeout(() => gameStateManager.playMainmenuSound(), 2500); // 设置阻塞，在privacy的2.5秒后播放音效
+  setTimeout(() => gameStateManager.playMainmenuSound(), 2500); // Set blocking and play the sound effect after 2.5 seconds of privacy
 
   //初始化角色
   player = new Player();
@@ -58,7 +58,7 @@ function extractFrames(spriteSheet, frameCount, targetArray) {
 function draw() {
   player.updateBlinking();
   gameStateManager.update();
-  // drawDebugCollisionBoxes(); // 这里是用于碰撞测试
+  // drawDebugCollisionBoxes(); // 用于碰撞测试
   fadeMgr.update();
   fadeMgr.draw();
 }

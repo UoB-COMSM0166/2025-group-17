@@ -13,11 +13,11 @@ class GameStateManager {
     this.#isGameCompleted = false;
     this.#timeSpent = 0;
 
-    // 当前BGM引用 + 滤波器
+    // Current BGM reference + filter
     this.currentBGM = null;
     this.filter = new p5.LowPass();
 
-    // room index -> BGM 映射（可多个 index 共用）
+    // room index -> BGM mapping (can be shared by multiple indices)
     this.roomBGMs = {
       0: L1_OfficeSound,
       1: L1_OfficeSound,
@@ -133,7 +133,7 @@ class GameStateManager {
     this.#PageDrawer.toggleResumeButtons();
     this.#PageDrawer.toggleStartButtons();
     this.#PageDrawer.toggleGameOverButtons();
-    this.stopBGM(); // 确保此时停止任何主菜单 BGM
+    this.stopBGM(); // Make sure to stop any main menu BGM at this time
   }
 
   #resetGame() {
@@ -150,7 +150,7 @@ class GameStateManager {
     if (btnSound) btnSound.play();
     this.#PageDrawer.showResumeButtons();
 
-    // 添加滤波器（电话音效）
+    // Add a filter (telephone sound effect)
     if (this.currentBGM) {
       this.currentBGM.setVolume(0.3);
       this.currentBGM.disconnect();
@@ -166,7 +166,7 @@ class GameStateManager {
     this.#PageDrawer.setInGameState();
     startTime += millis() - this.#pauseTime;
 
-    // 移除滤波器
+    // Remove the filter
     if (this.currentBGM) {
       this.currentBGM.setVolume(0.5);
       this.currentBGM.disconnect();
@@ -180,7 +180,7 @@ class GameStateManager {
     this.#PageDrawer.showStartButtons();
     this.#PageDrawer.toggleGameOverButtons();
 
-    this.playBGM(mainmenuSound); // 返回主菜单播放主界面音乐
+    this.playBGM(mainmenuSound); // Return to the main menu and play the music on the main interface
   }
 
   playMainmenuSound() { this.playBGM(mainmenuSound); }
@@ -193,8 +193,8 @@ class GameStateManager {
 
       this.currentBGM = sound;
       if (this.currentBGM) {
-        this.currentBGM.disconnect(); // 清除旧连接
-        this.currentBGM.connect();    // 重新连接主输出
+        this.currentBGM.disconnect(); // Clear the old connection
+        this.currentBGM.connect();    // Reconnect the main output
         this.currentBGM.setLoop(true);
         this.currentBGM.setVolume(0.5);
         this.currentBGM.play();
@@ -207,7 +207,7 @@ class GameStateManager {
   playBGMForRoom(index) {
     console.log(this.#PageDrawer.getGameState());
     const currentPageState = this.#PageDrawer.getGameState();
-    if (currentPageState !== "inGame") return; // 如果还在剧情，就不播放音乐
+    if (currentPageState !== "inGame") return; // If it's still in the plot, don't play the music
     const nextBGM = this.roomBGMs[index];
   
     if (this.currentBGM === nextBGM && this.currentBGM?.isPlaying()) return;
