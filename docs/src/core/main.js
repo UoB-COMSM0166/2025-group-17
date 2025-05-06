@@ -42,7 +42,7 @@ function setup() {
 
   window.hitEffectFrames = [];
   extractFrames(hitEffectSheet, 10, window.hitEffectFrames);
-  //-------------------------------------------
+  //------------------------------------------------------------
 }
 
 //Auxiliary function, used for extracting Sprite animation frames
