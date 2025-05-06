@@ -241,6 +241,7 @@ EventBus -> MenuDrawer: updateState()
 ### 4. Implementation
 #### Sprite：
 One of the key challenges we faced was making sure enemies in different levels not only moved and attacked, but also looked visually distinct and animated. Initially, our game used single static images for each enemy type, which made them appear lifeless and less engaging. To improve the visual quality and communicate level-specific identity, we wanted enemies in different levels to have different animation styles and sprite sheets.
+
 ![GIF_20250506143013681](https://github.com/user-attachments/assets/7537bc18-af3a-466a-a933-00ef5bb445e0)
 
 To achieve this, we first prepared separate sprite images for each enemy type across different levels. Then, instead of hardcoding sprite logic into each enemy class, we decided to use a centralized system: during room setup in `Room.js`, we dynamically assigned the correct animation frames based on the level ID. This way, for example, Level 3’s `Chaser` and `Shooter` would be linked to `window.chaserFramesL3` and `window.shooterFramesL3`, while lower levels still used the default animations.
