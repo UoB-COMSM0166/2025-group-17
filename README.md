@@ -239,6 +239,20 @@ EventBus -> MenuDrawer: updateState()
 ```
 
 ### 4. Implementation
+#### Sprite：
+One of the key challenges we faced was making sure enemies in different levels not only moved and attacked, but also looked visually distinct and animated. Initially, our game used single static images for each enemy type, which made them appear lifeless and less engaging. To improve the visual quality and communicate level-specific identity, we wanted enemies in different levels to have different animation styles and sprite sheets.
+
+To achieve this, we first prepared separate sprite images for each enemy type across different levels. Then, instead of hardcoding sprite logic into each enemy class, we decided to use a centralized system: during room setup in `Room.js`, we dynamically assigned the correct animation frames based on the level ID. This way, for example, Level 3’s `Chaser` and `Shooter` would be linked to `window.chaserFramesL3` and `window.shooterFramesL3`, while lower levels still used the default animations.
+
+The actual animation is implemented using a simple frame-switching timer. Each enemy class (like Chaser and Shooter) has `frameCounter` and `currentFrame` attributes. In the `update()` function, we increase `frameCounter`, and when it exceeds a threshold (e.g., every 10 frames), we cycle to the next sprite. This ensures animations are smooth but not too fast, and the system is shared by all enemy types.
+
+#### Sound effect：
+Another challenges we encountered was how to manage background music and sound effects dynamically across rooms and gameplay states. For example, each level had a different background track, and certain moments like pausing the game required special audio effects (e.g., low-pass “telephone” filter). We also wanted to avoid overlapping or abrupt changes in audio playback when transitioning between levels or states.
+
+To solve this, we created a centralized sound manager in `GameStateManager.js` that handles music playback based on the current room’s level ID. We used the `p5.sound` library to load all BGM files during `preload()` and played them using `.loop()` when the room started. To prevent redundant playback, we only switched tracks when the target BGM was different from the current one.
+
+For the pause effect, we applied a `LowPass filter` provided by `p5.sound`. When the game enters the pause state, we route the currently playing BGM through this filter and lower the overall volume. When the player resumes, we disconnect the filter and restore the original volume. This adds an immersive "muted" feel to the pause state without interrupting the track entirely.
+
 
 - 15% ~750 words
 
