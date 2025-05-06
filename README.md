@@ -2,7 +2,7 @@
 2025 COMSM0166 group 17
 ## Your Game
 
-![Coins](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/coins.gif)&nbsp;&nbsp;[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/public/)&nbsp;&nbsp;![Slot](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Slot.gif)&nbsp;![orange](Web_Dec\Orange.gif)&nbsp;![red](Web_Dec\Red.gif)&nbsp;![green](Web_Dec\Green.gif)
+![Coins](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/coins.gif)&nbsp;&nbsp;[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/public/)&nbsp;&nbsp;![Slot](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Slot.gif)&nbsp;![orange](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Orange.gif)&nbsp;![red](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Red.gif)&nbsp;![green](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Green.gif)
 
 Your game lives in the [/docs](/docs) folder, and is published using Github pages to the link above.
 
