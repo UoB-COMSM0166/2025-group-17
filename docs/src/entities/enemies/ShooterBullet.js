@@ -15,7 +15,7 @@ class ShooterBullet {
 
       markAsHit() {
             this.isHit = true;
-          }
+      }
           
       update() {
             this.position.add(p5.Vector.mult(this.direction, this.speed));

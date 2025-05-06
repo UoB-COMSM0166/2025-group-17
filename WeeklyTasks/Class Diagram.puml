@@ -143,7 +143,7 @@ class HelpBar {
   -btnOpacity: number
   -iconCharSize: number
   -textSize: number
-  -animation: {y: number, targetY: number, easing: number, duration: number}
+  -animation: { y: number, targetY: number, easing: number, duration: number }
   -stateMap: { [key: string]: number } 
   -currentState: string
   -currentBtnIdx: number
@@ -165,98 +165,402 @@ class HelpBar {
 }
 
 class CollisionDetector {
-  +detectPlayerCollision(playerObj, objArr): 
-  
+  +detectPlayerCollision(playerObj: Player, objArr: GameObject[]): boolean
+  +handleEnemyCollision(enemyArr: Enemy[], obstacleArr: Obstacle[]): void
+  -handleEnemyObstacleCollision(enemyArr: Enemy[], obstacleArr: Obstacle[]): void
+  +detectBulletCollision(bulletArr: Bullet[], enemyArr: Enemy[], obstacleArr: Obstacle[]): void
+  +detectBulletEnemyCollision(bulletArr: Bullet[], enemyArr: Enemy[]): void
+  +detectCollision(objA: Object, objB: Object): boolean
+  -computeCollisionArea(obj: Object): { left: number, right: number, top: number, bottom: number}
+  -isOverlapping(boundsA: { left: number, right: number, top: number, bottom: number}, boundsB: { left: number, right: number, top: number, bottom: number}): boolean
+  +detectCollisionWithBullet(bulletObj: , objB: Object): boolean
+  +isHitBoundary(obj: Object): boolean
+  -isBulletHitWall(bulletObj: Bullet): boolean  
 }
 
 class FadeManager {
+  -alpha: number
+  -speed: number
+  -state: string
+  -_onMid: Function
 
+  +FadeManager(fadeSpeed: number) <<constructor>>
+  +start(callback: Function): void
+  +update(): void
+  +draw(): void
+  +isActive(): boolean
 }
 
 ' 游戏实体
 class Player {
-  -hp
-  -bullets
-  -animations
-  +shoot()
-  +updateVelocity()
-  +updateHp()
+  -maxhp: number = 3
+  -baseAtk: number = 50
+  -atk: number = 50
+  -maxAtk = 100
+  -maxSpeed = 4
+  -acceleration = 3.0
+  -friction = 0.85
+  -bulletSize = 20
+  -maxBulletSize = 40
+  -canShootAgain = true
+  -shootCoolDownDuration = 300
+  -position = p5.Vector
+  -hp: number
+  -velocity: p5.Vector
+  -size: p5.Vector
+  -displaySize: p5.Vector
+  -invincibleTimer: number
+  -blinkCounter: number
+  -bullets: Bullet[]
+  -image: p5.Image
+  -animations: { up: p5.Image[], down: p5.Image[], left: p5.Image[], right: p5.Image[] }
+  -direction: string
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number
+
+  +Player(x: number = leftBoundary, y: number = heightInPixel / 2) <<constructor>>
+  +getAtk(): number
+  +getBulletSize(): number
+  +getHp(): number
+  +getMaxHp(): number
+  +setHp(newHp: number): void
+  +resetRoomState(newHp: number, atk: number, bulletSize: number, x: number, y: number): void
+  +updateHp(valueToAdd: number, invincibleDuration: number = 60): void
+  +shoot(direction: string): void
+  +powerUp(): void
+  +updateBlinking(): void
+  +display(): void
+  +updateVelocity(): void
+  +applyFriction(): void
+  +resetVelocity(): void
+  +updatePosition(): void
+  +revertPosition(): void
+  +resetInvincibleTimer(duration: number = 60): void
 }
 
 class Enemy {
-  <<abstract>>
-  #hp
-  #position
-  #size
-  +update()
-  +display()
+  -hp: number
+  -position: p5.Vector
+  -size: p5.Vector
+  -velocity: p5.Vector
+  -image: p5.Image
+  -frames: p5.Image[]
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number
+
+  +Enemy(x: number, y: number, hp: number, enImage: p5.Image, levelId: number) <<constructor>>
+  +update(): void
+  +display(): void
+  +collide(otherObj: Object): void
 }
 
 class Chaser {
-  -dash logic
-  +update()
+  -shakeIntensity: number
+  -isDead: boolean
+  -position: p5.Vector
+  -size: p5.Vector
+  -collisionDetector: CollisionDetector
+  -maxHp: number = 800
+  -hp: number
+  -isHurt: boolean
+  -hitFrame: number
+  -speed: number = 1
+  -dashSpeed: number = 20
+  -chaseRange: number= 150
+  -isDashing: boolean
+  -dashCooldown: number = 100
+  -currentCooldown: numbe
+  -dashDamageApplied: boolean
+  -dashDuration: number = 10
+  -currentDashTime: number
+  -frames: p5.Image[]
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number = 12
+
+  +Chaser(x: number, y: number) <<constructor>>
+  +update(): void
+  +applyDashDamage(): void
+  +chasePlayer(): void
+  +startDash(): void
+  +hitWall(): void
+  +takeDamage(damage: number): number
+  -markAsDead(): void
+  +shouldBeRemoved(): boolean
+  +detectBulletCollision(bulletArr: Bullet[]): void
+  +checkBulletCollision(bullet: Bullet): boolean
+  +display(): void
+  +displayDeadBoss(img: p5.Image): void
+  +applyHitEffect(flashFrame: number): void
 }
 
 class Shooter {
-  -bullets
-  +shoot()
+  <<abstract>>
+  -shakeIntensity: number
+  -isDead: boolean
+  -position: p5.Vector
+  -size: p5.Vector
+  -collisionDetector: CollisionDetector
+  -maxHp: number = 800
+  -hp: number
+  -isHurt: boolean
+  -hitFrame: number
+  -speed: number = 0.8
+  -moveCooldown: number = 60
+  -currentMoveCooldown: number
+  -direction: p5.Vector
+  -shootCooldown: number = 280
+  -currentShootCooldown: number
+  -bullets: ShooterBullet[]
+  -warningTime: number
+  -warningDuration: number = 60
+  -shooterSoundOn: boolean
+  -frames: p5.Image[]
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number = 10
+
+  +Shooter(x: number, y: number, collisionDetector: CollisionDetector) <<constructor>>
+  +update(): void
+  +checkBoundaryCollision(): void
+  +shoot(): void
+  +takeDamage(damage: number): void
+  -markAsDead(): void
+  +shouldBeRemoved(): boolean
+  +detectBulletCollision(bulletArr: Bullet[]): void
+  +checkBulletCollision(bullet: Bullet): boolean
+  +checkPlayerCollisionDirect(): void
+  +display(): void
+  -displayDeadBoss(img: p5.Image): void
+  +displayWarningEffect(): void
+  +applyHitEffect(flashFrame: number): void
+  +getPosition(): p5.Vector
+  +getSize(): p5.Vector
+}
+
+class ShooterFourDir {
+  +ShooterFourDir(+Shooter(x: number, y: number, collisionDetector: CollisionDetector) <<constructor>>
+  +shoot(): void
+}
+
+class ShooterEightDir {
+  +ShooterEightDir(x: number, y: number, collisionDetector: CollisionDetector) <<constructor>>
+  +shoot(): void
 }
 
 class Bullet {
-  <<abstract>>
-  #position
-  #damage
-  +update()
-  +display()
+  -position: p5.Vector
+  -size: p5.Vector
+  -speed: number = 4
+  -direction: string
+  -damage: number
+  -image: p5.Image
+  -initialAngle: number
+  -spin: number
+  -rotationSpeed: number
+  -isHit: boolean
+  -hitFrame: number
+  -frames: p5.Image[]
+  -life: number
+  -maxLife: number = 100
+  -trail: Array<{ pos: p5.Vector, age: number }>
+  -trailMax: number = 15
+  
+  +Bullet(x: number, y: number, direction: string, dmg: number img: p5.Image, s: number = 20) <<constructor>>
+  +update(): void
+  +display(): void
+  +markAsHit(playSound: boolean): void
+  +shouldBeRemoved(): boolean
 }
 
 class ShooterBullet {
-  +Special rotation effect
+  -position: p5.Vector
+  -direction: p5.Vector
+  -damage: number
+  -speed: number
+  -image: p5.Image
+  -isHit: boolean
+  -size: p5.Vector
+  -angle: number
+
+  +ShooterBullet(x: number, y: number, direction: , dmg: number, speed: number, bulletImg: p5.Image) <<constructor>>
+  +markAsHit: void
+  +update(): void
+  +display(): void
 }
 
 class Room {
-  -enemies
-  -obstacles
-  -items
-  +setup()
-  +update()
-  +display()
+  -currentRoomData: Object
+  -obstacleCount: number
+  -startTime: number
+  -clearTime: number
+  -items: Item[]
+  -savePoint: SavePoint
+  -door: Door
+  -enemies: Enemy[]
+  -chaser: Chaser[]
+  -shooter: Shooter[]
+  -obstacles: Obstacle[]
+  -size: { width: number, height: number }
+  -collisionDetector: CollisionDetector
+  
+  +Room() <<constructor>>
+  +setup(data: Object): void
+  +getRoomDataId(): number
+  +getCurrentRoomId(): number
+  +getCurrentLevelId(): number
+  +getCurrentRoomNo(): number
+  +update(playerObj: Player): void
+  -handleItemPicking(playerObj: Player): void
+  -handleItemBulletsCollision(bulletArr: Bullet[], itemArr: Item[]): void
+  +display(playerObj: Player): void
+  -displayInstructions(): void
+  -displayBossStatus(): void
+  +generateObstacles(currentRoomData: Object): void
+  +generateEnemies(currentRoomData: Object): void
+  +generateChaser(): void
+  +generateShooter(): void
+  +generateFinalBossRoom(): void
+  +updateEnemies(): void
+  +updateShooter(): void
+  -shouldDropItemAndRemove(bossObj: Object): boolean
+  -dropItemFromBossType(bossObj: Object, itemX: number, itemY: number, bossBtm: number): void
+  +updateAfterClear(): void
+  +checkClearCondition(): boolean
+  +resolveBossCollision(): void
+  +setObstacleCount(currentRoomData: Object): void
+  +generateTutorialObs(obsData: Object): void
+  -setGameTime(currentRoomId: number): void
 }
 
 class Door {
-  +open()
-  +close()
+  -position: p5.Vector
+  -size: p5.Vector
+  -currentDoorImg: p5.Image
+  -isOpen: boolean
+  
+  +Door() <<constructor>>
+  +display(): void
+  +open(): void
+  +close(): void
+  +updateImage(): void
 }
 
 class Item {
+  -ITEM_IMAGES: { [key: string]: p5.Image } <<static>>
+  -EFFECT_MAP: { [key: string]: Function } <<static>>
+  -position: p5.Vector
+  -vel: p5.Vector
+  -type: string
+  -gravity: number = 0.2
+  -bounce: number = 0.4
+  -image: p5.Image
+  -size: p5.Vector
+  -groundY: number
 
+  +Item(x: number, y: number, bossBtm: number, type: string) <<constructor>>
+  +update(): void
+  -applyGravity(): void
+  -handleGroundCollision(): void
+  +display(): void
+  +applyEffect(playerObj: Player): void
+  +getType(): string
 }
 
 class Obstacle {
+  -position: p5.Vector
+  -size: p5.Vector
+  -image: p5.Image
 
+  +Obstacle(x: number, y: number, obImage: p5.Image) <<constructor>>
+  +display(): void
 }
 
 class SavePoint {
-  +checked()
+  -position: p5.Vector
+  -size: p5.Vector
+  -image: p5.Image
+  -checkedImg: p5.Image
+  -lastSaveTime: number
+  -isChecked: boolean
+
+  +SavePoint(x: number, y: number) <<constructor>>
+  +display(): void
+  +checked(): void
 }
 
 ' UI系统
 
 class PlayerStatusDisplayer {
-  +display()
+  -iconSize: number = 40 <<static>>
+  -iconPadding: number = 15 <<static>>
+  -hPadding: number = 20 <<static>>
+  -vPadding: number = 20 <<static>>
+  -uiTextSize: number = 24 <<static>>
+
+  +display(playerObj: Player, currentlevelId: number, currentRoomNo: number, timeSpent: number, heartImg: p5.Image, damagedHeartImg: p5.Image, uiFont: p5.Font): void <<static>>
+  -drawHealthBar(playerObj: Player, heartImg: p5.Image, damagedHeartImg: p5.Image): void <<static>>
+  -drawCurrentLevel(currentlevelId: number, currentRoomNo: number, uiFont: p5.Font): void <<static>>
+  -drawTimer(timeSpent: number, uiFont:p5.Font): void <<static>>
+
 }
 
 class BossStatusDisplayer {
-  +display()
+  -vPadding: number = 20 <<static>>
+  -hpBarOffsetX: number = 22.5 <<static>>
+  -hpBarOffsetY: number = 27.5 <<static>>
+
+  +display(bossObj: Object, bossHpBarImg: p5.Image, bossHpImg: p5.Image): void <<static>>
+  -preprocessImages(bossHpBarImg: p5.Image, bossHpImg: p5.Image): void <<static>>
+  -calculateBarPositionX(bossHpBarImg: p5.Image): number <<static>>
+  -createHpPercentageImage(bossObj: Object, bossHpImg: p5.Image): p5.Image <<static>>
+  -drawHpBackground(bossHpImg: p5.Image, positionX: number): void <<static>>
+  -applyHitEffects(bossObj: Object): void <<static>>
+  -drawCurrentHp(hpPercentageImg: p5.Image, positionX: number): void <<static>>
+  -drawHpBar(bossHpBarImg: p5.Image, positionX: number): void <<static>>
 }
 
 class InstructionDisplayer {
+  -fadeDuration: number = 500 <<static>>
+  -displayDuration: number = 1000 <<static>>
+  -boxSize: number = 60 <<static>>
+  -fontSize: number = 20 <<static>>
+  -fontFamily: string = "monospace" <<static>>
 
+  +display(textContent: string, displayStartTime: number): void <<static>>
+  -calculateAlpha(displayStartTime: number): number <<static>>
+  -drawDialogBox(alpha: number): void <<static>>
+  -drawHighlightEdges(alpha: number): void <<static>>
+  -drawInstructionText(textContent: string, alpha: number): void <<static>>
 }
 
+' 定义主类
 class PolicyDisplayer {
-  
+    +config: PolicyConfig <<static>> 
+    +display(): void <<static>> 
 }
+
+' 定义配置类
+class PolicyConfig {
+    title: String
+    content: List<String>
+    styles: StyleConfig
+}
+
+' 定义样式子配置类
+class StyleConfig {
+    background: Integer[3]
+    titleSize: Integer
+    bodySize: Integer
+    titleColor: Integer[1]
+    bodyColor: Integer[1]
+}
+
+' 关联关系
+PolicyDisplayer --> PolicyConfig : config
+PolicyConfig  --> StyleConfig  : styles
 
 
 
@@ -273,22 +577,24 @@ InputHandler "1" *-- "1" CollisionDetector
 InputHandler "1" o-- "1" Room
 InputHandler "1" o-- "1" FadeManager
 
-Room "1" *-- "many" Enemy
-Room "1" *-- "many" Obstacle
-Room "1" *-- "many" Item
-Room "1" *-- "1" Door
-Room "1" *-- "1" SavePoint
+Player "1" *-- "many" Bullet
 
-Enemy <|-- Chaser
-Enemy <|-- Shooter
+Chaser "1" *-- "1" CollisionDetector
+
 Shooter <|-- ShooterFourDir
 Shooter <|-- ShooterEightDir
 
-Bullet <|-- ShooterBullet
+ShooterFourDir "1" *-- "many" ShooterBullet
+ShooterEightDir "1" *-- "many" ShooterBullet
 
-Player "1" *-- "many" Bullet
-
-MenuDrawer "1" *-- "1" ScenePlayer
-MenuDrawer "1" *-- "1" HelpBar
+Room "1" *-- "1" CollisionDetector
+Room "1" *-- "1" Door
+Room "1" *-- "1" SavePoint
+Room "1" *-- "many" Enemy
+Room "1" *-- "many" Obstacle
+Room "1" *-- "many" Item
+Room "1" *-- "many" Chaser
+Room "1" *-- "many" ShooterFourDir
+Room "1" *-- "many" ShooterEightDir
 
 @enduml
