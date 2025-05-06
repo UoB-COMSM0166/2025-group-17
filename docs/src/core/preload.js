@@ -85,7 +85,6 @@ function preload() {
     window.enemyAnimations.level1.small.push(s1);
     window.enemyAnimations.level1.large.push(l1);
   }
-
   // L2 - 3
   for (let i = 0; i < 3; i++) {
     window.enemyAnimations.level2.small.push(loadImage(`assets/spritesheet/Enemy/L2/Enemy_L2_S${i}.png`));
@@ -112,9 +111,7 @@ function preload() {
   }
   window.shooterFramesL3 = [];
   for (let i = 0; i < 4; i++) {
-    window.shooterFramesL3.push(
-      loadImage(`assets/spritesheet/Shooter/Shooter_L3_${i}.png`)
-    );
+    window.shooterFramesL3.push(loadImage(`assets/spritesheet/Shooter/Shooter_L3_${i}.png`));
   }
 
 

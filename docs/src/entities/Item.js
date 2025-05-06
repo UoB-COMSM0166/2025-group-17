@@ -8,7 +8,7 @@ class Item {
   #EFFECT_MAP = {
     "health": playerObj => playerObj.updateHp(1),
     "powerup": playerObj => playerObj.powerUp(),
-    "photo": () => {},
+    "photo": () => { },
   };
 
   position;
@@ -28,7 +28,7 @@ class Item {
     this.#bounce = 0.4;
     this.#image = this.#ITEM_IMAGES[this.#type];
     console.log(this.#image);
-    const itemHeight = heightInPixel / 24;
+    const itemHeight = heightInPixel / 18;
     const itemWidth = itemHeight * (this.#image.width / this.#image.height);
     this.size = createVector(itemWidth, itemHeight);
     this.#groundY = bossBtm - this.size.y;
@@ -48,21 +48,21 @@ class Item {
     if (this.position.y > this.#groundY) {
       this.position.y = this.#groundY;
       this.#vel.y *= -this.#bounce;
-      
+
       if (Math.abs(this.#vel.y) < 0.5) this.#vel.y = 0;
     }
   }
 
   display() {
-    image(this.#image, 
-          this.position.x, this.position.y, 
-          this.size.x, this.size.y);
+    image(this.#image,
+      this.position.x, this.position.y,
+      this.size.x, this.size.y);
   }
 
   applyEffect(playerObj) {
     this.#EFFECT_MAP[this.#type]?.(playerObj);
   }
-  
+
   getType() {
     return this.#type;
   }
