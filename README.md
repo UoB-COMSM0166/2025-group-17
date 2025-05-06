@@ -152,7 +152,6 @@ sequenceDiagram
 ```
 ```mermaid
 sequenceDiagram
-@startuml
 actor User
 participant setup() as setup
 participant "p5.js" as p5
@@ -183,7 +182,6 @@ setup -> extract: extractFrames(bossSpriteSheet)
 setup -> extract: extractFrames(shooterSpriteSheet)
 setup -> extract: extractFrames(enemySpriteSheet)
 setup -> extract: extractFrames(hitEffectSheet)
-@enduml
 ```
 ```mermaid
 sequenceDiagram
@@ -210,7 +208,6 @@ end
 ```
 ```mermaid
 sequenceDiagram
-@startuml
 participant GameStateManager
 participant EventBus
 participant InputHandler
@@ -237,7 +234,6 @@ Room -> Door: checkCollision()
 GameStateManager -> EventBus: publish('game-update')
 EventBus -> InputHandler: handleInput()
 EventBus -> MenuDrawer: updateState()
-@enduml
 ```
 
 ### 4. Implementation
