@@ -400,8 +400,11 @@ This report documents the testing approach, tools, techniques, and outcomes for 
   Frequent Meetings: Meetings were conducted every Monday to discuss completed work, resolve blockers, and reassign tasks. We estimated complexity using Planning Poker, ensuring balanced workloads and realistic sprint goals.
   Tools Used:
   **Github** was used for version control, branch management, and bug tracking.
+  
   **Notion** supported real-time note-taking during meetings and goals tracking.
+  
   **Kanban Board** organized our tasks into "To Do," "In Progress," and "Done."
+  
   **Tencent Meeting** and **Wechat** supported continuous communication and problem resolution.
 - *2) Testing Focus* 
    Our black-box testing included:
