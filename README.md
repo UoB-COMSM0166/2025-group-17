@@ -150,6 +150,95 @@ sequenceDiagram
         Room->>Room: setup(nextRoomData)
     end
 ```
+```mermaid
+sequenceDiagram
+@startuml
+actor User
+participant setup() as setup
+participant "p5.js" as p5
+participant FadeManager
+participant EventBus
+participant Room
+participant InputHandler
+participant MenuDrawer
+participant GameStateManager
+participant Player
+participant "extractFrames()" as extract
+
+setup -> p5: createCanvas(windowWidth, windowHeight)
+setup -> p5: create cnv
+setup -> FadeManager: new(fadeSpeed=0.05)
+setup -> EventBus: new()
+setup -> Room: new()
+setup -> InputHandler: new(room)
+setup -> InputHandler: set fadeMgr
+setup -> MenuDrawer: new(eventBus, sceneData, ...)
+setup -> GameStateManager: new(eventBus, PageDrawer, inputHandler)
+setup -> MenuDrawer: setupMainMenu()
+setup -> MenuDrawer: setupPauseMenu()
+setup -> MenuDrawer: setupGameOverPage()
+setup -> GameStateManager: setTimeout(playMainmenuSound)
+setup -> Player: new()
+setup -> extract: extractFrames(bossSpriteSheet)
+setup -> extract: extractFrames(shooterSpriteSheet)
+setup -> extract: extractFrames(enemySpriteSheet)
+setup -> extract: extractFrames(hitEffectSheet)
+@enduml
+```
+```mermaid
+sequenceDiagram
+actor User
+participant "p5.js" as p5
+participant draw() as draw
+participant Player
+participant GameStateManager
+participant FadeManager
+
+loop every frame
+  p5 -> draw: invoke()
+  
+  draw -> Player: updateBlinking()
+  draw -> GameStateManager: update()
+  draw -> FadeManager: update()
+  draw -> FadeManager: draw()
+  
+  alt key pressed
+    User -> p5: keyPressed()
+    p5 -> GameStateManager: handlePlayerShooting()
+  end
+end
+```
+```mermaid
+sequenceDiagram
+@startuml
+participant GameStateManager
+participant EventBus
+participant InputHandler
+participant MenuDrawer
+participant Room
+participant Player
+
+GameStateManager -> InputHandler: update(player)
+InputHandler -> Room: getCurrentRoom()
+InputHandler -> CollisionDetector: detectPlayerCollision()
+InputHandler -> Player: updatePosition()
+
+GameStateManager -> MenuDrawer: renderMenu(player)
+MenuDrawer -> ScenePlayer: draw()
+MenuDrawer -> HelpBar: update()
+MenuDrawer -> EventBus: publish('menu-interaction')
+
+GameStateManager -> Room: update(player)
+Room -> Enemy: update()
+Room -> Obstacle: display()
+Room -> Item: applyEffect()
+Room -> Door: checkCollision()
+
+GameStateManager -> EventBus: publish('game-update')
+EventBus -> InputHandler: handleInput()
+EventBus -> MenuDrawer: updateState()
+@enduml
+```
 
 ### 4. Implementation
 
