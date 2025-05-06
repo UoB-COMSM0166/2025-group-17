@@ -74,11 +74,13 @@ so that I can enjoy the game regardless of my previous gaming experiences.
 
 **Note**: The potential stakeholders are marked as **bolded** above.
 
-Onion Model
-![Modell.png](images/Modell.png)</br>
 
-Use-case Diagram
+![Modell.png](images/Modell.png)</br>
+*Oinion Model*
+
+
 ![use-case-diagram.png](images/use-case-diagram.png)</br>
+*Use-case Diagram*
 ### 3. Design
 <!-- 
 - 15% ~750 words 
@@ -90,7 +92,7 @@ Encapsulation ensures data integrity and controlled access to game object states
 #### 3.2 Class Design
 The class diagram clearly outlines key classes, their primary attributes, and critical methods:
 - Player: Attributes include health, velocity, and position. Key methods: move(), shoot(), updatePosition().
-- 
+ 
 
 <!--![class-diagram.svg](images/class-diagram.svg)</br>
 
@@ -495,18 +497,22 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 ![d8e7d67450a08bffac6aacd4a66122e](https://github.com/user-attachments/assets/16c0db61-2bbc-47ef-abbd-c04069e6d9dd)
 
 ###  7. Sustainability, Ethics and Accessibility
-####  Green Software Foundation Implementation Patterns Applied in the Project
+####  7.1 Green Software Foundation Implementation Patterns Applied in the Project
 
 ##### Deprecate GIFs for animated content
 - We removed all legacy `.gif` animations and replaced them with finely tuned PNG sprite sequences, loading each frame via `loadImage` and driving playback with a `frameIndex` loop.  
-- This change gives us precise control over frame rate and leverages modern PNG compression tools (animation assets grew from X MB to Y MB, ≈Z% change).
+- This change gives us precise control over frame rate and leverages modern PNG compression tools.
 
 ##### Remove unused CSS definitions
-- We audited our stylesheet with browser Coverage and regex-based searches, stripped out every unused selector, and now only ship the base layout rules and the `.blink` keyframe animation.  
+We audited our stylesheet with browser Coverage and regex-based searches, stripped out every unused selector, and now only ship the base layout rules and the `.blink` keyframe animation.  
 
 ##### Optimize image size
 - We applied automated image compression (using imagemin with MozJPEG/PNGQuant) and resized high-resolution assets to match in-game display size, reducing the total image footprint from X to Y.  
-- This optimization cuts bandwidth by Z%, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
+- This optimization cuts bandwidth, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
+
+####  7.2 The Sustainability Awareness Framework
+![SusAD](https://github.com/user-attachments/assets/adc2f299-bb7f-40cd-8b1e-80ab55a9ae5f)
+*The Sustainability Awareness Diagram*
 
 
 
