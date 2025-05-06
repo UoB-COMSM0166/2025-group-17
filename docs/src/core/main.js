@@ -15,7 +15,7 @@ function setup() {
   //初始化房间
   room = new Room();
   let inputHandler = new InputHandler(room);
-  inputHandler.fadeMgr = fadeMgr;
+  inputHandler.fadeMgr = fadeMgr; //处理转场
 
   const eventBus = new EventBus();
   //页面管理器

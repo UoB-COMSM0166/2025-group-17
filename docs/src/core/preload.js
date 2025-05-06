@@ -27,6 +27,7 @@ function preload() {
   playerImage = loadImage('assets/character/Character.png');
   //主角子弹（普通）
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
+  powerUpBulletImage = loadImage('assets/character/bullets/UpperBullet.png');
 
   //敌人
   enemyImage = loadImage('assets/enemies/level1/CCTV.png'); //只会瞎走的敌人

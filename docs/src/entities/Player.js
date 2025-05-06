@@ -1,4 +1,5 @@
 class Player {
+  //角色属性
   #maxHp = 3;
   #baseAtk = 50;
   #atk = 50;
@@ -12,29 +13,32 @@ class Player {
   #shootCoolDownDuration = 300;
 
   constructor(x = leftBoundary, y = heightInPixel / 2) {
-    this.position = createVector(x, y);
     this.hp = this.#maxHp;
-    this.velocity = createVector(0, 0);
+    this.position = createVector(x, y); //初始位置
+    this.velocity = createVector(0, 0); //初始速度
 
+
+    //------------伤害判定和图像显示分开------------
     // 判定框尺寸（红框用来检测碰撞）！！！
     this.size = createVector(36, 52);  // ← 可调整碰撞判定大小（原本是 heightInPixel / 7）
-
     //  图像显示尺寸（不会影响判定框）！！！
     this.displaySize = createVector(72, 72); // ← 建议大于判定框，让图像不被裁剪
+    //--------------------------------------------
 
-    this.invincibleTimer = 0;   // Frames remaining for invincibility
-    this.blinkCounter = 0;      // Used for blinking during invincibility
+
     this.invincibleTimer = 0;   // 剩余无敌帧数
     this.blinkCounter = 0;      // 用于无敌闪烁效果
-    this.bullets = [];
+    this.bullets = []; //子弹管理数组
+
 
     this.image = playerImage; // 初始静态图像
-    // 动画相关初始化
+    // -------------角色动画控制模块--------------
     this.animations = window.playerAnimations; // 从 preload.js 获取动画帧
     this.direction = 'down';                   // 初始朝向
     this.currentFrame = 0;                     // 当前帧索引
     this.frameCounter = 0;                     // 动画播放计数器
     this.frameDelay = 6;                       // 每几帧切换一次动画
+    // ------------------------------------------
   }
 
   getAtk() { return this.#atk; }
@@ -42,8 +46,8 @@ class Player {
   getHp() { return this.hp; }
   getMaxHp() { return this.#maxHp; }
   setHp(newHp) { this.hp = newHp; }
-  
-  // Reset transient room state while preserving progression stats
+
+  // 重置房间状态，确保玩家在新房间中位置和状态能够被继承
   resetRoomState(newHp, atk = this.#atk, bulletSize = this.#bulletSize, x = leftBoundary, y = heightInPixel / 2) {
     this.hp = newHp;
     this.#atk = atk;
@@ -53,11 +57,11 @@ class Player {
     this.invincibleTimer = 60; // Player becomes invincible when entering a room
     this.#canShootAgain = true;
     this.bullets = [];
-    
-    this.direction = 'down';
+
+    this.direction = 'down'; //idle状态
     this.currentFrame = 0;
     this.frameCounter = 0;
-    this.frameDelay = 6; 
+    this.frameDelay = 6;
   }
 
   updateHp(valueToAdd, invincibleDuration = 60) {
