@@ -78,7 +78,7 @@ Onion Model
 ![use-case-diagram.png](images/use-case-diagram.png)</br>
 
 Use-case Diagram
-![Case-diagram.png](images/Case-diagram.png)</br>
+![use-case-diagram.png](images/use-case-diagram.png)</br>
 ### 3. Design
 <!-- 
 - 15% ~750 words 
