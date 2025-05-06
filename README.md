@@ -511,7 +511,8 @@ We audited our stylesheet with browser Coverage and regex-based searches, stripp
 - This optimization cuts bandwidth, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
 
 ####  7.2 The Sustainability Awareness Framework
-![SusAD](https://github.com/user-attachments/assets/adc2f299-bb7f-40cd-8b1e-80ab55a9ae5f)
+![SusAD](https://github.com/user-attachments/assets/5cc546f5-c0fc-49b6-a68c-c6d9af7fdffd)
+
 *The Sustainability Awareness Diagram*
 
 
