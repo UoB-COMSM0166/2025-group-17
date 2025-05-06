@@ -93,8 +93,10 @@ The class diagram clearly outlines key classes, their primary attributes, and cr
 - 
 
 <!--![class-diagram.svg](images/class-diagram.svg)</br>
--->
+
 ![class diagram.png](images/class%20diagram.png)</br>
+-->
+![Class Diagram.svg](images/Class Diagram.svg)</br>
 ```mermaid
 sequenceDiagram
     participant Player 
