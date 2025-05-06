@@ -1,0 +1,68 @@
+@startuml
+' left to right direction
+
+' rectangle "技术驱动因素" {
+'   component "系统演进" as Evolution
+'   component "维护需求" as Maintenance
+'   component "架构设计" as Architecture
+' }
+
+' rectangle "技术债务动态" {
+'   component "技术债务增加" as DebtInc
+'   component "技术债务管理" as DebtMgmt
+' }
+
+' rectangle "可持续性结果" {
+'   component "系统弹性" as Resilience
+'   component "长期可维护性" as Maintainability
+' }
+
+' rectangle "跨维度影响" {
+'   component "经济成本降低" as Economy
+'   component "环境效益提升" as Environment
+' }
+
+' Evolution --> DebtInc : 导致
+' DebtMgmt --> DebtInc : 控制
+' Maintenance --> DebtMgmt : 需配合
+' Architecture --> Resilience : 支持
+' Architecture --> Maintainability : 优化
+' DebtMgmt --> Maintainability : 提升
+' Resilience --> Environment : 降低碳足迹
+' Maintainability --> Economy : 减少维护费用
+
+
+
+left to right direction
+
+rectangle "Technical Drivers" {
+  component "System Evolution" as Evolution
+  component "Maintenance Needs" as Maintenance
+  component "Architecture Design" as Architecture
+}
+
+rectangle "Technical Debt Dynamics" {
+  component "Technical Debt Accumulation" as DebtInc
+  component "Technical Debt Management" as DebtMgmt
+}
+
+rectangle "Sustainability Outcomes" {
+  component "System Resilience" as Resilience
+  component "Long‑term Maintainability" as Maintainability
+}
+
+rectangle "Cross‑Dimensional Impacts" {
+  component "Reduced Economic Cost" as Economy
+  component "Enhanced Environmental Benefits" as Environment
+}
+
+Evolution --> DebtInc : leads to
+DebtMgmt --> DebtInc : controls
+Maintenance --> DebtMgmt : requires coordination
+Architecture --> Resilience : supports
+Architecture --> Maintainability : optimizes
+DebtMgmt --> Maintainability : enhances
+Resilience --> Environment : reduces carbon footprint
+Maintainability --> Economy : reduces maintenance cost
+
+@enduml
