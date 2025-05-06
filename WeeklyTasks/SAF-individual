@@ -1,0 +1,37 @@
+Action 1: Tutorial, user instructions, and help texts
+First-order effect:
+- Users understand how to play the game and feel supported early on. (Individual)
+Second-order effects:
+- Users are less likely to quit out of frustration. (Individual/health)
+Third-order effects:
+- Higher user retention leads to potential revenue, including ads and in-game purchases. (Economics)
+- Players might be willing to build a positive community culture where experienced players help newcomers. (Community)
+
+Action 2: Users can save and load their game progress
+First-order effect:
+- Players don’t lose progress and feel more in control. (Individual/self-awareness and free will)
+- Players can choose not to save. In other words, players know they have the right to give consent for specific data uses. (Individual/Privacy)
+- Players feel less frustrated when they lose because they don't have to start from scratch. (Individual)
+Second-order effect:
+- Players are more likely to return to the game, which increases session frequency.
+- The company builds trust with the players. (Individual/Trust).
+Third-order effect:
+- Trust between users and the development team leads to higher user retention. (Economics/CRM)
+- High session frequency leads to high revenue. (Economics/value)
+
+Action 3: Automatic CI/CD
+First-order effect:
+- Continuous integration/deployment may increase the game’s carbon footprint. (Environmental)
+- Automatic CI/CD makes quick delivery of updates and features possible, potentially improving user satisfaction. (Individual)
+- Our product runs as a website, which would work on multiple platforms. (Technical/Maintainability)
+- Automatic CI/CD reduces game downtime, improving user satisfaction. (Individual)
+- Automatic CI/CD ensures the product is ready to use, which reduces energy waste from unexpected crashes and rollbacks. 
+
+Action 4: Users are exempt from damage in certain situations
+First-order effect:
+- Players feel the game is fair and gain positive feedback while playing. (Individual)
+Second-order effects:
+- Players are less likely to quit out of anger and frustration (Individual/health)
+- Encourages users to experiment more with game mechanics, which leads to longer engagement. (Individual)
+- More positive reviews and community feedback. (Individual/Participation and communication)
+Casual players feel welcome, leading to a more diverse user base. (Social/Inclusiveness and diversity)
