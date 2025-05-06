@@ -95,7 +95,597 @@ The class diagram clearly outlines key classes, their primary attributes, and cr
 <!--![class-diagram.svg](images/class-diagram.svg)</br>
 ![class diagram.png](images/class diagram.png)</br>
 -->
-![class diagram](https://www.plantuml.com/plantuml/png/tLnFRnmvTh_tfo1ysPwesx6zzcJGa8njgILB6CiIrDeT3mR6W5r5TTEg9WiaIrAlruSW661pI3P0SieXsLjE6I0ma4pWBF9bnkFaMmIFP5NnNxNQuvqWo6Mivdjy9Dy__lZ8cbz8XOMgbaMlzpFqm--_U_UVV_73N__Jkz_-w_itRz-__STULc0fqHEy95E55Jd63C-9GAzw20qfAojrY5bU4352Hyule9xYEPa8V0sqOy8gypTGo1LXQhUI8xHl_zBI98oonvTbGHJ9HsZ6UK4m0rg9AqdEwPAC4AkMCoD6qIMPbeGfjp6hX02PJuv7g7nqTyehbX_GWW3jWXOAPbC-klkKNvzYgSSLd2ztdnpB4Ng5lheagrhQ2ry0Ujth8RGLQg8VBsQ0qaiVe6w5VOAsjpFEf19LfhXu_1Z6gieSAzB_P8IkECsXPQ6vJmky8cAwu5nHDdVeGxdWLP6V4POJ0GC3pL5ZjY3PvHHVaLDEcUf_CchwuIi2AvjWXTtn2expLBjsccVa6cZk-898eeB6BMsyi54GMIsZLd93rJa_nfJLis-457W5xKl2AcsJaBZxvBWlWU2RBUOwuEACysMVifpSrCRsriPB4EQgbQYgr9t0MK0PHtdSSuZpbvLKUvXTOVa5LOknB4ccph2YF50I_JNPLKmshQzxDj1g7p81fdrBZj39x2N9bFQ_cg6Vz1XPpMGcw8mOjnmXgGHbym7AS57CS7OvGWSLonJbp5LCDIkeN8HzSgpm266sYcRP-hIU9nhAZ33hbYCqRNzeue8KvIuM8tHe_Z0z88RgiNJBJB4ZroIwCPagDEyUPugoYcXpxnTaIPYgQTOp8zBIEXRetYL-zQBkUGg-cX9vflqrHTc_eIfgrpw_VgYd7ETFiLGGZnqZGfH5f3bUafCh8XAIWRxL6YUPcxIf9jgqngriqz5oxgH0OnUJ0e-MU4xGQykd8wk3qqcM0sJDxWwLybaqp0I1V0hAgfJYh4-NyrEi5gqd5dX6YlRdwkJYGf8cxQUyUu0MDCy9QzBV9v4UJIuzvfNKwkpF57DvslY0Y2svf23NpZ3WZQRaTDxIoIEHqkePn6aK3I5LJS7wEfRwaRZJshrYqXFh7h079KQpNkNromM-JarG4v933PikSjvNL1LDA8VTkwQpDJSRXTvBWT1c0bZ74VE8xX8RX11Jwm4RbhxY2XSkSF24BVYrrhAnglHaAJwV5wIJ37rDJkZkt4s7thLcklklun3j7b_gL7ioUpb29kiEK0IDNDjHQJAqjOYJWYFu48ds3MK0YlQGNSLEROnuypHU1rH1f2HvGgJZdMPYWi-1EOg8P-H6JHKNgwVK3ugX4fYPmS_vFikZg1aAeYh1plcf85TwuQcLDTmPPqhm0ZBixkfpifBzcJ61dsy7I2VOyrL9PAsNhrvuiuPrVBoO9RyYkqHT4y9k4-ORklQWv79ROAZXM2ScSN6gmIKMP0CY6Y7uhsxaHK4bvMn2587qFa9xOHFm5LYgXX1Y-WkSa-Ev6A43-CD0R8rxt4be5ARN0cElWyvhh9p6qkiw69cxLL4G9TTnQdkTSt1N3HfJ0SeB8Z3B4dbf2A1RztF6dXErrohzIAFVHciEzIcv8aKt6Je_upurE7S5HuOvKSVunXzRuEipYuERdRsHsBYD0mEDr-GElpxm0QvOZpaq-DuCS3X-gKSUeR4GUBMjVq32UEnmX42pyzY8VeDOLHJ0mZYLv8Wf0fccEILgvtIMsiyzQBN16WTemnKc7HssFFTmWSkoM3s3gUvVN93CtUYtREAlJUrRUekH6vVRO93mf1KVZc1BDlbMmyDd6dVxMA1n2Ni0CEvmHIMT0N1ml6r1w7pXdUTvYJDNtGORdyIjDEDiRu75bFxQhnB0fX6qOKQNS2fZeFDLYoCL5dEYlcmR29QKpTlVUILiFzDYFTJK0yg41MisvBfdSFHfd4-nezppoj8uZt5agppOlHvhhxCD_PUIizjGTfqGKrCOeEG4eint3WxoemGCZO1nhNRNpRG3fwM69yAWr-TaLICZCB9ZjXBdkMUtIx9gzFWvMHqfidmSI-jVajLKZztEuQOLidBcqTe8-avBab5SWFlXJ17HpnPmtbqdOu20vmkQmpcdOzxHE6TaNXLOVCWudWp0DPWo6SgHyShzNK3WQx3-BiukvqBd17sAU9vUc37cyuzQgh6iCs1QYTU-L3z_11RM_WkU0gK3hzAHbeqBEcUEZ_C2C4sp044kw4rdgekWZqvwMxd-PRQAXYK54FZivLY8aQwych3MsCx9rmQ_x3EoNBMI2FpK7JK1m2MVIOMpWkZM4_l31Of3Hr9D_pY9Tfa6AhMYPlgtxcL86lj-hFn00viD4ibg1O3csmsSprxkEY37BQRoPLcfLbDZGJ1qThXVeO9SE7KAuNedWC2o_J7ZIW6SDhzVcueuOFS2boL0qvb62UEFaWeD86NtewJuVXZe3mgVHl7M5DgjroXoYyf3gdPXNbYi0Wqw-gRIY3sawWjS5AvqGsZP4Me3qJb86Do1YtA1tNGZIq9oho7SeB_cx9ZcRNL9Rx-Eu3uSMwQkc7HrLbTUrfPYuv9_0F2sg1ndYbvvwEsrlhpvxhiVVlkxTz_-m_T_-5kxTXTzB_7DeZ4fsa4_rr0AIp9MbqxpetjQHucs9RuPgqkqW-xVgt_h9QCTz53toJ82XnfO4SY_gxak1CrioxsxdptIWsfh0IP3E-X1BMlNRNseMpFCzC5iFCSK12XH4NlBmTKUvyM4NxD9rGvf9bRNwj0E0EXVDGVFTlaQVfA26mpfCKaD5Rscd4gDXMCAPLUKPO1YuHmhF91QK7QvnokcWdPpV6oJKtCIQiy47aJLvuAgRAcGpt9-pVmM4ynkYmtejic0rPmAaXaC6o7G0u63uxZGHyDe5RfzGWhiduFi4UZ6yHsOLntRpkwATknUVSHEwGqfq9-Y1ycOcHCrLfVHURRrbeXqM4PDn_WcR9MQaP7hmp81UFKz5fnnJOtHOniW9pe6gFNcjgq3YFb1VbZsht1HaNC-plEsG-jJa_2miOC-lUSUl20C-f4ztOiTVat4Byj-NCG0x_Jl3hUicyVClxAHubBqCVF0ndO_r5ogXwqLnZN2BK6kY51fYYu5Uq7MpzUffRr8WttUP3u_xkliS7lSTsI8HB3gS91khFqHWqglf0F-BXol9Ep8dnaa1LqDMhif9NQSs15qRIydVQuM5gSsEtG0UnTOrZkENE3BHC54R-KJWeCR_etDiccTSGb1xpZ9PsPtyBs1oiCAxjZS6WIDJUP11DW2JJrBBgO1mMnd6MZX3BDv8sG7tJUxA9KJB1VwvEEC2Q9WGpDvlHt6JDawKi1GzvjWCFQuB0iQl9hGr3XQxhj2OJPH4VOdScSO-u7sQUCcIQVUq4br0feqo_US5OJRhIXyim0zl0SL5amwJGfV4YiqnoQY4cVK9HQNO-t6VJybLqM-Iyu8b823Mkhcfo9lCIIxJ7U9SMz7zDeccEmkbnBkLrlZXZezfCfM3YyAB1UUkQDmr_3CnllsDfv91GK5RRF_p-5_x-vdTPa_4RMVkl5rdE09O9Y_uXhR1a8VVEPAdQQuF7XfBUEYp6ii66NpCDfjSn9jD3CYGfU2JvYdgvyoKTmpbNKpUCVsjualR9XFJ9nPeDf6MWItDamKpKtG_zKqeJi4TQY9zidrK62uQJAnV5yOxuel8pPEDWR2k_3G3HYWrSU0jZrCK0Uy4XDgQt1-M_-dyZ7VNy8PxSFX9vnItVY_D1NZ5mQiRPw0msJuiFDKwKT51tQcZ2gAYp6R5q7EfLvc4rpf_3GDgpMwV7Hh2a-dge9U47zNltdgDBKGJ0bCY_e6uHKgkNIqCa3ECj7hnqs7O-mUXUz3zGFCOSjZQID7cXoWVDdKoP4NRWCaFUpvum6-oLE7LFMRQp_twTG6YIjqy0sSgsiFZFqcAj6b72doWuJpOi_DdD3Rr2QUDGR8crXT33ZoKcBA9eswrrR-0ZCr6eR2HFGGOnBShlEcab_vBwGr3Wv1G5OGBC96giXIZX3SbfbmaVNJuH5gNX5hWt78HHDkT0p5TWgnPcljpOa8yfN-rqepcc-mYccjvotTqdzhpLVhhtpiEu3DC28esJoqI2PDU4tdNUVxEz9PynHutMkBF-fJZTjVjTYx733PASqkRtdIud3RPosttAE0H-WcunC9PrqtckKviegc_fkscWoe0ifkbVGVm32eBPFQ9sI_m_SJVVQDGtv03ti-JL1gi90W7L262vXz-7Z7cAsUHKI8HTg7U1F1Ir3qcEKcuVPdNCgJhWkItB8V2Bw4QS23ih27CQ5pDGi_ltHlUk2zshApQ3c-K4JiGRA8mBDktUCiRt2Q0pS5aRou8Z2jDBY6cnmdONs0hSuhnGN5nSbCzlbCfhc7zhi4I76kxFWTVvDb8PrzA3QgYogS2syJiBTv9V7EJx0AO4tddyGkpKlYQIqhk2InGnrv5P7s7PyYTjiuEjy__lheUFnaVxhsQHBQteQxC9gP4_t-mS7-tldNn-FJHA_wCYlgrQ6zAtZHxRMeLUdTkiq5ld8g1_hS_K0VSddbl9pJxGyxG472HkOzmPSU203LTEpzGKGCa3lDpG2NUPJrn2od7wNV9tf2oR18-82MPGzDwruhpeb-KUgyy6qSeOwq3_NkKBymJ2shGtjy5XIbDtBr5alMAEDZfrf__4JoA2uB-mr6X7xadkdHXgp6YytdKnjNBrC5TIFQNV7Fq2-Fx4TttlMjsGidHaRpwLt6cNldfEzCWy03dbF_cOq-XGHiYvZdGIZgQWEUYfu7J-s0ww7BjHOeD0-7WbkBfjqW8YSGmqVk00QnyE4tVCO4_-Q72L953pWpTwJmXpL6i2wuW3yak50BU6oNcFO73TezXWiB-n-eYeqNOgxG4fgp4he5E6M31g05Jhc9bopWoQBvMEQvo_VWxgDkpYzTpZ_pELsVYi0ED1o2dC0yfdq3mvI2b89dH4hD9FiVBJ73HLOLS0UBHLtKUjuXjW7_eGpznTHXUKf4HfZ2SxlbTwm_bDbiy0b7BvqdTudU0rJduES1S0g4-UKzcK2kwyFWiEmllFNzc4dKAnATPjj4aFCXH7Dm2JmVtlya2kYFxeNkNrTFKxTo4VECtmJfzDEGvOApAEMcU0xmaXODN4CxwCwICovBd94xNT6KV2fPFuO9YmYtEFiO7btrrtHE-ZdORq9nmUUx_ARlFTnQOt0wNnHG4zZF8M0txENOjlkTw6soz2x-xjk___xV__Bxxzw-_vUtzKRE2vgjV9_Hj-hiWiv7bhodVpdYaE4Aq8F7u0putz_yrVi_V1kEQOMQ0Us7UjFc0owKrIjyIgNQDWJzKIQIQgLhC5FurqXnH_lXz__sxZz-z-wV_oOSrk6teywQX0AVl2io9-Ahdxze9sJSrr9C3vwlubRDl6SUuTPoxhzeEiGKCzrltlpNd__Tks_Ul7_pjXVQOJXyxEjfX8nDUbwhvdCNXaPMFxsU7UFzcxT6CRteVvLmv_uTn8T3_M_p4VDQBk__fB2Mq_d_AlISZxA1z2UMnVqQkuEb_Yux84UJxdbVWhaIukfQn5fBqv-BTLAzpxxiyyLce2Lcgpks6jNhsQScwwVHgs-ejtyp70QtGKbQVGNJzAolZe9PU6NZNdYfivQvf-ktw-STiUZYQjJQLc5zaXbMrr-JbFhKbYJ2OJX9C1fFaWBDhc5f5VmBml9gMVmF "class diagram")
+```mermaid
+classDiagram
+class GameStateManager {
+  -inputHandler: InputHandler
+  -PageDrawer: MenuDrawer
+  -eventBus: EventBus
+  -isGameCompleted: boolean
+  -pauseTime: number
+  -timeSpent: number
+  -currentBGM: p5.SoundFile
+  -filter: p5.LowPass
+  -roomBGMs: { [key: number]: p5.SoundFile }
+
+  +GameStateManager(eventBus: EventBus, PageDrawer: MenuDrawer, inputHandler: InputHandler) <<constructor>>
+  +update(): void
+  +handlePlayerShooting(): void
+  -shouldRenderMenu(): boolean
+  -checkSavePoint():void
+  -saveGameData(): void
+  +loadGameData(): void
+  +startNewGame(): void
+  -resetGame(): void
+  +pauseGame(): void
+  +resumeGame(): void
+  +exitToMainMenu(): void
+  +playMainmenuSound(): void
+  +playBGM(sound: p5.SoundFile): void
+  +playBGMForRoom(index: number): void
+  +stopBGM(): void
+  -setupRoom(roomDataId: number): void
+  -adjustCanvasWithAspectRatio(): void
+  -resizeBtns(): void
+}
+
+class EventBus {
+  -events: Object
+
+  +EventBus() <<constructor>>
+  +subscribe(event: string, callback: Function): void
+  +publish(event: string, data: any): void
+}
+
+class MenuDrawer {
+   -scenePlayer: ScenePlayer
+   -helpBar: HelpBar
+   -state: string
+   -btnIndex: number
+   -eventBus: EventBus
+   -btnContinue: p5.Element
+   -btnNewGame: p5.Element
+   -mainMenuBtns: p5.Element[]
+   -btnPause: p5.Element
+   -btnResume: p5.Element
+   -btnExit: p5.Element
+   -pauseMenuBtns: p5.Element[]
+   -btnLoadLastSave: p5.Element
+   -btnRestart: p5.Element
+   -gameOverBtns: p5.Element[]
+
+   +MenuDrawer(eventBus: EventBus, sceneData: Object, sceneImgs: { [key: string]: p5.Image }, sceneSounds: { [key: string]: p5.SoundFile }, helpBarData: Object) <<constructor>>
+   -createMenuButton(imgPath: string, label: string, yOffset: number, callback: Function, hidden: boolean): p5.Element
+   -handleMouseOver(btn: p5.Element): void
+   -repositionButton(btn: p5.Element, yOffset: number): void
+   +setupMainMenu(): void
+   -handleNewGame(): void
+   -playStartScene(): void
+   +setupPauseMenu(): void
+   +setupGameOverPage(): void
+   -handleRestart(): void
+   +drawMainMenu(): void
+   +drawPauseMenu(): void
+   -drawMainMsg(title: string): void
+   +drawGameOverPage(): void
+   +getGameState(): string
+   +setInGameState(): void
+   +setCompletedState(): void
+   +drawGameCompleted(totalTime: number): void
+   +showStartButtons(): void
+   +toggleStartButtons(): void
+   +showResumeButtons(): void
+   +toggleResumeButtons(): void
+   +showGameOverButtons(): void
+   +toggleGameOverButtons(): void
+   +renderMenu(playerObj: Player, timeSpent: number): void
+   -isScenePage(): string
+   -shouldRenderMenu(playerObj: Player): string
+   +updatePauseBtnPosition(): void
+   +handleBtnPressed(playerObj: Player)
+   -handleSceneProgress(): void
+   -playNextStoryLine(): void
+   -transitionToEndScene(): void
+   -returnToPrevPage(playerObj: Player): void
+   -controlBtnsByKeys(buttons: p5.Element[], eventTypes: string[]): void
+   -pressBtnsByKeys(buttons: p5.Element[], eventTypes: string[]): void
+   -moveBetweenBtnsByKeys(buttons: p5.Element[]): void
+   -isGameOver(playerObj: Player): boolean
+   +resizeBtns(): void
+}
+
+class InputHandler {
+  -currentRoom: Room
+  -collisionDetector: CollisionDetector
+  -lastCollisionTime: number
+  -fadeMgr: FadeManager
+
+  +InputHandler(roomObj: Room) <<constructor>>
+  +update(playerObj: Player): void
+  +handlePlayerShooting(playerObj: Player): void
+  +updateBullets(playerObj: Player): void
+  -moveToNextRoom(playerObj: Player, tolerance: number): void
+  -loadRoom(): void
+  +getCurrentRoomId(): number
+  +getCurrentLevelId(): number
+  +getCurrentRoomNo(): number
+  +isGameCompleted(): boolean
+  -getMaxCurrentRoomId(rawRoomData: Object): number
+}
+
+class ScenePlayer {
+  -data: Object
+  -images: { [key: string]: p5.Image }
+  -sounds: { [key: string]: p5.SoundFile }
+  -currentScene: Array<SceneLine>
+  -currentIndex: number
+  -currentBGM: p5.SoundFile | null
+  -noiseIntensity: number
+
+  +ScenePlayer(data: Object, images: { [key: string]: p5.Image }, sounds: { [key: string]: p5.SoundFile }) <<constructor>>
+  +draw(): void
+  -applyNoiseEffect(): void
+  +isSceneComplete(): boolean
+  +next(): void
+  -playSound(): void
+  +stopBGM(): void
+  +setScene(sceneName: string): void
+}
+
+class HelpBar {
+  -visible: boolean
+  -height: number
+  -opacity: number
+  -btnOpacity: number
+  -iconCharSize: number
+  -textSize: number
+  -animation: { y: number, targetY: number, easing: number, duration: number }
+  -stateMap: { [key: string]: number } 
+  -currentState: string
+  -currentBtnIdx: number
+  -pages: Array<HelpBarPage>
+
+  +HelpBar(jsonData: Object) <<constructor>>
+  +update(currentState: string, currentBtnIdx: number): void
+  +updateText(currentState: string, currentBtnIdx: number): void
+  -updateAnimation(): void
+  -draw(currentState: string, btnIndex: number): void
+  -drawKeyButtons(textY: number, padding: number, keys: Array<KeyItem>): void
+  -drawKey(keyString: string, x: number, y: number): number
+  -drawSpecialCharacter(char: string, x: number, y: number, charWidth: number, padding: number): number
+  -drawRegularCharacter(char: string, x: number, y: number): number
+  -containsRegularCharacters(keyString: string): boolean
+  -rawTextBackground(startX: number, y: number, currentX: number, charWidth: number, padding: number): number
+  -drawButtonBackground(x: number, y: number, width: number, height: number): void
+  -drawText(textContent: string, x: number, y: number, align: string, color: number, prefix: string): void
+}
+
+class CollisionDetector {
+  +detectPlayerCollision(playerObj: Player, objArr: GameObject[]): boolean
+  +handleEnemyCollision(enemyArr: Enemy[], obstacleArr: Obstacle[]): void
+  -handleEnemyObstacleCollision(enemyArr: Enemy[], obstacleArr: Obstacle[]): void
+  +detectBulletCollision(bulletArr: Bullet[], enemyArr: Enemy[], obstacleArr: Obstacle[]): void
+  +detectBulletEnemyCollision(bulletArr: Bullet[], enemyArr: Enemy[]): void
+  +detectCollision(objA: Object, objB: Object): boolean
+  -computeCollisionArea(obj: Object): { left: number, right: number, top: number, bottom: number}
+  -isOverlapping(boundsA: { left: number, right: number, top: number, bottom: number}, boundsB: { left: number, right: number, top: number, bottom: number}): boolean
+  +detectCollisionWithBullet(bulletObj: , objB: Object): boolean
+  +isHitBoundary(obj: Object): boolean
+  -isBulletHitWall(bulletObj: Bullet): boolean  
+}
+
+class FadeManager {
+  -alpha: number
+  -speed: number
+  -state: string
+  -_onMid: Function
+
+  +FadeManager(fadeSpeed: number) <<constructor>>
+  +start(callback: Function): void
+  +update(): void
+  +draw(): void
+  +isActive(): boolean
+}
+
+' 游戏实体
+class Player {
+  -maxhp: number = 3
+  -baseAtk: number = 50
+  -atk: number = 50
+  -maxAtk = 100
+  -maxSpeed = 4
+  -acceleration = 3.0
+  -friction = 0.85
+  -bulletSize = 20
+  -maxBulletSize = 40
+  -canShootAgain = true
+  -shootCoolDownDuration = 300
+  -position = p5.Vector
+  -hp: number
+  -velocity: p5.Vector
+  -size: p5.Vector
+  -displaySize: p5.Vector
+  -invincibleTimer: number
+  -blinkCounter: number
+  -bullets: Bullet[]
+  -image: p5.Image
+  -animations: { up: p5.Image[], down: p5.Image[], left: p5.Image[], right: p5.Image[] }
+  -direction: string
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number
+
+  +Player(x: number = leftBoundary, y: number = heightInPixel / 2) <<constructor>>
+  +getAtk(): number
+  +getBulletSize(): number
+  +getHp(): number
+  +getMaxHp(): number
+  +setHp(newHp: number): void
+  +resetRoomState(newHp: number, atk: number, bulletSize: number, x: number, y: number): void
+  +updateHp(valueToAdd: number, invincibleDuration: number = 60): void
+  +shoot(direction: string): void
+  +powerUp(): void
+  +updateBlinking(): void
+  +display(): void
+  +updateVelocity(): void
+  +applyFriction(): void
+  +resetVelocity(): void
+  +updatePosition(): void
+  +revertPosition(): void
+  +resetInvincibleTimer(duration: number = 60): void
+}
+
+class Enemy {
+  -hp: number
+  -position: p5.Vector
+  -size: p5.Vector
+  -velocity: p5.Vector
+  -image: p5.Image
+  -frames: p5.Image[]
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number
+
+  +Enemy(x: number, y: number, hp: number, enImage: p5.Image, levelId: number) <<constructor>>
+  +update(): void
+  +display(): void
+  +collide(otherObj: Object): void
+}
+
+class Chaser {
+  -shakeIntensity: number
+  -isDead: boolean
+  -position: p5.Vector
+  -size: p5.Vector
+  -collisionDetector: CollisionDetector
+  -maxHp: number = 800
+  -hp: number
+  -isHurt: boolean
+  -hitFrame: number
+  -speed: number = 1
+  -dashSpeed: number = 20
+  -chaseRange: number= 150
+  -isDashing: boolean
+  -dashCooldown: number = 100
+  -currentCooldown: numbe
+  -dashDamageApplied: boolean
+  -dashDuration: number = 10
+  -currentDashTime: number
+  -frames: p5.Image[]
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number = 12
+
+  +Chaser(x: number, y: number) <<constructor>>
+  +update(): void
+  +applyDashDamage(): void
+  +chasePlayer(): void
+  +startDash(): void
+  +hitWall(): void
+  +takeDamage(damage: number): number
+  -markAsDead(): void
+  +shouldBeRemoved(): boolean
+  +detectBulletCollision(bulletArr: Bullet[]): void
+  +checkBulletCollision(bullet: Bullet): boolean
+  +display(): void
+  +displayDeadBoss(img: p5.Image): void
+  +applyHitEffect(flashFrame: number): void
+}
+
+class Shooter {
+  <<abstract>>
+  -shakeIntensity: number
+  -isDead: boolean
+  -position: p5.Vector
+  -size: p5.Vector
+  -collisionDetector: CollisionDetector
+  -maxHp: number = 800
+  -hp: number
+  -isHurt: boolean
+  -hitFrame: number
+  -speed: number = 0.8
+  -moveCooldown: number = 60
+  -currentMoveCooldown: number
+  -direction: p5.Vector
+  -shootCooldown: number = 280
+  -currentShootCooldown: number
+  -bullets: ShooterBullet[]
+  -warningTime: number
+  -warningDuration: number = 60
+  -shooterSoundOn: boolean
+  -frames: p5.Image[]
+  -currentFrame: number
+  -frameCounter: number
+  -frameDelay: number = 10
+
+  +Shooter(x: number, y: number, collisionDetector: CollisionDetector) <<constructor>>
+  +update(): void
+  +checkBoundaryCollision(): void
+  +shoot(): void
+  +takeDamage(damage: number): void
+  -markAsDead(): void
+  +shouldBeRemoved(): boolean
+  +detectBulletCollision(bulletArr: Bullet[]): void
+  +checkBulletCollision(bullet: Bullet): boolean
+  +checkPlayerCollisionDirect(): void
+  +display(): void
+  -displayDeadBoss(img: p5.Image): void
+  +displayWarningEffect(): void
+  +applyHitEffect(flashFrame: number): void
+  +getPosition(): p5.Vector
+  +getSize(): p5.Vector
+}
+
+class ShooterFourDir {
+  +ShooterFourDir(+Shooter(x: number, y: number, collisionDetector: CollisionDetector) <<constructor>>
+  +shoot(): void
+}
+
+class ShooterEightDir {
+  +ShooterEightDir(x: number, y: number, collisionDetector: CollisionDetector) <<constructor>>
+  +shoot(): void
+}
+
+class Bullet {
+  -position: p5.Vector
+  -size: p5.Vector
+  -speed: number = 4
+  -direction: string
+  -damage: number
+  -image: p5.Image
+  -initialAngle: number
+  -spin: number
+  -rotationSpeed: number
+  -isHit: boolean
+  -hitFrame: number
+  -frames: p5.Image[]
+  -life: number
+  -maxLife: number = 100
+  -trail: Array<{ pos: p5.Vector, age: number }>
+  -trailMax: number = 15
+  
+  +Bullet(x: number, y: number, direction: string, dmg: number img: p5.Image, s: number = 20) <<constructor>>
+  +update(): void
+  +display(): void
+  +markAsHit(playSound: boolean): void
+  +shouldBeRemoved(): boolean
+}
+
+class ShooterBullet {
+  -position: p5.Vector
+  -direction: p5.Vector
+  -damage: number
+  -speed: number
+  -image: p5.Image
+  -isHit: boolean
+  -size: p5.Vector
+  -angle: number
+
+  +ShooterBullet(x: number, y: number, direction: , dmg: number, speed: number, bulletImg: p5.Image) <<constructor>>
+  +markAsHit: void
+  +update(): void
+  +display(): void
+}
+
+class Room {
+  -currentRoomData: Object
+  -obstacleCount: number
+  -startTime: number
+  -clearTime: number
+  -items: Item[]
+  -savePoint: SavePoint
+  -door: Door
+  -enemies: Enemy[]
+  -chaser: Chaser[]
+  -shooter: Shooter[]
+  -obstacles: Obstacle[]
+  -size: { width: number, height: number }
+  -collisionDetector: CollisionDetector
+  
+  +Room() <<constructor>>
+  +setup(data: Object): void
+  +getRoomDataId(): number
+  +getCurrentRoomId(): number
+  +getCurrentLevelId(): number
+  +getCurrentRoomNo(): number
+  +update(playerObj: Player): void
+  -handleItemPicking(playerObj: Player): void
+  -handleItemBulletsCollision(bulletArr: Bullet[], itemArr: Item[]): void
+  +display(playerObj: Player): void
+  -displayInstructions(): void
+  -displayBossStatus(): void
+  +generateObstacles(currentRoomData: Object): void
+  +generateEnemies(currentRoomData: Object): void
+  +generateChaser(): void
+  +generateShooter(): void
+  +generateFinalBossRoom(): void
+  +updateEnemies(): void
+  +updateShooter(): void
+  -shouldDropItemAndRemove(bossObj: Object): boolean
+  -dropItemFromBossType(bossObj: Object, itemX: number, itemY: number, bossBtm: number): void
+  +updateAfterClear(): void
+  +checkClearCondition(): boolean
+  +resolveBossCollision(): void
+  +setObstacleCount(currentRoomData: Object): void
+  +generateTutorialObs(obsData: Object): void
+  -setGameTime(currentRoomId: number): void
+}
+
+class Door {
+  -position: p5.Vector
+  -size: p5.Vector
+  -currentDoorImg: p5.Image
+  -isOpen: boolean
+  
+  +Door() <<constructor>>
+  +display(): void
+  +open(): void
+  +close(): void
+  +updateImage(): void
+}
+
+class Item {
+  -ITEM_IMAGES: { [key: string]: p5.Image } <<static>>
+  -EFFECT_MAP: { [key: string]: Function } <<static>>
+  -position: p5.Vector
+  -vel: p5.Vector
+  -type: string
+  -gravity: number = 0.2
+  -bounce: number = 0.4
+  -image: p5.Image
+  -size: p5.Vector
+  -groundY: number
+
+  +Item(x: number, y: number, bossBtm: number, type: string) <<constructor>>
+  +update(): void
+  -applyGravity(): void
+  -handleGroundCollision(): void
+  +display(): void
+  +applyEffect(playerObj: Player): void
+  +getType(): string
+}
+
+class Obstacle {
+  -position: p5.Vector
+  -size: p5.Vector
+  -image: p5.Image
+
+  +Obstacle(x: number, y: number, obImage: p5.Image) <<constructor>>
+  +display(): void
+}
+
+class SavePoint {
+  -position: p5.Vector
+  -size: p5.Vector
+  -image: p5.Image
+  -checkedImg: p5.Image
+  -lastSaveTime: number
+  -isChecked: boolean
+
+  +SavePoint(x: number, y: number) <<constructor>>
+  +display(): void
+  +checked(): void
+}
+
+' UI系统
+
+class PlayerStatusDisplayer {
+  -iconSize: number = 40 <<static>>
+  -iconPadding: number = 15 <<static>>
+  -hPadding: number = 20 <<static>>
+  -vPadding: number = 20 <<static>>
+  -uiTextSize: number = 24 <<static>>
+
+  +display(playerObj: Player, currentlevelId: number, currentRoomNo: number, timeSpent: number, heartImg: p5.Image, damagedHeartImg: p5.Image, uiFont: p5.Font): void <<static>>
+  -drawHealthBar(playerObj: Player, heartImg: p5.Image, damagedHeartImg: p5.Image): void <<static>>
+  -drawCurrentLevel(currentlevelId: number, currentRoomNo: number, uiFont: p5.Font): void <<static>>
+  -drawTimer(timeSpent: number, uiFont:p5.Font): void <<static>>
+
+}
+
+class BossStatusDisplayer {
+  -vPadding: number = 20 <<static>>
+  -hpBarOffsetX: number = 22.5 <<static>>
+  -hpBarOffsetY: number = 27.5 <<static>>
+
+  +display(bossObj: Object, bossHpBarImg: p5.Image, bossHpImg: p5.Image): void <<static>>
+  -preprocessImages(bossHpBarImg: p5.Image, bossHpImg: p5.Image): void <<static>>
+  -calculateBarPositionX(bossHpBarImg: p5.Image): number <<static>>
+  -createHpPercentageImage(bossObj: Object, bossHpImg: p5.Image): p5.Image <<static>>
+  -drawHpBackground(bossHpImg: p5.Image, positionX: number): void <<static>>
+  -applyHitEffects(bossObj: Object): void <<static>>
+  -drawCurrentHp(hpPercentageImg: p5.Image, positionX: number): void <<static>>
+  -drawHpBar(bossHpBarImg: p5.Image, positionX: number): void <<static>>
+}
+
+class InstructionDisplayer {
+  -fadeDuration: number = 500 <<static>>
+  -displayDuration: number = 1000 <<static>>
+  -boxSize: number = 60 <<static>>
+  -fontSize: number = 20 <<static>>
+  -fontFamily: string = "monospace" <<static>>
+
+  +display(textContent: string, displayStartTime: number): void <<static>>
+  -calculateAlpha(displayStartTime: number): number <<static>>
+  -drawDialogBox(alpha: number): void <<static>>
+  -drawHighlightEdges(alpha: number): void <<static>>
+  -drawInstructionText(textContent: string, alpha: number): void <<static>>
+}
+
+class PolicyDisplayer {
+    +config: PolicyConfig <<static>> 
+    +display(): void <<static>> 
+}
+
+class PolicyConfig {
+    title: String
+    content: List<String>
+    styles: StyleConfig
+}
+
+class StyleConfig {
+    background: Integer[3]
+    titleSize: Integer
+    bodySize: Integer
+    titleColor: Integer[1]
+    bodyColor: Integer[1]
+}
+
+PolicyDisplayer --> PolicyConfig : config
+PolicyConfig  --> StyleConfig  : styles
+
+GameStateManager "1" o-- "1" EventBus
+GameStateManager "1" o-- "1" InputHandler
+GameStateManager "1" o-- "1" MenuDrawer
+
+MenuDrawer "1" *-- "1" ScenePlayer
+MenuDrawer "1" *-- "1" HelpBar
+MenuDrawer "1" o-- "1" EventBus
+
+InputHandler "1" *-- "1" CollisionDetector
+InputHandler "1" o-- "1" Room
+InputHandler "1" o-- "1" FadeManager
+
+Player "1" *-- "many" Bullet
+
+Chaser "1" *-- "1" CollisionDetector
+
+Shooter <|-- ShooterFourDir
+Shooter <|-- ShooterEightDir
+
+ShooterFourDir "1" *-- "many" ShooterBullet
+ShooterEightDir "1" *-- "many" ShooterBullet
+
+Room "1" *-- "1" CollisionDetector
+Room "1" *-- "1" Door
+Room "1" *-- "1" SavePoint
+Room "1" *-- "many" Enemy
+Room "1" *-- "many" Obstacle
+Room "1" *-- "many" Item
+Room "1" *-- "many" Chaser
+Room "1" *-- "many" ShooterFourDir
+Room "1" *-- "many" ShooterEightDir
+```
 ```mermaid
 sequenceDiagram
     participant Player 
