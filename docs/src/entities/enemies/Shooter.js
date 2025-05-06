@@ -19,25 +19,25 @@ class Shooter {
     this.bullets = [];
     this.warningTime = 0;
     this.warningDuration = 60;
-    this.shooterSoundOn = false;          // 新做法：标记“正在连续播放”
+    this.shooterSoundOn = false;          //  Mark "Playing continuously"
     this.#shakeIntensity = 0;
     this.#isDead = false;
 
-    // Shooter Boss 动画相关
+    // Shooter Boss animation
     this.frames = window.shooterFrames || window.shooterFramesDefault;
     this.currentFrame = 0;
     this.frameCounter = 0;
-    this.frameDelay = 10; // 随意设置轮播速度
+    this.frameDelay = 10; // Set the carousel speed at will
   }
 
   update() {
     //if (this.hp <= 0) return;
     if (this.hp <= 0) {
-      this.#markAsDead(); // 确保触发死亡处理逻辑（包括 stop 音效）
+      this.#markAsDead(); // Ensure that the death handling logic is triggered (including the stop sound effect)
       return;
     }
 
-    // 动画切换逻辑
+    // Animation switching logic
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
@@ -60,10 +60,10 @@ class Shooter {
 
     if (this.currentShootCooldown <= this.warningDuration) {
       this.warningTime = this.warningDuration;
-      // 新：整段时间内循环播放
+      // It is played in a loop throughout the entire period of time
       if (!this.shooterSoundOn && shooterSound && !this.#isDead) {
         shooterSound.playMode("untilDone"); 
-        shooterSound.play();        // 从头开始并循环
+        shooterSound.play();        // Start from the beginning and loop
         this.shooterSoundOn = true;
       }
     }
@@ -71,7 +71,7 @@ class Shooter {
     if (this.currentShootCooldown <= 0) {
          
      if (this.shooterSoundOn && shooterSound) {
-         //shooterSound.stop();   // stop() 会自动把播放头归零
+         //shooterSound.stop();   // stop() will automatically reset the playback head to zero
          this.shooterSoundOn = false;
      }
 
@@ -85,9 +85,9 @@ class Shooter {
     this.bullets.forEach(bullet => bullet.update());
 
     this.collisionDetector.detectBulletCollision(
-      this.bullets,          // 子弹数组
-      [player],              // 把 player 当作“敌人”处理
-      []             // 障碍物数组（假设你在外部定义了）
+      this.bullets,          // bullets Array
+      [player],              // Treat player as an "enemy"
+      []             // Obstacle array (have defined it externally)
     );
     //this.detectPlayerCollision();
     //this.bullets = this.bullets.filter(bullet => !this.isBulletOutOfBounds(bullet));
@@ -155,15 +155,15 @@ class Shooter {
     this.#shakeIntensity = 30;
 
 
-    // ★ 停止音效
+    // Stop sound
     if (shooterSound && shooterSound.isPlaying()) {
       shooterSound.stop();
        }
 
 
-    // ★ 播放死亡音效
+    // Playing death sound
     if (bossDeathSound) {
-      bossDeathSound.currentTime = 0;  // 从头播
+      bossDeathSound.currentTime = 0;  
       bossDeathSound.play();
       }
   }
@@ -253,7 +253,7 @@ class Shooter {
   display() {
     if (this.hp <= 0) return;
 
-    // 动画显示
+    
     const img = this.frames[this.currentFrame];
     image(img, this.position.x, this.position.y, this.size.x, this.size.y);
 
@@ -265,7 +265,7 @@ class Shooter {
   }
 
   display() {
-    // 播放当前动画帧
+    
     const img = this.frames[this.currentFrame];
     if (this.#isDead) {
       this.#displayDeadBoss(img);
@@ -323,9 +323,9 @@ class Shooter {
   }
 }
 
-// 在 Shooter.js 文件末尾添加：
 
-// 四方向发射子弹的 Shooter
+
+// A Shooter that fires bullets in four directions
 class ShooterFourDir extends Shooter {
   constructor(x, y, collisionDetector) {
     super(x, y, collisionDetector);
@@ -333,7 +333,7 @@ class ShooterFourDir extends Shooter {
   shoot() {
     //shooterFireSound.play();
 
-    // 只要上下左右四个方向
+    
     const directions = [
       createVector(1, 0),
       createVector(-1, 0),
@@ -361,14 +361,13 @@ class ShooterFourDir extends Shooter {
   }
 }
 
-// 八方向发射子弹的 Shooter（可选，若想显式区分）
+// A Shooter that fires bullets in eight directions
 class ShooterEightDir extends Shooter {
   constructor(x, y, collisionDetector) {
-    super(x, y, collisionDetector); // ✅ 传递给 Shooter 父类
+    super(x, y, collisionDetector); // Pass it to the parent class of Shooter
   }
 
-  // 不重写 shoot() 也可以直接继承父类的八方向逻辑
-  // 如果你想在这里写得更清晰，也可以复制父类 shoot() 的内容：
+  
   shoot() {
     //shooterFireSound.play();
     super.shoot();
