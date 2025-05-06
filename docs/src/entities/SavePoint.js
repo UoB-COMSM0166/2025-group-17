@@ -4,22 +4,18 @@ class SavePoint {
     this.size = createVector(30, 30);
     this.image = savePointImg;
     this.checkedImg = checkedSavePointImg;
-    this.lastSaveTime = 0;
     this.isChecked = false;
   }
 
   display() {
-    // Turn red once checked, and back to unchecked after 0.5 second
-    if (this.isChecked && (millis() - this.lastSaveTime < 500)) {
+    // Turn red once checked for each room
+    if (this.isChecked) {
       image(this.checkedImg, this.position.x, this.position.y, this.size.x, this.size.y);
     } else {
-      this.isChecked = false;
       image(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
     }
   };
 
-  checked() {
-    this.isChecked = true;
-    this.lastSaveTime = millis();
-  }
+  check() { this.isChecked = true; }
 }
+

@@ -81,7 +81,7 @@ class GameStateManager {
     player.position.y + player.size.y > room.savePoint.position.y;
     if (!room.savePoint.isChecked && nearSavePoint) {
       this.#saveGameData();
-      room.savePoint.checked();
+      room.savePoint.check();
     }
   }
   
