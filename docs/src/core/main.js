@@ -26,10 +26,10 @@ function setup() {
   PageDrawer.setupGameOverPage();
   setTimeout(() => gameStateManager.playMainmenuSound(), 2500); // Set blocking and play the sound effect after 2.5 seconds of privacy
 
-  //初始化角色
+  //Initialize the player
   player = new Player();
 
-  //----------------精灵图提取------------------
+  //----------------Extraction of Sprite Sheet------------------
   // Extract all animation frames
   window.bossFrames = [];
   extractFrames(bossSpriteSheet, 3, window.bossFrames);
@@ -45,7 +45,7 @@ function setup() {
   //-------------------------------------------
 }
 
-//辅助函数，用于提取精灵图动画帧
+//Auxiliary function, used for extracting Sprite animation frames
 function extractFrames(spriteSheet, frameCount, targetArray) {
   const frameW = spriteSheet.width / frameCount;
   const frameH = spriteSheet.height;
@@ -58,7 +58,7 @@ function extractFrames(spriteSheet, frameCount, targetArray) {
 function draw() {
   player.updateBlinking();
   gameStateManager.update();
-  // drawDebugCollisionBoxes(); // 用于碰撞测试
+  // drawDebugCollisionBoxes(); // Used for collision testing
   fadeMgr.update();
   fadeMgr.draw();
 }

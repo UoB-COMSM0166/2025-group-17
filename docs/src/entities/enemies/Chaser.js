@@ -29,7 +29,7 @@ class Chaser {
   }
 
   update() {
-    // 动画更新：每 frameDelay 帧切换一张图
+    // Animation update: Switch one image for each frameDelay frame
     if (this.#isDead) return;
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
@@ -81,7 +81,7 @@ class Chaser {
       }
     }
 
-    // 撞到玩家但不是dash
+    // Hit the player but not dash
     if (!this.isDashing && this.collisionDetector.detectCollision(this, player)) {
       const pushDir = p5.Vector.sub(player.position, this.position).normalize().mult(4);
       player.position.add(pushDir);
@@ -120,7 +120,7 @@ class Chaser {
     direction.normalize().mult(this.dashSpeed);
     this.dashDirection = direction;
     this.dashDamageApplied = false;
-    //this.applyDashDamage(); // 初始 dash 撞击立即扣血
+    //this.applyDashDamage(); // The initial dash impact immediately deducts health
   }
 
   hitWall() {
@@ -142,9 +142,9 @@ class Chaser {
     this.#isDead = true;
     this.#shakeIntensity = 30;
 
-    // ★ 播放死亡音效
+    // Play the death sound effect
     if (bossDeathSound) {
-      bossDeathSound.currentTime = 0;  // 从头播
+      bossDeathSound.currentTime = 0;  // Play the sound effect from the beginning
       bossDeathSound.play();
       }
   }
@@ -178,7 +178,7 @@ class Chaser {
   }
 
   display() {
-    // 播放当前动画帧
+    // Play the current animation frame
     const img = this.frames[this.currentFrame];
     if (this.#isDead) this.#displayDeadBoss(img);
     else image(img, this.position.x, this.position.y, this.size.x, this.size.y);

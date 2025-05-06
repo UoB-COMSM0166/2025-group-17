@@ -4,7 +4,7 @@ class Enemy {
     this.position = createVector(x, y);
     const smallEnemyHp = 50;
 
-    // 敌人尺寸根据 HP 判断
+    // Enemy size
     const isSmall = (hp === smallEnemyHp);
     const enemyHeight = isSmall ? heightInPixel / 8 : heightInPixel / 6;
     const enemyWidth = Math.floor(enemyHeight * (enImage.width / enImage.height));
@@ -15,34 +15,34 @@ class Enemy {
     this.velocity = createVector(random([-1, 1]), random([-1, 1]));
     this.image = enImage;
 
-    // 添加动画帧相关，根据 level 和尺寸选择帧组
+    // Add animation frame-related content and select frame groups based on level and size
     const levelKey = `level${levelId}`;
     const sizeKey = isSmall ? 'small' : 'large';
-    this.frames = window.enemyAnimations?.[levelKey]?.[sizeKey] || [enImage]; // fallback 到单图
+    this.frames = window.enemyAnimations?.[levelKey]?.[sizeKey] || [enImage]; // fallback to a single image
     console.log(`Enemy sprite size ${this.frames[0].width}, ${this.frames[0].height}`);
     
     this.currentFrame = 0;
     this.frameCounter = 0;
-    this.frameDelay = 10; // 控制播放速度，越大越慢
+    this.frameDelay = 10; // Control the playback speed. The higher, the slower
   }
 
   update() {
-    // 动画更新：每隔 frameDelay 帧切换一张图
+    // Animation update: Switch to one image every frameDelay frame
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
       this.currentFrame = (this.currentFrame + 1) % this.frames.length;
     }
 
-    // 保持原有运动逻辑不变
+    // Keep the original motion logic unchanged
     this.position.add(this.velocity);
 
-    // 每帧检查碰撞并造成伤害（替代 InputHandler 中统一处理）
+    // Each frame checks for collisions and causes damage (instead of uniform processing in InputHandler)
     // this.checkPlayerCollisionAndDamage();
   }
 
   display() {
-    // 播放当前帧
+    // Play the current frame
     const img = this.frames[this.currentFrame] || this.image;
     image(img, this.position.x, this.position.y, this.size.x, this.size.y);
   }

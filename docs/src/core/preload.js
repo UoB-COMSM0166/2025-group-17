@@ -1,60 +1,60 @@
 function preload() {
-  uiFont = loadFont('assets/fonts/PressStart2P.ttf'); //字体加载
+  uiFont = loadFont('assets/fonts/PressStart2P.ttf'); //Load font
 
-  //主角HP
+  //Player's HP
   heartImg = loadImage('assets/ui/full_heart.png');
   damagedHeartImg = loadImage('assets/ui/empty_heart.png');
 
-  //boss血条
+  //boss HP
   bossHpBarImg = loadImage('assets/ui/bossBar.png');
   bossHpImg = loadImage('assets/ui/bossHp.png');
 
-  //菜单图片
+  //Game menu picture
   startMenuImg = loadImage('assets/background/Menu_Start.png');
   pauseMenuImg = loadImage('assets/background/Menu_Pause.png');
   gameCompletedMenuImg = loadImage('assets/background/Menu_GameCompleted.png');
   gameOverMenuImg = loadImage('assets/background/Menu_GameOver.png');
 
-  //门
+  //Door
   closedDoorImg = loadImage('assets/door/close-right.png');
   openDoorImg = loadImage('assets/door/open-right.png');
 
-  //检查点
+  //Save point
   savePointImg = loadImage('assets/savepoint/SavePoint.jpg');
   checkedSavePointImg = loadImage('assets/savepoint/SavePoint_Checked.png');
 
-  //主角
+  //Player
   playerImage = loadImage('assets/character/Character.png');
-  //主角子弹（普通）
+  //Player bullet (normal bullets)
   bulletImage = loadImage('assets/character/bullets/NormalBullet.png');
   powerUpBulletImage = loadImage('assets/character/bullets/UpperBullet.png');
 
-  //敌人
+  //Enemy
   enemyImage = loadImage('assets/enemies/level1/CCTV.png'); //只会瞎走的敌人
   chaserImage = loadImage('assets/enemies/level1/Crab.png'); //螃蟹
   shooterImage = loadImage('assets/enemies/level1/The Boss.png'); //the boss
   pigImage = loadImage('assets/enemies/level1/pig_6&10.png'); //猪猪，索敌+朝着主角射击
 
 
-  //Boss子弹
+  //Boss bullet
   BossBulletImgL2 = loadImage("assets/enemies/level2/L2_BossBullet.png");
   BossBulletImgL3 = loadImage('assets/enemies/level3/L3_BossBullet.png');
 
-  //物品
+  //Item
   healthItemImg = loadImage('assets/items/item_health.png');
   powerUpItemImg = loadImage('assets/items/item_powerUp.png');
   photoItemImg = loadImage('assets/items/item_photo.png');
 
-  //读取JSON文件
+  //Read JSON Documentation 
   sceneData = loadJSON("assets/scenes/scene.json", preloadScenes);
   rawRoomData = loadJSON("assets/rooms.json", setRoomImg);
   helpBarData = loadJSON('assets/ui/helpBarContent.json');
 
   // -------------------------------------------
-  // 存入全局变量 window.playerAnimations 供 Player.js 使用
+  // Store the global variable window.playerAnimations for use by Player.js
   // -------------------------------------------
-  // 玩家精灵图
-  // 加载玩家角色四方向动画帧（每个方向5张）
+  // Player spirit sheet
+  // Load the four-direction animation frames of the player character (5 frames in each direction)
   window.playerAnimations = {
     up: [],
     down: [],
@@ -68,7 +68,7 @@ function preload() {
     }
   });
 
-  //敌人精灵图
+  //enemy sprite sheet
   window.enemyAnimations = {
     level0: { small: [], large: [] },
     level1: { small: [], large: [] },
@@ -92,12 +92,12 @@ function preload() {
     window.enemyAnimations.level2.large.push(loadImage(`assets/spritesheet/Enemy/L2/Enemy_L2_L${i}.png`));
   }
 
-  // 加载 Boss 精灵图（整张），等 setup 同步切帧
+  // Load the Boss Sprite image (the entire image) and wait for the setup to synchronize the frame cutting
   bossSpriteSheet = loadImage("assets/spritesheet/Chaser/Crab_Boss.png");
   shooterSpriteSheet = loadImage("assets/spritesheet/Shooter/shooter_Boss.png");
   enemySpriteSheet = loadImage("assets/spritesheet/enemy.png");
   hitEffectSheet = loadImage("./assets/spritesheet/bullet_Effects.png");
-  // 额外添加 Level 3 的 boss 动画帧
+  //Add the boss animation frame of Level 3 additionally
   window.shooterFramesDefault = [];
   for (let i = 0; i < 3; i++) {
     window.shooterFramesDefault.push(loadImage(`assets/spritesheet/Shooter/Shooter_L1_${i}.png`));
@@ -117,14 +117,14 @@ function preload() {
 
 
 
-  //  加载主界面和第一关的 BGM（使用 p5.sound）
+  //  Load the BGM of the main interface and the first level (using p5.sound)
   mainmenuSound = loadSound("assets/music/bgm/MainMenu.mp3");
   L1_OfficeSound = loadSound("assets/music/bgm/L1_Office.mp3");
   L2_CasinoSound = loadSound("assets/music/bgm/L2_Casino.mp3");
   L3_PsychoSound = loadSound("assets/music/bgm/L3_Psycho.mp3");
 
 
-  //加载音效
+  //Loading sound effect
   btnSound = loadSound("assets/music/se/Btn_Pressed.mp3");
   hitSound = loadSound("assets/music/se/Enemy_Hurt.mp3");
   playerDeathSound = loadSound("assets/music/se/Player_Death.mp3");
