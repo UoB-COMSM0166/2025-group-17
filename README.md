@@ -398,7 +398,9 @@ This report documents the testing approach, tools, techniques, and outcomes for 
   Agile Development: We adopted the Agile methodology, working in weekly sprints. This allowed us to continuously evaluate progress, adapt based on testing feedback, and incorporate incremental enhancements. Agile proved especially helpful due to our limited prior experience in game development. We prioritized building a Minimum Viable Product (MVP) and iteratively added new features.
   Pair Programming: Pair programming was used extensively to avoid bugs and ensure clean, understandable code. This technique enabled collaborative problem solving and faster testing cycles. For example, in player attack logic, one member implemented the function while the other tested it in real-time and provided feedback.
   Frequent Meetings: Meetings were conducted every Monday to discuss completed work, resolve blockers, and reassign tasks. We estimated complexity using Planning Poker, ensuring balanced workloads and realistic sprint goals.
+  
   Tools Used:
+  
   **Github** was used for version control, branch management, and bug tracking.
   
   **Notion** supported real-time note-taking during meetings and goals tracking.
@@ -406,12 +408,18 @@ This report documents the testing approach, tools, techniques, and outcomes for 
   **Kanban Board** organized our tasks into "To Do," "In Progress," and "Done."
   
   **Tencent Meeting** and **Wechat** supported continuous communication and problem resolution.
+  
 - *2) Testing Focus* 
    Our black-box testing included:
+  
    **Gameplay Mechanics**: Verifying that attack, movement, collision, and level transitions work smoothly.
+  
    **UI/UX Testing**: Ensuring layout clarity and button responsiveness.
+  
    **Scenario-Based Playtesting**: Simulating real user journeys from start to end.
+  
    **Bug Logging**: Reporting discovered bugs through GitHub issues for developer review.
+  
    This testing aproach simulated how players would use the game, helping us catch the logic errors and improve usability without needing to understand internal code.
 
 ##### 5.4.3 White-Box Testing
