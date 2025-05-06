@@ -7,29 +7,29 @@ class Bullet {
     this.damage = dmg;
     this.image = img;
 
-    this.initialAngle = random(TWO_PI); //赋予子弹随机初始角度
-    this.spin = 0; //旋转增量
-    this.rotationSpeed = random([-1, 1]) * random(0.01, 0.08)  // 每帧旋转 0.5 ~ 1 弧度
+    this.initialAngle = random(TWO_PI); //Assign a random initial Angle to the bullet
+    this.spin = 0; //Rotation increment
+    this.rotationSpeed = random([-1, 1]) * random(0.01, 0.08)  // Rotate 0.5 to 1 arc per frame
 
     this.isHit = false;
     this.hitFrame = 0;
     this.frames = window.hitEffectFrames;
 
-    //添加子弹寿命
+    //Increase the lifespan of bullets
     this.life = 0;
     this.maxLife = 100;
 
-    this.trail = [];          // 存放残影粒子
-    this.trailMax = 15;       // 最多记录15个尾迹
+    this.trail = [];          // Store afterimage particles
+    this.trailMax = 15;       // Record up to 15 trails at most
 
   }
 
   update() {
     if (this.isHit) {
       this.hitFrame++;
-      // ❗ 清空尾迹（子弹死亡时立即清除尾迹）
+      // Clear the wake (Clear the wake immediately when the bullet dies)
       if (this.isHit || this.life >= this.maxLife) {
-        this.trail = [];  // ✅ 立即清空尾迹数组
+        this.trail = [];  // Clear the wake array immediately
       }
       return;
     }
@@ -43,20 +43,20 @@ class Bullet {
     if (this.direction === 's') this.position.y += this.speed;
     if (this.direction === 'd') this.position.x += this.speed;
 
-    //自转
+    //rotation
     this.spin += this.rotationSpeed;
 
-    //累积寿命
+    //cumulative life
     this.life++;
 
-    // ✅ 添加当前位置为残影
+    // Add the current position as a afterimage
     this.trail.unshift({
       pos: this.position.copy(),
       age: 0
     });
-    // 限制尾迹最大长度
+    // Limit the maximum length of the wake
     if (this.trail.length > this.trailMax) this.trail.pop();
-    // 每帧增长年龄
+    // Age increases with each frame
     for (let t of this.trail) t.age++;
   }
 
@@ -65,23 +65,23 @@ class Bullet {
     imageMode(CENTER);
     noStroke();
 
-    // ✅ 先绘制尾迹粒子
+    // Draw the wake particles first
     for (let i = 0; i < this.trail.length; i++) {
       const t = this.trail[i];
-      // ✅ 粒子透明度随 age 衰减
+      // The transparency of particles decays with age
       const alpha = map(t.age, 0, this.trailMax, 200, 0);
 
-      // ✅ 尺寸随 age 缩小，基础为子弹尺寸一半
-      const baseSize = this.size.x * 0.5; // 🎯 基础是主子弹一半
-      const shrink = map(t.age, 0, this.trailMax, 1.0, 0.3); // 衰减比例
-      const flicker = map(sin(frameCount * 0.3 + i), -1, 1, 0.9, 1.1); // 微闪烁
+      // The size decreases with age, and the base is half the size of a bullet
+      const baseSize = this.size.x * 0.5; // The base is half of the main bullet
+      const shrink = map(t.age, 0, this.trailMax, 1.0, 0.3); // attenuation ratio
+      const flicker = map(sin(frameCount * 0.3 + i), -1, 1, 0.9, 1.1); // Glitter
       const radius = baseSize * shrink * flicker;
       fill(255, 255, 180, alpha);
       ellipse(t.pos.x, t.pos.y, radius, radius);
     }
 
     translate(this.position.x, this.position.y);
-    rotate(this.initialAngle + this.spin); //✅ 每颗子弹有独立角度
+    rotate(this.initialAngle + this.spin); //Each bullet has an independent Angle
 
 
     // Advance to next hit animation frame each 3 frame

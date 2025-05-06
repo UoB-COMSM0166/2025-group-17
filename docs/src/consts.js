@@ -18,7 +18,7 @@ let sceneData, helpBarData, rawRoomData, roomData;
 let sceneImgs = {};
 let sceneSounds = {};
 
-// TODO: Merge into classes
+// Merge into classes
 let startTime;
 const widthInPixel = 1024;
 const heightInPixel = 576;
