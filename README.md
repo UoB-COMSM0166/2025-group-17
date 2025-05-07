@@ -23,6 +23,37 @@ https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000
 
 ## Project Report
 
+### Table of Content
+
+<details>
+<summary>Click to expand</summary>
+
+1. [Introduction](#1-introduction)
+2. [Requirements](#2-requirements)
+   - 2.1 [Ideation process & Early stages design](#21-ideation-process--early-stages-design)
+   - 2.2 [Stakeholder Identification](#22-stakeholder-identification)
+   - 2.3 [Epic and User Stories](#23-epic-and-user-stories)
+   - 2.4 [Use-Case Modelling](#24-use-case-modelling)
+3. [Design](#3-design)
+   - 3.1 [System Overview](#31-system-overview)
+   - 3.2 [Class Design](#32-class-design)
+4. [Implementation](#4-implementation)
+5. [Evaluation](#5-evaluation)
+   - 5.1 [Qualitative Evaluation - Heuristic Evaluation](#51-qualitative-evaluation---heuristic-evaluation)
+   - 5.2 [Quantitative Evaluation - System Usability Survey (SUS)](#52-quantitative-evaluation---system-usability-survey-sus)
+   - 5.3 [Improvements of the final version](#53-improvements-of-the-final-version)
+   - 5.4 [Testing](#54-testing)
+6. [Process](#6-process)
+   - 6.1 [Team Collaboration and Workflow](#61-team-collaboration-and-workflow)
+   - 6.2 [Tools and Technologies](#62-tools-and-technologies)
+7. [Sustainability, Ethics and Accessibility](#7-sustainability-ethics-and-accessibility)
+   - 7.1 [Green Software Foundation Implementation Patterns Applied in the Project](#71-green-software-foundation-implementation-patterns-applied-in-the-project)
+   - 7.2 [The Sustainability Awareness Framework](#72-the-sustainability-awareness-framework)
+8. [Contributions](#8-contributions)
+9. [Conclusion](#9-conclusion)
+10. [Contribution Statement](#10-contribution-statement)
+</details>
+
 ### 1. Introduction
 
 
@@ -43,7 +74,7 @@ We started the ideation process by exploring games on the markets in Week 1 and 
 | [Untitled](https://www.youtube.com/watch?v=__04UEmjg2M) | Star kirby | <ul><li> Players aim to score higher points by collecting items </li><br><li> Player can get an achievement when they collect certain items </li><br><li> Random items/events will give players unique abilities </li></ul> | <ol><li> Design of the item system and their corresponding player's abilities </li><br><li> Make sure each level is unique and has a reasonable difficulty curve </li></ol> |
 | Majhontro | Balatro | <ul><li> Players aim to score higher points by different combinations of the current tiles </li><br><li> Boss levels introduce restrictions on card playing or drawing. </li><br><li> Random tile generation ensures the game replayability </li></ul> | <ol><li> Replace suit logic with a Mahjong tile </li><br><li> Design tile combination and rules for bonus points </li></ol> |
 
-*Table 1: List of game ideas. Click the game title to see the corresponding paper prototype video.*
+*Table 1. List of game ideas. Click the game title to see the corresponding paper prototype video.*
 
 #### 2.2 Stakeholder Identification
 During the workshop in Week 4, we explored the process of requirement engineering by identifying various stakeholders and determining their expectations. To estimate the user value of our game, we utilised the onion model to hierarchically consider stakeholders and gather potential requirements beyond our team's initial scope. We first came out a list of possible stakeholders with their relation and effects to the game in Table 2, and then used onion model to identify the stakeholders to priorities, as shown in Figure 1.
@@ -61,11 +92,11 @@ During the workshop in Week 4, we explored the process of requirement engineerin
 | **Potential Sponsors** | Could fund or support further development post-coursework. | Financial/technical backing could extend the game’s lifecycle. |
 | **Testathon Organisers** | Use the number of participation to plan future events (frequency, venue size). | \- |
 
-*Table 2: List of stakeholders.*
+*Table 2. List of stakeholders.*
 
 <!-- Onion Model -->
 ![Modell.png](images/Modell.png) <br>
-*Figure 1: Onion Model.*
+*Figure 1. Onion Model.*
 
 #### 2.3 Epic and User Stories
 <!-- Reflection on requirement engineering -->
@@ -95,14 +126,14 @@ After identifying the key users, we decided to priorities the needs of different
 When prioritising user stories, we consider value versus effort and apply the MoSCoW method. Value and effort estimations are based on feedback from lab sessions (see Figure 2 for an example) and team discussions. With the minimum viable product (MVP) as our initial goal, we first implemented the must-have requirements, followed by additional features after the initial game version was completed.
 
 ![feedback-w4](images/feedback-w4.png) <br>
-*Figure 2: Feedback gathering from game testing activity in Week 4.*
+*Figure 2. Feedback gathering from game testing activity in Week 4.*
 
 
 #### 2.4 Use-Case Modelling
 We utilised a use-case diagram shown in Figure 3, along with the use-case specifications, to better evaluate the time and effort required to implement each interface and in-game interaction, while also keeping the entire team aligned on the gameplay flow.
 
 ![use-case-diagram.png](images/use-case-diagram.png) <br>
-*Figure 3: Use-case Diagram.*
+*Figure 3. Use-case Diagram.*
 
 > **Use-case specification 1: Win/lose** <br>
 > **Description:** This use-case describes how players interact with enemies and health mechanics.  
@@ -280,26 +311,38 @@ EventBus -> MenuDrawer: updateState()
 ```
 
 ### 4. Implementation
-#### Sprite：
+#### 4.1 Sprite and visual feedback
 One of the key challenges we faced was making sure enemies in different levels not only moved and attacked, but also looked visually distinct and animated. Initially, our game used single static images for each enemy type, which made them appear lifeless and less engaging. To improve the visual quality and communicate level-specific identity, we wanted enemies in different levels to have different animation styles and sprite sheets.
 
 ![GIF_20250506143013681](https://github.com/user-attachments/assets/7537bc18-af3a-466a-a933-00ef5bb445e0)
+*Figure 4. Illustration of sprite and visual feedback*
 
 To achieve this, we first prepared separate sprite images for each enemy type across different levels. Then, instead of hardcoding sprite logic into each enemy class, we decided to use a centralized system: during room setup in `Room.js`, we dynamically assigned the correct animation frames based on the level ID. This way, for example, Level 3’s `Chaser` and `Shooter` would be linked to `window.chaserFramesL3` and `window.shooterFramesL3`, while lower levels still used the default animations.
 
-The actual animation is implemented using a simple frame-switching timer. Each enemy class (like Chaser and Shooter) has `frameCounter` and `currentFrame` attributes. In the `update()` function, we increase `frameCounter`, and when it exceeds a threshold (e.g., every 10 frames), we cycle to the next sprite. This ensures animations are smooth but not too fast, and the system is shared by all enemy types.
+The actual animation is implemented using a simple frame-switching timer. Each enemy class (like Chaser and Shooter) has `frameCounter` and `currentFrame` attributes. In the `update()` function, we increase `frameCounter`, and when it exceeds a threshold (e.g., every 10 frames), we cycle to the next sprite. This ensures animations are smooth but not too fast, and the system is shared by all enemy types. 
 
-#### Sound effect：
-Another challenges we encountered was how to manage background music and sound effects dynamically across rooms and gameplay states. For example, each level had a different background track, and certain moments like pausing the game required special audio effects (e.g., low-pass “telephone” filter). We also wanted to avoid overlapping or abrupt changes in audio playback when transitioning between levels or states.
+We also use sprites for visual feedback. As seen in Figure 4, the player can easily identify if a bullet hits an enemy or wall through the corresponding visual effects. Additionally, we added both visual and audio feedback to help players track game progress. Unlike regular enemies, the defeat of the boss is marked by a shaking effect and a distinct death sound, with the shaking effect shown in Figure 4.
+
+#### 4.2 Add realism to game
+Another challenge we encountered was collision detection. In the initial version, collisions were calculated based on the edges of PNG images, which made the collision between entities appear like interaction between two flat images. After receiving feedback during evaluation, we aimed to introduce depth into the implementation to simulate the z-axis (see details in Table 3). In the final version, we decided to use only the bottom area of the image for collision detection, and use the Y-axis coordinates to ensure a more accurate 2.5D depth representation.
+
+| Attempts | In-game behaviour | Implementation in details
+|-|-|-|
+| **Version 1: Image-based detection** | ![V1](image1.png) | Collision is detected based on the position and dimensions of the image, which can incorrectly trigger on transparent areas. |
+| **Version 2: Bottom-only collision** | ![V2](image2.png) | Collision is limited to the bottom of the character to reflect their actual position — their feet. However, the player appears underneath other entities even when standing in front of them, which looks unnatural. |
+| **Version 3: Separate layers** | ![V3](image3.png) | The player is drawn on a separate layer. This still causes unnatural visuals when moving in front of other entities, as layering doesn’t reflect true depth. |
+| **Final version: y-axis sorting** | ![V4](image4.png) | Entities are sorted and drawn based on their Y-axis position. Make entities at the "top" of the screen render behind objects at the "bottom" of the screen, creating a natural depth effect. |
+
+*Table 3. Iteration of 2.5D collision detection*
+
+In addition to the 2.5 effects on collisions, we aimed to make object movements feel more natural by adding physical effects. We improved the player’s movement by adding friction (`#friction`) and inertia through acceleration (`#acceleration`), resulting in smoother and more responsive controls. Instead of abrupt stops, the player now decelerates gradually when input ceases, thanks to the `applyFriction()` method. We also enhanced item drops by controlling their velocity with gravity (`#gravity`) and bounce (`#bounce`) mechanics, making them fall and rebound more realistically. The `#handleGroundCollision()` method ensures items settle naturally by reducing their bounce velocity until they come to rest.
+
+#### 4.3 Sound effects
+While not listed as one of our challenges in the plan, another challenges we encountered was how to manage background music and sound effects dynamically across rooms and gameplay states. For example, each level had a different background track, and certain moments like pausing the game required special audio effects (e.g., low-pass “telephone” filter). We also wanted to avoid overlapping or abrupt changes in audio playback when transitioning between levels or states.
 
 To solve this, we created a centralized sound manager in `GameStateManager.js` that handles music playback based on the current room’s level ID. We used the `p5.sound` library to load all BGM files during `preload()` and played them using `.loop()` when the room started. To prevent redundant playback, we only switched tracks when the target BGM was different from the current one.
 
 For the pause effect, we applied a `LowPass filter` provided by `p5.sound`. When the game enters the pause state, we route the currently playing BGM through this filter and lower the overall volume. When the player resumes, we disconnect the filter and restore the original volume. This adds an immersive "muted" feel to the pause state without interrupting the track entirely.
-
-
-- 15% ~750 words
-
-- Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
 
 ### 5. Evaluation
 #### 5.1 Qualitative Evaluation - Heuristic Evaluation
@@ -590,7 +633,7 @@ Explore accessibility testing for inclusive gameplay.
 
 ### Contribution Statement
 
-- Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
+<!-- - Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent.  -->
 
 <!-- ### Additional Marks
 
