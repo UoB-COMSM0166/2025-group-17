@@ -324,14 +324,14 @@ The actual animation is implemented using a simple frame-switching timer. Each e
 We also use sprites for visual feedback. As seen in Figure 4, the player can easily identify if a bullet hits an enemy or wall through the corresponding visual effects. Additionally, we added both visual and audio feedback to help players track game progress. Unlike regular enemies, the defeat of the boss is marked by a shaking effect and a distinct death sound, with the shaking effect shown in Figure 4.
 
 #### 4.2 Add realism to game
-Another challenge we encountered was collision detection. In the initial version, collisions were calculated based on the edges of PNG images, which made the collision between entities appear like interaction between two flat images. After receiving feedback during evaluation, we aimed to introduce depth into the implementation to simulate the z-axis (see details in Table 3). In the final version, we decided to use only the bottom area of the image for collision detection, and use the Y-axis coordinates to ensure a more accurate 2.5D depth representation.
+Another challenge we faced was creating a sense of realism during gameplay. Of all the efforts we made to address this, collision detection takes the largest number of sprints to integrate. In the initial version, collisions were calculated based on the edges of PNG images, which made the collision between entities appear like interaction between two flat images. After receiving feedback during evaluation, we aimed to introduce depth into the implementation to simulate the z-axis (see details in Table 3). In the final version, we decided to use only the bottom area of the image for collision detection, and use the Y-axis coordinates to ensure a more accurate 2.5D depth representation.
 
 | Attempts | In-game behaviour | Implementation in details
 |-|-|-|
-| **Version 1: Image-based detection** | ![V1](image1.png) | Collision is detected based on the position and dimensions of the image, which can incorrectly trigger on transparent areas. |
-| **Version 2: Bottom-only collision** | ![V2](image2.png) | Collision is limited to the bottom of the character to reflect their actual position — their feet. However, the player appears underneath other entities even when standing in front of them, which looks unnatural. |
-| **Version 3: Separate layers** | ![V3](image3.png) | The player is drawn on a separate layer. This still causes unnatural visuals when moving in front of other entities, as layering doesn’t reflect true depth. |
-| **Final version: y-axis sorting** | ![V4](image4.png) | Entities are sorted and drawn based on their Y-axis position. Make entities at the "top" of the screen render behind objects at the "bottom" of the screen, creating a natural depth effect. |
+| **Version 1: image-based detection** | ![V1](./images/v1.gif) | Collision is detected based on the position and dimensions of the image, which can incorrectly trigger on transparent areas. |
+| **Version 2: bottom-only collision** | ![V2](./images/v2.gif) | Collision is limited to the center and bottom of the character to reflect their actual position — their feet. However, the player appears above other entities even when standing behind them, which looks unnatural. |
+| **Version 3: separate layers** | ![V3](./images/v3.gif) | The player is drawn on a separate layer. This still causes unnatural visuals when moving in front of other entities, as layering doesn’t reflect true depth. |
+| **Final version: y-axis sorting** | ![V4](./images/v4.gif) | Entities are sorted and drawn based on their Y-axis position. Make entities at the "top" of the screen render behind objects at the "bottom" of the screen, creating a natural depth effect. |
 
 *Table 3. Iteration of 2.5D collision detection*
 
