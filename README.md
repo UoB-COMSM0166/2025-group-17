@@ -4,14 +4,9 @@
 
 ![Coins](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/coins.gif)&nbsp;&nbsp;[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/public/)&nbsp;&nbsp;![Slot](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Slot.gif)&nbsp;![orange](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Orange.gif)&nbsp;![red](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Red.gif)&nbsp;![green](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Green.gif)
 
-Your game lives in the [/docs](/docs) folder, and is published using Github pages to the link above.
-
-Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
-
-
 ## Your Group
 
-![group-photo.jpg](images/group-photo.jpg)</br>
+![group-photo.jpg](images/group-photo.jpg) <br>
 
 | Name | GitHub Profile | Email | Role |
 |-|-|-|-|
@@ -39,48 +34,92 @@ Artistically, the game features original hand-drawn visuals that help tell the s
 
 ### 2. Requirements 
 
-<!-- - 15% ~750 words
-- Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop? -->
-<!-- Early stages design & Ideation process -->
-We started the ideation process by exploring games on the markets in Week 1 and came up a list of possible game mechanisms and ideas. After brainstorming and discussion in Week 2, we narrowed down the list to two ideas below. Despite the rest of the game ideas have not been prototyped, the mechanisms extracted from them, such as using random events to improve users' engagement, have set the foundation for the finalised game. Finally, we considered the feasibility of implementation, and the feedback gained from other teams during the workshop in Week 3. As a result, we decided to go with an action advantage game similar to The Binding of Isaac.
+#### 2.1 Ideation process & Early stages design
+We started the ideation process by exploring games on the markets in Week 1 and came up a [list](./WeeklyTasks/W1.md#game-mechanisms) of possible game mechanisms and ideas. After brainstorming and discussion in Week 2, we narrowed down the list to three ideas below. Despite the rest of the game ideas have not been prototyped, the mechanisms extracted from them, such as using random events to improve users' engagement, have set the foundation for the finalised game. Finally, we considered the feasibility of implementation, and the feedback gained from other teams during the workshop in Week 3. As a result, we decided to go with an advantage beat 'em all similar to The Binding of Isaac.
 
-Prototype Ideas Video
-https://youtu.be/wU7b8NAj1_g?si=eox95n0rkYJhKN4H
-
-<!-- TODO: Finalised two ideas -->
 | Game Idea | Inspried by | Game Mechanisms | Possible Challenges |
 |-|-|-|-|
-| Out | The Binding of Isaac | <ul><li> Players aim to reach the end of each level to complete the game </li><br><li> Random items/events will give players unique abilities </li><br><li> Save point enables players to reload the save data when they died </li></ul> | <ol><li> Careful design for collision detection to replicate the experience of the original game. </li><br><li> Make sure each level is unique and has a reasonable difficulty curve </li></ol> |
-| Majhontro | Balatro | <ul><li> Players aim to score higher points by different combinations of the current tiles </li><br><li> Boss levels introduce restrictions on card playing or drawing </li><br><li> Random tile generation ensures the game replayability </li></ul> | <ol><li> Replace suit logic with a Mahjong tile </li><br><li> Design tile combination and rules for bonus points </li></ol> |
+| [Out](https://youtu.be/wU7b8NAj1_g?si=eox95n0rkYJhKN4H) | The Binding of Isaac | <ul><li> Players aim to defeat all the enemies to complete the game. </li><br><li> Every playthrough has a random layout of rooms and items </li><br><li> Save point enables players to reload the save data when they died. </li></ul> | <ol><li> Careful design for collision detection to replicate the experience of the original game </li><br><li> Vivid visual and audio feedback, including cutscenes and in-game progress notices </li></ol> |
+| [Untitled](https://www.youtube.com/watch?v=__04UEmjg2M) | Star kirby | <ul><li> Players aim to score higher points by collecting items </li><br><li> Player can get an achievement when they collect certain items </li><br><li> Random items/events will give players unique abilities </li></ul> | <ol><li> Design of the item system and their corresponding player's abilities </li><br><li> Make sure each level is unique and has a reasonable difficulty curve </li></ol> |
+| Majhontro | Balatro | <ul><li> Players aim to score higher points by different combinations of the current tiles </li><br><li> Boss levels introduce restrictions on card playing or drawing. </li><br><li> Random tile generation ensures the game replayability </li></ul> | <ol><li> Replace suit logic with a Mahjong tile </li><br><li> Design tile combination and rules for bonus points </li></ol> |
 
+*Table 1: List of game ideas. Click the game title to see the corresponding paper prototype video.*
 
+#### 2.2 Stakeholder Identification
+During the workshop in Week 4, we explored the process of requirement engineering by identifying various stakeholders and determining their expectations. To estimate the user value of our game, we utilised the onion model to hierarchically consider stakeholders and gather potential requirements beyond our team's initial scope. We first came out a list of possible stakeholders with their relation and effects to the game in Table 2, and then used onion model to identify the stakeholders to priorities, as shown in Figure 1.
+
+<!-- List of stakeholders -->
+| Stakeholder | Role/interest | Impact |
+|-|-|-|
+| **Team Members**| Develop the game; grades depend on its quality. | Directly responsible for design, implementation, and quality. |
+| **Target Players** | Game must align with their preferences. | Feedback shapes game mechanics, UI/UX, and overall enjoyment. |
+| **Markers** | Assess and grade the project; provide official feedback. | Influence final evaluation and suggest improvements. |
+| **Other Groups (Peers)** | Exchange feedback during labs. | Peer insights help refine the game before final submission. |
+| **Testathon Testers** | Take part in HCI evaluation through gameplay testing. | Identify usability issues, bugs, and areas for improvement. |
+| **Future Students** | May use the project/report as reference or inspiration. | The project’s readme file could serve as a learning resource. |
+| **Teaching Team** | May showcase the project to engage future students. | Can highlight the game as an example of coursework standards. |
+| **Potential Sponsors** | Could fund or support further development post-coursework. | Financial/technical backing could extend the game’s lifecycle. |
+| **Testathon Organisers** | Use the number of participation to plan future events (frequency, venue size). | \- |
+
+*Table 2: List of stakeholders.*
+
+<!-- Onion Model -->
+![Modell.png](images/Modell.png) <br>
+*Figure 1: Onion Model.*
+
+#### 2.3 Epic and User Stories
 <!-- Reflection on requirement engineering -->
-During the workshop in Week 4, we explored the process of requirement engineering by identifying various stakeholders and determining their expectations. To estimate the user value of our game, we utilized the onion model to hierarchically consider stakeholders and gather potential requirements beyond our team's initial scope. Outlining the epics and user stories helps us break them into smaller, manageable tasks, specifying what the team should build in each sprint cycle. This approach ensures clear and measurable requirements, detailing the time and effort required from the development team. By assigning smaller tasks to each team member, we minimize the impact of adjustments, keeping our team agile and adaptable. We also consider the diverse needs of different users, which allows each team member to focus on independent and achievable goals, thereby reducing the risk associated with complex objectives. The acceptance criteria are crucial for identifying deliverable outcomes and prioritizing solutions that work for most people. Furthermore, communicating requirements within the team enhances our ability to gather feedback among the team members and reflect on changes before modifying the actual code. With the help of it, we can be more flexible to the demands that change frequently, which fits the spirit of agile development.
+After identifying the key users, we decided to priorities the needs of different players. Outlining the epics and user stories helps us break them into smaller, manageable tasks, specifying what the team should build in each sprint cycle. This approach ensures clear and measurable requirements, detailing the time and effort required from the development team. By assigning smaller tasks to each team member, we minimise the impact of adjustments, keeping our team agile and adaptable. We also consider the diverse needs of different users, which allows each team member to focus on independent and achievable goals, thereby reducing the risk associated with complex objectives. The acceptance criteria are crucial for identifying deliverable outcomes and prioritising solutions that work for most people. Furthermore, communicating requirements within the team enhances our ability to gather feedback among the team members and reflect on changes before modifying the actual code. With the help of it, we can be more flexible to the demands that change frequently, which fits the spirit of agile development. **Note**: The potential stakeholders are marked as **bolded** below.
 
-#### Epic and User Stories
-**Epic 1: Players with different gaming experiences**
+> **Epic 1: Improve user diversity**
+>
+> | User Story | Acceptance Criteria | Value | Effort | MoSCoW |
+> |-|-|-|-|-|
+> | As a **casual player**, I want to save my game progress frequently, so that I can return to play without losing significant progress. | Given the player reaches the end of each sub-level, When the player passes by a save point, Then the game saves the current progress and provides a visual confirmation feedback. | High | Low | Must-have |
+> | As a **competitive player**, I want to see trackers for my performance, so that I can compare with other players. | Given the player completes all the levels, When the end screen is displayed, Then the player’s time taken are shown. | High | Low | Must-have |
 
-As a player,
-I want to get inspired and relax during the gameplay,
-so that I can enjoy the game regardless of my previous gaming experiences.
+> **Epic 2: Enhance player immersions**
+> 
+> | User Story | Acceptance Criteria | Value | Effort | MoSCoW |
+> |-|-|-|-|-|
+> | As a **roleplayer**, I want to see the storyline, so that I know better about the character's motivations, goals, and the place in the world. | <ul><li> Given a player presses the "New Game" button, When the new game is started, Then the prologue introduces the main character and setting. </li><br><li> Given the player defeats the final boss, When the user's time taken finish displayed, Then the epilogue wraps up the story. </li></ul> | High | High | Should-have |
 
-| User Story | Acceptance Criteria |
-|-|-|
-| As a **casual player**, I want to save my game progress frequently, so that I can return to play without losing significant progress. | Given the player reaches the end of each sub-level, When the player passes by a save point, Then the game saves the current progress and provides a confirmation message. |
-| As an **explorer player**, I want to explore all the easter eggs and gain all the achievements, so that I can explore every interesting aspect and experience of this game. | Given the player reaches the optional challenge level/room, When the player beats all the enemies in this room, Then they would gain different skill sets or bonus points. |
-| As a **competitive player**, I want to see trackers for my performance, so that I can compare with other players. | Given the player completes all the levels, When the end screen is displayed and the user enters their username, Then the player’s name and score are shown along with their rank on the leaderboard for that level.
-| As a **new player**, I want to learn the basic controls and terminologies, so that I can quickly learn how to play without frustration. | Given the game is started for the first time, When the user selects "New Game", Then an interactive tutorial provides step-by-step guidance on moving, jumping, and collecting items. |
-| As a **story seeker**, I want to meet all the items and unlock all the elements of the game. | Given the player has finished all the levels, When every time play the game, Then new grap of the game will be achieved. |
+> **Epic 3: Eahance ease of use**
+> 
+> | User Story | Acceptance Criteria | Value | Effort | MoSCoW |
+> |-|-|-|-|-|
+> | As a **first-time player**, I want a clear description of each button so that I don’t get confused about what I can do on each menu page. | <ul><li> Given the player is on a menu page, When they hover over or select a button, Then they see a conceptual tip explaining what the button does. </li><br><li> Given the player is on a menu page, When a keyboard shortcut is available (e.g., ESC to exit), Then the shortcut is clearly displayed on the help bar. </li></ul> | High | High | Should-have |
+> | As a **still-learning player**, I want instant access to an in-game control tutorial so that I can check the controls without affecting my game progress. | Given the player pauses during gameplay, When they select the tutorial option, Then they see an image tutorial explaining the controls. | High | Low | Must-have |
+> | As a **player not particularly skilled at precise controls**, I want to receive stat boosts or recover before the final boss so that I can reduce frustration. | Given I am approaching the final boss stage, When I complete a preceding level, Then an item that improves character's stats or increase their health drops. | High | High | Should-have |
 
-**Note**: The potential stakeholders are marked as **bolded** above.
+When prioritising user stories, we consider value versus effort and apply the MoSCoW method. Value and effort estimations are based on feedback from lab sessions (see Figure 2 for an example) and team discussions. With the minimum viable product (MVP) as our initial goal, we first implemented the must-have requirements, followed by additional features after the initial game version was completed.
+
+![feedback-w4](images/feedback-w4.png) <br>
+*Figure 2: Feedback gathering from game testing activity in Week 4.*
 
 
-![Modell.png](images/Modell.png)</br>
-*Oinion Model*
+#### 2.4 Use-Case Modelling
+We utilised a use-case diagram shown in Figure 3, along with the use-case specifications, to better evaluate the time and effort required to implement each interface and in-game interaction, while also keeping the entire team aligned on the gameplay flow.
 
+![use-case-diagram.png](images/use-case-diagram.png) <br>
+*Figure 3: Use-case Diagram.*
 
-![use-case-diagram.png](images/use-case-diagram.png)</br>
-*Use-case Diagram*
+> **Use-case specification 1: Win/lose** <br>
+> **Description:** This use-case describes how players interact with enemies and health mechanics.  
+> 
+> | **Flow Type** | **Steps** |
+> |-|-|
+> | **Basic Flow** | 1. Player begins gameplay with 3 HP. <br> 2. Player encounters enemies. <br> 3. If player takes damage (attack/collision), they lose 1 HP. <br> 4. Player defeats all the enemies and completes the game. |
+> | **Alternative Flow** | 1. When HP reaches 0, game displays "Game Over" screen. <br> 2. Player can restart from main menu or "Game Over" screen. |
+
+> **Use-case specification 2: Save/load** <br>
+> **Description:** This use-case describes how players interact with the save/load system.  
+> 
+> | **Flow Type** | **Steps** |
+> |-|-|
+> | **Basic Flow** | 1. Player begins gameplay with 3 HP. <br> 2. Player encounters enemies and savepoints. <br> 3. When HP reaches 0, game displays "Game Over" screen. <br> 4. Player can restart from main menu or "Game Over" screen. |
+> | **Alternative Flow** | 1. Player passes by a savepoint. <br> 2. Player loads saved game from main menu or "Game Over" screen. <br> 3. The player restarts in the room they were in and with the health and boost they had when they last passed a savepoint. |
+
 ### 3. Design
 <!-- 
 - 15% ~750 words 
@@ -94,11 +133,11 @@ The class diagram clearly outlines key classes, their primary attributes, and cr
 - Player: Attributes include health, velocity, and position. Key methods: move(), shoot(), updatePosition().
  
 
-<!--![class-diagram.svg](images/class-diagram.svg)</br>
+<!--![class-diagram.svg](images/class-diagram.svg) <br>
 
-![class diagram.png](images/class%20diagram.png)</br>
+![class diagram.png](images/class%20diagram.png) <br>
 -->
-![Class Diagram.svg](images/Class%20Diagram.svg)</br>
+![Class Diagram.svg](images/Class%20Diagram.svg) <br>
 ```mermaid
 sequenceDiagram
     participant Player 
@@ -486,7 +525,7 @@ The main branch was always kept stable to ensure that we always had a functionin
 Given the complexity of our game, which involved multiple interconnected game states, we adopted Notion as our project management tool. Notion enabled us to track progress on various tasks, delegate responsibilities, and visualize our workflow clearly. We divided work based on game modules and assigned responsibilities accordingly. In retrospect, we realized that we could have further broken down larger tasks into smaller sub-tasks—such as dividing the development of the shop state into UI design, game logic, and asset integration. This would have given us a more granular understanding of our progress and helped balance the workload more effectively.
 <!--![微信截图_20250412140536](https://github.com/user-attachments/assets/fc33d177-d199-4be4-b140-9c36fdd7c5b3)
 -->
-![kanban.png](images/kanban.png)</br>
+![kanban.png](images/kanban.png) <br>
 **Development Tools:**  
 For the core of our game development, we used **P5.js**, a JavaScript-based creative coding framework that supports dynamic rendering and a wide variety of extension libraries. Early on, we encountered some difficulties with debugging and extending functionality using P5.js, particularly since many team members were unfamiliar with it. However, through collaboration and consistent practice, we overcame these challenges and gained proficiency, which accelerated the later stages of development.
 
@@ -553,12 +592,12 @@ Explore accessibility testing for inclusive gameplay.
 
 - Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
 
-### Additional Marks
+<!-- ### Additional Marks
 
 You can delete this section in your own repo, it's just here for information. in addition to the marks above, we will be marking you on the following two points:
 
 - **Quality** of report writing, presentation, use of figures and visual material (5%) 
-  - Please write in a clear concise manner suitable for an interested layperson. Write as if this repo was publicly available.
+  - Please write in a clear concise manner suitable for an interested layperson. Write as if this repo was publicly available. -->
 
 <!-- **Documentation** of code (5%)
 
