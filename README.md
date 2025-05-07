@@ -613,6 +613,8 @@ To address privacy protection, we have introduced a policy that appears each tim
 
 Players can choose to opt out of savepoints, thereby maintaining full control over their data consent. Because no data is uploaded or shared, the risk of data breaches is also minimized. Furthermore, since the data remains local and contains no personal information, we did not use personas to analyse of the game’s data collection.
 
+![pbd](./images/pbd.png)
+
 ### 8. Contributions
 
 | Name          | Role / Responsibility           | Contributions          |
