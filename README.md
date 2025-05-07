@@ -314,7 +314,7 @@ EventBus -> MenuDrawer: updateState()
 #### 4.1 Sprite and visual feedback
 One of the key challenges we faced was making sure enemies in different levels not only moved and attacked, but also looked visually distinct and animated. Initially, our game used single static images for each enemy type, which made them appear lifeless and less engaging. To improve the visual quality and communicate level-specific identity, we wanted enemies in different levels to have different animation styles and sprite sheets.
 
-![GIF_20250506143013681](https://github.com/user-attachments/assets/7537bc18-af3a-466a-a933-00ef5bb445e0)
+![GIF_20250506143013681](https://github.com/user-attachments/assets/7537bc18-af3a-466a-a933-00ef5bb445e0) </br>
 *Figure 4. Illustration of sprite and visual feedback*
 
 To achieve this, we first prepared separate sprite images for each enemy type across different levels. Then, instead of hardcoding sprite logic into each enemy class, we decided to use a centralized system: during room setup in `Room.js`, we dynamically assigned the correct animation frames based on the level ID. This way, for example, Level 3’s `Chaser` and `Shooter` would be linked to `window.chaserFramesL3` and `window.shooterFramesL3`, while lower levels still used the default animations.
@@ -347,6 +347,10 @@ For the pause effect, we applied a `LowPass filter` provided by `p5.sound`. When
 ### 5. Evaluation
 #### 5.1 Qualitative Evaluation - Heuristic Evaluation
 
+<details>
+  <summary>Heuristic Evaluation Results</summary>
+<br>
+
 | Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 |----------|----------|----------|----------|----------|----------|----------|----------|
 | Hsinyun Fan | Tutorial Interface | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
@@ -373,9 +377,7 @@ For the pause effect, we applied a `LowPass filter` provided by `p5.sound`. When
 | Ashby | "Playing" Interface | The obstacles looked smaller than they actually were. It was a bit easy to just spam attack.  | User control and freedom, Consistency and standards, Flexibility and efficiency of use  | 2 | 1 | 3 | 2 |
 | Asher | "Playing" Interface | Hitboxes too large, not obvious that music notes stop when they hit obstacles, cannot move left or right when also moving into an obstacle, saving is not clear | Visibility of system status, User control and freedom, Consistency and standards, Flexibility and efficiency of use, Help users recognise, diagnose, and recover from errors | 4 | 3 | 0 | 2.33 |
 | gg | Start Menu |  | Flexibility and efficiency of use | 1 | 3 | 1 | 1.67 |
-
-
-*Heuristic Evaluation Results*
+</details>
 
 We conducted two questionnaire collection activities. A total of 24 feedback from 21 students were collected, which is shown in the above table.
 
@@ -388,11 +390,16 @@ We conducted two questionnaire collection activities. A total of 24 feedback fro
 | **Recognition Over Recall**            | - Players can't easily identify their character or elements. <br> - Difficult to remember how to restart or continue the game.                    | Increases cognitive load by requiring memory instead of recognition.                           | Strengthen visual cues, add icons and labels to assist recognition.                                           |
 
 
-*Usability Issues and Suggested Improvements in Game Design*
+*Table 4. Usability Issues and Suggested Improvements in Game Design*
 
 The feedback of personal user experience is concluded and classified into five categories with each category has various manifestation, suggested improvement, and impact as shown in the above table.
 
 #### 5.2 Quatitative Evaluation - System Usability Survey (SUS)
+
+
+<details>
+  <summary>SUS Results of Easy Mode</summary>
+<br>
 
 | User ID | I think I would like to use this system frequently | I found the system unnecessarily complex | I thought the system was easy to use | I think that I would need the support of a technical person to be able to use this system | I found the various functions in this system were well integrated | I thought there was too much inconsistency in this system | I would imagine that most people would learn to use this system very quickly | I found the system very cumbersome to use | I felt very confident using the system | I needed to learn a lot of things before I could get going with this system |
 |---------|-----------------------------------------------------|------------------------------------------|--------------------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------|------------------------------------------|-------------------------------------|------------------------------------------------------------------------------------|
@@ -407,11 +414,12 @@ The feedback of personal user experience is concluded and classified into five c
 | User 09 | 5                                                   | 3                                        | 5                                    | 2                                                                                                | 5                                                                      | 1                                                            | 2                                                                                       | 3                                        | 5                                   | 1                                                                                  |
 | User 10| 4                                                   | 2                                        | 3                                    | 3                                                                                                | 5                                                                      | 3                                                            | 4                                                                                       | 3                                        | 4                                   | 2                                                                                  |
 | User 11| 4                                                   | 2                                        | 2                                    | 4                                                                                                | 5                                                                      | 2                                                            | 3                                                                                       | 2                                        | 2                                   | 2                                                                                  |
+</details>
 
 
-*SUS Results of Easy Mode*
-
-
+<details>
+  <summary>SUS Results of Hard Mode</summary>
+<br>
 
 | User ID | I think I would like to use this system frequently | I found the system unnecessarily complex | I thought the system was easy to use | I think that I would need the support of a technical person to be able to use this system | I found the various functions in this system were well integrated | I thought there was too much inconsistency in this system | I would imagine that most people would learn to use this system very quickly | I found the system very cumbersome to use | I felt very confident using the system | I needed to learn a lot of things before I could get going with this system |
 |---------|-----------------------------------------------------|------------------------------------------|--------------------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------|------------------------------------------|-------------------------------------|------------------------------------------------------------------------------------|
@@ -427,8 +435,7 @@ The feedback of personal user experience is concluded and classified into five c
 | User 10 | 3 | 2 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 2 |
 | User 11 | 3 | 2 | 2 | 5 | 4 | 2 | 1 | 4 | 2 | 2 |
 
-
-*SUS Results of Hard Mode*
+</details>
 
 
 | User ID | Easy Mode | Hard Mode |
@@ -445,7 +452,7 @@ The feedback of personal user experience is concluded and classified into five c
 | User 10 | 67.5       | 55.0       |
 | User 11 | 60.0       | 42.5       |
 
-*SUS scores of Each User in the Easy Mode and Hard Mode*
+*Table 5. SUS scores of Each User in the Easy Mode and Hard Mode*
 
 Higher SUS scores indicate better perceived usability. The Easy Mode has higher usability score than that of the Hard Mode, suggesting that users found the game more intuitive and accessible in Easy Mode. We conducted the Wilcoxon sign-ranked test on the SUS data. The results show obvious significance. For a group of 11 participants, the calculated test statistic W is 5.5, which indicates that the significance level reached 0.025, or 97.5% according to the critical values table. The result determined that there was an significant difference between the easy mode and hard mode. However, this result does not determine exactly what causes the difference between the two modes. This uncertainty about whether there is really a difference in the usablity of two modes is related to one or more items of SUS.
 
@@ -463,7 +470,7 @@ Higher SUS scores indicate better perceived usability. The Easy Mode has higher 
 | I felt very confident using the system                                                        | 3.8  | 3.4  |
 | I needed to learn a lot of things before I could get going with this system                   | 2.4  | 2.3  |
 
-*The average score of each item on SUS of the easy mode and the hard mode*
+*Table 6. The average score of each item on SUS of the easy mode and the hard mode*
 
 
 The average scores of the easy mode and the hard mode are 73.2 and 62.3 respectively. The latter is lower than the general usability benchmark of 68. Based on the results of the above table, we decided to improve the control methods of the player, the collision logic between classes, and the UI design of non-game interfaces to enhance the integrity of the hard mode system and make it easier for users to master and proficiently use the game system with the expectation of bringing the usability score of hard mode to the 68 benchmark.
@@ -588,7 +595,7 @@ Figure 5. *The Sustainability Awareness Diagram*
 
 Based on the analysis, we reformulated these requirements into user stories, with particular attention to sustainability.
 > **Epic 4: Enhance accessibility for player (Individual/Health)**
-
+> 
 > | User Story | Acceptance Criteria | Value | Effort | MoSCoW |
 > |-|-|-|-|-|
 > | As a **player with slower reaction times**, I hope the game grants temporary damage immunity after transitions, so that I can progress without unexpected penalties. | Given the player was playing, when they enter a new room or load game data, then they should be exempt from damage for a few seconds.| High | Low | Must-have |
