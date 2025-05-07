@@ -646,3 +646,6 @@ Explore accessibility testing for inclusive gameplay.
 
 ### Contribution Statement
 
+### Acknowledgements
+Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
+
