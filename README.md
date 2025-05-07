@@ -579,7 +579,23 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 ![d8e7d67450a08bffac6aacd4a66122e](https://github.com/user-attachments/assets/16c0db61-2bbc-47ef-abbd-c04069e6d9dd)
 
 ###  7. Sustainability, Ethics and Accessibility
-####  7.1 Green Software Foundation Implementation Patterns Applied in the Project
+
+####  7.1 The Sustainability Awareness Framework
+To enhance sustainability, we organised the features planning to implement using categories from the Sustainability Awareness Framework (SusAF) and mapped their chains of effects within the framework to evaluate their sustainability impact.
+
+![SusAD](https://github.com/user-attachments/assets/5cc546f5-c0fc-49b6-a68c-c6d9af7fdffd) </br>
+Figure 5. *The Sustainability Awareness Diagram*
+
+Based on the analysis, we reformulated these requirements into user stories, with particular attention to sustainability.
+> **Epic 4: Enhance accessibility for player (Individual/Health)**
+
+> | User Story | Acceptance Criteria | Value | Effort | MoSCoW |
+> |-|-|-|-|-|
+> | As a **player with slower reaction times**, I hope the game grants temporary damage immunity after transitions, so that I can progress without unexpected penalties. | Given the player was playing, when they enter a new room or load game data, then they should be exempt from damage for a few seconds.| High | Low | Must-have |
+> | As a **player with limited hand mobility**, I want full keyboard control, so that I can play the game without switching input devices. |  the player is interacting with an in-game button, When they press either the associated keyboard key or click with the mouse, Then the button should respond appropriately to either input method. | High | Low | Must-have |
+
+####  7.2 Green Software Foundation Implementation Patterns Applied in the Project
+As part of our reflection on the environmental impact of our game using SusAF, we adopted several implementation patterns from the Green Software Foundation to help reduce the project’s environmental footprint.
 
 ##### Deprecate GIFs for animated content
 - We removed all legacy `.gif` animations and replaced them with finely tuned PNG sprite sequences, loading each frame via `loadImage` and driving playback with a `frameIndex` loop.  
@@ -592,15 +608,10 @@ We audited our stylesheet with browser Coverage and regex-based searches, stripp
 - We applied automated image compression (using imagemin with MozJPEG/PNGQuant) and resized high-resolution assets to match in-game display size, reducing the total image footprint from X to Y.  
 - This optimization cuts bandwidth, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
 
-####  7.2 The Sustainability Awareness Framework
-![SusAD](https://github.com/user-attachments/assets/5cc546f5-c0fc-49b6-a68c-c6d9af7fdffd)
+#### 7.3 Privacy & Security
+To address privacy protection, we have introduced a policy that appears each time a player accesses the game website. The policy respects GDPR principles by collecting only minimal, relevant data (level, room, HP) for the sole purpose of restoring game progress, with storage kept local and never shared.
 
-*The Sustainability Awareness Diagram*
-
-
-
-
-
+Players can choose to opt out of savepoints, thereby maintaining full control over their data consent. Because no data is uploaded or shared, the risk of data breaches is also minimized. Furthermore, since the data remains local and contains no personal information, we did not use personas to analyse of the game’s data collection.
 
 ### 8. Contributions
 
@@ -633,16 +644,3 @@ Explore accessibility testing for inclusive gameplay.
 
 ### Contribution Statement
 
-<!-- - Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent.  -->
-
-<!-- ### Additional Marks
-
-You can delete this section in your own repo, it's just here for information. in addition to the marks above, we will be marking you on the following two points:
-
-- **Quality** of report writing, presentation, use of figures and visual material (5%) 
-  - Please write in a clear concise manner suitable for an interested layperson. Write as if this repo was publicly available. -->
-
-<!-- **Documentation** of code (5%)
-
-  - Is your repo clearly organised? 
-  - Is code well commented throughout? -->
