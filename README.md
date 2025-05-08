@@ -161,9 +161,8 @@ We utilised a use-case diagram shown in Figure 3, along with the use-case specif
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
 -->
-#### 3.1 System Overview
 The design of **Out** follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. 
-#### 3.2 Class Design
+#### 3.1 Class Design
 <div style="width: 100%; overflow-x: auto;">
   <img src="images/Class%20Diagram.svg" alt="Class Diagram" style="min-width: 2000px;">
 </div>
@@ -172,11 +171,11 @@ The design of **Out** follows a structured and modular object-oriented architect
 
 The system follows a four-layer architecture, with the class diagram clearly showing the key components in each layer:
 - **Core Control Layer:** The ```GameStateManager``` acts as the central hub, coordinating the ```EventBus``` for event handling, the ```InputHandler``` for input processing and the ```MenuDrawer``` for managing and rendering all in-game menus and their interaction logic.
-- **Entity Layer:** This layer includes game entities such as ```Player```, ```Enemy```, ```Chaser```, ```Shooter``` and their subclasses, as well as the ```Bullet``` system, ```Room```, ```Door```, ```Obstacle```, ```Item```, and ```SavePoint```. These components use inheritance and composition to support diverse and dynamic behaviors.
+- **Entity Layer:** This layer includes game entities such as ```Player```, ```Enemy```, ```Chaser```, ```Shooter``` and their subclasses, as well as the ```Bullet``` system, ```Room```, ```Door```, ```Obstacle```, ```Item```, and ```SavePoint```. These components use inheritance and composition to support diverse and dynamic behaviors. The ```CollisionDetector``` class is the core collision detection system of the game, responsible for handling all collision logic between game entities.
 - **UI Layer:** The ```MenuDrawer``` and ```HelpBar``` classes use the state pattern to manage the user interface. Scene transitions at the start and end of the game are handled by the ```ScenePlayer``` class, while the ```FadeManager``` manages fade-in and fade-out effects during room transitions. Classes such as ```PlayerStatusDisplayer```, ```BossStatusDisplayer```, ```InstructionDisplayer```, and ```PolicyDisplayer``` use static methods for efficient rendering.
 - **Communication Layer:** The ```EventBus``` class uses the publish-subscribe pattern to decouple different modules. For example, a menu event can trigger a transition in the game state.
 
-#### 3.3 Behavioural Diagrams
+#### 3.2 Behavioural Diagrams
 ```mermaid
 sequenceDiagram
 actor User
@@ -555,7 +554,7 @@ As for future work, short-term improvements include introducing new types of ene
 Player feedback will remain central to our development priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
 
 ![new-enemy](./images/new-enemy.png) ![new-obstacle](./images/new-obstacle.png) ![new-item](./images/new-item.png) </br>
-*Figure 6. Upcoming content: new enemy, obstacle, and item.*
+*Figure 10. Upcoming content: new enemy, obstacle, and item.*
 
 
 ### 9. Contribution Statement
