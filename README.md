@@ -602,11 +602,12 @@ Noraml Enemy:<br>
 
 Elite Enemy:<br>
 ![elite1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Drumer.gif)&nbsp;
-![elite2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Keyboard.gif)&nbsp;
-![elite3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Singer.gif)&nbsp;<br>
+![elite2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Keyboard.gif)&nbsp;<br>
+![elite3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Singer.gif)&nbsp;
+![elite4](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Guitar.gif)<br>
 
 
-Boss:<br>
+Puppet&Egg:<br>
 ![boss6](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/DEAD.gif)&nbsp;
 ![boss7](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Puppet.gif)<br>
 
@@ -628,7 +629,7 @@ The Boss Sence:
 ![sence7](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Heart.png)<br>
 ![sence8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/BlankRoomt.png)<br><br>
 
-The Future Room:
+The Future Room:<br>
 ![miniroom](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Issac%20Map%20example.png)<br>
 
 
