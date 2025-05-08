@@ -542,16 +542,19 @@ Players can choose to opt out of savepoints, thereby maintaining full control ov
 
 ### 8. Conclusion
 
+<!-- Reflection on the whole project -->
+Given the time limit, we are proud of the collaborative result at this moment. The agile approach, focusing on epics, user stories, and MoSCoW prioritisation, allowed us to focus on essential features, while remaining flexible to add functionalities such as user instructions and stat boosts. Regular scrum meetings and sprint backlog with Kanban board also enabled us to rapidly respond to usability issues.
+
 <!-- Reflection on challenges -->
-The main challenges we faced were improving visual feedback and more realistic interactions. Through these challenges, we learned the importance of iteration and user insights. Initially, we focused on functionality, underestimating the value of visual feedback. However, feedback during the testathon shifted our perspective, and we came to realise how these elements can greatly enhance immersion and player engagement. Moving forward, we aim to balance technical development with player experience to create a more enjoyable and immersive result.
+The main challenges were improving visual feedback and more realistic interactions. Through these challenges, we learned the importance of iteration and user insights. At first, we were too focused on functionality, and underestimated the value of visual feedback. However, feedback during the testathon changed our perspective, and we came to realise how these elements can enhance immersion and player engagement. Moving forward, we aim to balance technical development with player experience to create a more enjoyable and immersive result.
 
 <!-- Lessons learned -->
-Through this project, we gained practical experience in JavaScript development and version control, while learning the importance of clear communication and collaboration. Tools like Git and Kanban boards helped us stay organised and adapt to challenges. Most importantly, we learned how to collaborate effectively by balancing different ideas, prioritising tasks, breaking them down into measurable actions, and using each team member's unique strengths to strengths to build software.
+Through this project, we gained practical experience in JavaScript development and version control, while learning the importance of clear communication and collaboration. Tools like Git and Kanban boards helped us stay organised and adapt to challenges. We also learned the importance of continuous user testing to discover usability issues, and the value of class diagrams and modular code architecture for late-stage feature additions. Most importantly, we learned how to collaborate effectively by balancing different ideas, prioritising tasks, breaking them down into measurable actions, and using each team member's unique strengths to strengths to build software.
 
 <!-- Future work -->
-As for future work, short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for greater immersion. In the medium term, we aim to enhance game essence by implementing non-linear exploration through optional paths and backtracking mechanics. We also plan to integrate in-game progress with leaderboards and social media platforms for competition and community engagement. The major long-term goal is to leverage deep learning techniques to generate levels tailored to each player's gameplay preferences.
+As for future work, our short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for better immersion. In the mid-term, we aim to enhance game essence by implementing non-linear exploration through optional paths and backtracking mechanics. We also plan to combine in-game progress with leaderboards and social media platforms for competition and community engagement. The major long-term goal is to utilise deep learning techniques to generate levels tailored to each player's gameplay preferences.
 
-Player feedback will remain central to our development priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
+Player feedback will still be our priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
 
 ![new-enemy](./images/new-enemy.png) ![new-obstacle](./images/new-obstacle.png) ![new-item](./images/new-item.png) </br>
 *Figure 10. Upcoming content: new enemy, obstacle, and item.*
@@ -571,4 +574,6 @@ Player feedback will remain central to our development priorities. As a Scrum te
 Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
 
 Thanks to [Freesound](https://freesound.org/) for the sound effect used in this project.
+
+Thanks to everyone contributed feedback on both the game and the report.
 
