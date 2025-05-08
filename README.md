@@ -574,7 +574,7 @@ Player feedback will still be our priorities. As a Scrum team, we plan to implem
 
 BONUS
 For Leve2, the MONSTERS are approaching...
-![enemy1](../../Web_Dec/Lil_Cult.gif)
+![enemy1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Cult.gif)
 ![new-enemy](./images/new-enemy.png) ![new-obstacle](./images/new-obstacle.png) ![new-item](./images/new-item.png) </br>
 *Figure 10. Upcoming content: new enemy, obstacle, and item.*
 
