@@ -290,7 +290,7 @@ Another challenge we faced was creating a sense of realism during gameplay. Of a
 
 *Table 3. Iteration of 2.5D collision detection*
 
-In addition to the 2.5 effects on collisions, we aimed to make object movements feel more natural by adding physical effects. We improved the player’s movement by adding friction (`#friction`) and inertia through acceleration (`#acceleration`), resulting in smoother and more responsive controls. Instead of abrupt stops, the player now decelerates gradually when input ceases, thanks to the `applyFriction()` method. We also enhanced item drops by controlling their velocity with gravity (`#gravity`) and bounce (`#bounce`) mechanics, making them fall and rebound more realistically. The `#handleGroundCollision()` method ensures items settle naturally by reducing their bounce velocity until they come to rest.
+In addition to the 2.5D effects on collisions, we made object movements feel more natural by adding physical effects. We improved player movement by adding friction (`#friction`) and inertia through acceleration (`#acceleration`), making controls smoother and more responsive. Instead of stopping suddenly, the player now gradually slows down when no input is given, thanks to the `applyFriction()` method. We also improved item drops by controlling their velocity with the value of gravity (`#gravity`) and bounce (`#bounce`), making them fall and bounce more realistically. The `#handleGroundCollision()` method reduces the item's bounce speed until they come to rest.
 
 #### 4.3 Sound effects
 While not listed as one of our challenges in the plan, another challenges we encountered was how to manage background music and sound effects dynamically across rooms and gameplay states. For example, each level had a different background track, and certain moments like pausing the game required special audio effects (e.g., low-pass “telephone” filter). We also wanted to avoid overlapping or abrupt changes in audio playback when transitioning between levels or states.
@@ -534,25 +534,20 @@ We audited our stylesheet with browser Coverage and regex-based searches, stripp
 - This optimization cuts bandwidth, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
 
 #### 7.3 Privacy & Security
-To address privacy protection, we have introduced a policy that appears each time a player accesses the game website. The policy respects GDPR principles by collecting only minimal, relevant data (level, room, HP) for the sole purpose of restoring game progress, with storage kept local and never shared.
+To address privacy protection, there is a policy that appears each time a player accesses the game website. The policy respects GDPR principles by collecting only minimal, relevant data (level, room, HP) for the sole purpose of restoring game progress, with storage kept local and never shared.
 
 Players can choose to opt out of savepoints, thereby maintaining full control over their data consent. Because no data is uploaded or shared, the risk of data breaches is also minimized. Furthermore, since the data remains local and contains no personal information, we did not use personas to analyse of the game’s data collection.
-
 ![pbd](./images/pbd.png)
 
 ### 8. Conclusion
 
-<!-- Reflection on the whole project -->
-Given the time limit, we are proud of the collaborative result at this moment. The agile approach, focusing on epics, user stories, and MoSCoW prioritisation, allowed us to focus on essential features, while remaining flexible to add functionalities such as user instructions and stat boosts. Regular scrum meetings and sprint backlog with Kanban board also enabled us to rapidly respond to usability issues.
+Given the time limit, we are proud of the collaborative result at this moment. The agile approach, focusing on epics, user stories, and MoSCoW prioritisation, allowed us to focus on essential features, while remaining flexible to add functionalities such as user instructions and stat boosts. Regular scrum meetings and a Kanban board kept us on track and let us fix usability issues quickly.
 
-<!-- Reflection on challenges -->
 The main challenges were improving visual feedback and more realistic interactions. Through these challenges, we learned the importance of iteration and user insights. At first, we were too focused on functionality, and underestimated the value of visual feedback. However, feedback during the testathon changed our perspective, and we came to realise how these elements can enhance immersion and player engagement. Moving forward, we aim to balance technical development with player experience to create a more enjoyable and immersive result.
 
-<!-- Lessons learned -->
-Through this project, we gained practical experience in JavaScript development and version control, while learning the importance of clear communication and collaboration. Tools like Git and Kanban boards helped us stay organised and adapt to challenges. We also learned the importance of continuous user testing to discover usability issues, and the value of class diagrams and modular code architecture for late-stage feature additions. Most importantly, we learned how to collaborate effectively by balancing different ideas, prioritising tasks, breaking them down into measurable actions, and using each team member's unique strengths to strengths to build software.
+Through this project, we gained practical experience in JavaScript development and version control, while learning the importance of clear communication and collaboration. Tools like Git and Kanban boards helped us stay organised and adapt to challenges. We also learned the importance of continuous user testing to discover usability issues, and the value of class diagrams and modular code architecture for late-stage feature additions. Most importantly, we discovered how to work well as a team: breaking tasks into clear actions, prioritising effectively, and playing to each member’s strengths.
 
-<!-- Future work -->
-As for future work, our short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for better immersion. In the mid-term, we aim to enhance game essence by implementing non-linear exploration through optional paths and backtracking mechanics. We also plan to combine in-game progress with leaderboards and social media platforms for competition and community engagement. The major long-term goal is to utilise deep learning techniques to generate levels tailored to each player's gameplay preferences.
+As for future work, our short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for better immersion. In the mid-term, we will introduce non-linear exploration by implementing optional paths and backtracking. In addition, We also plan to combine in-game progress with leaderboards and social media platforms for competition and community engagement. Long-term, we hope to use deep learning to generate levels tailored to each player’s style.
 
 Player feedback will still be our priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
 
