@@ -565,3 +565,5 @@ Player feedback will remain central to our development priorities. As a Scrum te
 ### 10. Acknowledgements
 Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
 
+Thanks to [Freesound](https://freesound.org/) for the sound effect used in this project.
+
