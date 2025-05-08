@@ -630,6 +630,18 @@ Player feedback will still be our priorities. As a Scrum team, we plan to implem
 
 ### The Future Room:<br>
 ![miniroom](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Issac%20Map%20example.png)<br>
+![current](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/current.png)&nbsp; where you are now<br>
+![unvisited](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/unvisited.png)&nbsp;
+unvisited rooms<br>
+![visited](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/visited.png)&nbsp;
+visited rooms<br>
+![treasure](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/treasure.png)&nbsp;
+treasure room -- for cool items<br>
+![elite](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/elite.png)&nbsp;
+elite room -- challenge yourself<br>
+![boss](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/boss.png)&nbsp;
+boss room
+
 
 
 
