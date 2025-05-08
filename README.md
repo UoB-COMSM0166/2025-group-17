@@ -449,19 +449,16 @@ The average scores of the easy mode and the hard mode are 73.2 and 62.3 respecti
 
 #### 5.4 Testing
 We used Jest to develop white-box unit tests for validating internal logic of important modules such as `Player`, `CollisionDetector`, and time tracking functionality.
-1. Player Class Tests*
-File: `tests/layer.test.js`
+1. Player Class Tests: `tests/layer.test.js`
     - HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
     - Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
     - HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
     - Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
-2. Collision Detection Tests*
-File: `tests/collisionDetector.test.js`
+2. Collision Detection Tests: `tests/collisionDetector.test.js`
     - Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
     - Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
 These tests indirectly verify internal logic like `isBulletHitWall() `and correct management of game objects.
-3. Time Tracking Tests*
-File: `tests/time.test.js`
+3. Time Tracking Tests: `tests/time.test.js`
     - Start Time Accuracy: Verifies correct timestamp capture when the game starts.
     - Elapsed Time: Confirms that time is accurately computed during gameplay.
     - End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
@@ -539,6 +536,9 @@ Players can choose to opt out of savepoints, thereby maintaining full control ov
 ![pbd](./images/pbd.png)
 
 ### 8. Conclusion
+
+<!-- Reflection on challenges -->
+The main challenges we faced were improving visual feedback and more realistic interactions. Through these challenges, we learned the importance of iteration and user insights. Initially, we focused on functionality, underestimating the value of visual feedback. However, feedback during the testathon shifted our perspective, and we came to realise how these elements can greatly enhance immersion and player engagement. Moving forward, we aim to balance technical development with player experience to create a more enjoyable and immersive result.
 
 <!-- Lessons learned -->
 Through this project, we gained practical experience in JavaScript development and version control, while learning the importance of clear communication and collaboration. Tools like Git and Kanban boards helped us stay organised and adapt to challenges. Most importantly, we learned how to collaborate effectively by balancing different ideas, prioritising tasks, breaking them down into measurable actions, and using each team member's unique strengths to strengths to build software.
