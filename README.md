@@ -588,6 +588,11 @@ As for future work, our short-term improvements include introducing new types of
 
 Player feedback will still be our priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
 
+BONUS<br>
+For Leve2, the MONSTERS are approaching...<br>
+![enemy1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Cult.gif)&nbsp;
+![enemy2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Lust.gif)&nbsp;
+![enemy3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Greedy.gif)&nbsp;
 ![new-enemy](./images/new-enemy.png) ![new-obstacle](./images/new-obstacle.png) ![new-item](./images/new-item.png) </br>
 *Figure 10. Upcoming content: new enemy, obstacle, and item.*
 
@@ -603,11 +608,11 @@ Player feedback will still be our priorities. As a Scrum team, we plan to implem
 | Zhexing Yang | Scrum Master | Sound design, story scripting, spritesheet animation, video editing | X |
 
 ### 10. Acknowledgements
-Thanks to ![p5.js](https://p5js.org/favicon.ico?)[p5.js](https://p5js.org/) for providing the framework that supports the contents of our game.
+🌹Thanks to ![p5.js](https://p5js.org/favicon.ico?)[p5.js](https://p5js.org/) for providing the framework that supports the contents of our game.
 
-Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
+🌹Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
 
-Thanks to [Freesound](https://freesound.org/) for the sound effect used in this project.
+🌹Thanks to [Freesound](https://freesound.org/) for the sound effect used in this project.
 
-Thanks to everyone contributed feedback on both the game and the report.
+🌹Thanks to everyone contributed feedback on both the game and the report.
 
