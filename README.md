@@ -170,6 +170,12 @@ The design of **Out** follows a structured and modular object-oriented architect
 
 *Figure 4. Class Diagram.*
 
+The system follows a four-layer architecture, with the class diagram clearly showing the key components in each layer:
+- **Core Control Layer:** The ```GameStateManager``` acts as the central hub, coordinating the ```EventBus``` for event handling, the ```InputHandler``` for input processing and the ```MenuDrawer``` for managing and rendering all in-game menus and their interaction logic.
+- **Entity Layer:** This layer includes game entities such as ```Player```, ```Enemy```, ```Chaser```, ```Shooter``` and their subclasses, as well as the ```Bullet``` system, ```Room```, ```Door```, ```Obstacle```, ```Item```, and ```SavePoint```. These components use inheritance and composition to support diverse and dynamic behaviors.
+- **UI Layer:** The ```MenuDrawer``` and ```HelpBar``` classes use the state pattern to manage the user interface. Scene transitions at the start and end of the game are handled by the ```ScenePlayer``` class, while the ```FadeManager``` manages fade-in and fade-out effects during room transitions. Classes such as ```PlayerStatusDisplayer```, ```BossStatusDisplayer```, ```InstructionDisplayer```, and ```PolicyDisplayer``` use static methods for efficient rendering.
+- **Communication Layer:** The ```EventBus``` class uses the publish-subscribe pattern to decouple different modules. For example, a menu event can trigger a transition in the game state.
+
 #### 3.3 Behavioural Diagrams
 ```mermaid
 sequenceDiagram
