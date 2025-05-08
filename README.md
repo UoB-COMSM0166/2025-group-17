@@ -2,7 +2,7 @@
 2025 COMSM0166 group 17
 ## Game
 ![Coins](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/coins.gif)&nbsp;&nbsp;
-<span style="font-size:20px">
+<span style="font-size:80px">
   <a href="https://uob-comsm0166.github.io/2025-group-17/public/" target="_blank">
     Link to our game!
   </a>
