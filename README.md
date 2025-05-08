@@ -10,6 +10,7 @@
 ## Video
 ![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
 [Click here to play the video!](https://www.youtube.com/watch?v=58hXDIqVQvE)
+![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
 
 ## Group
 ![group-photo.jpg](images/group-photo.jpg) <br>
