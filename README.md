@@ -571,6 +571,8 @@ Player feedback will still be our priorities. As a Scrum team, we plan to implem
 | Zhexing Yang | Scrum master | Sound design, story scripting, spritesheet animation, video editing | X |
 
 ### 10. Acknowledgements
+Thanks to ![p5.js](https://p5js.org/favicon.ico?)[p5.js](https://p5js.org/) for providing the framework that supports the contents of our game.
+
 Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
 
 Thanks to [Freesound](https://freesound.org/) for the sound effect used in this project.
