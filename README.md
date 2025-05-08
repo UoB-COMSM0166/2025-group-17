@@ -1,11 +1,13 @@
 # 2025-group-17
 2025 COMSM0166 group 17
-## Your Game
-
+## Game
 ![Coins](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/coins.gif)&nbsp;&nbsp;[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/public/)&nbsp;&nbsp;![Slot](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Slot.gif)&nbsp;![orange](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Orange.gif)&nbsp;![red](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Red.gif)&nbsp;![green](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Green.gif)
 
-## Your Group
+## Video
+![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
+[Click here to play the video!](https://www.youtube.com/watch?v=58hXDIqVQvE)
 
+## Group
 ![group-photo.jpg](images/group-photo.jpg) <br>
 
 | Name | GitHub Profile | Email | Role |
@@ -20,10 +22,6 @@
 
 ## Kanban Board
 https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000c642e4ac8&pvs=4
-
-## Project Video
-![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
-https://www.youtube.com/watch?v=58hXDIqVQvE
 
 ## Project Report &nbsp;![button](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/SaveButton.gif)
 
@@ -291,7 +289,8 @@ To achieve this, we first prepared separate sprite images for each enemy type ac
 
 The actual animation is implemented using a simple frame-switching timer. Each enemy class (like Chaser and Shooter) has `frameCounter` and `currentFrame` attributes. In the `update()` function, we increase `frameCounter`, and when it exceeds a threshold (e.g., every 10 frames), we cycle to the next sprite. This ensures animations are smooth but not too fast, and the system is shared by all enemy types. 
 
-We also use sprites for visual feedback. As seen in Figure 4, the player can easily identify if a bullet hits an enemy or wall through the corresponding visual effects. Additionally, we added both visual and audio feedback to help players track game progress. Unlike regular enemies, the defeat of the boss is marked by a shaking effect and a distinct death sound, with the shaking effect shown in Figure 4.
+We also use sprites for visual feedback. As seen in Figure 4, the player can easily identify if a bullet hits an enemy or wall based on the visual effects. In addition, we added both visual and audio feedback to help players track game progress. Unlike regular enemies, defeated boss has shaking effect and a distinct death sound. The shaking effect is shown in Figure 4.
+
 
 #### 4.2 Add realism to game
 Another challenge we faced was creating a sense of realism during gameplay. Of all the efforts we made to address this, collision detection takes the largest number of sprints to integrate. In the initial version, collisions were calculated based on the edges of PNG images, which made the collision between entities appear like interaction between two flat images. After receiving feedback during evaluation, we aimed to introduce depth into the implementation to simulate the z-axis (see details in Table 3). In the final version, we decided to use only the bottom area of the image for collision detection, and use the Y-axis coordinates to ensure a more accurate 2.5D depth representation.
