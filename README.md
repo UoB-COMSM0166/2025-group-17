@@ -1,7 +1,13 @@
 # 2025-group-17
 2025 COMSM0166 group 17
 ## Game
-![Coins](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/coins.gif)&nbsp;&nbsp;[Link to our game!](https://uob-comsm0166.github.io/2025-group-17/public/)&nbsp;&nbsp;![Slot](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Slot.gif)&nbsp;![orange](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Orange.gif)&nbsp;![red](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Red.gif)&nbsp;![green](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Green.gif)
+![Coins](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/coins.gif)&nbsp;&nbsp;
+<span style="font-size:20px">
+  <a href="https://uob-comsm0166.github.io/2025-group-17/public/" target="_blank">
+    Link to our game!
+  </a>
+</span>
+![Slot](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Slot.gif)&nbsp;![orange](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Orange.gif)&nbsp;![red](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Red.gif)&nbsp;![green](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Green.gif)
 
 ## Video
 ![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
