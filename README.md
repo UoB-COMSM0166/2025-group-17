@@ -49,10 +49,10 @@ https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000
 7. [Sustainability, Ethics and Accessibility](#7-sustainability-ethics-and-accessibility)
    - 7.1 [The Sustainability Awareness Framework](#71-the-sustainability-awareness-framework)
    - 7.2 [Green Software Foundation Implementation Patterns Applied in the Project](#72-green-software-foundation-implementation-patterns-applied-in-the-project)
-   - 7.3 [Privacy & Security](#73-privacy--security) 
-8. [Contributions](#8-contributions)
-9. [Conclusion](#9-conclusion)
-10. [Contribution Statement](#10-contribution-statement)
+   - 7.3 [Privacy & Security](#73-privacy--security)
+8. [Conclusion](#8-conclusion)
+9. [Contribution Statement](#9-contribution-statement)
+10. [Acknowledgements](#10-acknowledgements)
 </details>
 
 ### 1. Introduction
@@ -505,20 +505,20 @@ The average scores of the easy mode and the hard mode are 73.2 and 62.3 respecti
 We used Jest to develop white-box unit tests for validating internal logic of important modules such as `Player`, `CollisionDetector`, and time tracking functionality.
 1. Player Class Tests*
 File: `tests/layer.test.js`
-·HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
-·Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
-·HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
-·Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
+    - HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
+    - Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
+    - HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
+    - Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
 2. Collision Detection Tests*
 File: `tests/collisionDetector.test.js`
-·Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
-·Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
+    - Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
+    - Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
 These tests indirectly verify internal logic like `isBulletHitWall() `and correct management of game objects.
 3. Time Tracking Tests*
 File: `tests/time.test.js`
-·Start Time Accuracy: Verifies correct timestamp capture when the game starts.
-·Elapsed Time: Confirms that time is accurately computed during gameplay.
-·End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
+    - Start Time Accuracy: Verifies correct timestamp capture when the game starts.
+    - Elapsed Time: Confirms that time is accurately computed during gameplay.
+    - End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
 These tests guarantee that players receive meaningful feedback about how long it took to finish the game, adding an important competitive and motivational layer.
 
 Through white-box testing, we covered major user interactions, game logic integrity, and data tracking. Our combination of test types enabled us to verify the system both externally and internally. Testing was not a final step, but a continuous part of the development cycle.
@@ -592,33 +592,27 @@ Players can choose to opt out of savepoints, thereby maintaining full control ov
 
 ![pbd](./images/pbd.png)
 
+### 8. Conclusion
 
-<!-- ### Lessons Learned:
-·Pair testing helps catch issues early.
-·Writing unit tests made our codebase more modular and maintainable.
-·Regular playtesting helped refine the user experience iteratively.
-### Future Plans:
-Expand unit testing to include item interactions and enemy AI.
-Add automated stress and load testing.
-Explore accessibility testing for inclusive gameplay. -->
+<!-- Future work -->
+As for future work, short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for greater immersion. In the medium term, we aim to enhance game essence by implementing non-linear exploration through optional paths and backtracking mechanics. We also plan to integrate in-game progress with leaderboards and social media platforms for competition and community engagement. The major long-term goal is to leverage deep learning techniques to generate levels tailored to each player's gameplay preferences.
 
-### 9. Conclusion
+Player feedback will remain central to our development priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
 
-- 10% ~500 words
+![new-enemy](./images/new-enemy.png) ![new-obstacle](./images/new-obstacle.png) ![new-item](./images/new-item.png) </br>
+*Figure 6. Upcoming content: new enemy, obstacle, and item.*
 
-- Reflect on project as a whole. Lessons learned. Reflect on challenges. Future work. 
 
-### Contribution Statement
+### 9. Contribution Statement
+| Name | Scrum Role | Responsibility | Contribution |
+|-|-|-|-|
+| Yishan Chen | Project owner | Random room generation, in-room content design, room transition | X |
+| Hong Jin | Frontend & UI Developer | Sprint backlog writing, UI flow, user instruction, 2.5D collision, save/load | X |
+| Yuetong Dong | QA Tester | Testing, sound effect integration, video voice-over | X |
+| Yuzheng Li | Backend developer | Entity classes and corresponding logic | X |
+| Shuzhou Huang | Frontend developer | Visual art, pixel asset, visual feedback enhancement, map management | X |
+| Zhexing Yang | Scrum master | Sound design, story scripting, spritesheet animation, video editing | X |
 
-| Name          | Role / Responsibility           | Contributions          |
-|---------------|---------------------------------|------------------------|
-| Yishan Chen   | Game logic & system integration |           X            |
-| Hong Jin      | Game logic & UI                 |           X            |
-| Yuetong Dong  | Testing & sound load            |           X            |
-| Yuzheng Li    | Game logic & report             |           X            |
-| Shuzhou Huang | Visual art & pixel assets       |           X            |
-| Zhexing Yang  | Sound design & story script     |           X            |
-
-### Acknowledgements
+### 10. Acknowledgements
 Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
 
