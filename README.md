@@ -594,8 +594,7 @@ Noraml Enemy:<br>
 ![enemy5](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/WaterVencher.gif)&nbsp;
 ![enemy6](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/PCGhost.gif)&nbsp;
 ![enemy7](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Pig_Img.gif)&nbsp;
-![enemy8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Chair.gif)&nbsp;
-![enemy9](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/CCTV.gif)&nbsp;<br>
+![enemy8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Chair.gif)&nbsp;<br>
 ![enemy1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Cult.gif)&nbsp;
 ![enemy2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Lust.gif)&nbsp;
 ![enemy3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Greedy.gif)&nbsp;
@@ -604,35 +603,34 @@ Noraml Enemy:<br>
 Elite Enemy:<br>
 ![elite1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Drumer.gif)&nbsp;
 ![elite2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Keyboard.gif)&nbsp;
-![elite3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Singer.gif)&nbsp;
-![elite4](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Guitar.gif)<br>
+![elite3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Elite_Singer.gif)&nbsp;<br>
+
 
 Boss:<br>
 ![boss6](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/DEAD.gif)&nbsp;
 ![boss7](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Puppet.gif)<br>
+
+For Leve3, the BOSS RUSH is coming...<br>
 ![boss1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Boss_Ear.gif)&nbsp;
 ![boss2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Boss_Eye.gif)&nbsp;
-![boss3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Boss_Mouth.gif)&nbsp;
 ![boss4](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Boss_Nose.gif)&nbsp;
 ![boss5](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Boss_Heart.gif)&nbsp;<br>
 
-Secret Boss(The dark side of Paul)
+Secret Boss(The dark side of Paul)<br>
 ![boss8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Paul(Dark).gif)&nbsp;<br>
 
 The Boss Sence:
 ![sence1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_LiveRoomt.png)<br>
 ![sence2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L2Boss.png)<br>
-![sence3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Ear.png)<br>
 ![sence4](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Eye.png)<br>
 ![sence5](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Mouth.png)<br>
 ![sence6](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Nose.png)<br>
 ![sence7](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Heart.png)<br>
-![sence8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/BlankRoomt.png)<br>
+![sence8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/BlankRoomt.png)<br><br>
 
 The Future Room:
 ![miniroom](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Issac%20Map%20example.png)<br>
 
-*Figure 10. Upcoming content: new enemy, boss, sences.*
 
 
 ### 9. Contribution Statement
