@@ -206,7 +206,14 @@ setup -> extract: extractFrames(shooterSpriteSheet)
 setup -> extract: extractFrames(enemySpriteSheet)
 setup -> extract: extractFrames(hitEffectSheet)
 ```
-*Figure 5. Sequence Diagram of Initialization Process.*
+*Figure 5. Sequence Diagram of Initialization Process.*</br>
+The system’s initialization adheres to the principles of layered architecture, ensuring a stable foundation through structured resource loading and modular setup. As shown in the sequence diagram (Figure 5), the process consists of five key stages:</br>
+**1. Framework Setup:** The system starts by creating a responsive canvas with p5.js (```createCanvas```) to set up the rendering context. It then initializes the ```FadeManager``` for smooth room transitions. The ```EventBus``` is instantiated next, serving as the communication hub for publish-subscribe interactions between modules.</br>
+**2. Core System Construction:** The room system (```Room```) loads the initial room configuration to build the base game environment. The ```InputHandler``` is initialized with room dependencies and linked to the fade controller. Dependency injection ensures that ```InputHandler``` handles both user input and room switching.</br>
+**3. UI System Loading:**  The ```MenuDrawer``` loads scene images, sound effects, and help documentation during construction. It pre-generates all menu DOM elements using ```setupMainMenu()```, ```setupPauseMenu()```, and ```setupGameOverPage()```. Thanks to the use of the state pattern, the menu system can quickly switch rendering logic based on its internal ```#state```. </br>
+**4. Control Center Assembly:** The ```GameStateManager```, acting as the brain of the system, is assembled last. It integrates the three major components: the ```EventBus```, the ```MenuDrawer```, and the ```InputHandler```.</br>
+**5. Entity Resource Initialization:** After all core systems are in place, the ```Player``` entity is instantiated. Its animation component pre-processes sprite sheets using ```extractFrames()``` to prepare for efficient rendering.</br>
+
 ```mermaid
 sequenceDiagram
 actor User
@@ -230,7 +237,11 @@ loop every frame
   end
 end
 ```
-*Figure 6. Sequence Diagram of Main loop Process.*
+*Figure 6. Sequence Diagram of Main loop Process.*</br>
+Figure 6 illustrates the core mechanism of the game loop, which is driven by the ```draw()``` function in p5.js. Using a layered update strategy, it ensures consistent game state progression and efficient rendering. The loop can be divided into two main key stages:</br>
+**1. Player State Update:** </br>Each frame begins with visual feedback for the player: ```Player.updateBlinking()``` manages the visual effect and timing of the player’s invincibility state.</br>
+**2. Game Logic Update:** </br>During each frame, the system first adjusts the canvas scale and updates the game clock. It then immediately checks whether to display the main menu, pause screen, or game over screen—if so, that screen is rendered directly, and all gameplay logic is skipped. Next, the system handles background music playback for the current scene and updates the positions of UI control buttons.</br>The game world then begins to update: level logic runs and the scene is drawn; the player’s movement intent is processed with collision prediction and response (including position updates and damage handling); enemy and environmental interactions are resolved; projectiles are updated and rendered; and if conditions are met, a cutscene triggers the transition to the next area.</br>Back in the main flow, the interface updates the player’s status panel (e.g., health and equipment). If the player reaches a new checkpoint, the game auto-saves. Finally, it checks for victory conditions—if met, the system switches to the result screen and stops all background audio.</br>
+The entire loop follows a smooth sequence: **display adjustment** → **menu check** → **audio and controls** → **game world update** → **status feedback** → **autosave** → **victory handling**, ensuring a fluid and responsive gameplay experience.</br>
 ```mermaid
 sequenceDiagram
 participant GameStateManager
@@ -260,7 +271,11 @@ GameStateManager -> EventBus: publish('game-update')
 EventBus -> InputHandler: handleInput()
 EventBus -> MenuDrawer: updateState()
 ```
-*Figure 7. Sequence Diagram of System interaction Process.*
+*Figure 7. Sequence Diagram of System interaction Process.*</br>
+Figure 7 depicts the integration of various game subsystems, showcasing the deep integration of an event-driven architecture with a layered update strategy. The process is coordinated by the ```GameStateManager```, which drives the game through three main stages:</br>
+**1. Player–Environment Interaction
+In each frame, the ```GameStateManager``` initiates the core gameplay logic by calling ```InputHandler.update()```. The process begins by extracting scene data from the current ```Room```, including the list of enemies and obstacle layout. Next, ```CollisionDetector``` performs three layers of collision prediction based on the player’s intended movement—checking against enemies, obstacles, and boundaries. Movement decisions follow: if no collision is detected, ```updatePosition()``` moves the player normally; otherwise, ```resetVelocity()``` halts illegal movement. If the player collides with an enemy, the damage feedback system is triggered—health is reduced, and the player enters a temporary invincibility state. The room logic is then updated via ```Room.update()```, which follows a fixed priority: (1) enemy actions like movement, chasing, or shooting; (2) application of item effects (e.g., healing or damage boosts); (3) access control checks to determine if the room’s exit conditions are met.</br>
+**2. UI系统协同**
 
 ### 4. Implementation
 #### 4.1 Sprite and visual feedback
@@ -452,16 +467,19 @@ The average scores of the easy mode and the hard mode are 73.2 and 62.3 respecti
 
 #### 5.4 Testing
 We used Jest to develop white-box unit tests for validating internal logic of important modules such as `Player`, `CollisionDetector`, and time tracking functionality.
-1. Player Class Tests: `tests/layer.test.js`
+1. Player Class Tests*
+File: `tests/layer.test.js`
     - HP Initialization: Ensures that a new `Player` instance starts with default HP, critical for combat logic.
     - Shooting: Tests whether shooting adds a bullet with the correct direction and plays sound effects. This ensures responsive combat experience.
     - HP Updates: Includes scenarios for taking damage without death and handling HP reduction to zero, ensuring death-related logic functions correctly.
     - Position Updates: Verifies if player movement via velocity is reflected in position, and if `revertPosition()` resets it properly. This guards against invalid movement errors.
-2. Collision Detection Tests: `tests/collisionDetector.test.js`
+2. Collision Detection Tests*
+File: `tests/collisionDetector.test.js`
     - Out-of-Bounds Bullet Removal: Confirms that bullets leaving the screen are removed. This prevents unnecessary memory usage and UI clutter.
     - Valid Bullet Retention: Ensures that valid bullets remain active in gameplay, supporting uninterrupted user action.
 These tests indirectly verify internal logic like `isBulletHitWall() `and correct management of game objects.
-3. Time Tracking Tests: `tests/time.test.js`
+3. Time Tracking Tests*
+File: `tests/time.test.js`
     - Start Time Accuracy: Verifies correct timestamp capture when the game starts.
     - Elapsed Time: Confirms that time is accurately computed during gameplay.
     - End Message Format: Ensures that completion messages display correctly formatted time (mm:ss), improving end-user feedback and polish.
