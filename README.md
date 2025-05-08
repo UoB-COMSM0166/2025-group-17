@@ -540,6 +540,9 @@ Players can choose to opt out of savepoints, thereby maintaining full control ov
 
 ### 8. Conclusion
 
+<!-- Lessons learned -->
+Through this project, we gained practical experience in JavaScript development and version control, while learning the importance of clear communication and collaboration. Tools like Git and Kanban boards helped us stay organised and adapt to challenges. Most importantly, we learned how to collaborate effectively by balancing different ideas, prioritising tasks, breaking them down into measurable actions, and using each team member's unique strengths to strengths to build software.
+
 <!-- Future work -->
 As for future work, short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for greater immersion. In the medium term, we aim to enhance game essence by implementing non-linear exploration through optional paths and backtracking mechanics. We also plan to integrate in-game progress with leaderboards and social media platforms for competition and community engagement. The major long-term goal is to leverage deep learning techniques to generate levels tailored to each player's gameplay preferences.
 
