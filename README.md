@@ -572,9 +572,11 @@ As for future work, our short-term improvements include introducing new types of
 
 Player feedback will still be our priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
 
-BONUS
-For Leve2, the MONSTERS are approaching...
-![enemy1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Cult.gif)
+BONUS<br>
+For Leve2, the MONSTERS are approaching...<br>
+![enemy1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Cult.gif)&nbsp;
+![enemy2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Lust.gif)&nbsp;
+![enemy3](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Lil_Greedy.gif)&nbsp;
 ![new-enemy](./images/new-enemy.png) ![new-obstacle](./images/new-obstacle.png) ![new-item](./images/new-item.png) </br>
 *Figure 10. Upcoming content: new enemy, obstacle, and item.*
 
