@@ -158,76 +158,15 @@ We utilised a use-case diagram shown in Figure 3, along with the use-case specif
 - System architecture. Class diagrams, behavioural diagrams. 
 -->
 #### 3.1 System Overview
-The design of Out follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. This structure effectively organizes game mechanics into clearly defined components that interact seamlessly, simplifying development, testing, and future maintenance.
-Encapsulation ensures data integrity and controlled access to game object states, safeguarding mechanics such as player health, movement, enemy interactions, and obstacle collisions. Abstraction simplifies interactions by exposing only essential functionalities, reducing complexity. Inheritance and polymorphism enable flexible designs, notably within enemy subclasses that each exhibit unique behaviors derived from a common parent class. Composition allows for the assembly of complex objects from simpler components, ensuring modularity and ease of incremental integration.
+The design of Out follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. 
 #### 3.2 Class Design
-The class diagram clearly outlines key classes, their primary attributes, and critical methods:
-- Player: Attributes include health, velocity, and position. Key methods: move(), shoot(), updatePosition().
- 
-
-<!--![class-diagram.svg](images/class-diagram.svg) <br>
-
-![class diagram.png](images/class%20diagram.png) <br>
--->
 <div style="width: 100%; overflow-x: auto;">
   <img src="images/Class%20Diagram.svg" alt="Class Diagram" style="min-width: 2000px;">
 </div>
 
-```mermaid
-sequenceDiagram
-    participant Player 
-    participant InputHandler 
-    participant CollisionDetector 
-    participant Bullet 
-    participant Enemy 
-    participant Obstacle 
-    participant Room 
-    participant Door 
- 
-    Note right of Player: Player movement logic 
-    Player->>InputHandler: Direction key pressed
-    InputHandler->>Player: updateVelocity()
-    Player->>Player: updatePosition()
-    Player->>CollisionDetector: Detect collision 
-    CollisionDetector-->>Player: Return collision result 
-    alt If collision occurs 
-        Player->>Player: revertPosition()
-    end 
- 
-    Note right of Player: Player shooting logic 
-    Player->>InputHandler: Shoot button pressed
-    InputHandler->>Player: shoot(direction)
-    Player->>Bullet: new Bullet()
-    Bullet->>Bullet: update()
-    Bullet->>Bullet: display()
- 
-    Note right of CollisionDetector: Bullet collision detection 
-    CollisionDetector->>Bullet: detectCollisionWithBullet()
-    alt If collides with enemy 
-        Bullet->>Enemy: Inflict damage 
-        Enemy-->>CollisionDetector: hp -= damage 
-        CollisionDetector->>Bullet: splice()
-    else If collides with obstacle
-        Bullet-->>CollisionDetector: Disappear 
-        CollisionDetector->>Bullet: splice()
-    end 
- 
-    Note right of Room: Room state update 
-    Room->>Enemy: updateEnemies()
-    Enemy->>Enemy: update()
-    Enemy->>Enemy: display()
-    Room->>Obstacle: updateObstacles()
-    Obstacle->>Obstacle: display()
-    Room->>Door: updateAfterClear()
-    Door->>Door: open() or close()
- 
-    Note right of InputHandler: Room switching logic 
-    InputHandler->>Room: checkClearCondition()
-    alt If all enemies are defeated 
-        InputHandler->>Room: loadRoom()
-        Room->>Room: setup(nextRoomData)
-    end
-```
+*Figure 4. Class Diagram.*
+
+#### 3.3 Behavioural Diagrams
 ```mermaid
 sequenceDiagram
 actor User
@@ -261,6 +200,7 @@ setup -> extract: extractFrames(shooterSpriteSheet)
 setup -> extract: extractFrames(enemySpriteSheet)
 setup -> extract: extractFrames(hitEffectSheet)
 ```
+*Figure 5. Sequence Diagram of Initialization Process.*
 ```mermaid
 sequenceDiagram
 actor User
@@ -284,6 +224,7 @@ loop every frame
   end
 end
 ```
+*Figure 6. Sequence Diagram of Main loop Process.*
 ```mermaid
 sequenceDiagram
 participant GameStateManager
@@ -313,13 +254,14 @@ GameStateManager -> EventBus: publish('game-update')
 EventBus -> InputHandler: handleInput()
 EventBus -> MenuDrawer: updateState()
 ```
+*Figure 7. Sequence Diagram of System interaction Process.*
 
 ### 4. Implementation
 #### 4.1 Sprite and visual feedback
 One of the key challenges we faced was making sure enemies in different levels not only moved and attacked, but also looked visually distinct and animated. Initially, our game used single static images for each enemy type, which made them appear lifeless and less engaging. To improve the visual quality and communicate level-specific identity, we wanted enemies in different levels to have different animation styles and sprite sheets.
 
 ![GIF_20250506143013681](https://github.com/user-attachments/assets/7537bc18-af3a-466a-a933-00ef5bb445e0) </br>
-*Figure 4. Illustration of sprite and visual feedback*
+*Figure 8. Illustration of sprite and visual feedback*
 
 To achieve this, we first prepared separate sprite images for each enemy type across different levels. Then, instead of hardcoding sprite logic into each enemy class, we decided to use a centralized system: during room setup in `Room.js`, we dynamically assigned the correct animation frames based on the level ID. This way, for example, Level 3’s `Chaser` and `Shooter` would be linked to `window.chaserFramesL3` and `window.shooterFramesL3`, while lower levels still used the default animations.
 
@@ -561,7 +503,7 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 To enhance sustainability, we organised the features planning to implement using categories from the Sustainability Awareness Framework (SusAF) and mapped their chains of effects within the framework to evaluate their sustainability impact.
 
 ![SusAD](https://github.com/user-attachments/assets/e4e4b938-6a86-4b0e-9396-9552c3bd910d)
-Figure 5. *The Sustainability Awareness Diagram*
+*Figure 9. The Sustainability Awareness Diagram*
 
 Based on the analysis, we reformulated these requirements into user stories, with particular attention to sustainability.
 > **Epic 4: Enhance accessibility for player (Individual/Health)**
