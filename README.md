@@ -21,6 +21,10 @@
 ## Kanban Board
 https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000c642e4ac8&pvs=4
 
+## Project Video
+![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
+https://www.youtube.com/watch?v=58hXDIqVQvE
+
 ## Project Report &nbsp;![button](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/SaveButton.gif)
 
 ### Table of Content
