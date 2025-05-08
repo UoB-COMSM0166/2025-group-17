@@ -634,7 +634,7 @@ Player feedback will still be our priorities. As a Scrum team, we plan to implem
 ![sence8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/BlankRoomt.png)<br><br>
 
 ### The Future Room:<br>
-![miniroom](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Issac%20Map%20example.png)<br>
+![miniroom](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/minimap%20example.png)<br>
 ![current](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/current.png)&nbsp; where you are now<br>
 ![unvisited](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/unvisited.png)&nbsp;
 unvisited rooms<br>
