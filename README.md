@@ -10,8 +10,8 @@
 ## Video
 
 ![pause_play](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/pause_play.gif)&nbsp; **[Click here to play the video!](https://www.youtube.com/watch?v=58hXDIqVQvE)**&nbsp; 
-![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)&nbsp;
-![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)&nbsp;
+![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
+![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)
 ![Normal](https://github.com/user-attachments/assets/9fe1f5cf-2605-4e56-8749-b66fce13efb5)&nbsp;
 
 ## Group
