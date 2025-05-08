@@ -572,6 +572,9 @@ As for future work, our short-term improvements include introducing new types of
 
 Player feedback will still be our priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
 
+BONUS
+For Leve2, the MONSTERS are approaching...
+![enemy1](../../Web_Dec/Lil_Cult.gif)
 ![new-enemy](./images/new-enemy.png) ![new-obstacle](./images/new-obstacle.png) ![new-item](./images/new-item.png) </br>
 *Figure 10. Upcoming content: new enemy, obstacle, and item.*
 
