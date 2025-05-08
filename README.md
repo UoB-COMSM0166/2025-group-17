@@ -560,7 +560,7 @@ We sourced royalty-free audio from public platforms for sound design and then pr
 ####  7.1 The Sustainability Awareness Framework
 To enhance sustainability, we organised the features planning to implement using categories from the Sustainability Awareness Framework (SusAF) and mapped their chains of effects within the framework to evaluate their sustainability impact.
 
-![SusAD](https://github.com/user-attachments/assets/5cc546f5-c0fc-49b6-a68c-c6d9af7fdffd) </br>
+![SusAD](https://github.com/user-attachments/assets/e4e4b938-6a86-4b0e-9396-9552c3bd910d)
 Figure 5. *The Sustainability Awareness Diagram*
 
 Based on the analysis, we reformulated these requirements into user stories, with particular attention to sustainability.
