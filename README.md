@@ -25,7 +25,7 @@ https://www.notion.so/1827d976fa2680a4b440cbe594a6a63d?v=1827d976fa26807b9c51000
 
 ## Project Report &nbsp;![button](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/SaveButton.gif)
 
-### Table of Content
+### Table of Contents
 
 <details>
 <summary>Click to expand</summary>
@@ -208,6 +208,8 @@ setup -> extract: extractFrames(enemySpriteSheet)
 setup -> extract: extractFrames(hitEffectSheet)
 ```
 *Figure 5. Sequence Diagram of Initialization Process.*</br>
+
+
 The system’s initialization adheres to the principles of layered architecture, ensuring a stable foundation through structured resource loading and modular setup. As shown in the sequence diagram (Figure 5), the process consists of five key stages:</br>
 **1. Framework Setup:** The system starts by creating a responsive canvas with p5.js (```createCanvas```) to set up the rendering context. It then initializes the ```FadeManager``` for smooth room transitions. The ```EventBus``` is instantiated next, serving as the communication hub for publish-subscribe interactions between modules.</br>
 **2. Core System Construction:** The room system (```Room```) loads the initial room configuration to build the base game environment. The ```InputHandler``` is initialized with room dependencies and linked to the fade controller. Dependency injection ensures that ```InputHandler``` handles both user input and room switching.</br>
@@ -239,11 +241,16 @@ loop every frame
 end
 ```
 *Figure 6. Sequence Diagram of Main loop Process.*</br>
+
+
 Figure 6 illustrates the core mechanism of the game loop, which is driven by the ```draw()``` function in p5.js. Using a layered update strategy, it ensures consistent game state progression and efficient rendering. The loop can be divided into two main key stages:</br>
+
 **1. Player State Update** </br>
-Each frame begins with visual feedback for the player: ```Player.updateBlinking()``` manages the visual effect and timing of the player’s invincibility state.</br>
+    Each frame begins with visual feedback for the player: ```Player.updateBlinking()``` manages the visual effect and timing of the player’s invincibility state.</br>
+
+
 **2. Game Logic Update** </br>
-```GameStateManager.update()``` acts as the central control loop.The entire loop follows a smooth sequence: **display adjustment** → **menu check** → **audio and controls** → **game world update** → **status feedback** → **autosave** → **victory handling**, ensuring a fluid and responsive gameplay experience.</br>
+    ```GameStateManager.update()``` acts as the central control loop.The entire loop follows a smooth sequence: **display adjustment** → **menu check** → **audio and controls** → **game world update** → **status feedback** → **autosave** → **victory handling**, ensuring a fluid and responsive gameplay experience.</br>
 ```mermaid
 sequenceDiagram
 participant GameStateManager
@@ -274,14 +281,23 @@ EventBus -> InputHandler: handleInput()
 EventBus -> MenuDrawer: updateState()
 ```
 *Figure 7. Sequence Diagram of System interaction Process.*</br>
+
+
 Figure 7 depicts the integration of various game subsystems, showcasing the deep integration of an event-driven architecture with a layered update strategy. The process is coordinated by the ```GameStateManager```, which drives the game through three main stages:</br>
+
+
 **1. Player–Environment Interaction**</br>
-In each frame, the ```GameStateManager``` initiates the core gameplay logic by calling ```InputHandler.update()```. The process begins by extracting scene data from the current ```Room```, including the list of enemies and obstacle layout. Next, ```CollisionDetector``` performs three layers of collision prediction based on the player’s intended movement—checking against enemies, obstacles, and boundaries. Movement decisions follow: if no collision is detected, ```updatePosition()``` moves the player normally; otherwise, ```resetVelocity()``` halts illegal movement. If the player collides with an enemy, the damage feedback system is triggered—health is reduced, and the player enters a temporary invincibility state. The room logic is then updated via ```Room.update()```, which follows a fixed priority: (1) enemy actions like movement, chasing, or shooting; (2) application of item effects (e.g., healing or damage boosts); (3) access control checks to determine if the room’s exit conditions are met.</br>
+    In each frame, the ```GameStateManager``` initiates the core gameplay logic by calling ```InputHandler.update()```. The process begins by extracting scene data from the current ```Room```, including the list of enemies and obstacle layout. Next, ```CollisionDetector``` performs three layers of collision prediction based on the player’s intended movement—checking against enemies, obstacles, and boundaries. Movement decisions follow: if no collision is detected, ```updatePosition()``` moves the player normally; otherwise, ```resetVelocity()``` halts illegal movement. If the player collides with an enemy, the damage feedback system is triggered—health is reduced, and the player enters a temporary invincibility state. The room logic is then updated via ```Room.update()```, which follows a fixed priority: (1) enemy actions like movement, chasing, or shooting; (2) application of item effects (e.g., healing or damage boosts); (3) access control checks to determine if the room’s exit conditions are met.</br>
+
+
 **2. Menu Interaction and Rendering**</br>
-The menu system uses a polymorphic rendering mechanism. ```MenuDrawer.renderMenu()``` dynamically selects the appropriate rendering strategy based on the current state of its internal state machine (```#state```). During cutscenes, the system calls ```ScenePlayer.draw()``` to play animations and synchronously load voice assets. In the pause menu, buttons use the ```blink``` CSS class to create a breathing light effect. On the help screen, ```HelpBar.update()``` dynamically generates control hints based on the current key bindings.
-All menu actions follow an event-driven model, with user interactions broadcast via ```EventBus.publish('menu-interaction')```. For instance, clicking "Resume Game" publishes a ```RESUME_GAME``` event, while selecting "Exit" triggers the ```EXIT_TO_MAIN_MENU``` event. This design cleanly decouples the menu system from the core game logic, enabling new menu items to be added without modifying the main logic—greatly improving extensibility and maintainability.</br>
+    The menu system uses a polymorphic rendering mechanism. ```MenuDrawer.renderMenu()``` dynamically selects the appropriate rendering strategy based on the current state of its internal state machine (```#state```). During cutscenes, the system calls ```ScenePlayer.draw()``` to play animations and synchronously load voice assets. In the pause menu, buttons use the ```blink``` CSS class to create a breathing light effect. On the help screen, ```HelpBar.update()``` dynamically generates control hints based on the current key bindings.
+    All menu actions follow an event-driven model, with user interactions broadcast via ```EventBus.publish('menu-interaction')```. For instance, clicking "Resume Game" publishes a ```RESUME_GAME``` event, while selecting "Exit" triggers the ```EXIT_TO_MAIN_MENU``` event. This design cleanly decouples the menu system from the core game logic, enabling new menu items to be added without modifying the main logic—greatly improving extensibility and maintainability.</br>
+
+
 **3. Global Event-Driven Architecture**</br>
-The project adopts an event-driven architecture to decouple modules and enable efficient coordination. The core state manager, ```GameStateManager```, broadcasts the current game state using ```publish('game-update')```. Subsystems act as subscribers and respond accordingly: the input system processes the state through ```InputHandler.handleInput()```, updating the player’s input queue; the UI system syncs via ```MenuDrawer.updateState()```, triggering layout re-renders and animation updates; and the audio system checks the ```roomId``` in the state to determine if background music should change—if so, it fades out the current track and fades in the next for a seamless transition. This unified event bus mechanism establishes a loosely coupled, highly responsive relationship between modules, supporting easier feature expansion and maintenance.
+    The project adopts an event-driven architecture to decouple modules and enable efficient coordination. The core state manager, ```GameStateManager```, broadcasts the current game state using ```publish('game-update')```. Subsystems act as subscribers and respond accordingly: the input system processes the state through ```InputHandler.handleInput()```, updating the player’s input queue; the UI system syncs via ```MenuDrawer.updateState()```, triggering layout re-renders and animation updates; and the audio system checks the ```roomId``` in the state to determine if background music should change—if so, it fades out the current track and fades in the next for a seamless transition. This unified event bus mechanism establishes a loosely coupled, highly responsive relationship between modules, supporting easier feature expansion and maintenance.
+
 ### 4. Implementation
 #### 4.1 Sprite and visual feedback
 One of the key challenges we faced was making sure enemies in different levels not only moved and attacked, but also looked visually distinct and animated. Initially, our game used single static images for each enemy type, which made them appear lifeless and less engaging. To improve the visual quality and communicate level-specific identity, we wanted enemies in different levels to have different animation styles and sprite sheets.
