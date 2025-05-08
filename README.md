@@ -624,7 +624,6 @@ Player feedback will still be our priorities. As a Scrum team, we plan to implem
 ![sence1](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_LiveRoomt.png)<br>
 ![sence2](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L2Boss.png)<br>
 ![sence4](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Eye.png)<br>
-![sence5](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Mouth.png)<br>
 ![sence6](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Nose.png)<br>
 ![sence7](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/Future_L3Heart.png)<br>
 ![sence8](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/BlankRoomt.png)<br><br>
