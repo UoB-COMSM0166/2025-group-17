@@ -209,7 +209,14 @@ setup -> extract: extractFrames(shooterSpriteSheet)
 setup -> extract: extractFrames(enemySpriteSheet)
 setup -> extract: extractFrames(hitEffectSheet)
 ```
-*Figure 5. Sequence Diagram of Initialization Process.*
+*Figure 5. Sequence Diagram of Initialization Process.*</br>
+The system’s initialization adheres to the principles of layered architecture, ensuring a stable foundation through structured resource loading and modular setup. As shown in the sequence diagram (Figure 5), the process consists of five key stages:</br>
+**1. Framework Setup:** The system starts by creating a responsive canvas with p5.js (```createCanvas```) to set up the rendering context. It then initializes the ```FadeManager``` for smooth room transitions. The ```EventBus``` is instantiated next, serving as the communication hub for publish-subscribe interactions between modules.</br>
+**2. Core System Construction:** The room system (```Room```) loads the initial room configuration to build the base game environment. The ```InputHandler``` is initialized with room dependencies and linked to the fade controller. Dependency injection ensures that ```InputHandler``` handles both user input and room switching.</br>
+**3. UI System Loading:**  The ```MenuDrawer``` loads scene images, sound effects, and help documentation during construction. It pre-generates all menu DOM elements using ```setupMainMenu()```, ```setupPauseMenu()```, and ```setupGameOverPage()```. Thanks to the use of the state pattern, the menu system can quickly switch rendering logic based on its internal ```#state```. </br>
+**4. Control Center Assembly:** The ```GameStateManager```, acting as the brain of the system, is assembled last. It integrates the three major components: the ```EventBus```, the ```MenuDrawer```, and the ```InputHandler```.</br>
+**5. Entity Resource Initialization:** After all core systems are in place, the ```Player``` entity is instantiated. Its animation component pre-processes sprite sheets using ```extractFrames()``` to prepare for efficient rendering.</br>
+
 ```mermaid
 sequenceDiagram
 actor User
