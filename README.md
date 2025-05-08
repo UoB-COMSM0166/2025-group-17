@@ -576,12 +576,12 @@ Player feedback will still be our priorities. As a Scrum team, we plan to implem
 ### 9. Contribution Statement
 | Name | Scrum Role | Responsibility | Contribution |
 |-|-|-|-|
-| Yishan Chen | Project owner | Random room generation, in-room content design, room transition | X |
+| Yishan Chen | Project Owner | Random room generation, in-room content design, room transition | X |
 | Hong Jin | Frontend & UI Developer | Sprint backlog writing, UI flow, user instruction, 2.5D collision, save/load | X |
 | Yuetong Dong | QA Tester | Testing, sound effect integration, video voice-over | X |
-| Yuzheng Li | Backend developer | Entity classes and corresponding logic | X |
-| Shuzhou Huang | Frontend developer | Visual art, pixel asset, visual feedback enhancement, map management | X |
-| Zhexing Yang | Scrum master | Sound design, story scripting, spritesheet animation, video editing | X |
+| Yuzheng Li | Backend Developer | Entity classes and corresponding logic | X |
+| Shuzhou Huang | Frontend Developer | Visual art, pixel asset, visual feedback enhancement, map management | X |
+| Zhexing Yang | Scrum Master | Sound design, story scripting, spritesheet animation, video editing | X |
 
 ### 10. Acknowledgements
 Thanks to ![p5.js](https://p5js.org/favicon.ico?)[p5.js](https://p5js.org/) for providing the framework that supports the contents of our game.
