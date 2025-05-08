@@ -158,7 +158,7 @@ We utilised a use-case diagram shown in Figure 3, along with the use-case specif
 - System architecture. Class diagrams, behavioural diagrams. 
 -->
 #### 3.1 System Overview
-The design of Out follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. 
+The design of **Out** follows a structured and modular object-oriented architecture, informed by key principles of encapsulation, abstraction, inheritance, polymorphism, and composition. 
 #### 3.2 Class Design
 <div style="width: 100%; overflow-x: auto;">
   <img src="images/Class%20Diagram.svg" alt="Class Diagram" style="min-width: 2000px;">
