@@ -216,8 +216,8 @@ setup -> extract: extractFrames(hitEffectSheet)
 
 
 The system’s initialization adheres to the principles of layered architecture, ensuring a stable foundation through structured resource loading and modular setup. As shown in the sequence diagram (Figure 5), the process consists of five key stages:</br>
-**1. Framework Setup:** The system starts by creating a responsive canvas with p5.js (```createCanvas```) to set up the rendering context. It then initializes the ```FadeManager``` for smooth room transitions. The ```EventBus``` is instantiated next, serving as the communication hub for publish-subscribe interactions between modules.</br>
-**2. Core System Construction:** The room system (```Room```) loads the initial room configuration to build the base game environment. The ```InputHandler``` is initialized with room dependencies and linked to the fade controller. Dependency injection ensures that ```InputHandler``` handles both user input and room switching.</br>
+**1. Framework Setup:** The system starts by creating a responsive canvas with p5.js (```createCanvas```) to set up the rendering context. It then initialises the ```FadeManager``` for smooth room transitions. The ```EventBus``` is instantiated next, serving as the communication hub for publish-subscribe interactions between modules.</br>
+**2. Core System Construction:** The room system (```Room```) loads the initial room configuration to build the base game environment. The ```InputHandler``` is initialised with room dependencies and linked to the fade controller. Dependency injection ensures that ```InputHandler``` handles both user input and room switching.</br>
 **3. UI System Loading:**  The ```MenuDrawer``` loads scene images, sound effects, and help documentation during construction. It pre-generates all menu DOM elements using ```setupMainMenu()```, ```setupPauseMenu()```, and ```setupGameOverPage()```. Thanks to the use of the state pattern, the menu system can quickly switch rendering logic based on its internal ```#state```. </br>
 **4. Control Center Assembly:** The ```GameStateManager```, acting as the brain of the system, is assembled last. It integrates the three major components: the ```EventBus```, the ```MenuDrawer```, and the ```InputHandler```.</br>
 **5. Entity Resource Initialization:** After all core systems are in place, the ```Player``` entity is instantiated. Its animation component pre-processes sprite sheets using ```extractFrames()``` to prepare for efficient rendering.</br>
@@ -310,7 +310,7 @@ One of the key challenges we faced was making sure enemies in different levels n
 ![GIF_20250506143013681](https://github.com/user-attachments/assets/7537bc18-af3a-466a-a933-00ef5bb445e0) </br>
 *Figure 8. Illustration of sprite and visual feedback*
 
-To achieve this, we first prepared separate sprite images for each enemy type across different levels. Then, instead of hardcoding sprite logic into each enemy class, we decided to use a centralized system: during room setup in `Room.js`, we dynamically assigned the correct animation frames based on the level ID. This way, for example, Level 3’s `Chaser` and `Shooter` would be linked to `window.chaserFramesL3` and `window.shooterFramesL3`, while lower levels still used the default animations.
+To achieve this, we first prepared separate sprite images for each enemy type across different levels. Then, instead of hardcoding sprite logic into each enemy class, we decided to use a centralised system: during room setup in `Room.js`, we dynamically assigned the correct animation frames based on the level ID. This way, for example, Level 3’s `Chaser` and `Shooter` would be linked to `window.chaserFramesL3` and `window.shooterFramesL3`, while lower levels still used the default animations.
 
 The actual animation is implemented using a simple frame-switching timer. Each enemy class (like Chaser and Shooter) has `frameCounter` and `currentFrame` attributes. In the `update()` function, we increase `frameCounter`, and when it exceeds a threshold (e.g., every 10 frames), we cycle to the next sprite. This ensures animations are smooth but not too fast, and the system is shared by all enemy types. 
 
@@ -334,7 +334,7 @@ In addition to the 2.5D effects on collisions, we made object movements feel mor
 #### 4.3 Sound effects
 While not listed as one of our challenges in the plan, another challenges we encountered was how to manage background music and sound effects dynamically across rooms and gameplay states. For example, each level had a different background track, and certain moments like pausing the game required special audio effects (e.g., low-pass “telephone” filter). We also wanted to avoid overlapping or abrupt changes in audio playback when transitioning between levels or states.
 
-To solve this, we created a centralized sound manager in `GameStateManager.js` that handles music playback based on the current room’s level ID. We used the `p5.sound` library to load all BGM files during `preload()` and played them using `.loop()` when the room started. To prevent redundant playback, we only switched tracks when the target BGM was different from the current one.
+To solve this, we created a centralised sound manager in `GameStateManager.js` that handles music playback based on the current room’s level ID. We used the `p5.sound` library to load all BGM files during `preload()` and played them using `.loop()` when the room started. To prevent redundant playback, we only switched tracks when the target BGM was different from the current one.
 
 For the pause effect, we applied a `LowPass filter` provided by `p5.sound`. When the game enters the pause state, we route the currently playing BGM through this filter and lower the overall volume. When the player resumes, we disconnect the filter and restore the original volume. This adds an immersive "muted" feel to the pause state without interrupting the track entirely.
 
@@ -345,32 +345,32 @@ For the pause effect, we applied a `LowPass filter` provided by `p5.sound`. When
   <summary>Heuristic Evaluation Results</summary>
 <br>
 
-| Name | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
+| User ID | Interface | Issue | Heuristic(s) | Freguency 0 (rare) to 4 (common) | Impact 0 (easy) to difficult (4) | Persistence 0 (once) to 4 (repeated) | Severity = Sum Total of F+I+P/3 |
 |----------|----------|----------|----------|----------|----------|----------|----------|
-| Hsinyun Fan | Tutorial Interface | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
-| Kailin Fang | Tutorial Interface | Instruction could be more clear (like use picture to show). | Help and documentation | 1 | 2 | 1 | 1.33 |
-| Daisy Fan | Tutorial Interface | Can pop up instruction first then begin. The HP not very clear. | Help and documentation | 1 | 2 | 1 | 1.33 |
-| Brian | Tutorial Interface | Don't know how to win or play when just eneter the game. | Visibility | 1 | 4 | 1 | 2 |
-| Kaijie Xu | "Playing" Interface | Player identification | Recognition rather than recall. | 2 | 2 | 4 | 2.67 |
-| Rowan | Pause Menu | Hard to see the pause button | Visibility of system status, Consistency and standards, Error prevention, Recognition rather than recall, Flexibility. | 1 | 1 | 0 | 0.67 |
-| Rowan | "Playing" Interface | Difficult to avoid enemies | Visibility of system status, Consistency and standards, Error prevention, Recognition rather than recall, Aesthetic | 4 | 3 | 2 | 3 |
-| Aya | "Playing" Interface | Hard to defeat enemy, takes many shoots | Flexibility and efficiency of use | 2 | 3 | 2 | 2.33 |
-| A | "Playing" Interface | I'm not used to operating keys. The display of the player's health is not very obvious and is not easy to see at a glance. | User control and freedom. | 1 | 0 | 1 | 0.67 |
-| A | "Playing" Interface | The monster is moving too fast. It is better to show the monster's health. | User control and freedom. | 2 | 2 | 1 | 1.67 |
-| James | Tutorial Interface, "Playing" Interface | It’s a little bit hard for recognize the tutorial image of the first level. | Visibility of system status, Flexibility and efficiency of use | 2 | 2 | 1 | 1.67 |
-| James | "Playing" Interface, Game Over Interface | Hard game and hard to find the button to restart the game. | User control and freedom, Recognition rather than recall | 3 | 3 | 3 | 3 |
-| Farid | "Playing" Interface | Bullet is a bit too slow | Visibility of system status, Flexibility and efficiency of use | 3 | 2 | 3 | 2.67 |
-| Jacque | "Playing" Interface | Collision with box, health visibility | User control and freedom, Aesthetic and minimalist design | 2 | 0 | 3 | 1.67 |
-| Ziqi | "Playing" Interface |  | User control and freedom | 2 | 2 | 1 | 1.67 |
-| Hao | Start Menu | The playing button is too small | Aesthetic and minimalist design  | 1 | 2 | 1 | 1.33 |
-| Beam | "Playing" Interface | Collision detection is a bt off | User control and freedom | 4 | 3 | 1 | 2.67 |
-| Marek | "Playing" Interface | Too small buttons starts very quickly, once you play it more bcomes easier  | Visibility of system status, User control and freedom  | 1 | 1 | 3 | 1.67 |
-| Oliver | "Playing" Interface | Enemies can phase through the obstacles in the level, which is unintuitive that the player can't either. The hitboxes are quite tight which can halt movement if you're colliding with 1 pixel | User control and freedom  | 1 | 1 | 3 | 1.67 |
-| Luciano | Pause Menu, "Playing" Interface | Sometimes movement didn't work. Obstacle location being random each time can make level 3 easier than level 1. | User control and freedom, Aesthetic and minimalist design  | 2 | 3 | 4 | 3 |
-| Alexandros | "Playing" Interface | The hitboxes on the blue computers were a bit too big | Flexibility and efficiency of use  | 3 | 1 | 4 | 2.67 |
-| Ashby | "Playing" Interface | The obstacles looked smaller than they actually were. It was a bit easy to just spam attack.  | User control and freedom, Consistency and standards, Flexibility and efficiency of use  | 2 | 1 | 3 | 2 |
-| Asher | "Playing" Interface | Hitboxes too large, not obvious that music notes stop when they hit obstacles, cannot move left or right when also moving into an obstacle, saving is not clear | Visibility of system status, User control and freedom, Consistency and standards, Flexibility and efficiency of use, Help users recognise, diagnose, and recover from errors | 4 | 3 | 0 | 2.33 |
-| gg | Start Menu |  | Flexibility and efficiency of use | 1 | 3 | 1 | 1.67 |
+| User 01 | Tutorial Interface | Don't know when player is attacked by enemies. | Visibility of system status | 2 | 2 | 0 | 1.25 |
+| User 02 | Tutorial Interface | Instruction could be more clear (like use picture to show). | Help and documentation | 1 | 2 | 1 | 1.33 |
+| User 03 | Tutorial Interface | Can pop up instruction first then begin. The HP not very clear. | Help and documentation | 1 | 2 | 1 | 1.33 |
+| User 04 | Tutorial Interface | Don't know how to win or play when just eneter the game. | Visibility | 1 | 4 | 1 | 2 |
+| User 05 | "Playing" Interface | Player identification | Recognition rather than recall. | 2 | 2 | 4 | 2.67 |
+| User 06 | Pause Menu | Hard to see the pause button | Visibility of system status, Consistency and standards, Error prevention, Recognition rather than recall, Flexibility. | 1 | 1 | 0 | 0.67 |
+| User 06 | "Playing" Interface | Difficult to avoid enemies | Visibility of system status, Consistency and standards, Error prevention, Recognition rather than recall, Aesthetic | 4 | 3 | 2 | 3 |
+| User 07 | "Playing" Interface | Hard to defeat enemy, takes many shoots | Flexibility and efficiency of use | 2 | 3 | 2 | 2.33 |
+| User 08 | "Playing" Interface | I'm not used to operating keys. The display of the player's health is not very obvious and is not easy to see at a glance. | User control and freedom. | 1 | 0 | 1 | 0.67 |
+| User 08 | "Playing" Interface | The monster is moving too fast. It is better to show the monster's health. | User control and freedom. | 2 | 2 | 1 | 1.67 |
+| User 09 | Tutorial Interface, "Playing" Interface | It’s a little bit hard for recognise the tutorial image of the first level. | Visibility of system status, Flexibility and efficiency of use | 2 | 2 | 1 | 1.67 |
+| User 09 | "Playing" Interface, Game Over Interface | Hard game and hard to find the button to restart the game. | User control and freedom, Recognition rather than recall | 3 | 3 | 3 | 3 |
+| User 10 | "Playing" Interface | Bullet is a bit too slow | Visibility of system status, Flexibility and efficiency of use | 3 | 2 | 3 | 2.67 |
+| User 11 | "Playing" Interface | Collision with box, health visibility | User control and freedom, Aesthetic and minimalist design | 2 | 0 | 3 | 1.67 |
+| User 12 | "Playing" Interface |  | User control and freedom | 2 | 2 | 1 | 1.67 |
+| User 13 | Start Menu | The playing button is too small | Aesthetic and minimalist design  | 1 | 2 | 1 | 1.33 |
+| User 14 | "Playing" Interface | Collision detection is a bt off | User control and freedom | 4 | 3 | 1 | 2.67 |
+| User 15 | "Playing" Interface | Too small buttons starts very quickly, once you play it more bcomes easier  | Visibility of system status, User control and freedom  | 1 | 1 | 3 | 1.67 |
+| User 16 | "Playing" Interface | Enemies can phase through the obstacles in the level, which is unintuitive that the player can't either. The hitboxes are quite tight which can halt movement if you're colliding with 1 pixel | User control and freedom  | 1 | 1 | 3 | 1.67 |
+| User 17 | Pause Menu, "Playing" Interface | Sometimes movement didn't work. Obstacle location being random each time can make level 3 easier than level 1. | User control and freedom, Aesthetic and minimalist design  | 2 | 3 | 4 | 3 |
+| User 18 | "Playing" Interface | The hitboxes on the blue computers were a bit too big | Flexibility and efficiency of use  | 3 | 1 | 4 | 2.67 |
+| User 19 | "Playing" Interface | The obstacles looked smaller than they actually were. It was a bit easy to just spam attack.  | User control and freedom, Consistency and standards, Flexibility and efficiency of use  | 2 | 1 | 3 | 2 |
+| User 20 | "Playing" Interface | Hitboxes too large, not obvious that music notes stop when they hit obstacles, cannot move left or right when also moving into an obstacle, saving is not clear | Visibility of system status, User control and freedom, Consistency and standards, Flexibility and efficiency of use, Help users recognise, diagnose, and recover from errors | 4 | 3 | 0 | 2.33 |
+| User 21 | Start Menu |  | Flexibility and efficiency of use | 1 | 3 | 1 | 1.67 |
 </details>
 
 We conducted two questionnaire collection activities. A total of 24 feedback from 21 students were collected, which is shown in the above table.
@@ -379,8 +379,8 @@ We conducted two questionnaire collection activities. A total of 24 feedback fro
 |----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
 | **Lack of Visibility of System Status** | - Players don’t know when they are attacked.  <br> - Health display is unclear. <br> - Bullets are too slow, lack timely feedback. <br> - Enemy health is invisible. | Makes it hard for players to understand game status, leading to frustration.                   | Enhance UI elements like health bars and attack indicators to improve real-time feedback.                      |
 | **Insufficient User Control and Feedback** | - Unresponsive or unintuitive key controls. <br> - Movement restrictions (e.g., stuck on collisions, can't move sideways). <br> - High difficulty, restart button hard to find. <br> - Unclear saving system. | Reduces sense of control, potentially causes players to quit.                                   | Provide clear control prompts, customizable keys, and visible retry/exit buttons.                             |
-| **Lack of Help and Documentation**     | - Tutorial is unclear or disorganized. <br> - Players don’t know how to start or win the game.                                                   | High entry barrier, poor tutorial experience.                                                  | Use visuals, step-by-step popups, and task hints to enhance guidance.                                         |
-| **Inconsistency & Aesthetic Issues**   | - Buttons are too small or not noticeable. <br> - Visual and actual collision of obstacles are inconsistent. <br> - Enemies or obstacles are too fast to react. | Reduces interface usability and predictability.                                                | Unify visual style, optimize hitboxes, and highlight interactive elements.                                     |
+| **Lack of Help and Documentation**     | - Tutorial is unclear or disorganised. <br> - Players don’t know how to start or win the game.                                                   | High entry barrier, poor tutorial experience.                                                  | Use visuals, step-by-step popups, and task hints to enhance guidance.                                         |
+| **Inconsistency & Aesthetic Issues**   | - Buttons are too small or not noticeable. <br> - Visual and actual collision of obstacles are inconsistent. <br> - Enemies or obstacles are too fast to react. | Reduces interface usability and predictability.                                                | Unify visual style, optimise hitboxes, and highlight interactive elements.                                     |
 | **Recognition Over Recall**            | - Players can't easily identify their character or elements. <br> - Difficult to remember how to restart or continue the game.                    | Increases cognitive load by requiring memory instead of recognition.                           | Strengthen visual cues, add icons and labels to assist recognition.                                           |
 
 
@@ -471,24 +471,24 @@ The average scores of the easy mode and the hard mode are 73.2 and 62.3 respecti
 
 #### 5.3 Improvements of the final version
 ##### Enhancing System State Visibility
-- Add clear attack indicators when the player is hit (e.g., shaking the player image, damage flash), and optimize real-time feedback for health bar/heart icons.
+- Add clear attack indicators when the player is hit (e.g., shaking the player image, damage flash), and optimise real-time feedback for health bar/heart icons.
 - Display dynamic health values for both enemies and players, providing immediate visual effects when bullets hit and enemies take damage.
 
 ###### Improving User Control and Feedback
 - Add clear buttons for restart, exit, and continue on the interface.
-- Optimize collision detection to avoid getting stuck against walls or being unable to move sideways, and clearly indicate the save and restart processes.
+- Optimise collision detection to avoid getting stuck against walls or being unable to move sideways, and clearly indicate the save and restart processes.
 
 ###### Enhancing Help and Guidance
 - Set up tutorial levels before the game starts, and add task prompts or concise graphical/text tutorials to help new players quickly grasp game objectives and controls.
 - Provide a skippable quick guide mode to lower the learning barrier for experienced players.
 
 ###### Unifying Interface Style and Aesthetics
-- Standardize UI visual elements (buttons, fonts, colors), highlight interactive areas, and optimize the visual/collision detection of obstacles for consistency.
+- Standardise UI visual elements (buttons, fonts, colors), highlight interactive areas, and optimise the visual/collision detection of obstacles for consistency.
 - Control the movement speed of enemies and items (e.g. boss bullets) to ensure players have sufficient reaction time.
 
 ###### Strengthening "Recognition Over Recall"
 - Add key operation buttons and system operation instructions on non-game pages (e.g., pause interface) to reduce players' memory burden.
-- Use consistent and intuitive visual symbols for important interactions (e.g., save points, teleporters) to help players quickly recognize and make selections.
+- Use consistent and intuitive visual symbols for important interactions (e.g., save points, teleporters) to help players quickly recognise and make selections.
 
 
 #### 5.4 Testing
@@ -532,7 +532,7 @@ We used GitHub for version control and collaborative coding. Each team member wo
 
 The main branch was always kept stable to ensure that we always had a functioning build available. GitHub’s protection features, including pull requests, allowed us to thoroughly review and test each other’s contributions before merging. This improved code quality helped prevent merge conflicts and maintained consistency in implementing features.
 
-Given the complexity of our game, which involved multiple interconnected game states, we adopted Notion as our project management tool. Notion enabled us to track progress on various tasks, delegate responsibilities, and visualize our workflow clearly. We divided work based on game modules and assigned responsibilities accordingly. In retrospect, we realized that we could have further broken down larger tasks into smaller sub-tasks—such as dividing the development of the shop state into UI design, game logic, and asset integration. This would have given us a more granular understanding of our progress and helped balance the workload more effectively.
+Given the complexity of our game, which involved multiple interconnected game states, we adopted Notion as our project management tool. Notion enabled us to track progress on various tasks, delegate responsibilities, and visualise our workflow clearly. We divided work based on game modules and assigned responsibilities accordingly. In retrospect, we realised that we could have further broken down larger tasks into smaller sub-tasks—such as dividing the development of the shop state into UI design, game logic, and asset integration. This would have given us a more granular understanding of our progress and helped balance the workload more effectively.
 <!--![微信截图_20250412140536](https://github.com/user-attachments/assets/fc33d177-d199-4be4-b140-9c36fdd7c5b3)
 -->
 ![kanban.png](images/kanban.png) <br>
@@ -571,14 +571,14 @@ As part of our reflection on the environmental impact of our game using SusAF, w
 ##### Remove unused CSS definitions
 We audited our stylesheet with browser Coverage and regex-based searches, stripped out every unused selector, and now only ship the base layout rules and the `.blink` keyframe animation.  
 
-##### Optimize image size
+##### Optimise image size
 - We applied automated image compression (using imagemin with MozJPEG/PNGQuant) and resized high-resolution assets to match in-game display size, reducing the total image footprint from X to Y.  
 - This optimization cuts bandwidth, speeds up level load times, and lowers client-side decoding CPU usage for better energy efficiency.
 
 #### 7.3 Privacy & Security
 To address privacy protection, there is a policy that appears each time a player accesses the game website. The policy respects GDPR principles by collecting only minimal, relevant data (level, room, HP) for the sole purpose of restoring game progress, with storage kept local and never shared.
 
-Players can choose to opt out of savepoints, thereby maintaining full control over their data consent. Because no data is uploaded or shared, the risk of data breaches is also minimized. Furthermore, since the data remains local and contains no personal information, we did not use personas to analyse of the game’s data collection.
+Players can choose to opt out of savepoints, thereby maintaining full control over their data consent. Because no data is uploaded or shared, the risk of data breaches is also minimised. Furthermore, since the data remains local and contains no personal information, we did not use personas to analyse of the game’s data collection.
 ![pbd](./images/pbd.png)
 
 ### 8. Conclusion
@@ -589,9 +589,28 @@ The main challenges were improving visual feedback and more realistic interactio
 
 Through this project, we gained practical experience in JavaScript development and version control, while learning the importance of clear communication and collaboration. Tools like Git and Kanban boards helped us stay organised and adapt to challenges. We also learned the importance of continuous user testing to discover usability issues, and the value of class diagrams and modular code architecture for late-stage feature additions. Most importantly, we discovered how to work well as a team: breaking tasks into clear actions, prioritising effectively, and playing to each member’s strengths.
 
-As for future work, our short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for better immersion. In the mid-term, we will introduce non-linear exploration by implementing optional paths and backtracking. In addition, We also plan to combine in-game progress with leaderboards and social media platforms for competition and community engagement. Long-term, we hope to use deep learning to generate levels tailored to each player’s style.
+As for future work, our short-term improvements include introducing new types of enemies and items to enhance gameplay variety, and replacing static shooting sounds with dynamic audio for better immersion. In the mid-term, we will introduce non-linear exploration by implementing optional paths and backtracking. In addition, we also plan to combine in-game progress with leaderboards and social media platforms for competition and community engagement. Long-term, we hope to use deep learning to generate levels tailored to each player’s style.
 
 Player feedback will still be our priorities. As a Scrum team, we plan to implement more comprehensive black-box testing, participate in testathons to gather real-world user insights, and stay prepared to follow new agile methodologies.
+
+### 9. Contribution Statement
+| Name | Scrum Role | Responsibility | Contribution |
+|-|-|-|-|
+| Yishan Chen | Project Owner | Random room generation, in-room content design, room transition | 1.1 |
+| Hong Jin | Frontend & UI Developer | Sprint backlog writing, UI flow, user instruction, 2.5D collision, save/load | 1.1 |
+| Yuetong Dong | QA Tester | Testing, sound effect integration, video voice-over | 0.5 |
+| Yuzheng Li | Backend Developer | Entity classes and corresponding logic | 1.1 |
+| Shuzhou Huang | Frontend Developer | Visual art, pixel asset, visual feedback enhancement, map management | 1.1 |
+| Zhexing Yang | Scrum Master | Sound design, story scripting, spritesheet animation, video editing | 1.1 |
+
+### 10. Acknowledgements
+🌹Thanks to ![p5.js](https://p5js.org/favicon.ico?)[p5.js](https://p5js.org/) for providing the framework that supports the contents of our game.
+
+🌹Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
+
+🌹Thanks to [Freesound](https://freesound.org/) for the sound effect used in this project.
+
+🌹Thanks to everyone contributed feedback on both the game and the report.
 
 ## **BONUS**<br>
 ### For Leve2, the MONSTERS are approaching...<br>
@@ -646,26 +665,3 @@ treasure room -- for cool items<br>
 elite room -- challenge yourself<br>
 ![boss](https://github.com/UoB-COMSM0166/2025-group-17/blob/main/Web_Dec/boss.png)&nbsp;
 boss room
-
-
-
-
-### 9. Contribution Statement
-| Name | Scrum Role | Responsibility | Contribution |
-|-|-|-|-|
-| Yishan Chen | Project Owner | Random room generation, in-room content design, room transition | X |
-| Hong Jin | Frontend & UI Developer | Sprint backlog writing, UI flow, user instruction, 2.5D collision, save/load | X |
-| Yuetong Dong | QA Tester | Testing, sound effect integration, video voice-over | X |
-| Yuzheng Li | Backend Developer | Entity classes and corresponding logic | X |
-| Shuzhou Huang | Frontend Developer | Visual art, pixel asset, visual feedback enhancement, map management | X |
-| Zhexing Yang | Scrum Master | Sound design, story scripting, spritesheet animation, video editing | X |
-
-### 10. Acknowledgements
-🌹Thanks to ![p5.js](https://p5js.org/favicon.ico?)[p5.js](https://p5js.org/) for providing the framework that supports the contents of our game.
-
-🌹Thanks to [Google Fonts](https://fonts.google.com/) for the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) font used in this project.
-
-🌹Thanks to [Freesound](https://freesound.org/) for the sound effect used in this project.
-
-🌹Thanks to everyone contributed feedback on both the game and the report.
-
