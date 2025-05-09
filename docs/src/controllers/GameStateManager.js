@@ -114,6 +114,7 @@ class GameStateManager {
     const savedTimeSpent = localStorage.getItem('timeSpent');
     if (!savedXData || !savedYData || !savedHp || !savedAtk || !savedBulletSize || !savedTimeSpent) {
       console.log("Parts of save data missing; starting from scratch...");
+      this.#PageDrawer.setInGameState();
       return this.startNewGame();
     }
 
