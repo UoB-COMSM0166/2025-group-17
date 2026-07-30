@@ -6,6 +6,7 @@ class ScenePlayer {
   #currentIndex = 0;
   #currentBGM = null;
   #noiseIntensity = 0.1;
+  #loadingSounds = new Set();
 
   constructor(data, images, sounds) {
     this.#data = data;
@@ -55,10 +56,32 @@ class ScenePlayer {
     if (this.#currentIndex >= this.#currentScene.length) return this.stopBGM();
 
     const line = this.#currentScene[this.#currentIndex];
-    const sound = this.#sounds[line.sound.name];
-    console.log(`Current scene line: ${line.label}, sound: ${line.sound.name}`);
-    if (!sound) return;
+    if (!line.sound?.name) return;
+    const soundName = line.sound.name;
+    const sound = this.#sounds[soundName];
+    if (sound) return this.#startSound(line, sound);
+    if (this.#loadingSounds.has(soundName)) return;
 
+    const folder = line.sound.type === 'bgm' ? 'assets/music/bgm' : 'assets/music/se';
+    const soundPath = `${folder}/${soundName}.mp3`;
+    this.#loadingSounds.add(soundName);
+    loadSound(
+      soundPath,
+      loadedSound => {
+        this.#loadingSounds.delete(soundName);
+        this.#sounds[soundName] = loadedSound;
+        if (this.#currentScene[this.#currentIndex] === line) {
+          this.#startSound(line, loadedSound);
+        }
+      },
+      error => {
+        this.#loadingSounds.delete(soundName);
+        console.warn(`Unable to load scene audio: ${soundPath}`, error);
+      }
+    );
+  }
+
+  #startSound(line, sound) {
     if (line.sound.type === "bgm") {
       if (this.#currentBGM === sound) return;
       this.stopBGM();
@@ -73,12 +96,11 @@ class ScenePlayer {
   stopBGM() {
     if (this.#currentBGM?.isPlaying()) {
       this.#currentBGM.stop();
-      this.#currentBGM = null;
     }
+    this.#currentBGM = null;
   }
 
   setScene(sceneName) {
-    console.log(`Set scene to ${sceneName}`);
     this.stopBGM();
     this.#currentScene = this.#data[sceneName];
     this.#currentIndex = 0;

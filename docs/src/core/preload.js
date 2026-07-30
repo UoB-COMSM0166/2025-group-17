@@ -117,12 +117,8 @@ function preload() {
 
 
 
-  //  Load the BGM of the main interface and the first level (using p5.sound)
+  // Load only the main-menu BGM up front. Level music is loaded on demand.
   mainmenuSound = loadSound("assets/music/bgm/MainMenu.mp3");
-  L1_OfficeSound = loadSound("assets/music/bgm/L1_Office.mp3");
-  L2_CasinoSound = loadSound("assets/music/bgm/L2_Casino.mp3");
-  L3_PsychoSound = loadSound("assets/music/bgm/L3_Psycho.mp3");
-
 
   //Loading sound effect
   btnSound = loadSound("assets/music/se/Btn_Pressed.mp3");
@@ -146,11 +142,6 @@ function preloadScenes() {
     if (line.image && !sceneImgs[line.image]) {
       sceneImgs[line.image] = loadImage(`assets/scenes/${line.image}.png`);
     }
-
-    if (line.sound && !sceneSounds[line.sound.name]) {
-      const folder = line.sound.type === "bgm" ? "assets/music/bgm" : "assets/music/se";
-      sceneSounds[line.sound.name] = loadSound(`${folder}/${line.sound.name}.mp3`);
-    }
   }
 }
 
@@ -165,9 +156,7 @@ function setRoomImg() {
     }
     if (room.enemies) {
       room.enemies.forEach(enes => {
-        console.log(`Loading ${enes.image} into room ${room.currentRoomId}`)
         enes.img = loadImage(enes.image);
-        console.log(`Enemy image size ${enes.img.width}, ${enes.img.height}`)
       });
     }
   });

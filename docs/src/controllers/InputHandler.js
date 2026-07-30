@@ -47,17 +47,17 @@ class InputHandler {
   handlePlayerShooting(playerObj) {
     const direction = key.toLowerCase();
     if (direction === 'w' || direction === 'a' || direction === 's' || direction === 'd') {
-      console.log("Bullet input detected!");
       playerObj.shoot(direction);
     }
   }
 
   updateBullets(playerObj) {
-    playerObj.bullets.forEach((b, bIndex) => {
+    for (let bIndex = playerObj.bullets.length - 1; bIndex >= 0; bIndex--) {
+      const b = playerObj.bullets[bIndex];
       b.update();
       if (b.shouldBeRemoved()) playerObj.bullets.splice(bIndex, 1);
       else b.display();
-    });
+    }
   }
 
   #moveToNextRoom(playerObj, tolerance = playerObj.size.x) {
@@ -132,3 +132,5 @@ class InputHandler {
     return maxRoomId;
   }
 }
+
+if (typeof module !== 'undefined') module.exports = InputHandler;

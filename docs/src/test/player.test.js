@@ -22,8 +22,17 @@ global.p5 = {
 
 global.max = Math.max;
 
-global.deathSound = { play: jest.fn(), currentTime: 0 };
+global.min = Math.min;
+global.hurtSound = { play: jest.fn(), currentTime: 0 };
+global.playerDeathSound = { play: jest.fn(), currentTime: 0 };
 global.shootSound = { play: jest.fn(), currentTime: 0 };
+global.bulletImage = 'normal-bullet';
+global.powerUpBulletImage = 'power-up-bullet';
+global.window = {
+  playerAnimations: {
+    up: [], down: [], left: [], right: []
+  }
+};
 
 global.defaultHp = 3;
 global.defaultSpeed = 5;
@@ -57,15 +66,15 @@ describe('Player Class Functionality', () => {
   });
 
   test('updateHp() reduces HP without death', () => {
-    player.updateHp(2);
+    player.updateHp(-1);
     expect(player.hp).toBe(2);
-    expect(deathSound.play).not.toHaveBeenCalled();
+    expect(playerDeathSound.play).not.toHaveBeenCalled();
   });
 
   test('updateHp() reduces HP to 0 and triggers death sound', () => {
-    player.updateHp(0);
+    player.updateHp(-3);
     expect(player.hp).toBe(0);
-    expect(deathSound.play).toHaveBeenCalled();
+    expect(playerDeathSound.play).toHaveBeenCalled();
   });
 
   test('updatePosition() updates position by velocity', () => {

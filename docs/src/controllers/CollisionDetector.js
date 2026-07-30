@@ -116,6 +116,10 @@ class CollisionDetector {
     );
   }
 
+  isBulletHitWall(bulletObj) {
+    return this.#isBulletHitWall(bulletObj);
+  }
+
   #isBulletHitWall(bulletObj) {
     const boundaryInPixel = { w: 80, h: 72 };
     const wallMarginX = boundaryInPixel.w / 3;
@@ -131,4 +135,5 @@ class CollisionDetector {
     );
   }
 }
-window.CollisionDetector = CollisionDetector;
+if (typeof window !== 'undefined') window.CollisionDetector = CollisionDetector;
+if (typeof module !== 'undefined') module.exports = CollisionDetector;

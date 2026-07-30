@@ -70,7 +70,6 @@ class Player {
     if (newHp < this.hp) hurtSound.play();
 
     this.hp = max(0, min(newHp, this.#maxHp));
-    console.log("Player hp updated to", this.hp);
 
     if (this.hp <= 0) playerDeathSound.play();
     this.resetInvincibleTimer(invincibleDuration);
@@ -84,7 +83,6 @@ class Player {
     this.bullets.push(new Bullet(centerX, centerY, direction, this.#atk, bulletImg, this.#bulletSize));
     this.#canShootAgain = false;
     setTimeout(() => { this.#canShootAgain = true; }, this.#shootCoolDownDuration);
-    console.log("A bullet has been shot");
     shootSound.play();
   }
 
@@ -92,7 +90,6 @@ class Player {
     const upRatio = 1.25;
     this.#atk = min(this.#atk * upRatio, this.#maxAtk);
     this.#bulletSize = min(this.#bulletSize * upRatio, this.#maxBulletSize);
-    console.log(`Power Up activated! ATK: ${this.#atk}, Bullet size: ${this.#bulletSize}`);
   }
 
   updateBlinking() {
@@ -193,3 +190,5 @@ class Player {
     this.invincibleTimer = duration;
   }
 }
+
+if (typeof module !== 'undefined') module.exports = Player;

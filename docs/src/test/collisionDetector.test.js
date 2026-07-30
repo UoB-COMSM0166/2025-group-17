@@ -17,13 +17,19 @@ global.leftBoundary = 0;
 global.rightBoundary = 800;
 global.topBoundary = 0;
 global.bottomBoundary = 600;
+global.max = Math.max;
 global.boundaryInPixel = { w: 800, h: 600 };
+global.player = {};
 
 function createMockObj(x, y, w = 20, h = 20) {
   return {
     position: { x, y },
     size: { x: w, y: h },
-    velocity: { x: 0, y: 0 }
+    velocity: { x: 0, y: 0 },
+    isHit: false,
+    markAsHit() {
+      this.isHit = true;
+    }
   };
 }
 
@@ -60,7 +66,7 @@ describe('CollisionDetector Functionality Tests', () => {
     detector.detectBulletEnemyCollision(bullets, enemies);
 
     expect(enemies[0].hp).toBe(10); 
-    expect(bullets.length).toBe(0); 
+    expect(bullets[0].isHit).toBe(true);
   });
 
   test('detectBulletCollision - bullet hits obstacle and disappears', () => {
@@ -75,7 +81,7 @@ describe('CollisionDetector Functionality Tests', () => {
     const obstacles = [obstacle];
 
     detector.detectBulletCollision(bullets, enemies, obstacles);
-    expect(bullets.length).toBe(0); // The bullet was deleted
+    expect(bullets[0].isHit).toBe(true);
   });
 
   test('isBulletHitWall - bullet outside boundary returns true', () => {

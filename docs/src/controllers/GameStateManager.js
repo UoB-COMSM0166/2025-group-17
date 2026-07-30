@@ -1,9 +1,17 @@
+const GAME_SAVE_KEY = 'outGameSave';
+const GAME_SAVE_VERSION = 1;
+
 class GameStateManager {
   #inputHandler;
   #isGameCompleted;
   #PageDrawer;
   #pauseTime;
   #timeSpent;
+  #canvasScaleX;
+  #canvasScaleY;
+  #bgmCache;
+  #loadingBGMPaths;
+  #requestedBGMPath;
 
   // Manage which page and buttons to draw
   constructor(eventBus, PageDrawer, inputHandler) {
@@ -12,21 +20,26 @@ class GameStateManager {
     this.#pauseTime = null;
     this.#isGameCompleted = false;
     this.#timeSpent = 0;
+    this.#canvasScaleX = 1;
+    this.#canvasScaleY = 1;
+    this.#bgmCache = new Map();
+    this.#loadingBGMPaths = new Set();
+    this.#requestedBGMPath = null;
 
     // Current BGM reference + filter
     this.currentBGM = null;
     this.filter = new p5.LowPass();
 
     // room index -> BGM mapping (can be shared by multiple indices)
-    this.roomBGMs = {
-      0: L1_OfficeSound,
-      1: L1_OfficeSound,
-      2: L1_OfficeSound,
-      3: L1_OfficeSound,
-      4: L2_CasinoSound,
-      5: L2_CasinoSound,
-      6: L2_CasinoSound,
-      7: L3_PsychoSound,
+    this.roomBGMPaths = {
+      0: 'assets/music/bgm/L1_Office.mp3',
+      1: 'assets/music/bgm/L1_Office.mp3',
+      2: 'assets/music/bgm/L1_Office.mp3',
+      3: 'assets/music/bgm/L1_Office.mp3',
+      4: 'assets/music/bgm/L2_Casino.mp3',
+      5: 'assets/music/bgm/L2_Casino.mp3',
+      6: 'assets/music/bgm/L2_Casino.mp3',
+      7: 'assets/music/bgm/L3_Psycho.mp3',
     };
 
     eventBus.subscribe('LOAD_GAME', () => this.loadGameData());
@@ -37,7 +50,7 @@ class GameStateManager {
   }
 
   update() {
-    this.#adjustCanvasWithAspectRatio();
+    scale(this.#canvasScaleX, this.#canvasScaleY);
     if (!this.#isGameCompleted) this.#timeSpent = millis() - startTime;
     if (this.#shouldRenderMenu()) return;
 
@@ -87,49 +100,109 @@ class GameStateManager {
   
   #saveGameData() {
     if (room.savePoint.isChecked) return;
-    console.log("Can be saved again!");
-  
-    localStorage.setItem('currentRoomDataId', room.getRoomDataId());
-    localStorage.setItem('lastSavePointX', JSON.stringify(room.savePoint.position.x));
-    localStorage.setItem('lastSavePointY', JSON.stringify(room.savePoint.position.y));
-    localStorage.setItem('playerHp', JSON.stringify(player.getHp()));
-    localStorage.setItem('playerAtk', JSON.stringify(player.getAtk()));
-    localStorage.setItem('playerBulletSize', JSON.stringify(player.getBulletSize()));
-    localStorage.setItem('timeSpent', JSON.stringify(this.#timeSpent));
-    console.log("Game Saved!");
+
+    const saveData = {
+      version: GAME_SAVE_VERSION,
+      savedAt: Date.now(),
+      roomDataId: room.getRoomDataId(),
+      player: {
+        x: room.savePoint.position.x,
+        y: room.savePoint.position.y,
+        hp: player.getHp(),
+        attack: player.getAtk(),
+        bulletSize: player.getBulletSize(),
+      },
+      timeSpent: this.#timeSpent,
+    };
+
+    try {
+      localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(saveData));
+    } catch (error) {
+      console.warn('Unable to save the game:', error);
+    }
   }
 
   loadGameData() {
-    const savedRoomDataId = localStorage.getItem('currentRoomDataId');
-    if (savedRoomDataId) {
-      this.#PageDrawer.setInGameState();
-      this.#setupRoom(parseInt(savedRoomDataId));
-    }
-
-    const savedXData = localStorage.getItem('lastSavePointX');
-    const savedYData = localStorage.getItem('lastSavePointY');
-    const savedHp = localStorage.getItem('playerHp');
-    const savedAtk = localStorage.getItem('playerAtk');
-    const savedBulletSize = localStorage.getItem('playerBulletSize');
-    const savedTimeSpent = localStorage.getItem('timeSpent');
-    if (!savedXData || !savedYData || !savedHp || !savedAtk || !savedBulletSize || !savedTimeSpent) {
-      console.log("Parts of save data missing; starting from scratch...");
+    const saveData = this.#readSaveData();
+    if (!saveData) {
       this.#PageDrawer.setInGameState();
       return this.startNewGame();
     }
 
-    const savedPositionX = JSON.parse(savedXData);
-    const savedPositionY = JSON.parse(savedYData);
-    player.resetRoomState(JSON.parse(savedHp), JSON.parse(savedAtk), JSON.parse(savedBulletSize), savedPositionX, savedPositionY);
-    startTime = millis() - JSON.parse(savedTimeSpent);
-    console.log("Game Loaded!");
+    this.#PageDrawer.setInGameState();
+    this.#setupRoom(saveData.roomDataId);
+    player.resetRoomState(
+      saveData.player.hp,
+      saveData.player.attack,
+      saveData.player.bulletSize,
+      saveData.player.x,
+      saveData.player.y
+    );
+    startTime = millis() - saveData.timeSpent;
 
     this.#PageDrawer.toggleStartButtons();
     this.#PageDrawer.toggleGameOverButtons();
   }
 
+  #readSaveData() {
+    try {
+      const storedSave = localStorage.getItem(GAME_SAVE_KEY);
+      if (storedSave) {
+        const parsedSave = JSON.parse(storedSave);
+        if (this.#isValidSaveData(parsedSave)) return parsedSave;
+      }
+
+      const legacySave = this.#readLegacySaveData();
+      if (this.#isValidSaveData(legacySave)) {
+        localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(legacySave));
+        return legacySave;
+      }
+    } catch (error) {
+      console.warn('Ignoring invalid save data:', error);
+    }
+    return null;
+  }
+
+  #readLegacySaveData() {
+    const legacyKeys = [
+      'currentRoomDataId', 'lastSavePointX', 'lastSavePointY',
+      'playerHp', 'playerAtk', 'playerBulletSize', 'timeSpent'
+    ];
+    const values = legacyKeys.map(key => localStorage.getItem(key));
+    if (values.some(value => value === null)) return null;
+
+    return {
+      version: GAME_SAVE_VERSION,
+      savedAt: Date.now(),
+      roomDataId: Number(values[0]),
+      player: {
+        x: Number(values[1]),
+        y: Number(values[2]),
+        hp: Number(values[3]),
+        attack: Number(values[4]),
+        bulletSize: Number(values[5]),
+      },
+      timeSpent: Number(values[6]),
+    };
+  }
+
+  #isValidSaveData(saveData) {
+    if (!saveData || saveData.version !== GAME_SAVE_VERSION || !saveData.player) return false;
+    const numericValues = [
+      saveData.roomDataId, saveData.player.x, saveData.player.y,
+      saveData.player.hp, saveData.player.attack,
+      saveData.player.bulletSize, saveData.timeSpent
+    ];
+    return Number.isInteger(saveData.roomDataId)
+      && Boolean(roomData[saveData.roomDataId])
+      && numericValues.every(Number.isFinite)
+      && saveData.player.hp >= 0
+      && saveData.player.attack > 0
+      && saveData.player.bulletSize > 0
+      && saveData.timeSpent >= 0;
+  }
+
   startNewGame() {
-    console.log("New Game Start!");
     this.#resetGame();
     this.#PageDrawer.toggleResumeButtons();
     this.#PageDrawer.toggleStartButtons();
@@ -141,12 +214,10 @@ class GameStateManager {
     player = new Player();
     this.#setupRoom(0); // reset to the initial room from first room in JSON data
     this.#inputHandler = new InputHandler(room);
-    console.log("Game is reset!");
   }
 
   pauseGame() {
     this.#pauseTime = millis();
-    console.log("Game pause!");
 
     if (btnSound) btnSound.play();
     this.#PageDrawer.showResumeButtons();
@@ -162,7 +233,6 @@ class GameStateManager {
   }
 
   resumeGame() {
-    console.log("Game resume!");
     this.#PageDrawer.toggleResumeButtons();
     this.#PageDrawer.setInGameState();
     startTime += millis() - this.#pauseTime;
@@ -176,23 +246,28 @@ class GameStateManager {
   }
 
   exitToMainMenu() {
-    console.log("Exit to the main menu!");
     this.#PageDrawer.drawMainMenu();
     this.#PageDrawer.showStartButtons();
     this.#PageDrawer.toggleGameOverButtons();
 
-    this.playBGM(mainmenuSound); // Return to the main menu and play the music on the main interface
+    this.#requestedBGMPath = null;
+    this.playBGM(mainmenuSound, 'main-menu');
   }
 
-  playMainmenuSound() { this.playBGM(mainmenuSound); }
+  playMainmenuSound() {
+    this.#requestedBGMPath = null;
+    this.playBGM(mainmenuSound, 'main-menu');
+  }
 
-  playBGM(sound) {
+  playBGM(sound, key = sound) {
     try {
+      if (this.currentBGMKey === key && this.currentBGM?.isPlaying()) return;
       if (this.currentBGM && this.currentBGM.isPlaying()) {
         this.currentBGM.stop();
       }
 
       this.currentBGM = sound;
+      this.currentBGMKey = key;
       if (this.currentBGM) {
         this.currentBGM.disconnect(); // Clear the old connection
         this.currentBGM.connect();    // Reconnect the main output
@@ -206,30 +281,42 @@ class GameStateManager {
   }
 
   playBGMForRoom(index) {
-    console.log(this.#PageDrawer.getGameState());
     const currentPageState = this.#PageDrawer.getGameState();
     if (currentPageState !== "inGame") return; // If it's still in the plot, don't play the music
-    const nextBGM = this.roomBGMs[index];
-  
-    if (this.currentBGM === nextBGM && this.currentBGM?.isPlaying()) return;
-  
-    this.stopBGM();
-    this.currentBGM = nextBGM;
-  
-    if (this.currentBGM) {
-      this.currentBGM.disconnect();
-      this.currentBGM.connect();
-      this.currentBGM.setLoop(true);
-      this.currentBGM.setVolume(0.5);
-      this.currentBGM.play();
-    }
+    const bgmPath = this.roomBGMPaths[index];
+    if (!bgmPath) return;
+
+    this.#requestedBGMPath = bgmPath;
+    const cachedBGM = this.#bgmCache.get(bgmPath);
+    if (cachedBGM) return this.playBGM(cachedBGM, bgmPath);
+    if (this.#loadingBGMPaths.has(bgmPath)) return;
+
+    this.#loadingBGMPaths.add(bgmPath);
+    loadSound(
+      bgmPath,
+      sound => {
+        this.#loadingBGMPaths.delete(bgmPath);
+        this.#bgmCache.set(bgmPath, sound);
+        if (
+          this.#requestedBGMPath === bgmPath
+          && this.#PageDrawer.getGameState() === 'inGame'
+        ) {
+          this.playBGM(sound, bgmPath);
+        }
+      },
+      error => {
+        this.#loadingBGMPaths.delete(bgmPath);
+        console.warn(`Unable to load BGM: ${bgmPath}`, error);
+      }
+    );
   }
 
   stopBGM() {
     if (this.currentBGM && this.currentBGM.isPlaying()) {
       this.currentBGM.stop();
-      this.currentBGM = null;
     }
+    this.currentBGM = null;
+    this.currentBGMKey = null;
   }
 
   // Set up room and play BGM
@@ -238,7 +325,7 @@ class GameStateManager {
     this.playBGMForRoom(room.getCurrentRoomId());
   }
 
-  #adjustCanvasWithAspectRatio() {
+  resizeCanvasToWindow() {
     let cnvHeight, cnvWidth;
     // Calculate the max size that fits while keeping 16:9 aspect ratio
     if (windowWidth / windowHeight > 16 / 9) {
@@ -251,10 +338,11 @@ class GameStateManager {
   
     resizeCanvas(cnvWidth, cnvHeight);
     this.#resizeBtns();
+    this.#canvasScaleX = cnvWidth / widthInPixel;
+    this.#canvasScaleY = cnvHeight / heightInPixel;
   
     // Centre the cnv
     cnv.position((windowWidth - cnvWidth) / 2, (windowHeight - cnvHeight) / 2);
-    scale(cnvWidth / widthInPixel, cnvHeight / heightInPixel);
   }
 
   #resizeBtns() { this.#PageDrawer.resizeBtns(); }

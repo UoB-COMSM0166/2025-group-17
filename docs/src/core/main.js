@@ -24,10 +24,12 @@ function setup() {
   PageDrawer.setupMainMenu();
   PageDrawer.setupPauseMenu();
   PageDrawer.setupGameOverPage();
+  gameStateManager.resizeCanvasToWindow();
   setTimeout(() => gameStateManager.playMainmenuSound(), 2500); // Set blocking and play the sound effect after 2.5 seconds of privacy
 
   //Initialize the player
   player = new Player();
+  hideLoadingScreen();
 
   //----------------Extraction of Sprite Sheet------------------
   // Extract all animation frames
@@ -43,6 +45,13 @@ function setup() {
   window.hitEffectFrames = [];
   extractFrames(hitEffectSheet, 10, window.hitEffectFrames);
   //------------------------------------------------------------
+}
+
+function hideLoadingScreen() {
+  const loadingScreen = document.getElementById('loading-screen');
+  if (!loadingScreen) return;
+  requestAnimationFrame(() => loadingScreen.classList.add('is-hidden'));
+  setTimeout(() => loadingScreen.remove(), 350);
 }
 
 //Auxiliary function, used for extracting Sprite animation frames
@@ -86,4 +95,8 @@ function drawDebugCollisionBoxes() {
 function keyPressed() {
   if (fadeMgr.isActive()) return;
   if (gameStateManager) gameStateManager.handlePlayerShooting();
+}
+
+function windowResized() {
+  gameStateManager?.resizeCanvasToWindow();
 }
